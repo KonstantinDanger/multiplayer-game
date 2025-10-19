@@ -9,8 +9,20 @@ public abstract class GameState : IState
         _container = container;
     }
 
-    public virtual void Enter() { }
-    public virtual void Exit() { }
+    public void Enter()
+        => OnEnter();
+
+    public void Exit()
+    {
+        _container
+            .Resolve<MainUI>()
+            .Dispose();
+
+        OnExit();
+    }
+
+    public virtual void OnEnter() { }
+    public virtual void OnExit() { }
     public virtual void FixedUpdate(float fixedDeltaTime) { }
     public virtual void Update(float deltaTime) { }
 

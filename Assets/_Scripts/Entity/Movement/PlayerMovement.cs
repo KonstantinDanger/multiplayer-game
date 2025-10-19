@@ -53,4 +53,11 @@ public class PlayerMovement : NetworkBehaviour, IMovable
 
         _controller.Move(_externalForce);
     }
+
+    public void Warp(Vector3 position)
+    {
+        _controller.enabled = false;
+        transform.position = position;
+        _controller.enabled = true;
+    }
 }

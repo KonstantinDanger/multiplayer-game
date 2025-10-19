@@ -25,6 +25,9 @@ public class Entity : NetworkBehaviour
         OnAwake();
     }
 
+    private void Start()
+        => OnStart();
+
     private void OnEnable()
     {
         InputBrain.OnEnable();
@@ -75,6 +78,11 @@ public class Entity : NetworkBehaviour
     }
 
     protected virtual void OnAwake()
+    {
+
+    }
+
+    protected virtual void OnStart()
     {
 
     }

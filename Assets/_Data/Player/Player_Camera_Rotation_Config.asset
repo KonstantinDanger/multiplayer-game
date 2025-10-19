@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 010244a6db13d7242b9a2186b950aeea, type: 3}
   m_Name: Player_Camera_Rotation_Config
   m_EditorClassIdentifier: 
-  <RotationSpeed>k__BackingField: 5
+  <RotationSpeed>k__BackingField: 10

@@ -1,11 +1,16 @@
+using Mirror;
+
 public class Player : Entity
 {
     private IPlayerInputBrain Input => InputBrain as IPlayerInputBrain;
     private IRotatablePlayerCamera Camera => Rotatable as IRotatablePlayerCamera;
 
     private bool _isMenuActive = true;
-
     private LobbyUI _menu;
+
+    private bool IsOffline =>
+        !NetworkClient.active &&
+        !NetworkServer.active;
 
     protected override void HandleOnEnable()
         => Input.OnMenuInvoked += HandleMenuInvoked;
@@ -15,17 +20,23 @@ public class Player : Entity
 
     protected override void OnAwake()
     {
-        _menu = FindFirstObjectByType<LobbyUI>();
+        _menu = ServiceLocator.Container.Resolve<LobbyUI>();
 
         HandleMenuInvoked();
     }
 
-    //public void Initialize(LobbyUI menu)
-    //    => _menu = menu;
+    protected override void OnStart()
+        => Camera.Initialize(CanDoActions());
+
+    public override void OnStartServer() => UnityEngine.Debug.Log("Server has started ");
 
     protected override void Update()
     {
-        if (!isLocalPlayer)
+
+        //UnityEngine.Debug.Log("Is player offline: " + IsOffline);
+        //UnityEngine.Debug.Log("Is local player: " + isLocalPlayer);
+
+        if (!CanDoActions())
             return;
 
         base.Update();
@@ -33,7 +44,7 @@ public class Player : Entity
 
     protected override void HandleJump()
     {
-        if (!isLocalPlayer)
+        if (!CanDoActions())
             return;
 
         base.HandleJump();
@@ -41,7 +52,7 @@ public class Player : Entity
 
     private void HandleMenuInvoked()
     {
-        if (!isLocalPlayer)
+        if (!CanDoActions())
             return;
 
         _isMenuActive = !_isMenuActive;
@@ -57,9 +68,11 @@ public class Player : Entity
             Camera.HideCursor();
         }
 
-
         //Input.SetUiInput(_isMenuActive);
 
         _menu.gameObject.SetActive(_isMenuActive);
     }
+
+    private bool CanDoActions()
+        => isLocalPlayer || IsOffline;
 }

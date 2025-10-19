@@ -11,7 +11,7 @@ public class PlayerCamera : NetworkBehaviour, IRotatablePlayerCamera
     private float _verticalRotation;
     private float _horizontalRotation;
 
-    private void Start()
+    public void Initialize(bool isLocalPlayer)
     {
         if (!isLocalPlayer)
             _cameraHolder.gameObject.SetActive(false);

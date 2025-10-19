@@ -11,4 +11,5 @@ public interface IMovable
     void Jump(float jumpHeight, float gravity);
     void AddExternalForce(Vector3 force);
     void UpdateExternalForce(float drag);
+    void Warp(Vector3 position);
 }

@@ -1,14 +1,15 @@
+using Mirror;
 using UnityEngine;
 
-public class PlayersInfo : MonoBehaviour
+public class PlayersInfo : NetworkBehaviour
 {
-    [SerializeField] private Transform _infoHolder;
-    [SerializeField] private PlayerInfoUI _playerInfoUIPrefab;
+    [SerializeField] private PlayerInfoCell _playerInfoCellPrefab;
 
-    public void AddInfo(ulong steamId)
+    [Server]
+    public void RpcAddInfo(PlayerInfoUI infoUI, ulong steamId, NetworkConnectionToClient conn)
     {
-        _playerInfoUIPrefab = Instantiate(_playerInfoUIPrefab, _infoHolder);
+        var infoCell = Instantiate(_playerInfoCellPrefab, infoUI.Container.transform);
 
-        _playerInfoUIPrefab.SetSteamId(steamId);
+        infoCell.SetSteamId(steamId);
     }
 }

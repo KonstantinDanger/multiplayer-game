@@ -9,6 +9,7 @@ public interface ILobby
     event Action<GameLobbyJoinRequested_t> OnJoinRequested;
     event Action<LobbyEnter_t> OnLobbyEntered;
 
+    void DisbandLobby();
     void CreateLobby(ELobbyType lobbyType, int maxPlayersAmount = 2);
     void Initialize();
     public CSteamID LobbyId { get; }
