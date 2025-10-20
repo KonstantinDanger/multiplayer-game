@@ -21,7 +21,7 @@ public class ZoneView : MonoBehaviour
     private void OnDisable()
         => _zone.OnZoneShrink -= HandleZoneShrink;
 
-    private void HandleZoneShrink(SphereCollider collider)
-        => _viewObject.localScale = 2 * collider.radius * Vector3.one;
+    private void HandleZoneShrink(float zoneRadius)
+        => _viewObject.localScale = 2 * zoneRadius * Vector3.one;
 }
 

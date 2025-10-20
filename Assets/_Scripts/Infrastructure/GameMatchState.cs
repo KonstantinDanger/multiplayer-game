@@ -50,5 +50,5 @@ public class GameMatchState : GameState
     }
 
     private IEnumerable<Player> GetPlayersOutOfZone(IEnumerable<Player> players)
-        => players.Where(player => Vector3.Distance(player.transform.position, _zone.transform.position) > _zone.CurrentRadius);
+        => players.Where(player => Vector3.Distance(player.transform.position, _zone.transform.position) > _zone.Radius);
 }

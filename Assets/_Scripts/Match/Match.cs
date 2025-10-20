@@ -16,8 +16,8 @@ public class Match : IMatch
     public Match(GameMatchData data, IEnumerable<Player> players)
     {
         _data = data;
-        _matchTimer = new(_data.MatchTime);
-        _deathMatchTimer = new(_data.DeathmatchTime);
+        _matchTimer = new(_data.MatchTime * Constants.SecondsInMinute);
+        _deathMatchTimer = new(_data.DeathmatchTime * Constants.SecondsInMinute);
         //_players = players.ToList();
     }
 

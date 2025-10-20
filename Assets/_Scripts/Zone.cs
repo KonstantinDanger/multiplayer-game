@@ -1,28 +1,17 @@
 ﻿using System;
 using UnityEngine;
 
-[RequireComponent(typeof(SphereCollider))]
 public class Zone : MonoBehaviour
 {
-    public event Action<SphereCollider> OnZoneShrink;
+    public event Action<float> OnZoneShrink;
 
-    [SerializeField] private SphereCollider _collider;
     [SerializeField] private float _minRadius;
     [SerializeField] private float _maxRadius;
 
-    public float CurrentRadius => _collider.radius;
-
-    private void OnValidate()
-    {
-        if (_collider == null)
-            TryGetComponent(out _collider);
-
-        if (_collider && !_collider.isTrigger)
-            _collider.isTrigger = true;
-    }
+    public float Radius { get; private set; }
 
     private void Start()
-        => _collider.radius = _maxRadius;
+        => Radius = _maxRadius;
 
     public void Shrink(float normalizedValue)
     {
@@ -34,9 +23,9 @@ public class Zone : MonoBehaviour
 
         float currentZoneRadius = Mathf.Lerp(_minRadius, _maxRadius, shrinkMultiplier);
 
-        _collider.radius = currentZoneRadius;
+        Radius = currentZoneRadius;
 
-        OnZoneShrink.Invoke(_collider);
+        OnZoneShrink.Invoke(Radius);
     }
 
     #region Debug
@@ -50,7 +39,7 @@ public class Zone : MonoBehaviour
         Gizmos.DrawSphere(transform.position, _maxRadius);
 
         Gizmos.color = new Color(255, 0, 0, 0.5f);
-        Gizmos.DrawSphere(transform.position, _collider.radius);
+        Gizmos.DrawSphere(transform.position, Radius);
     }
 #endif
     #endregion
