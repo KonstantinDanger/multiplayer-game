@@ -6,23 +6,31 @@ public class Match : IMatch
     public event Action OnStarted;
     public event Action OnEnded;
 
-    private readonly GameMatchData _data;
+    private readonly GameMatchConfig _data;
 
     private readonly Timer _matchTimer;
     private readonly Timer _deathMatchTimer;
 
     private readonly List<Player> _players;
 
-    public Match(GameMatchData data, IEnumerable<Player> players)
+    private readonly float _matchTime;
+    private readonly float _deathMatchTime;
+
+    public Match(GameMatchConfig data, IEnumerable<Player> players)
     {
         _data = data;
-        _matchTimer = new(_data.MatchTime * Constants.SecondsInMinute);
-        _deathMatchTimer = new(_data.DeathmatchTime * Constants.SecondsInMinute);
+
+        _matchTime = _data.MatchTime * Constants.SecondsInMinute;
+        _deathMatchTime = _data.DeathmatchTime * Constants.SecondsInMinute;
+
+        _matchTimer = new(_matchTime);
+        _deathMatchTimer = new(_deathMatchTime);
+
         //_players = players.ToList();
     }
 
     public float GetMatchProgress()
-        => _matchTimer.ElapsedTime / _data.MatchTime;
+        => _matchTimer.ElapsedTime / _matchTime;
 
     public void Start()
     {

@@ -36,8 +36,13 @@ public class DamageSystem : MonoBehaviour
         Damage calculatedDamage = damage;
 
         foreach (DamageHandler handler in _damageHandlers)
+        {
+            if (handler == null)
+                continue;
+
             if (!handler.Calculate(calculatedDamage, out calculatedDamage))
                 break;
+        }
 
         return calculatedDamage;
     }

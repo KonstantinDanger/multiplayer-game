@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(IMovable))]
 public class Entity : NetworkBehaviour
 {
+    public EntityStats Stats = new(Utils.DefaultEntityStats());
+
     [SerializeField] private InterfaceReference<IMovable> _movement;
     [SerializeField] private InterfaceReference<IRotatable> _rotatable;
 

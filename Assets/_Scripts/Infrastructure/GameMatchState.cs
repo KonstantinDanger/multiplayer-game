@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameMatchState : GameState
 {
-    private GameMatchData _gameMatchData;
+    private GameMatchConfig _gameMatchData;
     private GameFactory _factory;
     private StaticData _data;
 

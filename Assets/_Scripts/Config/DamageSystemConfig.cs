@@ -4,8 +4,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Config/Damage_System_")]
 public class DamageSystemConfig : ScriptableObject
 {
-    [SerializeField, SubclassSelector] private List<DamageHandler> _damageHandlers = new();
+    [field: SerializeField, Range(1, 1000)] public float BaseHp { get; private set; }
 
-    [field: SerializeField] public float BaseHp { get; private set; }
+    [Space()]
+    [SerializeReference, SubclassSelector] private List<DamageHandler> _damageHandlers = new();
+
     public IReadOnlyList<DamageHandler> DamageHandlers => _damageHandlers;
 }
