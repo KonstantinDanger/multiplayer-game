@@ -7,6 +7,7 @@ public class PlayerCamera : NetworkBehaviour, IRotatablePlayerCamera
     [SerializeField] private Transform _cameraHolder;
     [SerializeField] private Transform _bodyTransform;
     [SerializeField] private CameraConfig _config;
+    [field: SerializeField] public Transform Transform { get; private set; }
 
     private float _verticalRotation;
     private float _horizontalRotation;

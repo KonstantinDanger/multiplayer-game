@@ -3,7 +3,7 @@ using Mirror;
 using UnityEngine;
 
 [RequireComponent(typeof(IMovable))]
-public class Entity : NetworkBehaviour
+public class Entity : NetworkBehaviour, IDamageable
 {
     public EntityStats Stats = new(Utils.DefaultEntityStats());
 
@@ -12,6 +12,8 @@ public class Entity : NetworkBehaviour
 
     [field: SerializeField] public MovementConfig MovementConfig { get; private set; }
     [field: SerializeField] public RotationConfig RotationConfig { get; private set; }
+    [field: SerializeField] public DamageSystemConfig DamageSystemConfig { get; private set; }
+    [field: SerializeField] public DamageSystem DamageSystem { get; private set; }
 
     public IInputBrain InputBrain { get; private set; }
     protected IMovable Movable => _movement.Value;
@@ -23,6 +25,7 @@ public class Entity : NetworkBehaviour
     private void Awake()
     {
         InputBrain = new PlayerInput();
+        DamageSystem.Initialize(DamageSystemConfig.BaseHp, null);
 
         OnAwake();
     }
@@ -91,4 +94,7 @@ public class Entity : NetworkBehaviour
 
     protected virtual void HandleJump()
         => Movable.Jump(MovementConfig.JumpHeight, MovementConfig.Gravity);
+
+    public virtual void TakeDamage(Damage damage)
+        => DamageSystem.TakeDamage(damage);
 }

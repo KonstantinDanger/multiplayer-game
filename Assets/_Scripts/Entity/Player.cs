@@ -1,7 +1,10 @@
 using Mirror;
+using UnityEngine;
 
 public class Player : Entity
 {
+    [SerializeField] private RayCastDamager _damager; //For testing
+
     private IPlayerInputBrain Input => InputBrain as IPlayerInputBrain;
     private IRotatablePlayerCamera Camera => Rotatable as IRotatablePlayerCamera;
 
@@ -13,7 +16,10 @@ public class Player : Entity
         !NetworkServer.active;
 
     protected override void HandleOnEnable()
-        => Input.OnMenuInvoked += HandleMenuInvoked;
+    {
+        Input.OnMenuInvoked += HandleMenuInvoked;
+        Input.OnAttackInvoked += HandleAttack;
+    }
 
     protected override void HandleOnDisable()
         => Input.OnMenuInvoked -= HandleMenuInvoked;
@@ -27,8 +33,6 @@ public class Player : Entity
 
     protected override void OnStart()
         => Camera.Initialize(CanDoActions());
-
-    public override void OnStartServer() => UnityEngine.Debug.Log("Server has started ");
 
     protected override void Update()
     {
@@ -48,6 +52,14 @@ public class Player : Entity
             return;
 
         base.HandleJump();
+    }
+
+    private void HandleAttack()
+    {
+        if (!CanDoActions())
+            return;
+
+        _damager.InflictDamage(Camera.Transform.position, Camera.Transform.forward);
     }
 
     private void HandleMenuInvoked()

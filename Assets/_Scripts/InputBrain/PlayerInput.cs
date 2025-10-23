@@ -11,12 +11,15 @@ public class PlayerInput : IPlayerInputBrain
 
     public event Action JumpAction;
     public event Action OnMenuInvoked;
+    public event Action OnAttackInvoked;
 
     public bool IsSprinting { get; private set; }
 
     public PlayerInput()
     {
         _actions = new();
+
+        _actions.Player.Attack.performed += _ => OnAttackInvoked?.Invoke();
 
         _actions.Player.Jump.performed += _ => JumpAction?.Invoke();
         _actions.UI.Menu.performed += _ => OnMenuInvoked?.Invoke();

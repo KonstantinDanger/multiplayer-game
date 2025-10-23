@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Mirror;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
-public class DamageSystem : MonoBehaviour
+public class DamageSystem : NetworkBehaviour
 {
     public event Action OnDamageTaken;
     public event Action OnDemise;
@@ -11,17 +11,21 @@ public class DamageSystem : MonoBehaviour
     private List<DamageHandler> _damageHandlers;
 
     private float _baseHealth;
-    private float _currentHealth;
+    [SyncVar] private float _currentHealth;
 
     public void Initialize(float baseHealth, IEnumerable<DamageHandler> damageHandlers)
     {
         _baseHealth = baseHealth;
 
-        _damageHandlers = damageHandlers?.ToList();
+        if (_damageHandlers == null)
+            _damageHandlers = new List<DamageHandler>();
+        else
+            _damageHandlers = damageHandlers.ToList();
 
         _currentHealth = _baseHealth;
     }
 
+    [Server]
     public void TakeDamage(Damage damage)
     {
         Damage calculatedDamage = CalculateDamage(damage);
