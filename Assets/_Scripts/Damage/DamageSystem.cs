@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class DamageSystem : NetworkBehaviour
+public class DamageSystem : NetworkBehaviour, IDamageable
 {
-    public event Action OnDamageTaken;
+    public event Action<Damage> OnDamageTaken;
     public event Action OnDemise;
 
     private List<DamageHandler> _damageHandlers;
@@ -25,9 +25,12 @@ public class DamageSystem : NetworkBehaviour
         _currentHealth = _baseHealth;
     }
 
-    [Server]
+    [Command(requiresAuthority = false)]
     public void TakeDamage(Damage damage)
     {
+        if (_currentHealth <= 0)
+            return;
+
         Damage calculatedDamage = CalculateDamage(damage);
         TakeCalculatedDamage(calculatedDamage);
     }
@@ -68,7 +71,10 @@ public class DamageSystem : NetworkBehaviour
         }
         else
         {
-            OnDamageTaken?.Invoke();
+            OnDamageTaken?.Invoke(damage);
         }
     }
+
+    public void RegenFully()
+        => _currentHealth = _baseHealth;
 }

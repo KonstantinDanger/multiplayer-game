@@ -55,9 +55,24 @@ public class CustomNetworkManager : NetworkManager
         foreach (var item in NetworkServer.connections)
         {
             var currentPlayer = item.Value.identity.gameObject;
+            var spawnPosition = GetStartPosition().position;
             var movable = currentPlayer.GetComponent<IMovable>();
-            var spawnPosition = GetStartPosition();
-            movable.Warp(spawnPosition.position);
+
+            movable.Warp(spawnPosition);
+
+            //TeleportPlayer(currentPlayer, spawnPosition);
+            //_teleporter.Warp(currentPlayer, spawnPosition);
         }
     }
+
+    //[Server]
+    //private void TeleportPlayer(GameObject player, Vector3 position)
+    //{
+    //    if (player.TryGetComponent(out NetworkTransformBase netTransform))
+    //    {
+    //        netTransform.ServerTeleport(position, Quaternion.identity);
+    //    }
+    //}
 }
+
+

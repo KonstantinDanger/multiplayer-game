@@ -3,21 +3,22 @@ using Mirror;
 using UnityEngine;
 
 [RequireComponent(typeof(IMovable))]
-public class Entity : NetworkBehaviour, IDamageable
+public class Entity : NetworkBehaviour
 {
     public EntityStats Stats = new(Utils.DefaultEntityStats());
 
     [SerializeField] private InterfaceReference<IMovable> _movement;
     [SerializeField] private InterfaceReference<IRotatable> _rotatable;
+    [SerializeField] private InterfaceReference<IDamageable> _damageable;
 
     [field: SerializeField] public MovementConfig MovementConfig { get; private set; }
     [field: SerializeField] public RotationConfig RotationConfig { get; private set; }
     [field: SerializeField] public DamageSystemConfig DamageSystemConfig { get; private set; }
-    [field: SerializeField] public DamageSystem DamageSystem { get; private set; }
 
     public IInputBrain InputBrain { get; private set; }
-    protected IMovable Movable => _movement.Value;
-    protected IRotatable Rotatable => _rotatable.Value;
+    public IMovable Movable => _movement.Value;
+    public IRotatable Rotatable => _rotatable.Value;
+    public IDamageable Damageable => _damageable.Value;
 
     private Vector2 MovementInput => InputBrain.MovementVector;
     private Vector2 RotationInput => InputBrain.Rotation;
@@ -25,7 +26,7 @@ public class Entity : NetworkBehaviour, IDamageable
     private void Awake()
     {
         InputBrain = new PlayerInput();
-        DamageSystem.Initialize(DamageSystemConfig.BaseHp, null);
+        Damageable.Initialize(DamageSystemConfig.BaseHp, null);
 
         OnAwake();
     }
@@ -38,6 +39,8 @@ public class Entity : NetworkBehaviour, IDamageable
         InputBrain.OnEnable();
 
         InputBrain.JumpAction += HandleJump;
+        Damageable.OnDamageTaken += OnDamageTaken;
+        Damageable.OnDemise += OnDemise;
 
         HandleOnEnable();
     }
@@ -47,6 +50,8 @@ public class Entity : NetworkBehaviour, IDamageable
         InputBrain.OnDisable();
 
         InputBrain.JumpAction -= HandleJump;
+        Damageable.OnDamageTaken -= OnDamageTaken;
+        Damageable.OnDemise -= OnDemise;
 
         HandleOnDisable();
     }
@@ -72,6 +77,10 @@ public class Entity : NetworkBehaviour, IDamageable
         return v;
     }
 
+    protected virtual void OnDamageTaken(Damage damage) { }
+
+    protected virtual void OnDemise() { }
+
     protected virtual void HandleOnEnable()
     {
 
@@ -94,7 +103,4 @@ public class Entity : NetworkBehaviour, IDamageable
 
     protected virtual void HandleJump()
         => Movable.Jump(MovementConfig.JumpHeight, MovementConfig.Gravity);
-
-    public virtual void TakeDamage(Damage damage)
-        => DamageSystem.TakeDamage(damage);
 }

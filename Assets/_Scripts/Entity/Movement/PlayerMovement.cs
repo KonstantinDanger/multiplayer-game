@@ -2,12 +2,14 @@ using Mirror;
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(NetworkTransformBase))]
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : NetworkBehaviour, IMovable
 {
     public event Action OnMove;
 
     [SerializeField] private CharacterController _controller;
+    [SerializeField] private NetworkTransformBase _netTransform;
 
     public Vector3 Velocity { get; private set; }
 
@@ -19,8 +21,8 @@ public class PlayerMovement : NetworkBehaviour, IMovable
     {
         _verticalVelocity += gravity * Time.deltaTime;
 
-        if (_verticalVelocity >= maxFallSpeed)
-            _verticalVelocity = maxFallSpeed;
+        if (Mathf.Abs(_verticalVelocity) >= maxFallSpeed)
+            _verticalVelocity = -maxFallSpeed;
 
         //if (IsGrounded && _verticalVelocity < 0f)
         //    _verticalVelocity = -_currentGroundedSnapForce;
@@ -54,10 +56,11 @@ public class PlayerMovement : NetworkBehaviour, IMovable
         _controller.Move(_externalForce);
     }
 
+    [Server]
     public void Warp(Vector3 position)
     {
         _controller.enabled = false;
-        transform.position = position;
+        _netTransform.ServerTeleport(position, Quaternion.identity);
         _controller.enabled = true;
     }
 }

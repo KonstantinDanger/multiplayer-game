@@ -4,6 +4,7 @@ using UnityEngine;
 public class Player : Entity
 {
     [SerializeField] private RayCastDamager _damager; //For testing
+    [SerializeField] private Respawn _respawn;
 
     private IPlayerInputBrain Input => InputBrain as IPlayerInputBrain;
     private IRotatablePlayerCamera Camera => Rotatable as IRotatablePlayerCamera;
@@ -36,15 +37,14 @@ public class Player : Entity
 
     protected override void Update()
     {
-
-        //UnityEngine.Debug.Log("Is player offline: " + IsOffline);
-        //UnityEngine.Debug.Log("Is local player: " + isLocalPlayer);
-
         if (!CanDoActions())
             return;
 
         base.Update();
     }
+
+    public void Spectate(bool active)
+        => Input.SetPlayerInput(!active);
 
     protected override void HandleJump()
     {
@@ -53,6 +53,9 @@ public class Player : Entity
 
         base.HandleJump();
     }
+
+    protected override void OnDemise()
+        => _respawn.Execute(this, DamageSystemConfig.RespawnTime);
 
     private void HandleAttack()
     {
@@ -87,4 +90,7 @@ public class Player : Entity
 
     private bool CanDoActions()
         => isLocalPlayer || IsOffline;
+
+    public void Respawn()
+        => Damageable.RegenFully();
 }

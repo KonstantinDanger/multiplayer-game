@@ -8,7 +8,7 @@ public class BulletRayCast : NetworkBehaviour
     [Header("Settings")]
     public float lineDuration = 0.05f;
     public Color lineColor = Color.yellow;
-    public float lineWidth = 0.05f;
+    public float lineWidth = 0.03f;
 
     private LineRenderer lineRenderer;
 
@@ -37,12 +37,10 @@ public class BulletRayCast : NetworkBehaviour
 
     private IEnumerator FireRay(Vector3 origin, Vector3 endPos)
     {
-        // Draw the line
         lineRenderer.SetPosition(0, origin);
         lineRenderer.SetPosition(1, endPos);
         lineRenderer.enabled = true;
 
-        // Wait briefly then hide line
         yield return new WaitForSeconds(lineDuration);
         lineRenderer.enabled = false;
     }
