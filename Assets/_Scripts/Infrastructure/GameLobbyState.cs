@@ -57,7 +57,7 @@ public class GameLobbyState : GameState
 
     public override void OnExit()
     {
-        _networkManager.autoCreatePlayer = false;
+        _networkManager.autoCreatePlayer = true;
 
         Events.OnLobbyDisband -= HandleLobbyDisband;
         Events.OnStartGameInitiated -= HandleStartGameInitiated;

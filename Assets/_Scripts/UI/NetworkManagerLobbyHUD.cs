@@ -18,6 +18,8 @@ public class NetworkManagerLobbyHUD : NetworkManagerHUD
     {
         var staticData = ServiceLocator.Container.Resolve<StaticData>();
 
+        _netManager.autoCreatePlayer = false;
+
         _netManager.ServerChangeScene(staticData.GameSceneName);
     }
 }

@@ -26,6 +26,9 @@ public class CustomNetworkManager : NetworkManager
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
+        if (!autoCreatePlayer)
+            return;
+
         base.OnServerAddPlayer(conn);
 
         DontDestroyOnLoad(conn.identity.gameObject);

@@ -27,9 +27,6 @@ public class Player : Entity
 
     protected override void OnAwake()
     {
-
-        UnityEngine.Debug.Log("awake of player ");
-
         //_menu = ServiceLocator.Container.Resolve<LobbyUI>();
         { }
         HandleMenuInvoked();
