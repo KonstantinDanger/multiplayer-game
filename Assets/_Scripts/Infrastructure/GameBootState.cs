@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class GameBootState : GameState
 {
     private readonly StaticData _staticData;
@@ -18,7 +20,7 @@ public class GameBootState : GameState
         var coroutineHolder = Resolve<CoroutineHolder>();
 
         _sceneLoader = new(coroutineHolder);
-        GameFactory factory = new();
+        GameFactory factory = Object.Instantiate(_staticData.GameFactoryPrefab, coroutineHolder.transform.parent);
         var netManager = factory.CreateNetworkManager(_staticData.NetworkManagerPrefab, coroutineHolder.transform);
         MainUI ui = factory.InitializeUI(_staticData.UIPrefab, null);
 

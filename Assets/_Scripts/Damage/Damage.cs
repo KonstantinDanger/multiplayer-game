@@ -4,4 +4,5 @@ public struct Damage
 {
     public float Amount;
     public LayerMask AttackLayers;
+    public DamageType Type;
 }

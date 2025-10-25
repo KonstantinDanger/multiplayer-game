@@ -1,21 +1,31 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 
-public class GameFactory
+public class GameFactory : NetworkBehaviour
 {
     private MainUI _mainUI;
 
-    public Player SpawnPlayer(Player player, Transform point)
-        => Object.Instantiate(player, point.position, Quaternion.identity);
+    //[Command(requiresAuthority = false)]
+    //public Player CmdSpawnPlayer(Player player, Transform point)
+    //{
+    //    Player playerObject = Object.Instantiate(player, point.position, Quaternion.identity);
+
+    //    Object.DontDestroyOnLoad(playerObject);
+
+    //    NetworkServer.AddPlayerForConnection(playerObject.connectionToClient, playerObject.gameObject);
+
+    //    return playerObject;
+    //}
 
     public MainUI InitializeUI(MainUI UIPrefab, Transform transform)
     {
-        _mainUI = Object.Instantiate(UIPrefab, transform);
-        GameObject.DontDestroyOnLoad(_mainUI);
+        _mainUI = Instantiate(UIPrefab, transform);
+        DontDestroyOnLoad(_mainUI);
         return _mainUI;
     }
 
     public UI AddUI(UI ui)
-        => Object.Instantiate(ui, _mainUI.transform);
+        => Instantiate(ui, _mainUI.transform);
 
     //public void RemoveUI(UI ui)
     //{
@@ -28,8 +38,22 @@ public class GameFactory
     //}
 
     public CustomNetworkManager CreateNetworkManager(CustomNetworkManager networkManagerPrefab, Transform transform)
-        => Object.Instantiate(networkManagerPrefab, transform);
+        => Instantiate(networkManagerPrefab, transform);
 
+    [Server]
     public Zone SpawnZone(Zone zonePrefab, Vector3 position)
-        => Object.Instantiate(zonePrefab, position, Quaternion.identity);
+    {
+        var zone = Instantiate(zonePrefab, position, Quaternion.identity);
+        NetworkServer.Spawn(zone.gameObject);
+        return zone;
+    }
+
+    public Player SpawnPlayer(NetworkConnectionToClient conn, Player playerPrefab, Vector3 position)
+    {
+        Player player = Instantiate(playerPrefab, position, Quaternion.identity);
+
+        NetworkServer.AddPlayerForConnection(conn, player.gameObject);
+
+        return player;
+    }
 }

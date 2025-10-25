@@ -12,4 +12,5 @@ public class StaticData : ScriptableObject
     [field: SerializeField] public PlayerInfoUI PlayerInfoUI { get; private set; }
     [field: SerializeField] public CustomNetworkManager NetworkManagerPrefab { get; private set; }
     [field: SerializeField] public Zone ZonePrefab { get; internal set; }
+    [field: SerializeField] public GameFactory GameFactoryPrefab { get; private set; }
 }

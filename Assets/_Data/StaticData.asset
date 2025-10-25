@@ -19,5 +19,6 @@ MonoBehaviour:
   <UIPrefab>k__BackingField: {fileID: 1105170729983489811, guid: fd064af28e613ed46a4f3134ac2d4112, type: 3}
   <LobbyUIPrefab>k__BackingField: {fileID: 7930260647628692699, guid: 42c61504473b8484cb5e6b5c6aeefdf7, type: 3}
   <PlayerInfoUI>k__BackingField: {fileID: 1133355810030146513, guid: 2834b6c588c3521449fa80a158db5941, type: 3}
-  <NetworkManagerPrefab>k__BackingField: {fileID: 8638753538948294093, guid: 56669ef53dcd1284f93c2282215647bc, type: 3}
+  <NetworkManagerPrefab>k__BackingField: {fileID: 8638753538948294093, guid: 240b62a2517c9754dbd6061d973eb5f4, type: 3}
   <ZonePrefab>k__BackingField: {fileID: 274732617518039713, guid: 86110dba61a133a42a50a37c16b67837, type: 3}
+  <GameFactoryPrefab>k__BackingField: {fileID: 1665039624068957351, guid: 356c4d4e560397d4d8838f52640c3ef7, type: 3}

@@ -1,6 +1,7 @@
+using Mirror;
 using UnityEngine;
 
-public class Game : MonoBehaviour
+public class Game : NetworkBehaviour
 {
     [SerializeField] private StaticData _staticData;
     [SerializeField] private CoroutineHolder _coroutineHolder;
@@ -20,8 +21,18 @@ public class Game : MonoBehaviour
     }
 
     private void Update()
-        => CurrentState.Update(Time.deltaTime);
+    {
+        if (!NetworkServer.active)
+            return;
+
+        CurrentState.Update(Time.deltaTime);
+    }
 
     private void FixedUpdate()
-        => CurrentState.FixedUpdate(Time.fixedDeltaTime);
+    {
+        if (!NetworkServer.active)
+            return;
+
+        CurrentState.FixedUpdate(Time.fixedDeltaTime);
+    }
 }

@@ -1,5 +1,4 @@
 using Mirror;
-using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,25 +26,19 @@ public class CustomNetworkManager : NetworkManager
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
-        Player player = _gameFactory.SpawnPlayer(_staticData.PlayerPrefab, GetStartPosition());
+        base.OnServerAddPlayer(conn);
 
-        DontDestroyOnLoad(player);
+        DontDestroyOnLoad(conn.identity.gameObject);
 
-        NetworkServer.AddPlayerForConnection(conn, player.gameObject);
+        //CSteamID steamID = SteamMatchmaking.GetLobbyMemberByIndex(Lobby.LobbyId, numPlayers - 1);
 
-        CSteamID steamID = SteamMatchmaking.GetLobbyMemberByIndex(Lobby.LobbyId, numPlayers - 1);
+        //PlayerInfoUI ui = ServiceLocator.Container.Resolve<PlayerInfoUI>();
 
-        PlayerInfoUI ui = ServiceLocator.Container.Resolve<PlayerInfoUI>();
-
-        _playersInfo.RpcAddInfo(ui, steamID.m_SteamID, conn);
+        //_playersInfo.RpcAddInfo(ui, steamID.m_SteamID, conn);
     }
 
     public override void OnServerSceneChanged(string sceneName)
-    {
-        OnServerSceneLoaded?.Invoke(sceneName);
-
-        ShufflePlayersPositions();
-    }
+        => OnServerSceneLoaded?.Invoke(sceneName);
 
     public void ShufflePlayersPositions()
     {

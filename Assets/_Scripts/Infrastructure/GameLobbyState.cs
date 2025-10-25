@@ -23,7 +23,7 @@ public class GameLobbyState : GameState
         if (!_isLobbyInitialized)
             InitializeLobby();
 
-        //SpawnPlayer();
+        //SpawnPlayers();
 
         Events.OnLobbyDisband += HandleLobbyDisband;
         Events.OnStartGameInitiated += HandleStartGameInitiated;
@@ -33,6 +33,8 @@ public class GameLobbyState : GameState
 
     private void InitializeLobby()
     {
+        return;
+
         _lobbyUiInstance = GetOrCreateLobbyUI();
         PlayerInfoUI infoUI = _factory.AddUI(_staticData.PlayerInfoUI) as PlayerInfoUI;
 
@@ -46,7 +48,7 @@ public class GameLobbyState : GameState
         _isLobbyInitialized = true;
     }
 
-    //private void SpawnPlayer()
+    //private void SpawnPlayers()
     //{
     //    _player = _factory.SpawnPlayer(_staticData.PlayerPrefab, _networkManager.GetStartPosition());
     //    OfflinePlayer offlinePlayer = new(_player);
@@ -55,6 +57,8 @@ public class GameLobbyState : GameState
 
     public override void OnExit()
     {
+        _networkManager.autoCreatePlayer = false;
+
         Events.OnLobbyDisband -= HandleLobbyDisband;
         Events.OnStartGameInitiated -= HandleStartGameInitiated;
 

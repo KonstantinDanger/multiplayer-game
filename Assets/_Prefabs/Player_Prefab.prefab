@@ -428,6 +428,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  _cube: {fileID: 1768439199690489168, guid: e8ed1aedc8cd572479ff2ddc96231fda, type: 3}
   _rayCastView: {fileID: 4521963623633174931}
   _damageLayers:
     serializedVersion: 2

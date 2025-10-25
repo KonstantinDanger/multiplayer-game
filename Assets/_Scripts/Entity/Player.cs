@@ -27,8 +27,11 @@ public class Player : Entity
 
     protected override void OnAwake()
     {
-        _menu = ServiceLocator.Container.Resolve<LobbyUI>();
 
+        UnityEngine.Debug.Log("awake of player ");
+
+        //_menu = ServiceLocator.Container.Resolve<LobbyUI>();
+        { }
         HandleMenuInvoked();
     }
 
@@ -85,7 +88,7 @@ public class Player : Entity
 
         //Input.SetUiInput(_isMenuActive);
 
-        _menu.gameObject.SetActive(_isMenuActive);
+        //_menu.gameObject.SetActive(_isMenuActive);
     }
 
     private bool CanDoActions()
