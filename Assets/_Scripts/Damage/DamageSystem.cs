@@ -12,6 +12,8 @@ public class DamageSystem : NetworkBehaviour, IDamageable
 
     private float _baseHealth;
     [SyncVar] private float _currentHealth;
+    [SyncVar] private bool _isDead;
+    public bool IsDead => _isDead;
 
     public void Initialize(float baseHealth, IEnumerable<DamageHandler> damageHandlers)
     {
@@ -68,6 +70,7 @@ public class DamageSystem : NetworkBehaviour, IDamageable
         {
             _currentHealth = 0f;
             OnDemise?.Invoke();
+            _isDead = true;
         }
         else
         {
@@ -75,6 +78,10 @@ public class DamageSystem : NetworkBehaviour, IDamageable
         }
     }
 
-    public void RegenFully()
-        => _currentHealth = _baseHealth;
+    [Command(requiresAuthority = false)]
+    public void Respawn()
+    {
+        _currentHealth = _baseHealth;
+        _isDead = false;
+    }
 }

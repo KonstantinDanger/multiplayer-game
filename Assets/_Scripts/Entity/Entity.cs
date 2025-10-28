@@ -1,9 +1,10 @@
 using AYellowpaper;
 using Mirror;
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(IMovable))]
-public class Entity : NetworkBehaviour
+public class Entity : NetworkBehaviour, IDisposable
 {
     public EntityStats Stats = new(Utils.DefaultEntityStats());
 
@@ -103,4 +104,6 @@ public class Entity : NetworkBehaviour
 
     protected virtual void HandleJump()
         => Movable.Jump(MovementConfig.JumpHeight, MovementConfig.Gravity);
+
+    public virtual void Dispose() { }
 }

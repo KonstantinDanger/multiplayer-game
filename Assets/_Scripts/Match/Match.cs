@@ -16,6 +16,8 @@ public class Match : IMatch
     private readonly float _matchTime;
     private readonly float _deathMatchTime;
 
+    public bool IsDeathmatchActive { get; private set; }
+
     public Match(GameMatchConfig data, IEnumerable<Player> players)
     {
         _data = data;
@@ -59,6 +61,9 @@ public class Match : IMatch
     }
 
     private void StartDeathMatch()
-        => _deathMatchTimer.Start();
+    {
+        _deathMatchTimer.Start();
+        IsDeathmatchActive = true;
+    }
 }
 

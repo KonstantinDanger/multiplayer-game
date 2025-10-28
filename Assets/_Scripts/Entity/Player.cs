@@ -8,6 +8,7 @@ public class Player : Entity
 
     private IPlayerInputBrain Input => InputBrain as IPlayerInputBrain;
     private IRotatablePlayerCamera Camera => Rotatable as IRotatablePlayerCamera;
+    private IPlayerDeathHandler PlayerDeathHandler { get; set; }
 
     private bool _isMenuActive = true;
     private LobbyUI _menu;
@@ -35,6 +36,9 @@ public class Player : Entity
     protected override void OnStart()
         => Camera.Initialize(CanDoActions());
 
+    public void Initialize(Match match)
+        => PlayerDeathHandler = new PlayerDeathHandler(match);
+
     protected override void Update()
     {
         if (!CanDoActions())
@@ -42,9 +46,6 @@ public class Player : Entity
 
         base.Update();
     }
-
-    public void Spectate(bool active)
-        => Input.SetPlayerInput(!active);
 
     protected override void HandleJump()
     {
@@ -55,7 +56,21 @@ public class Player : Entity
     }
 
     protected override void OnDemise()
-        => _respawn.Execute(this, DamageSystemConfig.RespawnTime);
+    {
+        Spectate(true);
+
+        void RespawnAction()
+            => _respawn.Execute(this, DamageSystemConfig.RespawnTime);
+
+        PlayerDeathHandler.HandleDeath(RespawnAction);
+    }
+
+    public void Respawn()
+        => Damageable.Respawn();
+
+    [ClientRpc]
+    public void Spectate(bool active)
+        => Input.SetPlayerInput(!active);
 
     private void HandleAttack()
     {
@@ -72,7 +87,8 @@ public class Player : Entity
 
         _isMenuActive = !_isMenuActive;
 
-        Input.SetPlayerInput(!_isMenuActive);
+        if (!Damageable.IsDead)
+            Input.SetPlayerInput(!_isMenuActive);
 
         if (_isMenuActive)
         {
@@ -90,7 +106,4 @@ public class Player : Entity
 
     private bool CanDoActions()
         => isLocalPlayer || IsOffline;
-
-    public void Respawn()
-        => Damageable.RegenFully();
 }

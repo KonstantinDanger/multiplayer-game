@@ -7,8 +7,8 @@
     private bool _isGoing;
 
     public bool IsEnded => _elapsedTime >= _targetTime;
-    public bool HasStarted => _elapsedTime == 0f;
     public float ElapsedTime => _elapsedTime;
+    public bool HasStarted { get; private set; }
 
     public Timer(float targetTime)
     {
@@ -17,7 +17,11 @@
     }
 
     public void Start()
-        => _isGoing = true;
+    {
+        _isGoing = true;
+
+        HasStarted = true;
+    }
 
     public void Update(float deltaTime)
     {

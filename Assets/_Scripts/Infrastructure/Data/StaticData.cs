@@ -13,4 +13,5 @@ public class StaticData : ScriptableObject
     [field: SerializeField] public CustomNetworkManager NetworkManagerPrefab { get; private set; }
     [field: SerializeField] public Zone ZonePrefab { get; internal set; }
     [field: SerializeField] public GameFactory GameFactoryPrefab { get; private set; }
+    [field: SerializeField] public float ZoneDPS { get; private set; } = 10;
 }

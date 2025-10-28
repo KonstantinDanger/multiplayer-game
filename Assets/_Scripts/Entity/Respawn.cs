@@ -15,15 +15,9 @@ public class Respawn : NetworkBehaviour
     [Server]
     private IEnumerator RespawnRoutine(Player player, float respawnTime)
     {
-        DisablePlayer(player);
         yield return new WaitForSeconds(respawnTime);
         EnablePlayer(player);
-
     }
-
-    [ClientRpc]
-    private void DisablePlayer(Player player)
-        => player.Spectate(true);
 
     [ClientRpc]
     private void EnablePlayer(Player player)

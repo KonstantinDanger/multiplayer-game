@@ -11,7 +11,7 @@ public class GameMatchState : GameState
 
     private Zone _zone;
     private Match _match;
-    private List<Player> _players = new();
+    private readonly List<Player> _players = new();
 
     public GameMatchState(IStateMachine stateMachine, ServiceLocator container) : base(stateMachine, container) { }
 
@@ -21,19 +21,9 @@ public class GameMatchState : GameState
         _factory = Resolve<GameFactory>();
         _gameMatchData = _data.GameMatchData;
 
-        foreach (var conn in NetworkServer.connections.Values)
-        {
-            Player player = conn.identity.GetComponent<Player>();
-            _players.Add(player);
-        }
-
-        Resolve<CustomNetworkManager>().ShufflePlayersPositions();
-
-        _zone = _factory.SpawnZone(_data.ZonePrefab, Vector3.zero);
-
-        _match = new(_gameMatchData, _players);
-
-        _match.Start();
+        InitZone();
+        InitMatch();
+        InitPlayers(_match);
     }
 
     public override void Update(float deltaTime)
@@ -44,12 +34,35 @@ public class GameMatchState : GameState
 
         _zone.Shrink(matchProgress);
 
-        const float zoneDamage = 3;
-
         var playersOutOfZone = GetPlayersOutOfZone(_players);
 
-        TryDamagePlayersOutOfZone(playersOutOfZone, zoneDamage * deltaTime);
+        TryDamagePlayersOutOfZone(playersOutOfZone, _data.ZoneDPS * deltaTime);
     }
+
+    public override void OnExit()
+        => _players.ForEach(player => player.Dispose());
+
+    private void InitPlayers(Match match)
+    {
+        foreach (var conn in NetworkServer.connections.Values)
+        {
+            Player player = conn.identity.GetComponent<Player>();
+            player.Initialize(match);
+            _players.Add(player);
+        }
+
+        Resolve<CustomNetworkManager>().ShufflePlayersPositions();
+    }
+
+    private void InitMatch()
+    {
+        _match = new(_gameMatchData, _players);
+
+        _match.Start();
+    }
+
+    private void InitZone()
+        => _zone = _factory.SpawnZone(_data.ZonePrefab, Vector3.zero);
 
     private void TryDamagePlayersOutOfZone(IEnumerable<Player> playersOutOfZone, float damage)
     {
@@ -57,7 +70,7 @@ public class GameMatchState : GameState
             return;
 
         foreach (Player player in playersOutOfZone)
-            player.Damageable.TakeDamage(new Damage() { Amount = damage });
+            player.Damageable.TakeDamage(new Damage() { Amount = damage, Type = DamageType.Absolute });
     }
 
     private IEnumerable<Player> GetPlayersOutOfZone(IEnumerable<Player> players)
