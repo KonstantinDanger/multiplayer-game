@@ -39,7 +39,11 @@ public class PlayerMovement : NetworkBehaviour, IMovable
     {
         Vector3 targetVelocity = direction.normalized * speed;
 
-        Velocity = Vector3.SmoothDamp(Velocity, targetVelocity, ref _movementDelta, smoothness);
+        Velocity = Vector3.SmoothDamp(
+            Velocity,
+            targetVelocity,
+            ref _movementDelta,
+            smoothness);
 
         _controller.Move(Velocity * Time.deltaTime);
 

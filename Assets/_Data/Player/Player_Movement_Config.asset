@@ -17,3 +17,4 @@ MonoBehaviour:
   <MovementSmoothness>k__BackingField: 0.12
   <JumpHeight>k__BackingField: 1.75
   <Gravity>k__BackingField: -14.715
+  <MaxFallSpeed>k__BackingField: 30

@@ -65,7 +65,8 @@ public class Entity : NetworkBehaviour, IDisposable
             (InputBrain.IsSprinting && MovementInput != Vector2.zero) ?
             MovementConfig.SprintSpeed : MovementConfig.Speed;
 
-        Movable.Move(GetMovementDirection(MovementInput), currentSpeed, MovementConfig.MovementSmoothness);
+        Vector3 movementDirection = GetMovementDirection(MovementInput);
+        Movable.Move(movementDirection, currentSpeed, MovementConfig.MovementSmoothness);
         Movable.ApplyGravity(MovementConfig.Gravity, MovementConfig.MaxFallSpeed);
 
         Rotatable.Rotate(RotationInput, RotationConfig.RotationSpeed);
@@ -74,7 +75,7 @@ public class Entity : NetworkBehaviour, IDisposable
     private Vector3 GetMovementDirection(Vector2 movementVector)
     {
         Vector3 v = transform.right * movementVector.x + transform.forward * movementVector.y;
-        v.Normalize();
+        v = Vector3.ClampMagnitude(v, 1f);
         return v;
     }
 
