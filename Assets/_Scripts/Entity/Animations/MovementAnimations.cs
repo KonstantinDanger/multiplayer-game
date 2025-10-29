@@ -12,10 +12,13 @@ public class MovementAnimations : NetworkBehaviour
     [Header("Params")]
     [SerializeField] private string _verticalInputParamName = "VerticalInput";
     [SerializeField] private string _horizontalInputParamName = "HorizontalInput";
-
+    NetworkAnimator _animator;
 
     private IMovable Movable => _movable.Value;
     private IRotatable Rotatable => _rotatable.Value;
+
+    private float _verticalVelocity;
+    private float _horizontalVelocity;
 
     private void OnEnable()
         => Movable.OnMove += HandleMove;
@@ -33,16 +36,16 @@ public class MovementAnimations : NetworkBehaviour
 
         float speedMultiplier = Movable.Velocity.magnitude / _config.SprintSpeed;
 
-        float vertical = velocity.z * speedMultiplier;
-        float horizontal = velocity.x * speedMultiplier;
+        _verticalVelocity = velocity.z * speedMultiplier;
+        _horizontalVelocity = velocity.x * speedMultiplier;
 
         if (velocity.magnitude < 0.05f)
         {
-            vertical = 0f;
-            horizontal = 0f;
+            _verticalVelocity = 0f;
+            _horizontalVelocity = 0f;
         }
 
-        _anim.SetFloat(Animator.StringToHash(_verticalInputParamName), vertical);
-        _anim.SetFloat(Animator.StringToHash(_horizontalInputParamName), horizontal);
+        _anim.SetFloat(_verticalInputParamName, _verticalVelocity);
+        _anim.SetFloat(_horizontalInputParamName, _horizontalVelocity);
     }
 }

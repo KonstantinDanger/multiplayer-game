@@ -5,6 +5,7 @@ public class Player : Entity
 {
     [SerializeField] private RayCastDamager _damager; //For testing
     [SerializeField] private Respawn _respawn;
+    [SerializeField] private GameObject _thirdPersonModel;
 
     private IPlayerInputBrain Input => InputBrain as IPlayerInputBrain;
     private IRotatablePlayerCamera Camera => Rotatable as IRotatablePlayerCamera;
@@ -26,10 +27,18 @@ public class Player : Entity
     protected override void HandleOnDisable()
         => Input.OnMenuInvoked -= HandleMenuInvoked;
 
+    //public override void OnStartLocalPlayer()
+    //{
+    //    base.OnStartLocalPlayer();
+
+    //    _thirdPersonModel.SetActive(false);
+    //}
+
     protected override void OnAwake()
     {
         //_menu = ServiceLocator.Container.Resolve<LobbyUI>();
         { }
+
         HandleMenuInvoked();
     }
 
