@@ -1,18 +1,29 @@
 ﻿using Mirror;
+using System;
 using UnityEngine;
 
 /// <summary>
 /// Class for testing
 /// </summary>
-public class RayCastDamager : NetworkBehaviour
+public class RayCastDamager : NetworkBehaviour, IAttacker
 {
     [SerializeField] private BulletRayCast _rayCastView;
     [SerializeField] private LayerMask _damageLayers;
     [SerializeField] private float _damage;
     [SerializeField] private float _range;
+    [SerializeField] private Transform _attackPoint;
+
+    public event Action OnAttack;
+
+    private IMovable _movable;
+
+    private void Start()
+        => _movable = GetComponentInParent<IMovable>();
 
     public void InflictDamage(Vector3 startPosition, Vector3 direction)
     {
+        Vector3 currentVelocity = _movable.Velocity;
+
         //GetComponentInParent<IDamageable>().TakeDamage(new()
         //{
         //    Amount = _damage,
@@ -41,6 +52,10 @@ public class RayCastDamager : NetworkBehaviour
             endPos = startPosition + direction * _range;
         }
 
-        _rayCastView.StartBulletView(startPosition, endPos);
+        Vector3 attackPosition = _attackPoint.position + currentVelocity * Time.deltaTime;
+
+        _rayCastView.StartBulletView(attackPosition, endPos);
+
+        OnAttack?.Invoke();
     }
 }

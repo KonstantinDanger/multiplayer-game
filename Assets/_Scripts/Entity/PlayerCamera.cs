@@ -1,4 +1,5 @@
 using Mirror;
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Player))]
@@ -11,6 +12,8 @@ public class PlayerCamera : NetworkBehaviour, IRotatablePlayerCamera
 
     private float _verticalRotation;
     private float _horizontalRotation;
+
+    public event Action<float> OnRotate;
 
     public void Initialize(bool isLocalPlayer)
     {
@@ -29,7 +32,10 @@ public class PlayerCamera : NetworkBehaviour, IRotatablePlayerCamera
         _verticalRotation = Mathf.Clamp(_verticalRotation, _config.MinRotationAngle, _config.MaxRotationAngle);
 
         _cameraHolder.localEulerAngles = new(_verticalRotation, _cameraHolder.localEulerAngles.y, _cameraHolder.localEulerAngles.z);
+
         _bodyTransform.Rotate(Vector3.up, _horizontalRotation);
+
+        OnRotate?.Invoke(_horizontalRotation);
     }
 
     public void HideCursor()

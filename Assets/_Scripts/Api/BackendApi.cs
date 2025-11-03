@@ -5,7 +5,8 @@ public static class BackendApi
 {
     private const string BackendUrl = "http://localhost:3000";
 
-    //AddPlayer (post)
+    //LogIn (post)
+    //AddPlayer (Register) (post)
     //UpdatePlayerData (post)
     //AddMatchData (post)
     //FetchPlayerData (get)

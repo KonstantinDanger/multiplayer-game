@@ -403,8 +403,10 @@ MonoBehaviour:
   _rotatable:
     _underlyingValue: {fileID: 2854472321422995004}
   _config: {fileID: 11400000, guid: a7e9482648561ea44b509607f893e2bf, type: 2}
+  _rotationSmoothness: 0.32
   _verticalInputParamName: VerticalVelocity
   _horizontalInputParamName: HorizontalVelocity
+  _movementAngle: MovementAngle
 --- !u!1 &4641920328616467223
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,6 +419,7 @@ GameObject:
   - component: {fileID: 535201948563966287}
   - component: {fileID: 6606694751097510699}
   - component: {fileID: 4521963623633174931}
+  - component: {fileID: 3418564144528050209}
   m_Layer: 7
   m_Name: Damager
   m_TagString: Untagged
@@ -460,6 +463,7 @@ MonoBehaviour:
     m_Bits: 128
   _damage: 10
   _range: 30
+  _attackPoint: {fileID: 4913612597288916954}
 --- !u!120 &6606694751097510699
 LineRenderer:
   serializedVersion: 2
@@ -585,6 +589,27 @@ MonoBehaviour:
   lineDuration: 0.05
   lineColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   lineWidth: 0.05
+--- !u!114 &3418564144528050209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4641920328616467223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f93b3799b673d34da63634b118fa6a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  _anim: {fileID: 3459466666786068578}
+  _attacker:
+    _underlyingValue: {fileID: 535201948563966287}
+  _attackAnimationName: Attack
+  _animationTransitionTime: 0
+  _layer: 1
 --- !u!1 &5907043757235501440
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,6 +772,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 380942662032228154, guid: 986e47519275ed14485299eeb5ff44b8, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 919132149155446097, guid: 986e47519275ed14485299eeb5ff44b8, type: 3}
       propertyPath: m_Name
       value: ybot_rigged
@@ -778,6 +807,11 @@ PrefabInstance:
 --- !u!95 &3459466666786068578 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 986e47519275ed14485299eeb5ff44b8, type: 3}
+  m_PrefabInstance: {fileID: 7019118624637330931}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4913612597288916954 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -6532396849450683863, guid: 986e47519275ed14485299eeb5ff44b8, type: 3}
   m_PrefabInstance: {fileID: 7019118624637330931}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &5788501455925746250 stripped

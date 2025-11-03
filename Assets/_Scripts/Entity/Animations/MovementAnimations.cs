@@ -8,23 +8,40 @@ public class MovementAnimations : NetworkBehaviour
     [SerializeField] private InterfaceReference<IMovable> _movable;
     [SerializeField] private InterfaceReference<IRotatable> _rotatable;
     [SerializeField] private MovementConfig _config;
+    [SerializeField] private float _rotationSmoothness = 0.03f;
 
     [Header("Params")]
     [SerializeField] private string _verticalInputParamName = "VerticalInput";
     [SerializeField] private string _horizontalInputParamName = "HorizontalInput";
-    NetworkAnimator _animator;
+    [SerializeField] private string _movementAngle = "MovementAngle";
 
     private IMovable Movable => _movable.Value;
     private IRotatable Rotatable => _rotatable.Value;
 
     private float _verticalVelocity;
     private float _horizontalVelocity;
+    private float _rotationAngleDelta;
 
     private void OnEnable()
-        => Movable.OnMove += HandleMove;
+    {
+        Movable.OnMove += HandleMove;
+        Rotatable.OnRotate += HandleRotation;
+    }
 
     private void OnDisable()
-        => Movable.OnMove -= HandleMove;
+    {
+        Movable.OnMove -= HandleMove;
+
+        Rotatable.OnRotate -= HandleRotation;
+    }
+
+    private void HandleRotation(float rotationAngle)
+    {
+        //float targetRotation = rotationAngle * 360;
+        //_rotationAngleDelta = Mathf.Lerp(_rotationAngleDelta, targetRotation, _rotationSmoothness);
+
+        //_anim.SetFloat(_movementAngle, _rotationAngleDelta * Time.deltaTime);
+    }
 
     private void HandleMove()
     {

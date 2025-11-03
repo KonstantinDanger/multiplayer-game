@@ -114,7 +114,12 @@ public class Player : Entity
     }
 
     private void LateUpdate()
-        => _headObject.transform.position = Camera.Transform.position;
+    {
+        if (!CanDoActions())
+            return;
+
+        _headObject.transform.position = Camera.Transform.position;
+    }
 
     private bool CanDoActions()
         => isLocalPlayer || IsOffline;
