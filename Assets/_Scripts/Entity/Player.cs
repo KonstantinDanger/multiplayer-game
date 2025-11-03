@@ -5,7 +5,7 @@ public class Player : Entity
 {
     [SerializeField] private RayCastDamager _damager; //For testing
     [SerializeField] private Respawn _respawn;
-    [SerializeField] private GameObject _thirdPersonModel;
+    [SerializeField] private GameObject _headObject;
 
     private IPlayerInputBrain Input => InputBrain as IPlayerInputBrain;
     private IRotatablePlayerCamera Camera => Rotatable as IRotatablePlayerCamera;
@@ -112,6 +112,9 @@ public class Player : Entity
 
         //_menu.gameObject.SetActive(_isMenuActive);
     }
+
+    private void LateUpdate()
+        => _headObject.transform.position = Camera.Transform.position;
 
     private bool CanDoActions()
         => isLocalPlayer || IsOffline;
