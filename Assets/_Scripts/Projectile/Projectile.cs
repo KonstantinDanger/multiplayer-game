@@ -1,0 +1,69 @@
+using Mirror;
+using UnityEngine;
+
+[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(NetworkTransformReliable))]
+public class Projectile : NetworkBehaviour
+{
+    public ProjectileData Data;
+
+    [SerializeField] private Collider _collider;
+    [SerializeField] private float _destroyTime = 10;
+
+    [Header("References")]
+    [SerializeReference, SubclassSelector]
+    private ProjectileMovementMethod _movementMethod;
+
+    [SerializeReference, SubclassSelector]
+    private ProjectileCollisionReaction _collisionReaction;
+
+#if UNITY_EDITOR
+    protected override void OnValidate()
+    {
+        base.OnValidate();
+
+        if (TryGetComponent(out _collider) && !_collider.isTrigger)
+        {
+            UnityEngine.Debug.LogError("Collider should be a trigger!");
+            _collider.isTrigger = true;
+        }
+    }
+#endif
+    public void Initialize(ProjectileData data)
+    {
+        Data = new(_collider)
+        {
+            Sender = data.Sender,
+            Direction = data.Direction,
+            Speed = data.Speed
+        };
+
+        _collider.excludeLayers |= (1 << data.Sender.layer);
+    }
+
+    private void Start()
+    {
+        _movementMethod.Initialize(this);
+
+        Destroy(gameObject, _destroyTime);
+    }
+
+    private void Update()
+    {
+        if (_movementMethod.UpdateMethod == MovementUpdate.Common)
+            MoveProjectile(Time.deltaTime);
+    }
+
+    private void FixedUpdate()
+    {
+        if (_movementMethod.UpdateMethod == MovementUpdate.Fixed)
+            MoveProjectile(Time.fixedDeltaTime);
+    }
+
+    private void MoveProjectile(float deltaTime)
+        => _movementMethod.Move(Data.Speed * deltaTime * Data.Direction);
+
+    private void OnTriggerEnter(Collider other)
+        => _collisionReaction.Collide(other, this);
+}
+

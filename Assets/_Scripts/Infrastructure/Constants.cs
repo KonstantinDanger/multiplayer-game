@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public static class Constants
 {
@@ -15,6 +16,8 @@ public static class Constants
     };
 
     public static float SecondsInMinute = 60f;
+    public static int PlayerLayer = LayerMask.NameToLayer("Player");
+    public static int EnemyLayer = LayerMask.NameToLayer("Enemy");
 
     public static string NameOfStat(StatType type)
     {
