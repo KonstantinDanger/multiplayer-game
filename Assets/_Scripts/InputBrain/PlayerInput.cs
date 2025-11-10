@@ -43,6 +43,9 @@ public class PlayerInput : IPlayerInputBrain
     public void SetUiInput(bool active)
         => (active ? (Action)_actions.UI.Enable : _actions.UI.Disable)();
 
+    public void SetPlayerAttackInput(bool active)
+        => (active ? (Action)_actions.Player.Attack.Enable : _actions.Player.Attack.Disable)();
+
     public void SetPlayerInput(bool active)
         => (active ? (Action)_actions.Player.Enable : _actions.Player.Disable)();
 }

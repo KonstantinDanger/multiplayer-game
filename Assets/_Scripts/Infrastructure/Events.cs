@@ -4,10 +4,14 @@ public static class Events
 {
     public static Action OnLobbyDisband;
     public static Action OnStartGameInitiated;
+    public static Action<Player> OnPlayerAdded;
 
     public static void InvokeLobbyDisband()
         => OnLobbyDisband?.Invoke();
 
     public static void InvokeStartGame()
         => OnStartGameInitiated?.Invoke();
+
+    public static void InvokePlayerConnected(Player player)
+        => OnPlayerAdded?.Invoke(player);
 }

@@ -1,7 +1,7 @@
+using Mirror.RemoteCalls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Mirror.RemoteCalls;
 using UnityEngine;
 
 namespace Mirror
@@ -326,11 +326,9 @@ namespace Mirror
         // Handle command from specific player, this could be one of multiple
         // players on a single client
         // default ready handler.
-        static void OnClientReadyMessage(NetworkConnectionToClient conn, ReadyMessage msg)
-        {
+        static void OnClientReadyMessage(NetworkConnectionToClient conn, ReadyMessage msg) =>
             // Debug.Log($"Default handler for ready message from {conn}");
             SetClientReady(conn);
-        }
 
         static void OnCommandMessage(NetworkConnectionToClient conn, CommandMessage msg, int channelId)
         {
@@ -440,8 +438,7 @@ namespace Mirror
         // batching already includes the remoteTimestamp.
         // we simply insert it on-message here.
         // => only for reliable channel. unreliable would always arrive earlier.
-        static void OnTimeSnapshotMessage(NetworkConnectionToClient connection, TimeSnapshotMessage _)
-        {
+        static void OnTimeSnapshotMessage(NetworkConnectionToClient connection, TimeSnapshotMessage _) =>
             // insert another snapshot for snapshot interpolation.
             // before calling OnDeserialize so components can use
             // NetworkTime.time and NetworkTime.timeStamp.
@@ -456,7 +453,6 @@ namespace Mirror
             // fixes Time.timeScale getting server & client time out of sync:
             // https://github.com/MirrorNetworking/Mirror/issues/3409
             connection.OnTimeSnapshot(new TimeSnapshot(connection.remoteTimeStamp, NetworkTime.localTime));
-        }
 
         // connections /////////////////////////////////////////////////////////
         /// <summary>Add a connection and setup callbacks. Returns true if not added yet.</summary>
@@ -659,10 +655,7 @@ namespace Mirror
         /// <summary>Send a message to only clients which are ready including the owner of the NetworkIdentity</summary>
         // TODO obsolete this later. it's not used anymore
         public static void SendToReadyObservers<T>(NetworkIdentity identity, T message, int channelId)
-            where T : struct, NetworkMessage
-        {
-            SendToReadyObservers(identity, message, true, channelId);
-        }
+            where T : struct, NetworkMessage => SendToReadyObservers(identity, message, true, channelId);
 
         // transport events ////////////////////////////////////////////////////
         // called by transport
@@ -977,10 +970,7 @@ namespace Mirror
 
         /// <summary>Replace a handler for message type T. Most should require authentication.</summary>
         public static void ReplaceHandler<T>(Action<T> handler, bool requireAuthentication = true)
-            where T : struct, NetworkMessage
-        {
-            ReplaceHandler<T>((_, value) => { handler(value); }, requireAuthentication);
-        }
+            where T : struct, NetworkMessage => ReplaceHandler<T>((_, value) => { handler(value); }, requireAuthentication);
 
         /// <summary>Replace a handler for message type T. Most should require authentication.</summary>
         public static void ReplaceHandler<T>(Action<NetworkConnectionToClient, T> handler, bool requireAuthentication = true)
@@ -1144,10 +1134,7 @@ namespace Mirror
 
         // Deprecated 2024-008-09
         [Obsolete("Use ReplacePlayerForConnection(NetworkConnectionToClient conn, GameObject player, ReplacePlayerOptions replacePlayerOptions) instead")]
-        public static bool ReplacePlayerForConnection(NetworkConnectionToClient conn, GameObject player, bool keepAuthority = false)
-        {
-            return ReplacePlayerForConnection(conn, player, keepAuthority ? ReplacePlayerOptions.KeepAuthority : ReplacePlayerOptions.KeepActive);
-        }
+        public static bool ReplacePlayerForConnection(NetworkConnectionToClient conn, GameObject player, bool keepAuthority = false) => ReplacePlayerForConnection(conn, player, keepAuthority ? ReplacePlayerOptions.KeepAuthority : ReplacePlayerOptions.KeepActive);
 
         /// <summary>Replaces connection's player object. The old object is not destroyed.</summary>
         // This does NOT change the ready state of the connection, so it can safely be used while changing scenes.
@@ -1558,10 +1545,7 @@ namespace Mirror
         /// <summary>Spawn the given game object on all clients which are ready.</summary>
         // This will cause a new object to be instantiated from the registered
         // prefab, or from a custom spawn function.
-        public static void Spawn(GameObject obj, NetworkConnectionToClient ownerConnection = null)
-        {
-            SpawnObject(obj, ownerConnection);
-        }
+        public static void Spawn(GameObject obj, NetworkConnectionToClient ownerConnection = null) => SpawnObject(obj, ownerConnection);
 
         /// <summary>Spawns an object and also assigns Client Authority to the specified client.</summary>
         // This is the same as calling NetworkIdentity.AssignClientAuthority on the spawned object.

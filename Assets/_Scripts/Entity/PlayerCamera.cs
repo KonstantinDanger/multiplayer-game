@@ -18,7 +18,10 @@ public class PlayerCamera : NetworkBehaviour, IRotatablePlayerCamera
     public void Initialize(bool isLocalPlayer)
     {
         if (!isLocalPlayer)
+        {
             _cameraHolder.gameObject.SetActive(false);
+            _cameraHolder.GetComponentInChildren<Camera>().tag = StaticData.Constants.EmptyTag;
+        }
 
         HideCursor();
     }

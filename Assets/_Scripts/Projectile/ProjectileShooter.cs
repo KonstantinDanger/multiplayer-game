@@ -18,7 +18,7 @@ public class ProjectileShooter : MonoBehaviour
 
     private void Shoot()
     {
-        Vector3 shootDir = _shootTarget.TargetPoint.position - _shootPosition.position;
+        Vector3 shootDir = _shootTarget.transform.position - _shootPosition.position;
         transform.rotation = Quaternion.LookRotation(new Vector3(shootDir.x, 0, shootDir.z));
 
         Projectile proj = Instantiate(_projectilePrefab, _shootPosition.position, Quaternion.LookRotation(shootDir));

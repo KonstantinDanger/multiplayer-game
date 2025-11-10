@@ -22,3 +22,5 @@ MonoBehaviour:
   <NetworkManagerPrefab>k__BackingField: {fileID: 8638753538948294093, guid: 240b62a2517c9754dbd6061d973eb5f4, type: 3}
   <ZonePrefab>k__BackingField: {fileID: 274732617518039713, guid: 86110dba61a133a42a50a37c16b67837, type: 3}
   <GameFactoryPrefab>k__BackingField: {fileID: 1665039624068957351, guid: 356c4d4e560397d4d8838f52640c3ef7, type: 3}
+  <ZoneDPS>k__BackingField: 10
+  <DamageTextPrefab>k__BackingField: {fileID: -8488073338923846487, guid: 6ca808c500f0cb44eb29573972d683a4, type: 3}

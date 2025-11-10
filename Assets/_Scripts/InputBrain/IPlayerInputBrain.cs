@@ -5,4 +5,5 @@ public interface IPlayerInputBrain : IInputBrain
 
     void SetUiInput(bool active);
     void SetPlayerInput(bool active);
+    void SetPlayerAttackInput(bool active);
 }

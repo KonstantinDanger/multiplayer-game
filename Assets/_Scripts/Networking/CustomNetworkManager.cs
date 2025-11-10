@@ -33,6 +33,8 @@ public class CustomNetworkManager : NetworkManager
 
         DontDestroyOnLoad(conn.identity.gameObject);
 
+        Events.InvokePlayerConnected(conn.identity.GetComponent<Player>());
+
         //CSteamID steamID = SteamMatchmaking.GetLobbyMemberByIndex(Lobby.LobbyId, numPlayers - 1);
 
         //PlayerInfoUI ui = ServiceLocator.Container.Resolve<PlayerInfoUI>();

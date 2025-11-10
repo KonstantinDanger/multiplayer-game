@@ -22,8 +22,8 @@ public class Match : IMatch
     {
         _data = data;
 
-        _matchTime = _data.MatchTime * Constants.SecondsInMinute;
-        _deathMatchTime = _data.DeathmatchTime * Constants.SecondsInMinute;
+        _matchTime = _data.MatchTime * StaticData.Constants.SecondsInMinute;
+        _deathMatchTime = _data.DeathmatchTime * StaticData.Constants.SecondsInMinute;
 
         _matchTimer = new(_matchTime);
         _deathMatchTimer = new(_deathMatchTime);

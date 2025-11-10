@@ -7,7 +7,7 @@ public class Player : Entity
     [SerializeField] private Respawn _respawn;
     [SerializeField] private GameObject _headObject;
 
-    private IPlayerInputBrain Input => InputBrain as IPlayerInputBrain;
+    public IPlayerInputBrain Input => InputBrain as IPlayerInputBrain;
     private IRotatablePlayerCamera Camera => Rotatable as IRotatablePlayerCamera;
     private IPlayerDeathHandler PlayerDeathHandler { get; set; }
 
