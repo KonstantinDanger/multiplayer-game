@@ -5,7 +5,7 @@ using UnityEngine;
 public class DamagePopUp : NetworkBehaviour
 {
     [SerializeField] private InterfaceReference<IDamageable> _damageable;
-    [SerializeField] private Transform _textSpawnPosition;
+    [SerializeField] private Transform _textSpawnTransform;
 
     private DamageText _damageTextPrefab;
     private GameFactory _gameFactory;
@@ -13,7 +13,8 @@ public class DamagePopUp : NetworkBehaviour
     private IDamageable Damageable => _damageable.Value;
 
 
-    private void OnEnable() => Damageable.OnDamageTaken += HandleDamageTaken;
+    private void OnEnable()
+        => Damageable.OnDamageTaken += HandleDamageTaken;
 
     private void Start()
     {
@@ -21,16 +22,20 @@ public class DamagePopUp : NetworkBehaviour
         _gameFactory = ServiceLocator.Container.Resolve<GameFactory>();
     }
 
-    private void OnDisable() => Damageable.OnDamageTaken -= HandleDamageTaken;
+    private void OnDisable()
+        => Damageable.OnDamageTaken -= HandleDamageTaken;
 
-    [Command(requiresAuthority = false)]
-    private void HandleDamageTaken(Damage Damage)
+    private void HandleDamageTaken(Damage damage)
+        => RpcHandleDamageTaken(damage);
+
+    [ClientRpc(includeOwner = false)]
+    private void RpcHandleDamageTaken(Damage damage)
     {
-        //float takenDamage = Damage.Amount;
+        float takenDamage = damage.Amount;
 
-        DamageText dText = _gameFactory.SpawnDamageText(_damageTextPrefab, _textSpawnPosition.position);
+        DamageText dText = _gameFactory.SpawnDamageText(_damageTextPrefab, _textSpawnTransform);
 
-        dText.Text = "Damage taken";
+        dText.Text = takenDamage.ToString();
         dText.StartTextPopUp();
     }
 }

@@ -57,11 +57,9 @@ public class GameFactory : NetworkBehaviour
         return player;
     }
 
-    public DamageText SpawnDamageText(DamageText damageTextPrefab, Vector3 position)
+    public DamageText SpawnDamageText(DamageText damageTextPrefab, Transform transform)
     {
-        var text = Instantiate(damageTextPrefab, position, Quaternion.identity);
-
-        NetworkServer.Spawn(text.gameObject);
+        var text = Instantiate(damageTextPrefab, transform);
 
         return text;
     }

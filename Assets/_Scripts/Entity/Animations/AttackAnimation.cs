@@ -19,5 +19,14 @@ public class AttackAnimation : NetworkBehaviour
         => Attacker.OnAttack -= HandleAttack;
 
     private void HandleAttack()
+        => CmdPlayAttackAnimation();
+
+    [Command]
+    private void CmdPlayAttackAnimation()
+        => RpcPlayAttackAnimation();
+
+    [ClientRpc]
+    private void RpcPlayAttackAnimation()
         => _anim.CrossFadeInFixedTime(_attackAnimationName, _animationTransitionTime, _layer);
+
 }

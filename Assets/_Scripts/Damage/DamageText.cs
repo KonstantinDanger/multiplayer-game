@@ -1,9 +1,8 @@
-using Mirror;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class DamageText : NetworkBehaviour
+public class DamageText : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _text;
     [SerializeField] private float _disappearTime;
@@ -13,15 +12,12 @@ public class DamageText : NetworkBehaviour
 
     public string Text { get => _text.text; set => _text.text = value; }
 
-    [Command(requiresAuthority = false)]
     public void StartTextPopUp()
         => RpcStartTextPopUp();
 
-    [ClientRpc(includeOwner = false)]
     private void RpcStartTextPopUp()
     {
-        //transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward);
-        transform.rotation = Quaternion.identity;
+        transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward);
         StartCoroutine(DamageTextPopUp());
     }
 
