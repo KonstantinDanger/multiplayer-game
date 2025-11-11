@@ -25,6 +25,7 @@ public class GameLobbyState : GameState
 
         //SpawnPlayers();
 
+
         Events.OnLobbyDisband += HandleLobbyDisband;
         Events.OnStartGameInitiated += HandleStartGameInitiated;
         Events.OnPlayerAdded += HandlePlayerAdded;
@@ -68,9 +69,7 @@ public class GameLobbyState : GameState
     }
 
     private void HandlePlayerAdded(Player player)
-    {
-        //UnityEngine.Debug.Log($"Player {player.netIdentity.name} Added ");
-    }
+        => player.SetCanAttack(false);
 
     private void HandleStartGameInitiated()
         => _networkManager.ServerChangeScene(_staticData.GameSceneName);

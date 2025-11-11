@@ -48,4 +48,5 @@ public class PlayerInput : IPlayerInputBrain
 
     public void SetPlayerInput(bool active)
         => (active ? (Action)_actions.Player.Enable : _actions.Player.Disable)();
+
 }

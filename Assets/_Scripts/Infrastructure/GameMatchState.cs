@@ -40,7 +40,13 @@ public class GameMatchState : GameState
     }
 
     public override void OnExit()
-        => _players.ForEach(player => player.Dispose());
+    {
+        _players.ForEach(player =>
+        {
+            player.SetCanAttack(false);
+            player.Dispose();
+        });
+    }
 
     private void InitPlayers(Match match)
     {
@@ -48,6 +54,7 @@ public class GameMatchState : GameState
         {
             Player player = conn.identity.GetComponent<Player>();
             player.Initialize(match);
+            player.SetCanAttack(true);
             _players.Add(player);
         }
 

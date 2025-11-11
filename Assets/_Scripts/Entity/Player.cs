@@ -7,7 +7,7 @@ public class Player : Entity
     [SerializeField] private Respawn _respawn;
     [SerializeField] private GameObject _headObject;
 
-    public IPlayerInputBrain Input => InputBrain as IPlayerInputBrain;
+    private IPlayerInputBrain Input => InputBrain as IPlayerInputBrain;
     private IRotatablePlayerCamera Camera => Rotatable as IRotatablePlayerCamera;
     private IPlayerDeathHandler PlayerDeathHandler { get; set; }
 
@@ -76,6 +76,10 @@ public class Player : Entity
 
     public void Respawn()
         => Damageable.Respawn();
+
+    [TargetRpc]
+    public void SetCanAttack(bool canAttack)
+        => Input.SetPlayerAttackInput(canAttack);
 
     [ClientRpc]
     public void Spectate(bool active)
