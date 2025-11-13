@@ -1,4 +1,5 @@
 using Mirror;
+using System.Linq;
 using UnityEngine;
 
 public class Player : Entity
@@ -6,6 +7,8 @@ public class Player : Entity
     [SerializeField] private RayCastDamager _damager; //For testing
     [SerializeField] private Respawn _respawn;
     [SerializeField] private GameObject _headObject;
+    [SerializeField] private Abilities _abilities;
+    [SerializeField] private ScriptableCharacterClass _characterClass;
 
     private IPlayerInputBrain Input => InputBrain as IPlayerInputBrain;
     private IRotatablePlayerCamera Camera => Rotatable as IRotatablePlayerCamera;
@@ -18,15 +21,6 @@ public class Player : Entity
         !NetworkClient.active &&
         !NetworkServer.active;
 
-    protected override void HandleOnEnable()
-    {
-        Input.OnMenuInvoked += HandleMenuInvoked;
-        Input.OnAttackInvoked += HandleAttack;
-    }
-
-    protected override void HandleOnDisable()
-        => Input.OnMenuInvoked -= HandleMenuInvoked;
-
     //public override void OnStartLocalPlayer()
     //{
     //    base.OnStartLocalPlayer();
@@ -37,10 +31,24 @@ public class Player : Entity
     protected override void OnAwake()
     {
         //_menu = ServiceLocator.Container.Resolve<LobbyUI>();
-        { }
 
         HandleMenuInvoked();
+
+        _abilities.Initialize(
+            _characterClass
+            .GetNew()
+            .Abilities
+            .ToList());
     }
+
+    protected override void HandleOnEnable()
+    {
+        Input.OnMenuInvoked += HandleMenuInvoked;
+        Input.OnAttackInvoked += HandleAttack;
+    }
+
+    protected override void HandleOnDisable()
+        => Input.OnMenuInvoked -= HandleMenuInvoked;
 
     protected override void OnStart()
         => Camera.Initialize(CanDoActions());
@@ -90,7 +98,8 @@ public class Player : Entity
         if (!CanDoActions())
             return;
 
-        _damager.InflictDamage(Camera.Transform.position, Camera.Transform.forward);
+        _abilities.Use(0);
+        //_damager.InflictDamage(Camera.Transform.position, Camera.Transform.forward);
     }
 
     private void HandleMenuInvoked()

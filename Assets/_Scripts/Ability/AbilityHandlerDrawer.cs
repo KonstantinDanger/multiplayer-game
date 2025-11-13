@@ -4,14 +4,15 @@ using UnityEngine;
 [Serializable]
 public class AbilityHandler : Ability
 {
-    [field: SerializeField] public Ability Ability;
+    public Ability Ability { get; private set; }
 
     public override float CooldownTime => Ability.CooldownTime;
     public override string Name => Ability.Name;
 
     private float _nextUsageTime = 0;
 
-    public AbilityHandler(string name) : base(name) { }
+    public AbilityHandler(Ability ability)
+        => Ability = ability;
 
     protected override void OnPerform(GameObject sender, GameObject target)
     {

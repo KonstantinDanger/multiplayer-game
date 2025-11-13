@@ -188,6 +188,7 @@ GameObject:
   - component: {fileID: 6200438880601125725}
   - component: {fileID: 6335237973204876179}
   - component: {fileID: 3776799554345185147}
+  - component: {fileID: 5132097041645439728}
   m_Layer: 7
   m_Name: Player_Prefab
   m_TagString: Untagged
@@ -284,6 +285,8 @@ MonoBehaviour:
   _damager: {fileID: 535201948563966287}
   _respawn: {fileID: 6200438880601125725}
   _headObject: {fileID: 5788501455925746250}
+  _abilities: {fileID: 5132097041645439728}
+  _characterClass: {fileID: 11400000, guid: c5ec7c1fbf6a2704abdc7b817a31b5f5, type: 2}
 --- !u!114 &2854472321422995004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,6 +430,18 @@ MonoBehaviour:
   _damageable:
     _underlyingValue: {fileID: 1705426453025376207}
   _textSpawnTransform: {fileID: 427621367933063959}
+--- !u!114 &5132097041645439728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4047092069969861197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b99ce5c7b306a1a4e92f3106ab022f1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4641920328616467223
 GameObject:
   m_ObjectHideFlags: 0

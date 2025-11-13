@@ -5,13 +5,9 @@ using UnityEngine;
 [Serializable]
 public abstract class Ability
 {
+    [field: SerializeField] public virtual string Name { get; private set; }
     [field: SerializeField] public virtual float CooldownTime { get; private set; }
     [SerializeReference, SubclassSelector] private List<GameActions.Action> _actionsToPerform = new();
-
-    public virtual string Name { get; private set; }
-
-    protected Ability(string name)
-        => Name = name;
 
     public void Perform(GameObject sender, GameObject target)
     {
@@ -35,4 +31,6 @@ public abstract class Ability
 
     public override int GetHashCode()
         => base.GetHashCode();
+
+    public Ability Clone() => this;
 }

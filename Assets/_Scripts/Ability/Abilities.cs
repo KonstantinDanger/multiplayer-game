@@ -3,7 +3,12 @@ using UnityEngine;
 
 public class Abilities : MonoBehaviour
 {
-    [SerializeReference, SubclassSelector] private List<AbilityHandler> _abilities = new();
+    private readonly List<AbilityHandler> _abilities = new();
+
+    public void Initialize(List<Ability> abilities)
+        => abilities
+        .ForEach(ability => _abilities
+        .Add(new AbilityHandler(ability)));
 
     public void Use(int index, GameObject target = null)
     {

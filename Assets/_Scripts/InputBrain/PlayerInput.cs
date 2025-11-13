@@ -41,12 +41,12 @@ public class PlayerInput : IPlayerInputBrain
         => _actions.Disable();
 
     public void SetUiInput(bool active)
-        => (active ? (GameActions)_actions.UI.Enable : _actions.UI.Disable)();
+        => (active ? (Action)_actions.UI.Enable : _actions.UI.Disable)();
 
     public void SetPlayerAttackInput(bool active)
-        => (active ? (GameActions)_actions.Player.Attack.Enable : _actions.Player.Attack.Disable)();
+        => (active ? (Action)_actions.Player.Attack.Enable : _actions.Player.Attack.Disable)();
 
     public void SetPlayerInput(bool active)
-        => (active ? (GameActions)_actions.Player.Enable : _actions.Player.Disable)();
+        => (active ? (Action)_actions.Player.Enable : _actions.Player.Disable)();
 
 }
