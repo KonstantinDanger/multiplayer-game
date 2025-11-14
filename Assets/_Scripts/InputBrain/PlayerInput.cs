@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [Serializable]
 public class PlayerInput : IPlayerInputBrain
@@ -11,7 +12,8 @@ public class PlayerInput : IPlayerInputBrain
 
     public event Action JumpAction;
     public event Action OnMenuInvoked;
-    public event Action OnAttackInvoked;
+    public event Action AttackAction;
+    public event Action<int> AbilityAction;
 
     public bool IsSprinting { get; private set; }
 
@@ -19,7 +21,8 @@ public class PlayerInput : IPlayerInputBrain
     {
         _actions = new();
 
-        _actions.Player.Attack.performed += _ => OnAttackInvoked?.Invoke();
+        _actions.Player.Attack.performed += _ => AttackAction?.Invoke();
+        _actions.Player.Ability.performed += HandleAbilityPerformed;
 
         _actions.Player.Jump.performed += _ => JumpAction?.Invoke();
         _actions.UI.Menu.performed += _ => OnMenuInvoked?.Invoke();
@@ -34,6 +37,15 @@ public class PlayerInput : IPlayerInputBrain
         Rotation = _actions.Player.Look.ReadValue<Vector2>();
     }
 
+    private void HandleAbilityPerformed(InputAction.CallbackContext context)
+    {
+        string keyName = context.control.name;
+
+        int.TryParse(keyName, out int abilityIndex);
+
+        AbilityAction?.Invoke(abilityIndex);
+    }
+
     public void OnEnable()
         => _actions.Enable();
 
@@ -41,12 +53,18 @@ public class PlayerInput : IPlayerInputBrain
         => _actions.Disable();
 
     public void SetUiInput(bool active)
-        => (active ? (Action)_actions.UI.Enable : _actions.UI.Disable)();
+    {
+        if (!_actions.Player.enabled)
+
+            (active ? (Action)_actions.UI.Enable : _actions.UI.Disable)();
+    }
 
     public void SetPlayerAttackInput(bool active)
-        => (active ? (Action)_actions.Player.Attack.Enable : _actions.Player.Attack.Disable)();
+    {
+        (active ? (Action)_actions.Player.Attack.Enable : _actions.Player.Attack.Disable)();
+        (active ? (Action)_actions.Player.Ability.Enable : _actions.Player.Ability.Disable)();
+    }
 
     public void SetPlayerInput(bool active)
         => (active ? (Action)_actions.Player.Enable : _actions.Player.Disable)();
-
 }

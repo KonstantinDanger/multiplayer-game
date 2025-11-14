@@ -24,16 +24,39 @@ public class ScriptableCharacterClassEditor : Editor
             var element = _abilitiesProp.GetArrayElementAtIndex(index);
             rect.y += 2;
 
+            Color oldColor = GUI.color;
+
+            if (index == 0)
+            {
+                Color color = new Color(1f, 0.85f, 0.6f);
+                GUI.color = color;
+                float thickness = 1f;
+
+                Rect frameRect = new Rect(rect.x - 2, rect.y - 2, rect.width + 4, EditorGUIUtility.singleLineHeight + 6);
+                EditorGUI.DrawRect(new Rect(frameRect.x, frameRect.y, frameRect.width, thickness), color);
+                EditorGUI.DrawRect(new Rect(frameRect.x, frameRect.yMax - thickness, frameRect.width, thickness), color);
+                EditorGUI.DrawRect(new Rect(frameRect.x, frameRect.y, thickness, frameRect.height), color);
+                EditorGUI.DrawRect(new Rect(frameRect.xMax - thickness, frameRect.y, thickness, frameRect.height), color);
+
+                GUI.color = new Color(1f, 0.84f, 0f);
+
+            }
+
             var abilityObj = element.objectReferenceValue as ScriptableAbility;
             string label = abilityObj != null ? abilityObj.name : "Empty";
+            string guiMessage = index == 0 ? "Primary ability" : $"Ability {index}: {label}";
+
 
             element.objectReferenceValue = EditorGUI.ObjectField(
                 new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight),
-                new GUIContent($"Ability {index + 1}: {label}"),
+                new GUIContent(guiMessage),
                 element.objectReferenceValue,
                 typeof(ScriptableAbility),
                 false
             );
+
+            GUI.color = oldColor;
+
         };
 
         _abilitiesList.elementHeightCallback = index =>

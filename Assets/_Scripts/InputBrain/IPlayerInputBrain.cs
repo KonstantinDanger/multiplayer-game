@@ -1,7 +1,7 @@
 public interface IPlayerInputBrain : IInputBrain
 {
     event System.Action OnMenuInvoked;
-    event System.Action OnAttackInvoked;
+    event System.Action AttackAction;
 
     void SetUiInput(bool active);
     void SetPlayerInput(bool active);

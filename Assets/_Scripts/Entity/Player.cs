@@ -34,8 +34,10 @@ public class Player : Entity
 
         HandleMenuInvoked();
 
-        _abilities.Initialize(
-            _characterClass
+        var characterClass = _characterClass.GetNew();
+        var abilities = characterClass.Abilities.ToList();
+
+        _abilities.Initialize(_characterClass
             .GetNew()
             .Abilities
             .ToList());
@@ -44,11 +46,16 @@ public class Player : Entity
     protected override void HandleOnEnable()
     {
         Input.OnMenuInvoked += HandleMenuInvoked;
-        Input.OnAttackInvoked += HandleAttack;
+        Input.AttackAction += HandleAttack;
+        Input.AbilityAction += HandleAbility;
     }
 
     protected override void HandleOnDisable()
-        => Input.OnMenuInvoked -= HandleMenuInvoked;
+    {
+        Input.OnMenuInvoked -= HandleMenuInvoked;
+        Input.AttackAction -= HandleAttack;
+        Input.AbilityAction -= HandleAbility;
+    }
 
     protected override void OnStart()
         => Camera.Initialize(CanDoActions());
@@ -93,12 +100,20 @@ public class Player : Entity
     public void Spectate(bool active)
         => Input.SetPlayerInput(!active);
 
+    private void HandleAbility(int index)
+    {
+        if (!CanDoActions() || index == 0)
+            return;
+
+        _abilities.Use(index);
+    }
+
     private void HandleAttack()
     {
         if (!CanDoActions())
             return;
 
-        _abilities.Use(0);
+        _abilities.Use();
         //_damager.InflictDamage(Camera.Transform.position, Camera.Transform.forward);
     }
 

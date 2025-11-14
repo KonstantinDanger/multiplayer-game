@@ -5,5 +5,5 @@ using UnityEngine;
 public class AttackAbility : Ability
 {
     protected override void OnPerform(GameObject sender, GameObject target)
-        => UnityEngine.Debug.Log("Attack performed ");
+        => UnityEngine.Debug.Log($"Ability \'{Name}\' performed");
 }
