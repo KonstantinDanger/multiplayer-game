@@ -10,6 +10,9 @@ public class PlayerCamera : NetworkBehaviour, IRotatablePlayerCamera
     [SerializeField] private CameraConfig _config;
     [field: SerializeField] public Transform Transform { get; private set; }
 
+    public Quaternion LookRotation => Quaternion.LookRotation(_cameraHolder.forward);
+    public Vector3 Forward => _cameraHolder.forward;
+
     private float _verticalRotation;
     private float _horizontalRotation;
 

@@ -20,5 +20,5 @@ MonoBehaviour:
     - rid: 4564918603799068740
       type: {class: AttackAbility, ns: , asm: Assembly-CSharp}
       data:
-        <Name>k__BackingField: Flash
+        <Name>k__BackingField: Light Ray
         <CooldownTime>k__BackingField: 1
