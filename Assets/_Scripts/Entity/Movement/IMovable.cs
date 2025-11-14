@@ -4,8 +4,9 @@ using UnityEngine;
 public interface IMovable
 {
     event Action OnMove;
-
+    bool IsGravityActive { get; set; }
     Vector3 Velocity { get; }
+    void ResetVerticalVelocity();
     void Move(Vector3 direction, float speed, float smoothness = 0.03f);
     void ApplyGravity(float gravity, float maxFallSpeed);
     void Jump(float jumpHeight, float gravity);

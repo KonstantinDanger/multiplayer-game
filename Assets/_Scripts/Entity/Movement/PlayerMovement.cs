@@ -13,12 +13,17 @@ public class PlayerMovement : NetworkBehaviour, IMovable
 
     public Vector3 Velocity { get; private set; }
 
+    public bool IsGravityActive { get; set; } = true;
+
     private Vector3 _externalForce;
     private Vector3 _movementDelta;
     private float _verticalVelocity;
 
     public void ApplyGravity(float gravity, float maxFallSpeed)
     {
+        if (!IsGravityActive)
+            return;
+
         _verticalVelocity += gravity * Time.deltaTime;
 
         if (Mathf.Abs(_verticalVelocity) >= maxFallSpeed)
@@ -31,6 +36,9 @@ public class PlayerMovement : NetworkBehaviour, IMovable
 
         _controller.Move(verticalVelocity * Time.deltaTime);
     }
+
+    public void ResetVerticalVelocity()
+        => _verticalVelocity = 0;
 
     public void Jump(float jumpHeight, float gravity)
         => _verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);

@@ -23,16 +23,22 @@ public class MovementAbility : Ability
         float warpEndTime = Time.time + _warpTime;
 
         Vector3 startPosition = sender.transform.position;
+        Vector3 forward = rotatable.Forward;
+
+        movable.IsGravityActive = false;
 
         while (Time.time < warpEndTime)
         {
-            Vector3 moveDirection = rotatable.Forward.normalized * _warpDistance;
+            Vector3 moveDirection = forward.normalized * _warpDistance;
 
             Vector3 movementDelta = Vector3.Lerp(startPosition, moveDirection, Time.time / warpEndTime);
 
-            movable.Move(moveDirection, _warpDistance / _warpTime);
+            movable.Move(movementDelta, _warpDistance / _warpTime);
 
             yield return null;
         }
+
+        movable.IsGravityActive = true;
+        movable.ResetVerticalVelocity();
     }
 }
