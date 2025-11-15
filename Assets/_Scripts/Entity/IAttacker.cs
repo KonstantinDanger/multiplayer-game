@@ -1,4 +1,9 @@
-﻿public interface IAttacker
+﻿using UnityEngine;
+
+public interface IAttacker
 {
     event System.Action OnAttack;
+
+    Transform AttackPoint { get; }
+    void InvokeAttack();
 }

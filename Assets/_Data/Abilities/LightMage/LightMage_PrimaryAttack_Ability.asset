@@ -22,3 +22,17 @@ MonoBehaviour:
       data:
         <Name>k__BackingField: Light Ray
         <CooldownTime>k__BackingField: 1
+        _attack:
+          rid: 4564918645034057793
+    - rid: 4564918645034057793
+      type: {class: RayCastAttack, ns: , asm: Assembly-CSharp}
+      data:
+        Amount: 1
+        TimeBetweenAttacks: 0
+        Damage:
+          Amount: 10
+          AttackLayers:
+            serializedVersion: 2
+            m_Bits: 4294967295
+          Type: 0
+          Range: 20

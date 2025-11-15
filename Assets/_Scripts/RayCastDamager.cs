@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class RayCastDamager : NetworkBehaviour, IAttacker
 {
-    [SerializeField] private BulletRayCast _rayCastView;
+    [SerializeField] private RayCastView _rayCastView;
     [SerializeField] private LayerMask _damageLayers;
     [SerializeField] private float _damage;
     [SerializeField] private float _range;
@@ -17,45 +17,50 @@ public class RayCastDamager : NetworkBehaviour, IAttacker
 
     private IMovable _movable;
 
+    public Transform AttackPoint => _attackPoint;
+
     private void Start()
         => _movable = GetComponentInParent<IMovable>();
 
-    public void InflictDamage(Vector3 startPosition, Vector3 direction)
-    {
-        Vector3 currentVelocity = _movable.Velocity;
+    //public void InflictDamage(Vector3 startPosition, Vector3 direction)
+    //{
+    //    Vector3 currentVelocity = _movable.Velocity;
 
-        //GetComponentInParent<IDamageable>().TakeDamage(new()
-        //{
-        //    Amount = _damage,
-        //});
+    //    //GetComponentInParent<IDamageable>().TakeDamage(new()
+    //    //{
+    //    //    Amount = _damage,
+    //    //});
 
-        Vector3 endPos;
+    //    Vector3 endPos;
 
-        if (Physics.Raycast(startPosition, direction, out RaycastHit hit, _range, _damageLayers, QueryTriggerInteraction.Ignore))
-        {
-            if (hit.collider.gameObject == transform.parent.gameObject)
-                return;
+    //    if (Physics.Raycast(startPosition, direction, out RaycastHit hit, _range, _damageLayers, QueryTriggerInteraction.Ignore))
+    //    {
+    //        if (hit.collider.gameObject == transform.parent.gameObject)
+    //            return;
 
-            if (hit.collider.TryGetComponent(out IDamageable damageable))
-            {
-                Damage damage = new()
-                {
-                    Amount = _damage,
-                };
+    //        if (hit.collider.TryGetComponent(out IDamageable damageable))
+    //        {
+    //            Damage damage = new()
+    //            {
+    //                Amount = _damage,
+    //            };
 
-                damageable.TakeDamage(damage);
-            }
-            endPos = hit.point;
-        }
-        else
-        {
-            endPos = startPosition + direction * _range;
-        }
+    //            damageable.TakeDamage(damage);
+    //        }
+    //        endPos = hit.point;
+    //    }
+    //    else
+    //    {
+    //        endPos = startPosition + direction * _range;
+    //    }
 
-        Vector3 attackPosition = _attackPoint.position + currentVelocity * Time.deltaTime;
+    //    Vector3 attackPosition = _attackPoint.position + currentVelocity * Time.deltaTime;
 
-        _rayCastView.StartBulletView(attackPosition, endPos);
+    //    _rayCastView.StartBulletView(attackPosition, endPos);
 
-        OnAttack?.Invoke();
-    }
+    //    OnAttack?.Invoke();
+    //}
+
+    public void InvokeAttack()
+        => OnAttack?.Invoke();
 }

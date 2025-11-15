@@ -20,5 +20,21 @@ MonoBehaviour:
     - rid: 4564918620506292295
       type: {class: AttackAbility, ns: , asm: Assembly-CSharp}
       data:
-        <Name>k__BackingField: LightSword
+        <Name>k__BackingField: Light burst
         <CooldownTime>k__BackingField: 10
+        _attack:
+          rid: 4564918650642890817
+    - rid: 4564918650642890817
+      type: {class: RayCastAttack, ns: , asm: Assembly-CSharp}
+      data:
+        Amount: 33
+        TimeBetweenAttacks: 0.07
+        Damage:
+          Amount: 1
+          AttackLayers:
+            serializedVersion: 2
+            m_Bits: 256
+          Type: 0
+          Range: 20
+        _verticalSpreadAngle: 30
+        _horizontalSpreadAngle: 30

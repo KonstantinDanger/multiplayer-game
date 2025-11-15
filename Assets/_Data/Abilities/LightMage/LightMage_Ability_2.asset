@@ -21,4 +21,20 @@ MonoBehaviour:
       type: {class: AttackAbility, ns: , asm: Assembly-CSharp}
       data:
         <Name>k__BackingField: Light Spread
-        <CooldownTime>k__BackingField: 5
+        <CooldownTime>k__BackingField: 0.1
+        _attack:
+          rid: 4564918645034057794
+    - rid: 4564918645034057794
+      type: {class: RayCastAttack, ns: , asm: Assembly-CSharp}
+      data:
+        Amount: 8
+        TimeBetweenAttacks: 0
+        Damage:
+          Amount: 6
+          AttackLayers:
+            serializedVersion: 2
+            m_Bits: 256
+          Type: 0
+          Range: 10
+        _verticalSpreadAngle: 10
+        _horizontalSpreadAngle: 10

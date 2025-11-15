@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
-public class BulletRayCast : NetworkBehaviour
+public class RayCastView : NetworkBehaviour
 {
     [Header("Settings")]
     public float lineDuration = 0.05f;
