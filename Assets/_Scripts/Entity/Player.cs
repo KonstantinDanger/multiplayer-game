@@ -28,6 +28,14 @@ public class Player : Entity
     //    _thirdPersonModel.SetActive(false);
     //}
 
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+
+        if (!isLocalPlayer)
+            gameObject.layer = StaticData.Constants.EnemyLayer;
+    }
+
     protected override void OnAwake()
     {
         //_menu = ServiceLocator.Container.Resolve<LobbyUI>();
