@@ -1,17 +1,22 @@
 using Mirror;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class GameMatchState : GameState
 {
+    private readonly List<Player> _players = new();
+
     private GameMatchConfig _gameMatchData;
     private GameFactory _factory;
     private StaticData _data;
 
     private Zone _zone;
     private Match _match;
-    private readonly List<Player> _players = new();
+    private GameData _gameData;
+
+    private float _matchTime;
 
     public GameMatchState(IStateMachine stateMachine, ServiceLocator container) : base(stateMachine, container) { }
 
@@ -20,10 +25,14 @@ public class GameMatchState : GameState
         _data = Resolve<StaticData>();
         _factory = Resolve<GameFactory>();
         _gameMatchData = _data.GameMatchData;
+        _gameData = Resolve<PersistentGameData>().GameData;
 
+        UpdateGameData(_gameData);
         InitZone();
         InitMatch();
         InitPlayers(_match);
+
+        Events.OnPlayerLost += HandlePlayerLost;
     }
 
     public override void Update(float deltaTime)
@@ -37,15 +46,49 @@ public class GameMatchState : GameState
         var playersOutOfZone = GetPlayersOutOfZone(_players);
 
         TryDamagePlayersOutOfZone(playersOutOfZone, _data.ZoneDPS * deltaTime);
+
+        _matchTime += deltaTime;
     }
 
     public override void OnExit()
     {
+        Events.OnPlayerLost -= HandlePlayerLost;
+
         _players.ForEach(player =>
         {
             player.SetCanAttack(false);
             player.Dispose();
         });
+    }
+
+    private void HandlePlayerLost(Player player)
+    {
+        var loser = player;
+        var winner = _players.Find(p => p != player);
+
+        _gameData.GameMatchData = new()
+        {
+            Winner = winner.name,
+            Loser = loser.name,
+            MatchDate = DateTime.Now,
+            MatchTime = _matchTime
+        };
+
+        GoTo<GameMatchSummaryState>();
+    }
+
+    private void UpdateGameData(GameData gameData)
+    {
+        List<PlayerData> playersData = _players
+            .Select(p => new PlayerData()
+            {
+                Name = p.name, //Steam player name
+                Currency = 0, //Fetch currency from server
+                UnlockedClasses = new[] { "Light mage" } //Fetch classes from server 
+            })
+            .ToList();
+
+        playersData.ForEach(pData => gameData.Players.Add(pData, new PlayerMatchSummaryData()));
     }
 
     private void InitPlayers(Match match)

@@ -24,6 +24,9 @@ public class GameBootState : GameState
         var netManager = factory.CreateNetworkManager(_staticData.NetworkManagerPrefab, coroutineHolder.transform);
         MainUI ui = factory.InitializeUI(_staticData.UIPrefab, null);
 
+        PersistentGameData persistentGameData = new PersistentGameData();
+
+        Bind(persistentGameData);
         Bind(_sceneLoader);
         Bind(factory);
         Bind(netManager);

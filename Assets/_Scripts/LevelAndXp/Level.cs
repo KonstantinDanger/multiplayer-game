@@ -1,0 +1,52 @@
+using System;
+using UnityEngine;
+
+public class Level : MonoBehaviour
+{
+    public int Lvl { get; private set; }
+    public int MaxLvl { get; private set; }
+    public float Xp { get; private set; }
+    public float XpPerLevel { get; private set; }
+
+    private Func<int, float> _xpPerLevelIncreaseFunction;
+
+    public Level(int level, int maxLevel, float xp, Func<int, float> xpIncreaseFunc)
+    {
+        Lvl = level;
+        MaxLvl = maxLevel;
+        Xp = xp;
+        _xpPerLevelIncreaseFunction = xpIncreaseFunc;
+
+        XpPerLevel = GetNextXpPerLevel(Lvl);
+    }
+
+    public void AddXp(float amount)
+    {
+        if (Lvl >= MaxLvl)
+            return;
+
+        if (amount <= 0)
+            return;
+
+        Xp += amount;
+
+        if (Xp >= XpPerLevel)
+        {
+
+            float xpRemainder = Xp - XpPerLevel;
+            LevelUp(xpRemainder);
+        }
+    }
+
+    private void LevelUp(float xpRemainder)
+    {
+        Xp = xpRemainder;
+
+        Lvl++;
+
+        XpPerLevel = GetNextXpPerLevel(Lvl);
+    }
+
+    private float GetNextXpPerLevel(int level)
+        => _xpPerLevelIncreaseFunction(level);
+}

@@ -1,7 +1,7 @@
-public class PersistentGameData {
-    public readonly GameData;
+public class PersistentGameData
+{
+    public readonly GameData GameData;
 
-    public PersistentGameData(){
-        GameData = new GameData();
-    }
+    public PersistentGameData()
+        => GameData = new GameData();
 }

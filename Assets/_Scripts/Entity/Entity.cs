@@ -81,7 +81,7 @@ public class Entity : NetworkBehaviour, IDisposable
 
     protected virtual void OnDamageTaken(Damage damage) { }
 
-    protected virtual void OnDemise() { }
+    protected virtual void OnDemise(Damage damage) { }
 
     protected virtual void HandleOnEnable()
     {

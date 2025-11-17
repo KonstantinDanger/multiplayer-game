@@ -5,6 +5,7 @@ using UnityEngine;
 public class StaticData : ScriptableObject
 {
     [field: SerializeField] public string StartingSceneName { get; private set; } = "LobbyScene";
+    [field: SerializeField] public string LobbySceneName { get; private set; } = "LobbyScene";
     [field: SerializeField] public string GameSceneName { get; private set; }
     [field: SerializeField] public GameMatchConfig GameMatchData { get; private set; }
     [field: SerializeField] public Player PlayerPrefab { get; private set; }

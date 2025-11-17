@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public interface IDamageable
 {
     event Action<Damage> OnDamageTaken;
-    event Action OnDemise;
+    event Action<Damage> OnDemise;
 
     public bool IsDead { get; }
 

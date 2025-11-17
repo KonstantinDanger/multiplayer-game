@@ -1,9 +1,10 @@
+using Mirror;
+
 public class GameLobbyState : GameState
 {
     private CustomNetworkManager _networkManager;
     private StaticData _staticData;
     private GameFactory _factory;
-    private Player _player;
     private Lobby _lobby;
     private SceneLoader _sceneLoader;
 
@@ -23,14 +24,27 @@ public class GameLobbyState : GameState
         if (!_isLobbyInitialized)
             InitializeLobby();
 
-        //SpawnPlayers();
+        InitLobbyPlayers(_networkManager);
 
+        //SpawnPlayers();
 
         Events.OnLobbyDisband += HandleLobbyDisband;
         Events.OnStartGameInitiated += HandleStartGameInitiated;
         Events.OnPlayerAdded += HandlePlayerAdded;
 
         _networkManager.OnServerSceneLoaded += HandleGameSceneLoaded;
+    }
+
+    private void InitLobbyPlayers(CustomNetworkManager networkManager)
+    {
+        foreach (var item in NetworkServer.connections)
+        {
+            var player = item.Value.identity.GetComponent<Player>();
+            player.Spectate(false);
+            player.SetCanAttack(false);
+            player.Movable.Warp(networkManager.GetStartPosition().position);
+            player.Respawn();
+        }
     }
 
     private void InitializeLobby()

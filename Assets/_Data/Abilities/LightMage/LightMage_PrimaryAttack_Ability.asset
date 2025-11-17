@@ -33,7 +33,7 @@ MonoBehaviour:
           Amount: 10
           AttackLayers:
             serializedVersion: 2
-            m_Bits: 183
+            m_Bits: 256
           Type: 0
           Range: 20
         _verticalSpreadAngle: 0

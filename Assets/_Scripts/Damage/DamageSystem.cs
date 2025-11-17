@@ -6,7 +6,7 @@ using System.Linq;
 public class DamageSystem : NetworkBehaviour, IDamageable
 {
     public event Action<Damage> OnDamageTaken;
-    public event Action OnDemise;
+    public event Action<Damage> OnDemise;
 
     private List<DamageHandler> _damageHandlers;
 
@@ -69,7 +69,7 @@ public class DamageSystem : NetworkBehaviour, IDamageable
         if (_currentHealth <= 0f)
         {
             _currentHealth = 0f;
-            OnDemise?.Invoke();
+            OnDemise?.Invoke(damage);
             _isDead = true;
         }
         else

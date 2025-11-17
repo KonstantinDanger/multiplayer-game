@@ -22,5 +22,5 @@ MonoBehaviour:
       data:
         <Name>k__BackingField: Flash
         <CooldownTime>k__BackingField: 3
-        _warpDistance: 10
+        _warpDistance: 5
         _warpTime: 0.1

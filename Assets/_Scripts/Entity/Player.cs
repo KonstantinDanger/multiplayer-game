@@ -36,14 +36,20 @@ public class Player : Entity
             gameObject.layer = StaticData.Constants.EnemyLayer;
     }
 
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+
+        if (isLocalPlayer && isServer)
+            gameObject.name += " (Server)";
+
+    }
+
     protected override void OnAwake()
     {
         //_menu = ServiceLocator.Container.Resolve<LobbyUI>();
 
         HandleMenuInvoked();
-
-        var characterClass = _characterClass.GetNew();
-        var abilities = characterClass.Abilities.ToList();
 
         _abilities.Initialize(_characterClass
             .GetNew()
@@ -69,7 +75,7 @@ public class Player : Entity
         => Camera.Initialize(CanDoActions());
 
     public void Initialize(Match match)
-        => PlayerDeathHandler = new PlayerDeathHandler(match);
+        => PlayerDeathHandler = new PlayerDeathHandler(this, match);
 
     protected override void Update()
     {
@@ -87,7 +93,7 @@ public class Player : Entity
         base.HandleJump();
     }
 
-    protected override void OnDemise()
+    protected override void OnDemise(Damage damage)
     {
         Spectate(true);
 
