@@ -1,6 +1,7 @@
+using Mirror;
 using UnityEngine;
 
-public class SwarmAgent : MonoBehaviour
+public class SwarmAgent : NetworkBehaviour
 {
     [Header("Swarm Behavior")]
     public float separationWeight = 1.5f;
@@ -24,7 +25,7 @@ public class SwarmAgent : MonoBehaviour
 
     private void Update()
     {
-        if (enemy == null || !enemy.IsChasing || enemy.target == null)
+        if (enemy == null || !enemy.IsChasing || enemy.Target == null)
             return;
 
         IMovable movable = enemy.Movable;
@@ -132,8 +133,8 @@ public class SwarmAgent : MonoBehaviour
 
     private Vector3 CalculateTargetDirection()
     {
-        if (enemy.target == null) return Vector3.zero;
+        if (enemy.Target == null) return Vector3.zero;
 
-        return (enemy.target.position - transform.position).normalized;
+        return (enemy.Target.position - transform.position).normalized;
     }
 }

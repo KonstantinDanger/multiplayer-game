@@ -3,7 +3,6 @@ using Mirror;
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(IMovable))]
 public class Entity : NetworkBehaviour, IDisposable
 {
     public EntityStats Stats = new(Utils.DefaultEntityStats());

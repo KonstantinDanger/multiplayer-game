@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1803ad23e471e8041881a042735ffee4, type: 3}
   m_Name: GameMatchConfig
   m_EditorClassIdentifier: 
-  <MatchTime>k__BackingField: 10.5
+  <MatchTime>k__BackingField: 0.5
   <DeathmatchTime>k__BackingField: 25.5

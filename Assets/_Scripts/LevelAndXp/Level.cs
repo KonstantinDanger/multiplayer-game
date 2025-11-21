@@ -10,11 +10,12 @@ public class Level : MonoBehaviour
 
     private Func<int, float> _xpPerLevelIncreaseFunction;
 
-    public Level(int level, int maxLevel, float xp, Func<int, float> xpIncreaseFunc)
+    public void Initialize(Func<int, float> xpIncreaseFunc, int level = 1, int maxLevel = 10, float xp = 0)
     {
         Lvl = level;
         MaxLvl = maxLevel;
         Xp = xp;
+
         _xpPerLevelIncreaseFunction = xpIncreaseFunc;
 
         XpPerLevel = GetNextXpPerLevel(Lvl);

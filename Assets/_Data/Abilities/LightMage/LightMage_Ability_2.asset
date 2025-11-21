@@ -21,7 +21,7 @@ MonoBehaviour:
       type: {class: AttackAbility, ns: , asm: Assembly-CSharp}
       data:
         <Name>k__BackingField: Light Spread
-        <CooldownTime>k__BackingField: 0.1
+        <CooldownTime>k__BackingField: 1
         _attack:
           rid: 4564918645034057794
     - rid: 4564918645034057794

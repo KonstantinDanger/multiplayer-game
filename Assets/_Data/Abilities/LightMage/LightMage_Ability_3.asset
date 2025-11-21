@@ -36,5 +36,5 @@ MonoBehaviour:
             m_Bits: 256
           Type: 0
           Range: 20
-        _verticalSpreadAngle: 30
-        _horizontalSpreadAngle: 30
+        _verticalSpreadAngle: 7
+        _horizontalSpreadAngle: 7

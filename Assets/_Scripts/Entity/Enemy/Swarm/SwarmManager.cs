@@ -1,3 +1,4 @@
+using Mirror;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,14 +35,10 @@ public class SwarmManager : MonoBehaviour
 
             Vector3 spawnPosition = transform.position + randomOffset;
             GameObject enemyObj = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity, transform);
+            NetworkServer.Spawn(enemyObj);
 
             Enemy enemy = enemyObj.GetComponent<Enemy>();
             SwarmAgent agent = enemyObj.GetComponent<SwarmAgent>();
-
-            if (enemy != null)
-            {
-                enemy.target = target;
-            }
 
             if (agent != null)
             {
