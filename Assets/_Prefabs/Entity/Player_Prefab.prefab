@@ -289,6 +289,7 @@ MonoBehaviour:
   _headObject: {fileID: 5788501455925746250}
   _abilities: {fileID: 5132097041645439728}
   _characterClass: {fileID: 11400000, guid: c5ec7c1fbf6a2704abdc7b817a31b5f5, type: 2}
+  _level: {fileID: 3897486771464272008}
 --- !u!114 &2854472321422995004
 MonoBehaviour:
   m_ObjectHideFlags: 0

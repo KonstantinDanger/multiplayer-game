@@ -3,6 +3,14 @@ using System.Collections.Generic;
 
 public static class Utils
 {
+    public static Func<int, float> DefaultXpIncreaseFormula = (lvl) =>
+    {
+        //TODO: get this formula from static data
+        float defaultXpPerLevel = 1000;
+        float multiplier = 1.2f;
+        return lvl * multiplier * defaultXpPerLevel;
+    };
+
     public static Dictionary<StatType, float> DefaultEntityStats()
     {
         Dictionary<StatType, float> stats = new();
@@ -12,4 +20,5 @@ public static class Utils
 
         return stats;
     }
+
 }

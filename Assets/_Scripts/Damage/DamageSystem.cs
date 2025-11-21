@@ -7,13 +7,17 @@ public class DamageSystem : NetworkBehaviour, IDamageable
 {
     public event Action<Damage> OnDamageTaken;
     public event Action<Damage> OnDemise;
+    public event Action OnValueChanged;
 
     private List<DamageHandler> _damageHandlers;
 
     private float _baseHealth;
     [SyncVar] private float _currentHealth;
     [SyncVar] private bool _isDead;
+
     public bool IsDead => _isDead;
+    public float CurrentValue => _currentHealth;
+    public float MaxValue => _baseHealth;
 
     public void Initialize(float baseHealth, IEnumerable<DamageHandler> damageHandlers)
     {
@@ -76,6 +80,8 @@ public class DamageSystem : NetworkBehaviour, IDamageable
         {
             OnDamageTaken?.Invoke(damage);
         }
+
+        OnValueChanged?.Invoke();
     }
 
     [Command(requiresAuthority = false)]

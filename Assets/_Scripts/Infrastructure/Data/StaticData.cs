@@ -17,6 +17,7 @@ public class StaticData : ScriptableObject
     [field: SerializeField] public GameFactory GameFactoryPrefab { get; private set; }
     [field: SerializeField] public float ZoneDPS { get; private set; } = 10;
     [field: SerializeField] public DamageText DamageTextPrefab { get; private set; }
+    [field: SerializeField] public PlayerHUD PlayerHUDPrefab { get; private set; }
 
     public static class Constants
     {

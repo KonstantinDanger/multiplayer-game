@@ -5,11 +5,19 @@ public class Abilities : MonoBehaviour
 {
     private readonly List<AbilityHandler> _abilities = new();
 
+    public IReadOnlyList<AbilityHandler> Handlers => _abilities;
+
     public void Initialize(List<Ability> abilities)
     {
         abilities
             .ForEach(ability => _abilities
             .Add(new AbilityHandler(ability)));
+    }
+
+    private void Update()
+    {
+        foreach (var ability in _abilities)
+            ability?.Update();
     }
 
     /// <summary>

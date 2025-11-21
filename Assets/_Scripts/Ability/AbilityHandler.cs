@@ -2,12 +2,17 @@
 using UnityEngine;
 
 [Serializable]
-public class AbilityHandler : Ability
+public class AbilityHandler : Ability, IGauge
 {
+    public event Action OnValueChanged;
+
     public Ability Ability { get; private set; }
 
     public override float CooldownTime => Ability.CooldownTime;
     public override string Name => Ability.Name;
+
+    public float CurrentValue => Time.time;
+    public float MaxValue => _nextUsageTime;
 
     private float _nextUsageTime = 0;
 
@@ -22,6 +27,12 @@ public class AbilityHandler : Ability
         Ability.Perform(sender, target);
 
         SetNextUseTime();
+    }
+
+    public void Update()
+    {
+        if (!IsReadyToUse())
+            OnValueChanged?.Invoke();
     }
 
     private bool IsReadyToUse()

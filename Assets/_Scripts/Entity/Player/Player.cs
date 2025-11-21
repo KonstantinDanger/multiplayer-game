@@ -9,6 +9,7 @@ public class Player : Entity
     [SerializeField] private GameObject _headObject;
     [SerializeField] private Abilities _abilities;
     [SerializeField] private ScriptableCharacterClass _characterClass;
+    [SerializeField] private Level _level;
 
     private IPlayerInputBrain Input => InputBrain as IPlayerInputBrain;
     private IRotatablePlayerCamera Camera => Rotatable as IRotatablePlayerCamera;
@@ -16,6 +17,7 @@ public class Player : Entity
 
     private bool _isMenuActive = true;
     private LobbyUI _menu;
+    private PlayerHUD _playerHUD;
 
     private bool IsOffline =>
         !NetworkClient.active &&
@@ -42,7 +44,6 @@ public class Player : Entity
 
         if (isLocalPlayer && isServer)
             gameObject.name += " (Server)";
-
     }
 
     protected override void OnAwake()
@@ -85,6 +86,13 @@ public class Player : Entity
         base.Update();
     }
 
+    public override void Dispose()
+    {
+        base.Dispose();
+
+        Destroy(_playerHUD);
+    }
+
     protected override void HandleJump()
     {
         if (!CanDoActions())
@@ -105,6 +113,19 @@ public class Player : Entity
 
     public void Respawn()
         => Damageable.Respawn();
+
+    [TargetRpc]
+    public void ResetLevel()
+        => _level.Initialize();
+
+    [TargetRpc]
+    public void CreateHUD()
+    {
+        GameFactory factory = ServiceLocator.Container.Resolve<GameFactory>();
+        var hudPrefab = ServiceLocator.Container.Resolve<StaticData>().PlayerHUDPrefab;
+        var hudInstance = factory.AddUI(hudPrefab) as PlayerHUD;
+        hudInstance.Initialize(_abilities, Damageable, _level);
+    }
 
     [TargetRpc]
     public void SetCanAttack(bool canAttack)

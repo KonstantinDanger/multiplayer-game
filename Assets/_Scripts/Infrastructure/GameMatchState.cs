@@ -97,6 +97,8 @@ public class GameMatchState : GameState
         {
             Player player = conn.identity.GetComponent<Player>();
             player.Initialize(match);
+            player.ResetLevel();
+            player.CreateHUD();
             player.SetCanAttack(true);
             _players.Add(player);
         }

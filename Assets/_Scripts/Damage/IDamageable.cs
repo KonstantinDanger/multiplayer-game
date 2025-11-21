@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public interface IDamageable
+public interface IDamageable : IGauge
 {
     event Action<Damage> OnDamageTaken;
     event Action<Damage> OnDemise;
