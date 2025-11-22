@@ -10,6 +10,7 @@ public class PlayerMovement : NetworkBehaviour, IMovable
 
     [SerializeField] private CharacterController _controller;
     [SerializeField] private NetworkTransformBase _netTransform;
+    [SerializeField] private float _groundedSnapForce = 5f;
 
     public Vector3 Velocity { get; private set; }
 
@@ -29,8 +30,8 @@ public class PlayerMovement : NetworkBehaviour, IMovable
         if (Mathf.Abs(_verticalVelocity) >= maxFallSpeed)
             _verticalVelocity = -maxFallSpeed;
 
-        //if (IsGrounded && _verticalVelocity < 0f)
-        //    _verticalVelocity = -_currentGroundedSnapForce;
+        if (_controller.isGrounded && _verticalVelocity < 0f)
+            _verticalVelocity = -_groundedSnapForce;
 
         Vector3 verticalVelocity = new(0, _verticalVelocity, 0);
 
@@ -41,7 +42,12 @@ public class PlayerMovement : NetworkBehaviour, IMovable
         => _verticalVelocity = 0;
 
     public void Jump(float jumpHeight, float gravity)
-        => _verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
+    {
+        if (!_controller.isGrounded)
+            return;
+
+        _verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
+    }
 
     public void Move(Vector3 direction, float speed, float smoothness)
     {
