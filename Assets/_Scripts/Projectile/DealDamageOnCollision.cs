@@ -17,8 +17,8 @@ public class DealDamageOnCollision : ProjectileCollisionReaction
         {
             Damage damageInfo = _damage;
 
-            damageInfo.Sender = self.Data.Sender;
-            damageInfo.Receiver = collider.gameObject;
+            //damageInfo.SenderNetId = self.Data.Sender;
+            //damageInfo.ReceiverNetId = collider.gameObject;
             damageInfo.AttackDirection = self.transform.forward;
 
             damageable.TakeDamage(damageInfo);

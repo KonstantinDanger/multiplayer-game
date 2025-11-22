@@ -1,129 +1,96 @@
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using UnityEngine;
 
-// ===== ENEMY CLASS =====
-public class Enemy : Entity
+public abstract class Enemy : Entity, IInputBrain
 {
-    [Header("Enemy Stats")]
-    [field: SerializeField] public EnemyConfig Config { get; private set; }
-    public float attackDamage = 10f;
-    public float attackCooldown = 1.5f;
-    public float attackRange = 2f;
-    public float detectionRange = 15f;
-    public float chaseSpeed = 3.5f;
-    public float chaseDuration = 5f;
+    [SerializeField] private EnemyConfig _config;
+    [SerializeField] protected float _detectionRadius = 10f;
+    [SerializeField] protected float _detectionInterval = 5f;
 
-    public float _checkForTargetTime = 5;
-    private float _targetCheckTimer;
-    private float _initTimer;
+    [Header("Enemy Components")]
+    [SerializeReference, SubclassSelector] protected IDetectable<Player> Detector;
+    [SerializeReference, SubclassSelector] protected IAggroHandler AggroHandler;
+    [SerializeReference, SubclassSelector] protected IAttackStrategy AttackStrategy;
 
-    public Transform Target { get; private set; }
+    public EnemyConfig Config => _config;
 
-    private float lastAttackTime;
-    private float chaseStartTime;
-    private bool isChasing;
-    private SwarmAgent swarmAgent;
+    #region InputBrain fields
+    public Vector2 MovementVector => throw new NotImplementedException();
+    public Vector2 Rotation => throw new NotImplementedException();
+    public bool IsSprinting => throw new NotImplementedException();
 
-    public bool IsChasing => isChasing;
-    public bool CanAttack => Time.time >= lastAttackTime + attackCooldown;
+    public event Action JumpAction;
+    public event Action AttackAction;
+    public event Action<int> AbilityAction;
+    #endregion
 
-    protected override void OnAwake()
-    {
-        base.OnAwake();
-        swarmAgent = GetComponent<SwarmAgent>();
-    }
+    protected float DetectionTimer;
+    protected Entity TargetPlayer;
 
-    protected override void OnStart()
-    {
-        base.OnStart();
-        _targetCheckTimer = _checkForTargetTime;
-    }
+    protected override IInputBrain SetInputBrain() => this;
 
     protected override void Update()
     {
-        base.Update();
+        //base.Update();
 
-        if (_initTimer < 5)
-            return;
+        DetectionTimer += Time.deltaTime;
 
-        _targetCheckTimer += Time.deltaTime;
-
-        if (_targetCheckTimer >= _checkForTargetTime)
+        if (DetectionTimer >= _detectionInterval)
         {
-            _targetCheckTimer = 0f;
-            Target = GetPlayerTarget();
+            DetectPlayers();
+            DetectionTimer = 0f;
         }
 
-        if (Target == null)
+        AggroHandler?.OnUpdate(Time.deltaTime);
+        UpdateBehavior();
+    }
+
+    protected virtual void DetectPlayers()
+    {
+        if (AggroHandler != null && AggroHandler.IsAggroed)
             return;
 
-        float distanceToTarget = Vector3.Distance(transform.position, Target.position);
-
-        if (!isChasing && distanceToTarget <= detectionRange)
-            StartChase();
-
-        if (isChasing && Time.time >= chaseStartTime + chaseDuration)
-            StopChase();
-
-        if (isChasing)
-            if (distanceToTarget <= attackRange)
-                if (CanAttack)
-                    Attack();
+        Entity nearestPlayer = Detector.DetectNearestPlayer(_detectionRadius);
+        if (nearestPlayer != null)
+        {
+            OnPlayerDetected(nearestPlayer);
+        }
     }
 
-    private Transform GetPlayerTarget()
+    protected abstract void OnPlayerDetected(Entity player);
+    protected abstract void UpdateBehavior();
+
+    protected virtual void ChaseTarget(Entity target)
     {
-        List<Player> players = Physics
-            .OverlapSphere(transform.position, detectionRange)
-            .Select(c => c.GetComponent<Player>())
-            .ToList();
+        if (target == null)
+            return;
 
-        if (players == null)
-            return null;
-
-        if (players.Count > 1)
-            return GetClosestPlayer(players).transform;
-
-        return players.First().transform;
+        Movable.Move(target.transform.position, MovementConfig.Speed);
+        Rotatable?.Rotate((target.transform.position - transform.position).normalized, RotationConfig.RotationSpeed);
     }
 
-    private Player GetClosestPlayer(IEnumerable<Player> players)
+    protected virtual void AttackTarget(Entity target)
     {
-        return players
-            .OrderBy(player => Vector3.Distance(transform.position, player.transform.position))
-            .FirstOrDefault();
+        if (target == null || AttackStrategy == null) return;
+
+        if (AttackStrategy.CanAttack() && AttackStrategy.IsInAttackRange(target))
+        {
+            AttackStrategy.ExecuteAttack(target);
+            AggroHandler?.RefreshAggro();
+        }
     }
 
-    public void StartChase()
-    {
-        isChasing = true;
-        chaseStartTime = Time.time;
-    }
-
-    public void StopChase()
-        => isChasing = false;
-
-    private void Attack()
-    {
-        lastAttackTime = Time.time;
-
-        Vector3 directionToTarget = (Target.position - transform.position).normalized;
-        Rotatable?.Rotate(directionToTarget, RotationConfig.RotationSpeed);
-
-        IDamageable targetDamageable = Target.GetComponent<IDamageable>();
-        targetDamageable?.TakeDamage(new Damage() { Amount = attackDamage });
-
-        Debug.Log($"{gameObject.name} attacked for {attackDamage} damage!");
-    }
+    public void StopMovement() { }
 
     protected override void OnDemise(Damage damage)
     {
         base.OnDemise(damage);
 
-        if (swarmAgent != null && swarmAgent.SwarmManager != null)
-            swarmAgent.SwarmManager.RemoveAgent(swarmAgent);
-
         Destroy(gameObject);
     }
+
+    void IInputBrain.Update() => Update();
+    public void Enable() { }
+    public void Disable() { }
+    public void Patrol() { }
 }

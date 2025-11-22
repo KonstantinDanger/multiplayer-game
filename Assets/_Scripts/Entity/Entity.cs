@@ -25,7 +25,7 @@ public class Entity : NetworkBehaviour, IDisposable
 
     private void Awake()
     {
-        InputBrain = new PlayerInput();
+        InputBrain = SetInputBrain();
         Damageable.Initialize(DamageSystemConfig.BaseHp, null);
 
         OnAwake();
@@ -36,7 +36,7 @@ public class Entity : NetworkBehaviour, IDisposable
 
     private void OnEnable()
     {
-        InputBrain.OnEnable();
+        InputBrain.Enable();
 
         InputBrain.JumpAction += HandleJump;
         Damageable.OnDamageTaken += OnDamageTaken;
@@ -47,7 +47,7 @@ public class Entity : NetworkBehaviour, IDisposable
 
     private void OnDisable()
     {
-        InputBrain.OnDisable();
+        InputBrain.Disable();
 
         InputBrain.JumpAction -= HandleJump;
         Damageable.OnDamageTaken -= OnDamageTaken;
@@ -55,6 +55,9 @@ public class Entity : NetworkBehaviour, IDisposable
 
         HandleOnDisable();
     }
+
+    protected virtual IInputBrain SetInputBrain()
+        => null;
 
     protected virtual void Update()
     {

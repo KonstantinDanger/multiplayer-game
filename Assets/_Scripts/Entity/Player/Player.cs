@@ -30,6 +30,9 @@ public class Player : Entity
     //    _thirdPersonModel.SetActive(false);
     //}
 
+    protected override IInputBrain SetInputBrain()
+        => new PlayerInput();
+
     public override void OnStartClient()
     {
         base.OnStartClient();

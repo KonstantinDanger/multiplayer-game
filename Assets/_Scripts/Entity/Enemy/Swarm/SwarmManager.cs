@@ -1,62 +1,38 @@
-using Mirror;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class SwarmManager : MonoBehaviour
 {
-    [Header("Swarm Settings")]
-    public int maxSwarmSize = 15;
-    public Transform target; // Player reference
-
-    [Header("Spawning")]
-    public GameObject enemyPrefab;
-    public float spawnRadius = 10f;
-    public bool spawnOnStart = true;
-    public int initialSpawnCount = 10;
-
-    private List<SwarmAgent> agents = new List<SwarmAgent>();
+    [SerializeField] private List<SwarmEnemy> _swarmMembers = new();
 
     private void Start()
     {
-        if (spawnOnStart)
+        _swarmMembers.ForEach(m =>
         {
-            SpawnSwarm(initialSpawnCount);
-        }
+            m.Initialize(this);
+            RegisterSwarmMember(m);
+        });
     }
 
-    public void SpawnSwarm(int count)
+    private void RegisterSwarmMember(SwarmEnemy member)
     {
-        count = Mathf.Min(count, maxSwarmSize - agents.Count);
+        if (!_swarmMembers.Contains(member))
+            _swarmMembers.Add(member);
+    }
 
-        for (int i = 0; i < count; i++)
+    public void UnregisterSwarmMember(SwarmEnemy member)
+        => _swarmMembers.Remove(member);
+
+    public void AlertSwarm(Entity target)
+    {
+        foreach (SwarmEnemy member in _swarmMembers)
         {
-            Vector3 randomOffset = Random.insideUnitSphere * spawnRadius;
-            randomOffset.y = transform.position.y; // Keep on same Y plane
-
-            Vector3 spawnPosition = transform.position + randomOffset;
-            GameObject enemyObj = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity, transform);
-            NetworkServer.Spawn(enemyObj);
-
-            Enemy enemy = enemyObj.GetComponent<Enemy>();
-            SwarmAgent agent = enemyObj.GetComponent<SwarmAgent>();
-
-            if (agent != null)
+            if (member != null && !member.GetComponent<AggroHandler>().IsAggroed)
             {
-                agent.Initialize(this);
-                agents.Add(agent);
+                member.GetComponent<AggroHandler>().Aggro(target);
             }
         }
     }
-
-    public void RemoveAgent(SwarmAgent agent) => agents.Remove(agent);
-
-    public List<SwarmAgent> GetAgents() => agents;
-
-    public int GetSwarmSize() => agents.Count;
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, spawnRadius);
-    }
 }
+
+

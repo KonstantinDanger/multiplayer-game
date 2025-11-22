@@ -1,20 +1,24 @@
+using AYellowpaper;
 using UnityEngine;
 
 public class XpDrop : MonoBehaviour
 {
-    [SerializeField] private IDamageable _damageable;
-    [SerializeField] private EnemyConfig _config;
+    [SerializeField] private InterfaceReference<IDamageable> _damageableRef;
+
+    private IDamageable Damageable => _damageableRef.Value;
 
     private void OnEnable()
-        => _damageable.OnDemise += HandleXpDrop;
+        => Damageable.OnDemise += HandleXpDrop;
 
     private void OnDisable()
-        => _damageable.OnDemise -= HandleXpDrop;
+        => Damageable.OnDemise -= HandleXpDrop;
 
     private void HandleXpDrop(Damage damage)
     {
-        float xpToDrop = _config.XpToDrop;
         Level level = damage.Sender.GetComponent<Level>();
+        EnemyConfig config = GetComponent<Enemy>().Config;
+
+        float xpToDrop = config.XpToDrop;
         level.AddXp(xpToDrop);
     }
 }

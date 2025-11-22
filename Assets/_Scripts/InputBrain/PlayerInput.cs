@@ -46,10 +46,10 @@ public class PlayerInput : IPlayerInputBrain
         AbilityAction?.Invoke(abilityIndex);
     }
 
-    public void OnEnable()
+    public void Enable()
         => _actions.Enable();
 
-    public void OnDisable()
+    public void Disable()
         => _actions.Disable();
 
     public void SetUiInput(bool active)

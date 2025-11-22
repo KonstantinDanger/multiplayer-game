@@ -37,7 +37,7 @@ public class GaugeBar : MonoBehaviour
 
     private void HandleValueChanged()
     {
-        float value = Gauge.CurrentValue / Gauge.MaxValue;
+        float value = Gauge.CurrentGaugeValue / Gauge.MaxGaugeValue;
         value = Mathf.Clamp01(value);
 
         if (_reverseGauge)

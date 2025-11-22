@@ -3,7 +3,7 @@
 public interface IGauge
 {
     event Action OnValueChanged;
-    float CurrentValue { get; }
-    float MaxValue { get; }
+    float CurrentGaugeValue { get; }
+    float MaxGaugeValue { get; }
 }
 

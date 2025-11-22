@@ -26,5 +26,5 @@ public class PlayerHUD : UI
         => _level.OnValueChanged -= HandleLevelChanged;
 
     private void HandleLevelChanged()
-        => _levelText.text = $"Lvl: {_level.CurrentValue} / {_level.MaxValue}";
+        => _levelText.text = $"Lvl: {_level.Lvl} / {_level.MaxLvl}";
 }

@@ -16,8 +16,8 @@ public class DamageSystem : NetworkBehaviour, IDamageable
     [SyncVar] private bool _isDead;
 
     public bool IsDead => _isDead;
-    public float CurrentValue => _currentHealth;
-    public float MaxValue => _baseHealth;
+    public float CurrentGaugeValue => _currentHealth;
+    public float MaxGaugeValue => _baseHealth;
 
     public void Initialize(float baseHealth, IEnumerable<DamageHandler> damageHandlers)
     {

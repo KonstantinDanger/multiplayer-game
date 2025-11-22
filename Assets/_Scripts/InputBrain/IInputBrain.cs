@@ -4,8 +4,8 @@ using UnityEngine;
 public interface IInputBrain
 {
     void Update();
-    void OnEnable();
-    void OnDisable();
+    void Enable();
+    void Disable();
 
     Vector2 MovementVector { get; }
     Vector2 Rotation { get; }

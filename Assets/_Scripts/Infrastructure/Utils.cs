@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Mirror;
+using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public static class Utils
 {
@@ -21,4 +23,10 @@ public static class Utils
         return stats;
     }
 
+    public static GameObject NetIdToGameObject(uint netId)
+    {
+        NetworkServer.spawned.TryGetValue(netId, out NetworkIdentity netObject);
+
+        return netObject.gameObject;
+    }
 }

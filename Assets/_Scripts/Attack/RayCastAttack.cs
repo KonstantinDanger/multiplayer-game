@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mirror;
+using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,8 +9,12 @@ public class RayCastAttack : Attack
     [SerializeField, Range(0, 360)] private float _verticalSpreadAngle;
     [SerializeField, Range(0, 360)] private float _horizontalSpreadAngle;
 
+    private GameObject _sender;
+
     protected override void OnApply(GameObject sender, GameObject target)
     {
+        _sender = sender;
+
         var attacker = sender.GetComponentInChildren<IAttacker>();
         var rayCastView = sender.GetComponentInChildren<RayCastView>();
         var movable = sender.GetComponent<IMovable>();
@@ -44,6 +49,7 @@ public class RayCastAttack : Attack
                 Damage damage = new()
                 {
                     Amount = Damage.Amount,
+                    SenderNetId = _sender.GetComponent<NetworkIdentity>().netId
                 };
 
                 damageable.TakeDamage(damage);

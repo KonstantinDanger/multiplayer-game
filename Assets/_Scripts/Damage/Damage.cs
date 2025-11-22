@@ -9,7 +9,13 @@ public struct Damage
     public DamageType Type;
     public float Range;
 
-    public GameObject Sender { get; set; }
-    public GameObject Receiver { get; set; }
-    public Vector3 AttackDirection { get; set; }
+    //net ids instead of refs
+    [HideInInspector] public uint SenderNetId;
+    [HideInInspector] public uint ReceiverNetId;
+    [HideInInspector] public Vector3 AttackDirection;
+
+    public readonly GameObject Sender
+        => Utils.NetIdToGameObject(SenderNetId);
+    public readonly GameObject Receiver
+        => Utils.NetIdToGameObject(ReceiverNetId);
 }

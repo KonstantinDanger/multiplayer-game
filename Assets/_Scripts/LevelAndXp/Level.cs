@@ -10,8 +10,8 @@ public class Level : MonoBehaviour, IGauge
     public float Xp { get; private set; }
     public float XpPerLevel { get; private set; }
 
-    public float CurrentValue => Xp;
-    public float MaxValue => XpPerLevel;
+    public float CurrentGaugeValue => Xp;
+    public float MaxGaugeValue => XpPerLevel;
 
     private Func<int, float> _xpPerLevelIncreaseFunction;
 
