@@ -2,11 +2,12 @@
 
 public class PeacefulEnemy : Enemy
 {
-    [Header("Peaceful Settings")]
+    [Header("Peaceful Enemy Settings")]
     [SerializeField] private float _fleeSpeed = 6f;
     [SerializeField] private float _fleeDistance = 15f;
     [SerializeField] private float _fleeDuration = 5f;
     [SerializeField] private SiblingNotifier _notifier;
+    [SerializeReference, SubclassSelector] private IFleeBehaviour _fleeBehaviour;
 
     private bool _isFleeing;
     private float _fleeTimer;
@@ -40,8 +41,8 @@ public class PeacefulEnemy : Enemy
         FleeFrom(attacker);
     }
 
-    public void OnSiblingAttacked(Entity attacker) =>
-        FleeFrom(attacker);
+    public void OnSiblingAttacked(Entity attacker)
+        => FleeFrom(attacker);
 
     private void FleeFrom(Entity target)
     {
@@ -54,8 +55,8 @@ public class PeacefulEnemy : Enemy
     {
         if (_isFleeing && _fleeTarget != null)
         {
-            Vector3 fleeDirection = (transform.position - _fleeTarget.transform.position).normalized;
-            Vector3 fleeDestination = transform.position + fleeDirection * _fleeDistance;
+            Vector3 fleeDestination = _fleeBehaviour.GetFleeDestinationFrom(_fleeTarget.transform, transform, _fleeDistance);
+            Vector3 fleeDirection = fleeDestination - transform.position;
 
             Movable.Move(fleeDestination, _fleeSpeed);
 

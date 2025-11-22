@@ -13,6 +13,8 @@ public class SimpleRotatable : MonoBehaviour, IRotatable
         if (direction == Vector3.zero)
             return;
 
+        direction.y = 0f;
+
         LookRotation = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, LookRotation, speed * Time.deltaTime);
 

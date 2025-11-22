@@ -127,8 +127,10 @@ MonoBehaviour:
     rid: 4564918803227476034
   AttackStrategy:
     rid: -2
-  fieldOfViewAngle: 120
-  visionRange: 30
+  _patrolStrategy:
+    rid: 4564918807990894659
+  _fieldOfViewAngle: 120
+  _visionRange: 15
   _isNeutral: 0
   references:
     version: 2
@@ -148,6 +150,13 @@ MonoBehaviour:
         aggroTimeout: 8
         aggroRange: 15
         _selfTransform: {fileID: 4188451577050409953}
+    - rid: 4564918807990894659
+      type: {class: Patrol, ns: , asm: Assembly-CSharp}
+      data:
+        patrolRadius: 5
+        patrolSpeed: 5
+        waitTimeAtPoint: 2
+        waypointReachedDistance: 0.5
 --- !u!114 &1435455419400485427
 MonoBehaviour:
   m_ObjectHideFlags: 0

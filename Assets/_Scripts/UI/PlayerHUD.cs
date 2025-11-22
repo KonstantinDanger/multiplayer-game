@@ -18,7 +18,6 @@ public class PlayerHUD : UI
         _healthGauge.Initialize(gauge: damageable);
         _xpGauge.Initialize(gauge: _level);
 
-
         _level.OnValueChanged += HandleLevelChanged;
     }
 

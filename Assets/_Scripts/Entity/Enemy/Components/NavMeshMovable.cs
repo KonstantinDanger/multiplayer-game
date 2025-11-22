@@ -12,7 +12,7 @@ public class NavMeshMovable : MonoBehaviour, IMovable
     public event Action OnMove;
 
     public void ResetVerticalVelocity() => throw new NotImplementedException();
-    public void Move(Vector3 direction, float speed, float smoothness = 0.03f)
+    public void Move(Vector3 position, float speed, float smoothness = 0.03f)
     {
         if (!_agent.isOnNavMesh)
         {
@@ -20,7 +20,9 @@ public class NavMeshMovable : MonoBehaviour, IMovable
             return;
         }
 
-        _agent.SetDestination(transform.position + direction);
+        _agent.speed = speed;
+
+        _agent.SetDestination(position);
         OnMove?.Invoke();
     }
 

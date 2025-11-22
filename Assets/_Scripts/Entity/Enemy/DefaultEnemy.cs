@@ -33,6 +33,8 @@ public class DefaultEnemy : Enemy
 
     protected override void OnDamageTaken(Damage damage)
     {
+        base.OnDamageTaken(damage);
+
         if (!damage.Sender.TryGetComponent(out Entity attacker))
             return;
 
@@ -84,7 +86,6 @@ public class DefaultEnemy : Enemy
         }
     }
 
-    // Simple idle patrol - can be extended with waypoints
     private void Patrol() =>
-        StopMovement();
+        _patrolStrategy.SetPatrolOrigin(transform.position);
 }

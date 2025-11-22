@@ -145,10 +145,14 @@ MonoBehaviour:
     rid: -2
   AttackStrategy:
     rid: -2
+  _patrolStrategy:
+    rid: 4564918807990894658
   _fleeSpeed: 6
   _fleeDistance: 15
   _fleeDuration: 5
   _notifier: {fileID: 6595900978107497887}
+  _fleeBehaviour:
+    rid: 4564918807990894657
   references:
     version: 2
     RefIds:
@@ -161,6 +165,18 @@ MonoBehaviour:
           serializedVersion: 2
           m_Bits: 128
         _transform: {fileID: 621757109037350936}
+    - rid: 4564918807990894657
+      type: {class: FleeBehaviour, ns: , asm: Assembly-CSharp}
+      data:
+        _chaoticAngleVariation: 33.55
+        _sineFrequency: 1.64
+        _noiseAmount: 67.4
+    - rid: 4564918807990894658
+      type: {class: Patrol, ns: , asm: Assembly-CSharp}
+      data:
+        patrolRadius: 10
+        waitTimeAtPoint: 2
+        waypointReachedDistance: 0.5
 --- !u!114 &3460745312512611894
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,8 +11,10 @@ public abstract class Enemy : Entity, IInputBrain
     [SerializeReference, SubclassSelector] protected IDetectable<Player> Detector;
     [SerializeReference, SubclassSelector] protected IAggroHandler AggroHandler;
     [SerializeReference, SubclassSelector] protected IAttackStrategy AttackStrategy;
+    [SerializeReference, SubclassSelector] protected IPatrol _patrolStrategy;
 
     public EnemyConfig Config => _config;
+    public IAggroHandler AggroSystem => AggroHandler;
 
     #region InputBrain fields
     public Vector2 MovementVector => throw new NotImplementedException();
@@ -29,9 +31,18 @@ public abstract class Enemy : Entity, IInputBrain
 
     protected override IInputBrain SetInputBrain() => this;
 
+    protected override void OnStart()
+    {
+        base.OnStart();
+
+        _patrolStrategy?.Initialize(Movable, transform, transform);
+    }
+
     protected override void Update()
     {
         //base.Update();
+
+        _patrolStrategy?.Update(Time.deltaTime);
 
         DetectionTimer += Time.deltaTime;
 
@@ -82,6 +93,13 @@ public abstract class Enemy : Entity, IInputBrain
 
     public void StopMovement() { }
 
+    protected override void OnDamageTaken(Damage damage)
+    {
+        base.OnDamageTaken(damage);
+
+        _patrolStrategy?.ResetPatrol();
+    }
+
     protected override void OnDemise(Damage damage)
     {
         base.OnDemise(damage);
@@ -92,5 +110,4 @@ public abstract class Enemy : Entity, IInputBrain
     void IInputBrain.Update() => Update();
     public void Enable() { }
     public void Disable() { }
-    public void Patrol() { }
 }

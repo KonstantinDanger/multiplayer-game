@@ -1,4 +1,5 @@
-﻿public interface IAttackStrategy
+﻿
+public interface IAttackStrategy
 {
     void ExecuteAttack(Entity target);
     bool CanAttack();
