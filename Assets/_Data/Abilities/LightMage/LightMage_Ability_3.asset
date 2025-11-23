@@ -23,8 +23,8 @@ MonoBehaviour:
         <Name>k__BackingField: Light burst
         <CooldownTime>k__BackingField: 10
         _attack:
-          rid: 4564918650642890817
-    - rid: 4564918650642890817
+          rid: 4564918831264825410
+    - rid: 4564918831264825410
       type: {class: RayCastAttack, ns: , asm: Assembly-CSharp}
       data:
         Amount: 33
@@ -36,5 +36,8 @@ MonoBehaviour:
             m_Bits: 256
           Type: 0
           Range: 20
+          SenderNetId: 0
+          ReceiverNetId: 0
+          AttackDirection: {x: 0, y: 0, z: 0}
         _verticalSpreadAngle: 7
         _horizontalSpreadAngle: 7

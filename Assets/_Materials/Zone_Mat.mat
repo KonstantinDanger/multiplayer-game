@@ -45,8 +45,12 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _CutoffHeight: 0.564
-    - _CutoffSmoothness: 0.5
-    m_Colors: []
+    - _CutoffHeight: 0.117
+    - _CutoffSmoothness: 0.067
+    - _IntersectionPower: 5
+    - _WaveSpeed: 0.17
+    m_Colors:
+    - _EdgeColor: {r: 1, g: 0.6125001, b: 0, a: 0.8}
+    - _MainColor: {r: 1, g: 0.31603768, b: 0.31603768, a: 0.20392157}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

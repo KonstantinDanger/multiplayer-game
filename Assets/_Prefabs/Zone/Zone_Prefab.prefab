@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _minRadius: 450
-  _maxRadius: 4300
+  _maxRadius: 1600
 --- !u!114 &7846779847051655936
 MonoBehaviour:
   m_ObjectHideFlags: 0
