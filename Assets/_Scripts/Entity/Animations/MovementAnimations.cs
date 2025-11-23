@@ -9,10 +9,11 @@ public class MovementAnimations : NetworkBehaviour
     [SerializeField] private InterfaceReference<IRotatable> _rotatable;
     [SerializeField] private MovementConfig _config;
     [SerializeField] private float _rotationSmoothness = 0.03f;
+    [SerializeField] private float _speedDeadZoneThreshold = 0.1f;
 
     [Header("Params")]
-    [SerializeField] private string _verticalInputParamName = "VerticalInput";
-    [SerializeField] private string _horizontalInputParamName = "HorizontalInput";
+    [SerializeField] private string _verticalInputParamName = "VerticalVelocity";
+    [SerializeField] private string _horizontalInputParamName = "HorizontalVelocity";
     [SerializeField] private string _movementAngle = "MovementAngle";
 
     private IMovable Movable => _movable.Value;
@@ -52,6 +53,9 @@ public class MovementAnimations : NetworkBehaviour
         velocity = transform.InverseTransformDirection(velocity);
 
         float speedMultiplier = Movable.Velocity.magnitude / _config.SprintSpeed;
+
+        if (speedMultiplier <= _speedDeadZoneThreshold)
+            speedMultiplier = 0f;
 
         _verticalVelocity = velocity.z * speedMultiplier;
         _horizontalVelocity = velocity.x * speedMultiplier;

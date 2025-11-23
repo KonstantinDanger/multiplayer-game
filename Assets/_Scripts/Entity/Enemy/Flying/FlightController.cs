@@ -9,6 +9,7 @@ public class FlightController : MonoBehaviour, IFlightController
     [SerializeField] private float retreatDuration = 2f;
     [SerializeField] private float bobAmplitude = 0.3f;
     [SerializeField] private float bobFrequency = 1f;
+    [SerializeField] private LayerMask _groundLayer;
 
     private bool isRetreating;
     private float retreatTimer;
@@ -19,7 +20,6 @@ public class FlightController : MonoBehaviour, IFlightController
 
     private void Update()
     {
-        // Smooth bobbing effect for natural flight
         bobTimer += Time.deltaTime * bobFrequency;
 
         if (isRetreating)
@@ -110,7 +110,7 @@ public class FlightController : MonoBehaviour, IFlightController
     public void MaintainFlightHeight()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 100f))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 100f, _groundLayer))
         {
             float targetY = hit.point.y + flightHeight;
             float currentY = transform.position.y;

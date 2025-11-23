@@ -43,8 +43,6 @@ public class GaugeBar : MonoBehaviour
         if (_reverseGauge)
             value = 1f - value;
 
-        UnityEngine.Debug.Log("value " + value);
-
         SetSliderValue(value);
     }
 

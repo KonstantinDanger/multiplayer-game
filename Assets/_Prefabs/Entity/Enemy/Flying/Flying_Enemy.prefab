@@ -117,6 +117,8 @@ MonoBehaviour:
     rid: 4564918806144876615
   AttackStrategy:
     rid: -2
+  _patrolStrategy:
+    rid: -2
   _fieldOfViewAngle: 120
   _visionRange: 20
   _isNeutral: 0
@@ -163,6 +165,9 @@ MonoBehaviour:
   retreatDuration: 2
   bobAmplitude: 0.3
   bobFrequency: 1
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 17
 --- !u!114 &7289807546561193304
 MonoBehaviour:
   m_ObjectHideFlags: 0

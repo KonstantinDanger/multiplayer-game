@@ -128,6 +128,8 @@ MonoBehaviour:
     rid: 4564918806144876613
   AttackStrategy:
     rid: -2
+  _patrolStrategy:
+    rid: -2
   _swarmRadius: 5
   _separationForce: 2
   _cohesionForce: 1
@@ -171,6 +173,9 @@ MonoBehaviour:
   retreatDuration: 2
   bobAmplitude: 0.3
   bobFrequency: 1
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 17
 --- !u!114 &8503144611088915437
 MonoBehaviour:
   m_ObjectHideFlags: 0

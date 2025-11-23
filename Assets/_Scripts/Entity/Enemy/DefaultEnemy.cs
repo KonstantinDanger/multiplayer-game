@@ -35,7 +35,7 @@ public class DefaultEnemy : Enemy
     {
         base.OnDamageTaken(damage);
 
-        if (!damage.Sender.TryGetComponent(out Entity attacker))
+        if (!damage.Sender.TryGetComponent(out Player attacker))
             return;
 
         if (!AggroHandler.IsAggroed)

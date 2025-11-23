@@ -125,13 +125,17 @@ public class SwarmEnemy : Enemy
 
     protected override void OnDemise(Damage damage)
     {
-        base.OnDemise(damage);
+        if (_swarmManager)
+            _swarmManager.UnregisterSwarmMember(this);
 
-        _swarmManager.UnregisterSwarmMember(this);
+        base.OnDemise(damage);
     }
 
     private void OnDestroy()
-        => _swarmManager.UnregisterSwarmMember(this);
+    {
+        if (_swarmManager)
+            _swarmManager.UnregisterSwarmMember(this);
+    }
 }
 
 
