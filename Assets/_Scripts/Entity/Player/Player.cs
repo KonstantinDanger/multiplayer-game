@@ -14,6 +14,7 @@ public class Player : Entity
     private IPlayerInputBrain Input => InputBrain as IPlayerInputBrain;
     private IRotatablePlayerCamera Camera => Rotatable as IRotatablePlayerCamera;
     private IPlayerDeathHandler PlayerDeathHandler { get; set; }
+    public ScriptableCharacterClass CharacterClass => _characterClass;
 
     private bool _isMenuActive = true;
     private LobbyUI _menu;

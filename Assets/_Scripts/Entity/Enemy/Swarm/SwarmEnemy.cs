@@ -121,7 +121,8 @@ public class SwarmEnemy : Enemy
         return (avgDirection / nearby.Length).normalized;
     }
 
-    private void FlyIdle() => _flightController.MaintainFlightHeight();
+    private void FlyIdle()
+        => _flightController.MaintainFlightHeight();
 
     protected override void OnDemise(Damage damage)
     {
@@ -137,5 +138,3 @@ public class SwarmEnemy : Enemy
             _swarmManager.UnregisterSwarmMember(this);
     }
 }
-
-

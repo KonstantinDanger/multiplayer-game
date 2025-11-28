@@ -1,13 +1,23 @@
 using System.Collections.Generic;
+using System.Linq;
 
 public class GameData
 {
-    public Dictionary<PlayerData, PlayerMatchSummaryData> Players;
-    public GameMatchData GameMatchData;
+    private Dictionary<PlayerData, PlayerMatchSummaryData> Players { get; set; } = new();
+    public GameMatchData GameMatchData { get; set; } = new();
 
-    public GameData()
+    public PlayerMatchSummaryData AddPlayerData(PlayerData playerData)
     {
-        Players = new();
-        GameMatchData = new();
+        var summaryData = new PlayerMatchSummaryData();
+        Players.Add(playerData, summaryData);
+        return summaryData;
+    }
+
+    public PlayerMatchSummaryData GetPlayerSummary(Player player)
+    {
+        return Players
+            .Where(pair => pair.Key.Name == player.name)
+            .Select(pair => pair.Value)
+            .FirstOrDefault();
     }
 }

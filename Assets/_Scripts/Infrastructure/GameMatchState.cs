@@ -7,6 +7,7 @@ using UnityEngine;
 public class GameMatchState : GameState
 {
     private readonly List<Player> _players = new();
+    private readonly List<PlayerSummaryDataBinder> _dataBinders = new();
 
     private GameMatchConfig _gameMatchData;
     private GameFactory _factory;
@@ -27,10 +28,10 @@ public class GameMatchState : GameState
         _gameMatchData = _data.GameMatchData;
         _gameData = Resolve<PersistentGameData>().GameData;
 
-        UpdateGameData(_gameData);
         InitZone();
         InitMatch();
         InitPlayers(_match);
+        InitializeMatchData(_gameData);
 
         Events.OnPlayerLost += HandlePlayerLost;
     }
@@ -54,6 +55,10 @@ public class GameMatchState : GameState
     {
         Events.OnPlayerLost -= HandlePlayerLost;
 
+        _dataBinders
+            .ForEach(dataB => dataB
+            .Unbind());
+
         _players.ForEach(player =>
         {
             player.SetCanAttack(false);
@@ -66,8 +71,14 @@ public class GameMatchState : GameState
         var loser = player;
         var winner = _players.Find(p => p != player);
 
+        PlayerMatchSummaryData[] _summaries = _players
+            .Select(player => _gameData
+            .GetPlayerSummary(player))
+            .ToArray();
+
         _gameData.GameMatchData = new()
         {
+            PlayersSummary = _summaries,
             Winner = winner.name,
             Loser = loser.name,
             MatchDate = DateTime.Now,
@@ -77,18 +88,23 @@ public class GameMatchState : GameState
         GoTo<GameMatchSummaryState>();
     }
 
-    private void UpdateGameData(GameData gameData)
+    private void InitializeMatchData(GameData gameData)
     {
-        List<PlayerData> playersData = _players
-            .Select(p => new PlayerData()
+        foreach (var player in _players)
+        {
+            PlayerData data = new()
             {
-                Name = p.name, //Steam player name
+                Name = player.name, //Steam player name
                 Currency = 0, //Fetch currency from server
                 UnlockedClasses = new[] { "Light mage" } //Fetch classes from server 
-            })
-            .ToList();
+            };
 
-        playersData.ForEach(pData => gameData.Players.Add(pData, new PlayerMatchSummaryData()));
+            PlayerMatchSummaryData summaryData = gameData.AddPlayerData(data);
+
+            PlayerSummaryDataBinder binder = new(player, summaryData);
+
+            _dataBinders.Add(binder);
+        }
     }
 
     private void InitPlayers(Match match)
@@ -103,7 +119,8 @@ public class GameMatchState : GameState
             _players.Add(player);
         }
 
-        Resolve<CustomNetworkManager>().ShufflePlayersPositions();
+        Resolve<CustomNetworkManager>()
+            .ShufflePlayersPositions();
     }
 
     private void InitMatch()

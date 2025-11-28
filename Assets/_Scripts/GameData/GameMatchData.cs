@@ -10,9 +10,19 @@ public class GameMatchData
     public DateTime MatchDate;
 
     public override string ToString()
-        => $"" +
+    {
+        string playersSummary = "";
+
+        foreach (var summary in PlayersSummary)
+            playersSummary += $"{summary}\n\n";
+
+        return $"" +
         $"Winner: {Winner}\n" +
         $"Loser: {Loser}\n" +
         $"Match time: {MatchTime}\n" +
-        $"Match date: {MatchDate}";
+        $"Match date: {MatchDate}\n\n" +
+        $"Players summary:\n" +
+        $"{playersSummary}";
+
+    }
 }

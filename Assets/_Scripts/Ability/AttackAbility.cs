@@ -10,6 +10,7 @@ public class AttackAbility : Ability
     {
         _attack.Apply(sender, target);
 
-        UnityEngine.Debug.Log($"Ability \'{Name}\' performed");
+        {//UnityEngine.Debug.Log($"Ability \'{Name}\' performed");
+        }
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 public class Level : MonoBehaviour, IGauge
 {
     public event Action OnValueChanged;
+    public Action<Level> OnLevelChanged;
+    public Action<float> OnXpReceived;
 
     public int Lvl { get; private set; }
     public int MaxLvl { get; private set; }

@@ -116,7 +116,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -260,6 +260,7 @@ MonoBehaviour:
   syncInterval: 0
   _controller: {fileID: 856957943013325311}
   _netTransform: {fileID: 6977470396741698936}
+  _groundedSnapForce: 5
 --- !u!114 &5774164757867739405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -412,6 +413,7 @@ MonoBehaviour:
     _underlyingValue: {fileID: 2854472321422995004}
   _config: {fileID: 11400000, guid: a7e9482648561ea44b509607f893e2bf, type: 2}
   _rotationSmoothness: 0.32
+  _speedDeadZoneThreshold: 0.1
   _verticalInputParamName: VerticalVelocity
   _horizontalInputParamName: HorizontalVelocity
   _movementAngle: MovementAngle
