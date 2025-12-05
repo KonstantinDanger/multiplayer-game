@@ -61,6 +61,7 @@ public class GameMatchState : GameState
 
         _players.ForEach(player =>
         {
+            player.ToggleHUD(false);
             player.SetCanAttack(false);
             player.Dispose();
         });
@@ -72,18 +73,18 @@ public class GameMatchState : GameState
         var winner = _players.Find(p => p != player);
 
         PlayerMatchSummaryData[] _summaries = _players
-            .Select(player => _gameData
-            .GetPlayerSummary(player))
+            .Select(player => _gameData.GameMatchData
+            .GetSummaryFor(player))
             .ToArray();
 
-        _gameData.GameMatchData = new()
+        _gameData.GameMatchData.MatchData = new()
         {
-            PlayersSummary = _summaries,
-            Winner = winner.name,
-            Loser = loser.name,
-            MatchDate = DateTime.Now,
-            MatchTime = _matchTime
+            winner = winner.name,
+            loser = loser.name,
+            matchTime = _matchTime
         };
+
+        _gameData.GameMatchData.MatchData.SetDate(DateTime.Now);
 
         GoTo<GameMatchSummaryState>();
     }
@@ -99,9 +100,11 @@ public class GameMatchState : GameState
                 UnlockedClasses = new[] { "Light mage" } //Fetch classes from server 
             };
 
-            PlayerMatchSummaryData summaryData = gameData.AddPlayerData(data);
+            PlayerMatchSummaryData summaryData = gameData.GameMatchData.AddNewSummaryForPlayerData(data);
 
             PlayerSummaryDataBinder binder = new(player, summaryData);
+
+            binder.Bind();
 
             _dataBinders.Add(binder);
         }
@@ -114,7 +117,7 @@ public class GameMatchState : GameState
             Player player = conn.identity.GetComponent<Player>();
             player.Initialize(match);
             player.ResetLevel();
-            player.CreateHUD();
+            player.ToggleHUD(true);
             player.SetCanAttack(true);
             _players.Add(player);
         }
@@ -143,5 +146,5 @@ public class GameMatchState : GameState
     }
 
     private IEnumerable<Player> GetPlayersOutOfZone(IEnumerable<Player> players)
-        => players.Where(player => Vector3.Distance(player.transform.position, _zone.transform.position) > _zone.Radius);
+        => players?.Where(player => Vector3.Distance(player.transform.position, _zone.transform.position) > _zone.Radius);
 }

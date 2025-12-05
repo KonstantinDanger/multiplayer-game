@@ -1,28 +1,56 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
-[System.Serializable]
+[Serializable]
 public class GameMatchData
 {
-    public PlayerMatchSummaryData[] PlayersSummary;
-    public string Winner; //Player id
-    public string Loser; //Player id
-    public float MatchTime;
-    public DateTime MatchDate;
+    private Dictionary<PlayerData, PlayerMatchSummaryData> PlayerSummaries { get; set; } = new();
+
+    public Data MatchData = new();
+
+    public PlayerMatchSummaryData AddNewSummaryForPlayerData(PlayerData playerData)
+    {
+        PlayerMatchSummaryData summaryData = new();
+        PlayerSummaries.Add(playerData, summaryData);
+        return summaryData;
+    }
+
+    public PlayerMatchSummaryData GetSummaryFor(Player player)
+    {
+        return PlayerSummaries
+            .Where(pair => pair.Key.Name == player.name)
+            .Select(pair => pair.Value)
+            .FirstOrDefault();
+    }
 
     public override string ToString()
     {
         string playersSummary = "";
 
-        foreach (var summary in PlayersSummary)
-            playersSummary += $"{summary}\n\n";
+        foreach (KeyValuePair<PlayerData, PlayerMatchSummaryData> summary in PlayerSummaries)
+        {
+            playersSummary += $"Summary for player \"{summary.Key.Name}\":\n";
+            playersSummary += $"{summary.Value}\n\n";
+        }
 
-        return $"" +
-        $"Winner: {Winner}\n" +
-        $"Loser: {Loser}\n" +
-        $"Match time: {MatchTime}\n" +
-        $"Match date: {MatchDate}\n\n" +
-        $"Players summary:\n" +
+        return $"Game match summary:\n" +
+        $"winner: {MatchData.winner}\n" +
+        $"loser: {MatchData.loser}\n" +
+        $"Match time: {MatchData.matchTime}\n" +
+        $"Match date: {MatchData.matchDate}\n\n" +
         $"{playersSummary}";
+    }
 
+    [Serializable]
+    public class Data
+    {
+        public string winner; //Player id
+        public string loser; //Player id
+        public float matchTime;
+        public string matchDate;
+
+        public void SetDate(DateTime date)
+            => matchDate = date.ToUniversalTime().ToString("o");
     }
 }

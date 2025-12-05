@@ -15,19 +15,22 @@ public class GameMatchSummaryState : GameState
     {
         DisablePlayers();
 
-        var matchData = Resolve<PersistentGameData>().GameData.GameMatchData;
+        GameMatchData matchData = Resolve<PersistentGameData>().GameData.GameMatchData;
 
         _staticData = Resolve<StaticData>();
         _netManager = Resolve<CustomNetworkManager>();
 
-        //Send request to backend to save the data
+        UnityEngine.Debug.Log("GameMatchData " + matchData);
 
-        UnityEngine.Debug.Log("matchData " + matchData.ToString());
+        //BackendApi.CreateMatch(matchData);
 
         _netManager.OnServerSceneLoaded += HandleLobbySceneLoaded;
 
         _ended = false;
     }
+
+    public override void OnExit()
+        => _netManager.OnServerSceneLoaded -= HandleLobbySceneLoaded;
 
     private void HandleLobbySceneLoaded(string sceneName)
     {

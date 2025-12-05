@@ -14,7 +14,7 @@ public class PlayerSummaryDataBinder
         _damageable = _player.Damageable;
         _level = _player.GetComponent<Level>();
 
-        _summaryData.UsedClassName = _player.CharacterClass.name;
+        _summaryData.UsedClassName = _player.CharacterClass.ClassName;
     }
 
     public void Bind()
@@ -43,12 +43,12 @@ public class PlayerSummaryDataBinder
 
     private void HandleDemise(Damage damage)
     {
-        HandleDamageTaken(damage);
         _summaryData.DeathsCount++;
+        HandleDamageTaken(damage);
     }
 
-    private void HandleLevelUp(Level level)
-        => _summaryData.ReachedLevel = level.MaxLvl;
+    private void HandleLevelUp(int level)
+        => _summaryData.ReachedLevel = level;
 
     private void HandleXpReceived(float amount)
     {

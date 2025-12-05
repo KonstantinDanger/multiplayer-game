@@ -74,7 +74,7 @@ public class PlayerMovement : NetworkBehaviour, IMovable
         _controller.Move(_externalForce);
     }
 
-    [Server]
+    [ClientRpc]
     public void Warp(Vector3 position)
     {
         _controller.enabled = false;

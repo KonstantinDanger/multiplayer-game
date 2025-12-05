@@ -22,7 +22,6 @@ public class GameBootState : GameState
         _sceneLoader = new(coroutineHolder);
         GameFactory factory = Object.Instantiate(_staticData.GameFactoryPrefab, coroutineHolder.transform.parent);
         var netManager = factory.CreateNetworkManager(_staticData.NetworkManagerPrefab, coroutineHolder.transform);
-        MainUI ui = factory.InitializeUI(_staticData.UIPrefab, null);
 
         PersistentGameData persistentGameData = new PersistentGameData();
 
@@ -30,7 +29,6 @@ public class GameBootState : GameState
         Bind(_sceneLoader);
         Bind(factory);
         Bind(netManager);
-        Bind(ui);
     }
 
     private void OnLoadStarted() { }

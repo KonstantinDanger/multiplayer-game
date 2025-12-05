@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class GaugeBar : MonoBehaviour
+public class GaugeBar : NetworkBehaviour
 {
     [SerializeField] private Slider _slider;
     [SerializeField] private bool _reverseGauge;
@@ -37,6 +38,7 @@ public class GaugeBar : MonoBehaviour
 
     private void HandleValueChanged()
     {
+        UnityEngine.Debug.Log("gauge value changed ");
         float value = Gauge.CurrentGaugeValue / Gauge.MaxGaugeValue;
         value = Mathf.Clamp01(value);
 

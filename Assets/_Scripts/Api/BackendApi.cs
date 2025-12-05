@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.Networking;
 
 public static class BackendApi
@@ -8,8 +9,22 @@ public static class BackendApi
     //LogIn (post)
     //AddPlayer (Register) (post)
     //UpdatePlayerData (post)
-    //AddMatchData (post)
     //FetchPlayerData (get)
+
+    public static async void CreateMatch(GameMatchData data)
+    {
+        string json = JsonUtility.ToJson(data.MatchData);
+
+        UnityEngine.Debug.Log("json " + json);
+        using UnityWebRequest request = UnityWebRequest.PostWwwForm($"{BackendUrl}/api/matches", json);
+
+        byte[] body = System.Text.Encoding.UTF8.GetBytes(json);
+
+        request.uploadHandler = new UploadHandlerRaw(body);
+        request.downloadHandler = new DownloadHandlerBuffer();
+
+        await SendRequest(request);
+    }
 
     public static async Task<string> FetchPlayer()
     {

@@ -4,9 +4,7 @@ public class GameLobbyState : GameState
 {
     private CustomNetworkManager _networkManager;
     private StaticData _staticData;
-    private GameFactory _factory;
     private Lobby _lobby;
-    private SceneLoader _sceneLoader;
 
     private LobbyUI _lobbyUiInstance;
     private bool _isLobbyInitialized;
@@ -15,8 +13,6 @@ public class GameLobbyState : GameState
 
     public override void OnEnter()
     {
-        _sceneLoader = Resolve<SceneLoader>();
-        _factory = Resolve<GameFactory>();
         _staticData = Resolve<StaticData>();
         _networkManager = Resolve<CustomNetworkManager>();
         _lobby = _networkManager.Lobby;
@@ -24,9 +20,7 @@ public class GameLobbyState : GameState
         if (!_isLobbyInitialized)
             InitializeLobby();
 
-        InitLobbyPlayers(_networkManager);
-
-        //SpawnPlayers();
+        InitLobbyPlayers();
 
         Events.OnLobbyDisband += HandleLobbyDisband;
         Events.OnStartGameInitiated += HandleStartGameInitiated;
@@ -35,15 +29,12 @@ public class GameLobbyState : GameState
         _networkManager.OnServerSceneLoaded += HandleGameSceneLoaded;
     }
 
-    private void InitLobbyPlayers(CustomNetworkManager networkManager)
+    private void InitLobbyPlayers()
     {
         foreach (var item in NetworkServer.connections)
         {
             var player = item.Value.identity.GetComponent<Player>();
-            player.Spectate(false);
-            player.SetCanAttack(false);
-            player.Movable.Warp(networkManager.GetStartPosition().position);
-            player.Respawn();
+            HandlePlayerAdded(player);
         }
     }
 
@@ -51,10 +42,10 @@ public class GameLobbyState : GameState
     {
         return;
 
-        _lobbyUiInstance = GetOrCreateLobbyUI();
-        PlayerInfoUI infoUI = _factory.AddUI(_staticData.PlayerInfoUI) as PlayerInfoUI;
+        //_lobbyUiInstance = GetOrCreateLobbyUI();
+        //PlayerInfoUI infoUI = _factory.AddUI(_staticData.PlayerInfoUI) as PlayerInfoUI;
 
-        Bind(infoUI);
+        //Bind(infoUI);
         Bind(_lobbyUiInstance);
 
         _lobby.Initialize();
@@ -64,17 +55,8 @@ public class GameLobbyState : GameState
         _isLobbyInitialized = true;
     }
 
-    //private void SpawnPlayers()
-    //{
-    //    _player = _factory.SpawnPlayer(_staticData.PlayerPrefab, _networkManager.GetStartPosition());
-    //    OfflinePlayer offlinePlayer = new(_player);
-    //    Bind(offlinePlayer, cached: true);
-    //}
-
     public override void OnExit()
     {
-        _networkManager.autoCreatePlayer = true;
-
         Events.OnLobbyDisband -= HandleLobbyDisband;
         Events.OnStartGameInitiated -= HandleStartGameInitiated;
         Events.OnPlayerAdded -= HandlePlayerAdded;
@@ -83,30 +65,36 @@ public class GameLobbyState : GameState
     }
 
     private void HandlePlayerAdded(Player player)
-        => player.SetCanAttack(false);
+    {
+        player.Spectate(false);
+        player.SetCanAttack(false);
+        player.ToggleHUD(false);
+        player.Movable.Warp(_networkManager.GetStartPosition().position);
+        player.Respawn();
+    }
 
-    private void HandleStartGameInitiated()
-        => _networkManager.ServerChangeScene(_staticData.GameSceneName);
+    private void HandleStartGameInitiated() =>
+        _networkManager.ServerChangeScene(_staticData.GameSceneName);
 
     private void HandleGameSceneLoaded(string sceneName)
     {
         if (sceneName != _staticData.GameSceneName)
-            throw new System.Exception("There was an error during game scene load. Possibly, the wrong scene has loaded ");
+            throw new System.Exception("There was an error during game scene load. The wrong scene has loaded ");
 
         GoTo<GameMatchState>();
     }
 
-    private LobbyUI GetOrCreateLobbyUI()
-    {
-        if (_lobbyUiInstance != null)
-            return _lobbyUiInstance;
+    //private LobbyUI GetOrCreateLobbyUI()
+    //{
+    //    if (_lobbyUiInstance != null)
+    //        return _lobbyUiInstance;
 
-        var instance = _factory.AddUI(_staticData.LobbyUIPrefab);
+    //    var instance = _factory.AddUI(_staticData.LobbyUIPrefab);
 
-        LobbyUI ins = instance as LobbyUI;
+    //    LobbyUI ins = instance as LobbyUI;
 
-        return ins;
-    }
+    //    return ins;
+    //}
 
     private void HandleLobbyDisband()
         => GoTo<GameLobbyRefreshState>();

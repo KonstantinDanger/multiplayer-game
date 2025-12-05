@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91149951e6a534b4f939a4b91764bc08, type: 3}
   m_Name: New Scriptable Character Class
   m_EditorClassIdentifier: 
+  <ClassName>k__BackingField: Light mage
   _abilities:
   - {fileID: 11400000, guid: 69d27dc5081091741880e54f069640da, type: 2}
   - {fileID: 11400000, guid: 82798b1bc7d42134782d0561d4639e51, type: 2}

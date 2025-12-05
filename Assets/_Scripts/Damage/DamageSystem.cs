@@ -73,15 +73,15 @@ public class DamageSystem : NetworkBehaviour, IDamageable
         if (_currentHealth <= 0f)
         {
             _currentHealth = 0f;
-            OnDemise?.Invoke(damage);
+            RpcOnDemise(damage);
             _isDead = true;
         }
         else
         {
-            OnDamageTaken?.Invoke(damage);
+            RpcOnDamageTaken(damage);
         }
 
-        OnValueChanged?.Invoke();
+        RpcOnValueChanged();
     }
 
     [Command(requiresAuthority = false)]
@@ -89,5 +89,10 @@ public class DamageSystem : NetworkBehaviour, IDamageable
     {
         _currentHealth = _baseHealth;
         _isDead = false;
+        RpcOnValueChanged();
     }
+
+    [ClientRpc] private void RpcOnDamageTaken(Damage damage) => OnDamageTaken?.Invoke(damage);
+    [ClientRpc] private void RpcOnDemise(Damage damage) => OnDemise?.Invoke(damage);
+    [ClientRpc] private void RpcOnValueChanged() => OnValueChanged?.Invoke();
 }

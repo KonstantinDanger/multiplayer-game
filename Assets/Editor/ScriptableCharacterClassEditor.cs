@@ -80,6 +80,11 @@ public class ScriptableCharacterClassEditor : Editor
         EditorGUILayout.LabelField("===|Character Class|===", EditorStyles.boldLabel);
 
         EditorGUILayout.Space(5);
+
+        // Draw EVERYTHING except _abilities
+        DrawPropertiesExcluding(serializedObject, "_abilities");
+
+        // Draw your custom list
         _abilitiesList.DoLayoutList();
 
         serializedObject.ApplyModifiedProperties();

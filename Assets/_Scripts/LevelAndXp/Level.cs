@@ -1,15 +1,19 @@
+using Mirror;
 using System;
-using UnityEngine;
 
-public class Level : MonoBehaviour, IGauge
+public class Level : NetworkBehaviour, IGauge
 {
     public event Action OnValueChanged;
-    public Action<Level> OnLevelChanged;
+    public Action<int> OnLevelChanged;
     public Action<float> OnXpReceived;
 
-    public int Lvl { get; private set; }
-    public int MaxLvl { get; private set; }
-    public float Xp { get; private set; }
+    [SyncVar] private int _level;
+    [SyncVar] private int _maxLevel;
+    [SyncVar] private float _xp;
+
+    public int Lvl => _level;
+    public int MaxLvl => _maxLevel;
+    public float Xp => _xp;
     public float XpPerLevel { get; private set; }
 
     public float CurrentGaugeValue => Xp;
@@ -19,9 +23,9 @@ public class Level : MonoBehaviour, IGauge
 
     public void Initialize(Func<int, float> xpIncreaseFunc = null, int level = 1, int maxLevel = 10, float xp = 0)
     {
-        Lvl = level;
-        MaxLvl = maxLevel;
-        Xp = xp;
+        _level = level;
+        _maxLevel = maxLevel;
+        _xp = xp;
 
         if (xpIncreaseFunc == null)
             xpIncreaseFunc = Utils.DefaultXpIncreaseFormula;
@@ -29,8 +33,12 @@ public class Level : MonoBehaviour, IGauge
         _xpPerLevelIncreaseFunction = xpIncreaseFunc;
 
         XpPerLevel = GetNextXpPerLevel(Lvl);
+
+        RpcOnLevelChanged(_level);
+        RpcOnXpReceived(_xp);
     }
 
+    [Command(requiresAuthority = false)]
     public void AddXp(float amount)
     {
         if (Lvl >= MaxLvl)
@@ -39,7 +47,7 @@ public class Level : MonoBehaviour, IGauge
         if (amount <= 0)
             return;
 
-        Xp += amount;
+        _xp += amount;
 
         if (Xp >= XpPerLevel)
         {
@@ -47,18 +55,26 @@ public class Level : MonoBehaviour, IGauge
             LevelUp(xpRemainder);
         }
 
-        OnValueChanged?.Invoke();
+        RpcOnXpReceived(amount);
+        RpcOnValueChanged();
     }
 
+    [Server]
     private void LevelUp(float xpRemainder)
     {
-        Xp = xpRemainder;
+        _xp = xpRemainder;
 
-        Lvl++;
+        _level++;
+
+        RpcOnLevelChanged(_level);
 
         XpPerLevel = GetNextXpPerLevel(Lvl);
     }
 
     private float GetNextXpPerLevel(int level)
         => _xpPerLevelIncreaseFunction(level);
+
+    [ClientRpc] private void RpcOnValueChanged() => OnValueChanged?.Invoke();
+    [ClientRpc] private void RpcOnLevelChanged(int level) => OnLevelChanged?.Invoke(level);
+    [ClientRpc] private void RpcOnXpReceived(float amount) => OnXpReceived?.Invoke(amount);
 }

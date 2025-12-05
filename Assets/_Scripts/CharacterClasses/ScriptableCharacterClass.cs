@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Class/Class")]
 public class ScriptableCharacterClass : ScriptableObject
 {
+    [field: SerializeField] public string ClassName { get; private set; }
     [SerializeField] private List<ScriptableAbility> _abilities = new();
 
     public CharacterClass GetNew()

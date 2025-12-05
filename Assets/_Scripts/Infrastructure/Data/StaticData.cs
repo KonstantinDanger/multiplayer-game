@@ -19,6 +19,9 @@ public class StaticData : ScriptableObject
     [field: SerializeField] public DamageText DamageTextPrefab { get; private set; }
     [field: SerializeField] public PlayerHUD PlayerHUDPrefab { get; private set; }
 
+    public override string ToString()
+        => $"Static data";
+
     public static class Constants
     {
         private static readonly Dictionary<StatType, string> StatNames = new()

@@ -12,14 +12,12 @@ public abstract class GameState : IState
     public void Enter()
         => OnEnter();
 
-    public void Exit()
-    {
-        _container
-            .Resolve<MainUI>()
-            .Dispose();
+    public void Exit() =>
+        //_container
+        //    .Resolve<MainUI>()
+        //    .Dispose();
 
         OnExit();
-    }
 
     public virtual void OnEnter() { }
     public virtual void OnExit() { }

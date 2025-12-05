@@ -17,6 +17,7 @@ public class Player : Entity
     public ScriptableCharacterClass CharacterClass => _characterClass;
 
     private bool _isMenuActive = true;
+    private MainUI _playerUI;
     private LobbyUI _menu;
     private PlayerHUD _playerHUD;
 
@@ -24,18 +25,14 @@ public class Player : Entity
         !NetworkClient.active &&
         !NetworkServer.active;
 
-    //public override void OnStartLocalPlayer()
-    //{
-    //    base.OnStartLocalPlayer();
-
-    //    _thirdPersonModel.SetActive(false);
-    //}
-
     protected override IInputBrain SetInputBrain()
         => new PlayerInput();
 
     public override void OnStartClient()
     {
+        if (isClient)
+            DontDestroyOnLoad(gameObject);
+
         base.OnStartClient();
 
         if (!isLocalPlayer)
@@ -54,6 +51,7 @@ public class Player : Entity
     {
         //_menu = ServiceLocator.Container.Resolve<LobbyUI>();
 
+        _isMenuActive = true;
         HandleMenuInvoked();
 
         _abilities.Initialize(_characterClass
@@ -115,6 +113,10 @@ public class Player : Entity
         PlayerDeathHandler.HandleDeath(RespawnAction);
     }
 
+    [TargetRpc]
+    public void ToggleHUD(bool active)
+        => _playerHUD.gameObject.SetActive(active);
+
     public void Respawn()
         => Damageable.Respawn();
 
@@ -123,12 +125,17 @@ public class Player : Entity
         => _level.Initialize();
 
     [TargetRpc]
-    public void CreateHUD()
+    public void CreateUI()
     {
-        GameFactory factory = ServiceLocator.Container.Resolve<GameFactory>();
-        var hudPrefab = ServiceLocator.Container.Resolve<StaticData>().PlayerHUDPrefab;
-        var hudInstance = factory.AddUI(hudPrefab) as PlayerHUD;
-        hudInstance.Initialize(_abilities, Damageable, _level);
+        if (!CanDoActions())
+            return;
+
+        var data = ServiceLocator.Container.Resolve<StaticData>();
+        var hudPrefab = data.PlayerHUDPrefab;
+
+        _playerUI = Instantiate(data.UIPrefab, transform);
+        _playerHUD = Instantiate(hudPrefab, _playerUI.transform);
+        _playerHUD.Initialize(_abilities, Damageable, _level);
     }
 
     [TargetRpc]

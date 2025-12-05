@@ -1,7 +1,8 @@
 using AYellowpaper;
+using Mirror;
 using UnityEngine;
 
-public class XpDrop : MonoBehaviour
+public class XpDrop : NetworkBehaviour
 {
     [SerializeField] private InterfaceReference<IDamageable> _damageableRef;
 

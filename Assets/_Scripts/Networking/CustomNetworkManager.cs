@@ -11,29 +11,26 @@ public class CustomNetworkManager : NetworkManager
 
     public Action<string> OnServerSceneLoaded;
 
-    private StaticData _staticData;
-    private GameFactory _gameFactory;
-
     public Lobby Lobby => _lobby;
 
-    public override void Start()
+    public override void OnClientConnect()
     {
-        base.Start();
+        base.OnClientConnect();
 
-        _staticData = ServiceLocator.Container.Resolve<StaticData>();
-        _gameFactory = ServiceLocator.Container.Resolve<GameFactory>();
+        autoCreatePlayer = false;
     }
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
-        if (!autoCreatePlayer)
-            return;
-
         base.OnServerAddPlayer(conn);
 
-        DontDestroyOnLoad(conn.identity.gameObject);
+        Player player = conn.identity.gameObject.GetComponent<Player>();
 
-        Events.InvokePlayerConnected(conn.identity.GetComponent<Player>());
+        UnityEngine.Debug.Log("create ui ");
+
+        player.CreateUI();
+
+        Events.InvokePlayerConnected(player);
 
         //CSteamID steamID = SteamMatchmaking.GetLobbyMemberByIndex(Lobby.LobbyId, numPlayers - 1);
 
@@ -62,15 +59,6 @@ public class CustomNetworkManager : NetworkManager
             //_teleporter.Warp(currentPlayer, spawnPosition);
         }
     }
-
-    //[Server]
-    //private void TeleportPlayer(GameObject player, Vector3 position)
-    //{
-    //    if (player.TryGetComponent(out NetworkTransformBase netTransform))
-    //    {
-    //        netTransform.ServerTeleport(position, Quaternion.identity);
-    //    }
-    //}
 }
 
 
