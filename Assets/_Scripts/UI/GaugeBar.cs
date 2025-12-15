@@ -1,8 +1,7 @@
-﻿using Mirror;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class GaugeBar : NetworkBehaviour
+public class GaugeBar : MonoBehaviour
 {
     [SerializeField] private Slider _slider;
     [SerializeField] private bool _reverseGauge;
@@ -21,20 +20,7 @@ public class GaugeBar : NetworkBehaviour
         Gauge.OnValueChanged += HandleValueChanged;
 
         _initialized = true;
-
-        HandleValueChanged();
     }
-
-    private void OnEnable()
-    {
-        if (Gauge == null)
-            return;
-
-        Gauge.OnValueChanged += HandleValueChanged;
-    }
-
-    private void OnDisable()
-        => Gauge.OnValueChanged -= HandleValueChanged;
 
     private void HandleValueChanged()
     {
@@ -46,6 +32,7 @@ public class GaugeBar : NetworkBehaviour
 
         SetSliderValue(value);
     }
+
 
     private void SetSliderValue(float value)
         => _slider.value = value;

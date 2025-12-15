@@ -29,6 +29,7 @@ public class Respawn : NetworkBehaviour
 
         Player player = identity.GetComponent<Player>();
         player.Spectate(false);
+        player.RefillHealth();
         CmdWarpPlayer(playerId, spawnPos.position);
     }
 

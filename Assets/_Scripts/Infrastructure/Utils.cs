@@ -33,7 +33,7 @@ public static class Utils
 
     public static GameObject NetIdToGameObject(uint netId)
     {
-        NetworkServer.spawned.TryGetValue(netId, out NetworkIdentity netObject);
+        NetworkClient.spawned.TryGetValue(netId, out NetworkIdentity netObject);
 
         return netObject.gameObject;
     }

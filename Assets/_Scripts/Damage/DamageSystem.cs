@@ -29,6 +29,8 @@ public class DamageSystem : NetworkBehaviour, IDamageable
             _damageHandlers = damageHandlers.ToList();
 
         _currentHealth = _baseHealth;
+
+        Respawn();
     }
 
     [Command(requiresAuthority = false)]

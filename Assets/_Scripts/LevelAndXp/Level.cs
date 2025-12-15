@@ -7,38 +7,38 @@ public class Level : NetworkBehaviour, IGauge
     public Action<int> OnLevelChanged;
     public Action<float> OnXpReceived;
 
-    [SyncVar] private int _level;
+    [SyncVar(hook = nameof(OnLevelSync))] private int _level;
     [SyncVar] private int _maxLevel;
-    [SyncVar] private float _xp;
+    [SyncVar(hook = nameof(OnXpSync))] private float _xp;
+    [SyncVar(hook = nameof(OnXpPerLevelSync))] private float _xpPerLevel;
 
     public int Lvl => _level;
     public int MaxLvl => _maxLevel;
     public float Xp => _xp;
-    public float XpPerLevel { get; private set; }
-
+    public float XpPerLevel => _xpPerLevel;
     public float CurrentGaugeValue => Xp;
     public float MaxGaugeValue => XpPerLevel;
 
     private Func<int, float> _xpPerLevelIncreaseFunction;
 
+    [Server]
     public void Initialize(Func<int, float> xpIncreaseFunc = null, int level = 1, int maxLevel = 10, float xp = 0)
     {
         _level = level;
         _maxLevel = maxLevel;
         _xp = xp;
 
-        if (xpIncreaseFunc == null)
-            xpIncreaseFunc = Utils.DefaultXpIncreaseFormula;
+        if (xpIncreaseFunc != null)
+            _xpPerLevelIncreaseFunction = xpIncreaseFunc;
 
-        _xpPerLevelIncreaseFunction = xpIncreaseFunc;
+        _xpPerLevel = GetNextXpPerLevel(_level);
 
-        XpPerLevel = GetNextXpPerLevel(Lvl);
-
-        RpcOnLevelChanged(_level);
-        RpcOnXpReceived(_xp);
+        OnLevelChanged?.Invoke(_level);
+        OnXpReceived?.Invoke(_xp);
+        OnValueChanged?.Invoke();
     }
 
-    //[Command(requiresAuthority = false)]
+    [Command(requiresAuthority = false)]
     public void AddXp(float amount)
     {
         if (Lvl >= MaxLvl)
@@ -54,30 +54,33 @@ public class Level : NetworkBehaviour, IGauge
             float xpRemainder = Xp - XpPerLevel;
             LevelUp(xpRemainder);
         }
-
-        RpcOnXpReceived(amount);
-        RpcOnValueChanged();
     }
 
-    //[Server]
+    [Server]
     private void LevelUp(float xpRemainder)
     {
         _xp = xpRemainder;
-
         _level++;
-
-        RpcOnLevelChanged(_level);
-
-        XpPerLevel = GetNextXpPerLevel(Lvl);
+        _xpPerLevel = GetNextXpPerLevel(Lvl);
     }
 
     private float GetNextXpPerLevel(int level)
-        => _xpPerLevelIncreaseFunction(level);
+    {
+        if (_xpPerLevelIncreaseFunction == null)
+            _xpPerLevelIncreaseFunction = Utils.DefaultXpIncreaseFormula;
 
-    /*[ClientRpc]*/
-    private void RpcOnValueChanged() => OnValueChanged?.Invoke();
-    /*[ClientRpc]*/
-    private void RpcOnLevelChanged(int level) => OnLevelChanged?.Invoke(level);
-    /*[ClientRpc]*/
-    private void RpcOnXpReceived(float amount) => OnXpReceived?.Invoke(amount);
+        return _xpPerLevelIncreaseFunction(level);
+    }
+
+    private void OnLevelSync(int oldLevel, int newLevel)
+        => OnLevelChanged?.Invoke(newLevel);
+
+    private void OnXpPerLevelSync(float oldXpPerLevel, float newXpPerLevel)
+        => OnValueChanged?.Invoke();
+
+    private void OnXpSync(float oldXp, float newXp)
+    {
+        OnXpReceived?.Invoke(newXp - oldXp);
+        OnValueChanged?.Invoke();
+    }
 }

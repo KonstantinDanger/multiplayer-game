@@ -112,14 +112,24 @@ public class Player : Entity
 
     [TargetRpc]
     public void ToggleHUD(bool active)
-        => _playerHUD.gameObject.SetActive(active);
+    {
+        _playerHUD.gameObject.SetActive(active);
+        _playerHUD.Initialize(_abilities, Damageable, _level);
+    }
 
     [ClientRpc]
     public void Respawn()
         => _respawn.Execute(this.netId, DamageSystemConfig.RespawnTime);
 
+    public void RefillHealth()
+        => Damageable.Respawn();
+
     [TargetRpc]
     public void ResetLevel()
+        => CmdResetLevel();
+
+    [Command]
+    private void CmdResetLevel()
         => _level.Initialize();
 
     [TargetRpc]
@@ -133,7 +143,7 @@ public class Player : Entity
 
         _playerUI = Instantiate(data.UIPrefab, transform);
         _playerHUD = Instantiate(hudPrefab, _playerUI.transform);
-        _playerHUD.Initialize(_abilities, Damageable, _level);
+        //_playerHUD.Initialize(_abilities, Damageable, _level);
     }
 
     [TargetRpc]

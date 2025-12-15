@@ -22,7 +22,7 @@ public class GameMatchSummaryState : GameState
 
         UnityEngine.Debug.Log("GameMatchData " + matchData);
 
-        //BackendApi.CreateMatch(matchData);
+        BackendApi.CreateMatch(matchData);
 
         _netManager.OnServerSceneLoaded += HandleLobbySceneLoaded;
 

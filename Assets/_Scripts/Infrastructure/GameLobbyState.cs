@@ -54,6 +54,7 @@ public class GameLobbyState : GameState
     {
         player.Spectate(false);
         player.SetCanAttack(false);
+        player.ResetLevel();
         player.ToggleHUD(false);
         player.Movable.Warp(_networkManager.GetStartPosition().position);
         player.Damageable.Respawn();

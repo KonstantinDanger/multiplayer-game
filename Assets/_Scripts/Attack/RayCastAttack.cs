@@ -54,13 +54,9 @@ public class RayCastAttack : Attack
 
                 damageable.TakeDamage(damage);
             }
-            endPos = hit.point;
-        }
-        else
-        {
-            endPos = startPosition + direction * Damage.Range;
         }
 
+        endPos = startPosition + direction * Damage.Range;
         Vector3 attackPosition = startPosition + currentVelocity * Time.deltaTime;
 
         rayCastView.StartBulletView(attackPosition, endPos);

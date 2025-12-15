@@ -21,5 +21,21 @@ public class XpDrop : NetworkBehaviour
 
         float xpToDrop = config.XpToDrop;
         level.AddXp(xpToDrop);
+
+        //CmdHandleXpDrop(damage);
+    }
+
+    [Command(requiresAuthority = false)]
+    private void CmdHandleXpDrop(Damage damage)
+        => ServerHandleXpDrop(damage);
+
+    [Server]
+    private void ServerHandleXpDrop(Damage damage)
+    {
+        Level level = damage.Sender.GetComponent<Level>();
+        EnemyConfig config = GetComponent<Enemy>().Config;
+
+        float xpToDrop = config.XpToDrop;
+        level.AddXp(xpToDrop);
     }
 }

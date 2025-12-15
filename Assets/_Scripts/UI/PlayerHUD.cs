@@ -19,6 +19,8 @@ public class PlayerHUD : UI
         _xpGauge.Initialize(gauge: _level);
 
         _level.OnValueChanged += HandleLevelChanged;
+
+        HandleLevelChanged();
     }
 
     private void OnDestroy()
