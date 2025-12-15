@@ -26,8 +26,6 @@ public class CustomNetworkManager : NetworkManager
 
         Player player = conn.identity.gameObject.GetComponent<Player>();
 
-        UnityEngine.Debug.Log("create ui ");
-
         player.CreateUI();
 
         Events.InvokePlayerConnected(player);

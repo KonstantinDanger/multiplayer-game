@@ -11,8 +11,17 @@ public class AbilityHandler : Ability, IGauge
     public override float CooldownTime => Ability.CooldownTime;
     public override string Name => Ability.Name;
 
-    public float CurrentGaugeValue => Time.time;
-    public float MaxGaugeValue => _nextUsageTime;
+    public float CurrentGaugeValue
+    {
+        get
+        {
+            float elapsedTime = Time.time - (_nextUsageTime - CooldownTime);
+
+            return Mathf.Clamp(elapsedTime, 0f, CooldownTime);
+        }
+    }
+
+    public float MaxGaugeValue => CooldownTime;
 
     private float _nextUsageTime = 0;
 
@@ -27,6 +36,7 @@ public class AbilityHandler : Ability, IGauge
         Ability.Perform(sender, target);
 
         SetNextUseTime();
+
     }
 
     public void Update()

@@ -38,7 +38,6 @@ public class GaugeBar : NetworkBehaviour
 
     private void HandleValueChanged()
     {
-        UnityEngine.Debug.Log("gauge value changed ");
         float value = Gauge.CurrentGaugeValue / Gauge.MaxGaugeValue;
         value = Mathf.Clamp01(value);
 

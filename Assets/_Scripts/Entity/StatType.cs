@@ -5,7 +5,7 @@ public enum StatType
     Defense = 2,
     MoveSpeed = 3,
     JumpHeight = 4,
-    AllProjectileSpeed = 5,
-    AllProjectileRadius = 6,
-    AllSplashRadius = 7,
+    projectileSpeed = 5,
+    projectileRadius = 6,
+    splashRadius = 7,
 }

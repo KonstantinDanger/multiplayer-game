@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public struct EntityStats
+public readonly struct EntityStats
 {
     private readonly Dictionary<StatType, float> _stats;
 
