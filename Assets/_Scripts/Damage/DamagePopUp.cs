@@ -28,7 +28,6 @@ public class DamagePopUp : NetworkBehaviour
     private void HandleDamageTaken(Damage damage)
         => RpcHandleDamageTaken(damage);
 
-    [ClientRpc(includeOwner = false)]
     private void RpcHandleDamageTaken(Damage damage)
     {
         float takenDamage = damage.Amount;

@@ -4,27 +4,42 @@ using UnityEngine;
 
 public class Respawn : NetworkBehaviour
 {
-    CustomNetworkManager _networkManager;
-
-    private void Start()
-        => _networkManager = ServiceLocator.Container.Resolve<CustomNetworkManager>();
-
-    public void Execute(Player player, float respawnTime)
-        => StartCoroutine(RespawnRoutine(player, respawnTime));
+    [Command(requiresAuthority = false)]
+    public void Execute(uint playerId, float respawnTime)
+        => ServerExecute(playerId, respawnTime);
 
     [Server]
-    private IEnumerator RespawnRoutine(Player player, float respawnTime)
+    private void ServerExecute(uint playerId, float respawnTime)
+        => StartCoroutine(RespawnRoutine(playerId, respawnTime));
+
+    private IEnumerator RespawnRoutine(uint playerId, float respawnTime)
     {
         yield return new WaitForSeconds(respawnTime);
-        EnablePlayer(player);
+        EnablePlayer(playerId);
     }
 
     [ClientRpc]
-    private void EnablePlayer(Player player)
+    private void EnablePlayer(uint playerId)
     {
+        if (!NetworkClient.spawned.TryGetValue(playerId, out NetworkIdentity identity))
+            throw new System.Exception("Could not resolve a player");
+
+        CustomNetworkManager netMan = ServiceLocator.Container.Resolve<CustomNetworkManager>();
+        var spawnPos = netMan.GetStartPosition();
+
+        Player player = identity.GetComponent<Player>();
         player.Spectate(false);
-        var spawnPos = _networkManager.GetStartPosition();
-        player.Movable.Warp(spawnPos.position);
-        player.Respawn();
+        CmdWarpPlayer(playerId, spawnPos.position);
+    }
+
+    [Command]
+    private void CmdWarpPlayer(uint playerId, Vector3 position)
+        => ServerWarpPlayer(playerId, position);
+
+    [Server]
+    private void ServerWarpPlayer(uint playerId, Vector3 position)
+    {
+        var player = Utils.ServerFindNetPlayerById(playerId);
+        player.Movable.Warp(position);
     }
 }

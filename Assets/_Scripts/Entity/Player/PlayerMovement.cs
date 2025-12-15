@@ -74,11 +74,15 @@ public class PlayerMovement : NetworkBehaviour, IMovable
         _controller.Move(_externalForce);
     }
 
-    [ClientRpc]
+    [TargetRpc]
     public void Warp(Vector3 position)
     {
         _controller.enabled = false;
-        _netTransform.ServerTeleport(position, Quaternion.identity);
+
+        transform.position = position;
+
+        Physics.SyncTransforms();
+
         _controller.enabled = true;
     }
 }

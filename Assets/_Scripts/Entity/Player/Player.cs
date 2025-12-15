@@ -13,7 +13,6 @@ public class Player : Entity
 
     private IPlayerInputBrain Input => InputBrain as IPlayerInputBrain;
     private IRotatablePlayerCamera Camera => Rotatable as IRotatablePlayerCamera;
-    private IPlayerDeathHandler PlayerDeathHandler { get; set; }
     public ScriptableCharacterClass CharacterClass => _characterClass;
 
     private bool _isMenuActive = true;
@@ -77,9 +76,6 @@ public class Player : Entity
     protected override void OnStart()
         => Camera.Initialize(CanDoActions());
 
-    public void Initialize(Match match)
-        => PlayerDeathHandler = new PlayerDeathHandler(this, match);
-
     protected override void Update()
     {
         if (!CanDoActions())
@@ -107,18 +103,20 @@ public class Player : Entity
     {
         Spectate(true);
 
-        void RespawnAction()
-            => _respawn.Execute(this, DamageSystemConfig.RespawnTime);
-
-        PlayerDeathHandler.HandleDeath(RespawnAction);
+        CmdOnDemise(this.netId);
     }
+
+    [Command(requiresAuthority = false)]
+    private void CmdOnDemise(uint netId)
+        => Events.InvokePlayerDemise(netId);
 
     [TargetRpc]
     public void ToggleHUD(bool active)
         => _playerHUD.gameObject.SetActive(active);
 
+    [ClientRpc]
     public void Respawn()
-        => Damageable.Respawn();
+        => _respawn.Execute(this.netId, DamageSystemConfig.RespawnTime);
 
     [TargetRpc]
     public void ResetLevel()
@@ -142,7 +140,6 @@ public class Player : Entity
     public void SetCanAttack(bool canAttack)
         => Input.SetPlayerAttackInput(canAttack);
 
-    [ClientRpc]
     public void Spectate(bool active)
         => Input.SetPlayerInput(!active);
 

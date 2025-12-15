@@ -38,7 +38,7 @@ public class Level : NetworkBehaviour, IGauge
         RpcOnXpReceived(_xp);
     }
 
-    [Command(requiresAuthority = false)]
+    //[Command(requiresAuthority = false)]
     public void AddXp(float amount)
     {
         if (Lvl >= MaxLvl)
@@ -59,7 +59,7 @@ public class Level : NetworkBehaviour, IGauge
         RpcOnValueChanged();
     }
 
-    [Server]
+    //[Server]
     private void LevelUp(float xpRemainder)
     {
         _xp = xpRemainder;
@@ -74,7 +74,10 @@ public class Level : NetworkBehaviour, IGauge
     private float GetNextXpPerLevel(int level)
         => _xpPerLevelIncreaseFunction(level);
 
-    [ClientRpc] private void RpcOnValueChanged() => OnValueChanged?.Invoke();
-    [ClientRpc] private void RpcOnLevelChanged(int level) => OnLevelChanged?.Invoke(level);
-    [ClientRpc] private void RpcOnXpReceived(float amount) => OnXpReceived?.Invoke(amount);
+    /*[ClientRpc]*/
+    private void RpcOnValueChanged() => OnValueChanged?.Invoke();
+    /*[ClientRpc]*/
+    private void RpcOnLevelChanged(int level) => OnLevelChanged?.Invoke(level);
+    /*[ClientRpc]*/
+    private void RpcOnXpReceived(float amount) => OnXpReceived?.Invoke(amount);
 }

@@ -5,6 +5,14 @@ using UnityEngine;
 
 public static class Utils
 {
+    public static Player ServerFindNetPlayerById(uint netId)
+    {
+        if (!NetworkServer.spawned.TryGetValue(netId, out NetworkIdentity identity))
+            throw new Exception("Player not found on the server");
+
+        return identity.GetComponent<Player>();
+    }
+
     public static Func<int, float> DefaultXpIncreaseFormula = (lvl) =>
     {
         //TODO: get this formula from static data

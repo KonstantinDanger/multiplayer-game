@@ -18,6 +18,7 @@ public class GameMatchState : GameState
     private GameData _gameData;
 
     private float _matchTime;
+    private CustomNetworkManager _netManager;
 
     public GameMatchState(IStateMachine stateMachine, ServiceLocator container) : base(stateMachine, container) { }
 
@@ -27,13 +28,15 @@ public class GameMatchState : GameState
         _factory = Resolve<GameFactory>();
         _gameMatchData = _data.GameMatchData;
         _gameData = Resolve<PersistentGameData>().GameData;
+        _netManager = Resolve<CustomNetworkManager>();
 
+        InitSpawnPositions();
         InitZone();
         InitMatch();
-        InitPlayers(_match);
+        InitPlayers();
         InitializeMatchData(_gameData);
 
-        Events.OnPlayerLost += HandlePlayerLost;
+        Events.OnPlayerDemise += HandlePlayerDemise;
     }
 
     public override void Update(float deltaTime)
@@ -53,7 +56,7 @@ public class GameMatchState : GameState
 
     public override void OnExit()
     {
-        Events.OnPlayerLost -= HandlePlayerLost;
+        Events.OnPlayerDemise -= HandlePlayerDemise;
 
         _dataBinders
             .ForEach(dataB => dataB
@@ -67,7 +70,20 @@ public class GameMatchState : GameState
         });
     }
 
-    private void HandlePlayerLost(Player player)
+    private void HandlePlayerDemise(uint playerId)
+    {
+        Player player = Utils.ServerFindNetPlayerById(playerId);
+
+        if (_match.IsDeathmatchActive)
+        {
+            HandlePlayerMatchLost(player);
+            return;
+        }
+
+        player.Respawn();
+    }
+
+    private void HandlePlayerMatchLost(Player player)
     {
         var loser = player;
         var winner = _players.Find(p => p != player);
@@ -87,6 +103,17 @@ public class GameMatchState : GameState
         _gameData.GameMatchData.MatchData.SetDate(DateTime.Now);
 
         GoTo<GameMatchSummaryState>();
+    }
+
+    private void InitSpawnPositions()
+    {
+        List<Transform> spawnPoints = GameObject
+            .FindObjectsOfType<NetworkStartPosition>()
+            .ToList()
+            .Select(p => p.transform)
+            .ToList();
+
+        _netManager.SetSpawnPositions(spawnPoints);
     }
 
     private void InitializeMatchData(GameData gameData)
@@ -110,20 +137,18 @@ public class GameMatchState : GameState
         }
     }
 
-    private void InitPlayers(Match match)
+    private void InitPlayers()
     {
         foreach (var conn in NetworkServer.connections.Values)
         {
             Player player = conn.identity.GetComponent<Player>();
-            player.Initialize(match);
             player.ResetLevel();
             player.ToggleHUD(true);
             player.SetCanAttack(true);
             _players.Add(player);
         }
 
-        Resolve<CustomNetworkManager>()
-            .ShufflePlayersPositions();
+        _netManager.ShufflePlayersPositions();
     }
 
     private void InitMatch()

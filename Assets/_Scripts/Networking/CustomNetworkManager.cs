@@ -1,7 +1,6 @@
 using Mirror;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class CustomNetworkManager : NetworkManager
@@ -40,21 +39,22 @@ public class CustomNetworkManager : NetworkManager
     public override void OnServerSceneChanged(string sceneName)
         => OnServerSceneLoaded?.Invoke(sceneName);
 
+    public void SetSpawnPositions(List<Transform> positions)
+    {
+        startPositions.Clear();
+
+        positions?.ForEach(position => RegisterStartPosition(position));
+    }
+
     public void ShufflePlayersPositions()
     {
-        List<NetworkStartPosition> startPositions = FindObjectsByType<NetworkStartPosition>(FindObjectsSortMode.None).ToList();
-        startPositions.ForEach(pos => RegisterStartPosition(pos.transform));
-
         foreach (var item in NetworkServer.connections)
         {
             var currentPlayer = item.Value.identity.gameObject;
-            var spawnPosition = GetStartPosition().position;
+            var positionTransform = GetStartPosition();
+            var spawnPosition = positionTransform.position;
             var movable = currentPlayer.GetComponent<IMovable>();
-
             movable.Warp(spawnPosition);
-
-            //TeleportPlayer(currentPlayer, spawnPosition);
-            //_teleporter.Warp(currentPlayer, spawnPosition);
         }
     }
 }
