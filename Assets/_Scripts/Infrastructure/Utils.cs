@@ -8,7 +8,7 @@ public static class Utils
     public static Player ServerFindNetPlayerById(uint netId)
     {
         if (!NetworkServer.spawned.TryGetValue(netId, out NetworkIdentity identity))
-            throw new Exception("Player not found on the server");
+            throw new Exception("player not found on the server");
 
         return identity.GetComponent<Player>();
     }

@@ -63,47 +63,20 @@ public class Entity : NetworkBehaviour, IDisposable
     {
         InputBrain.Update();
 
-        float currentSpeed =
-            (InputBrain.IsSprinting && MovementInput != Vector2.zero) ?
-            MovementConfig.SprintSpeed : MovementConfig.Speed;
-
-        Vector3 movementDirection = GetMovementDirection(MovementInput);
-        Movable.Move(movementDirection, currentSpeed, MovementConfig.MovementSmoothness);
-        Movable.ApplyGravity(MovementConfig.Gravity, MovementConfig.MaxFallSpeed);
-
         Rotatable.Rotate(RotationInput, RotationConfig.RotationSpeed);
-    }
-
-    private Vector3 GetMovementDirection(Vector2 movementVector)
-    {
-        Vector3 v = transform.right * movementVector.x + transform.forward * movementVector.y;
-        v = Vector3.ClampMagnitude(v, 1f);
-        return v;
     }
 
     protected virtual void OnDamageTaken(Damage damage) { }
 
     protected virtual void OnDemise(Damage damage) { }
 
-    protected virtual void HandleOnEnable()
-    {
+    protected virtual void HandleOnEnable() { }
 
-    }
+    protected virtual void HandleOnDisable() { }
 
-    protected virtual void HandleOnDisable()
-    {
+    protected virtual void OnAwake() { }
 
-    }
-
-    protected virtual void OnAwake()
-    {
-
-    }
-
-    protected virtual void OnStart()
-    {
-
-    }
+    protected virtual void OnStart() { }
 
     protected virtual void HandleJump()
         => Movable.Jump(MovementConfig.JumpHeight, MovementConfig.Gravity);

@@ -4,6 +4,7 @@ using UnityEngine;
 public interface IMovable
 {
     event Action OnMove;
+    bool IsGrounded { get; }
     bool IsGravityActive { get; set; }
     Vector3 Velocity { get; }
     void ResetVerticalVelocity();

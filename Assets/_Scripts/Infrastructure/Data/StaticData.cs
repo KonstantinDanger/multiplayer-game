@@ -37,7 +37,7 @@ public class StaticData : ScriptableObject
         };
 
         public static float SecondsInMinute = 60f;
-        public static int PlayerLayer = LayerMask.NameToLayer("Player");
+        public static int PlayerLayer = LayerMask.NameToLayer("player");
         public static int EnemyLayer = LayerMask.NameToLayer("Enemy");
         public static string EmptyTag = "Untagged";
 

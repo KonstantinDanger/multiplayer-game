@@ -9,6 +9,8 @@ public class NavMeshMovable : MonoBehaviour, IMovable
     public bool IsGravityActive { get; set; }
     public Vector3 Velocity => _agent.velocity;
 
+    public bool IsGrounded => throw new NotImplementedException();
+
     public event Action OnMove;
 
     public void ResetVerticalVelocity() => throw new NotImplementedException();

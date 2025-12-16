@@ -12,6 +12,9 @@ public class NonMovable : MonoBehaviour, IMovable
 
     public bool IsGravityActive { get; set; }
     public Vector3 Velocity { get; private set; }
+
+    public bool IsGrounded => true;
+
     public event Action OnMove;
     public void AddExternalForce(Vector3 force) { }
     public void ApplyGravity(float gravity, float maxFallSpeed) { }

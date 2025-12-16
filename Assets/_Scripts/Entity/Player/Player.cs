@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : Entity
 {
+    private IStateMachine _stateMachine;
+
     [SerializeField] private RayCastDamager _damager; //For testing
     [SerializeField] private Respawn _respawn;
     [SerializeField] private GameObject _headObject;
@@ -48,6 +50,7 @@ public class Player : Entity
 
     protected override void OnAwake()
     {
+        _stateMachine = new PlayerStateMachine(this);
         //_menu = ServiceLocator.Container.Resolve<LobbyUI>();
 
         _isMenuActive = true;
@@ -80,6 +83,10 @@ public class Player : Entity
     {
         if (!CanDoActions())
             return;
+
+        _stateMachine.CurrentState.Update(Time.deltaTime);
+
+        UnityEngine.Debug.Log("Current state: " + _stateMachine.CurrentState);
 
         base.Update();
     }
@@ -143,7 +150,6 @@ public class Player : Entity
 
         _playerUI = Instantiate(data.UIPrefab, transform);
         _playerHUD = Instantiate(hudPrefab, _playerUI.transform);
-        //_playerHUD.Initialize(_abilities, Damageable, _level);
     }
 
     [TargetRpc]

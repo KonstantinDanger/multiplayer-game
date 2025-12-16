@@ -12,13 +12,16 @@ public class PlayerMovement : NetworkBehaviour, IMovable
     [SerializeField] private NetworkTransformBase _netTransform;
     [SerializeField] private float _groundedSnapForce = 5f;
 
-    public Vector3 Velocity { get; private set; }
+    public Vector3 Velocity => new(_horizontalVelocity.x, _verticalVelocity, _horizontalVelocity.z);
 
     public bool IsGravityActive { get; set; } = true;
+
+    public bool IsGrounded => _controller.isGrounded;
 
     private Vector3 _externalForce;
     private Vector3 _movementDelta;
     private float _verticalVelocity;
+    private Vector3 _horizontalVelocity;
 
     public void ApplyGravity(float gravity, float maxFallSpeed)
     {
@@ -51,15 +54,15 @@ public class PlayerMovement : NetworkBehaviour, IMovable
 
     public void Move(Vector3 direction, float speed, float smoothness)
     {
+        direction.y = 0f;
         Vector3 targetVelocity = direction.normalized * speed;
-
-        Velocity = Vector3.SmoothDamp(
+        _horizontalVelocity = Vector3.SmoothDamp(
             Velocity,
             targetVelocity,
             ref _movementDelta,
             smoothness);
 
-        _controller.Move(Velocity * Time.deltaTime);
+        _controller.Move(_horizontalVelocity * Time.deltaTime);
 
         OnMove?.Invoke();
     }
