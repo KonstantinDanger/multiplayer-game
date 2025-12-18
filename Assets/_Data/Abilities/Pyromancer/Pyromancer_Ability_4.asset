@@ -13,28 +13,14 @@ MonoBehaviour:
   m_Name: Pyromancer_Ability_4
   m_EditorClassIdentifier: 
   _ability:
-    rid: 4564918650709475396
+    rid: 9013964976533274695
   references:
     version: 2
     RefIds:
-    - rid: 4564918650709475396
-      type: {class: AttackAbility, ns: , asm: Assembly-CSharp}
+    - rid: 9013964976533274695
+      type: {class: EntitySummonAbility, ns: , asm: Assembly-CSharp}
       data:
-        <Name>k__BackingField: Ultimate
-        <CooldownTime>k__BackingField: 120
-        _attack:
-          rid: 4564918650709475398
-    - rid: 4564918650709475398
-      type: {class: RayCastAttack, ns: , asm: Assembly-CSharp}
-      data:
-        Amount: 100
-        TimeBetweenAttacks: 0.05
-        Damage:
-          Amount: 3
-          AttackLayers:
-            serializedVersion: 2
-            m_Bits: 256
-          Type: 0
-          Range: 30
-        _verticalSpreadAngle: 90
-        _horizontalSpreadAngle: 90
+        <Name>k__BackingField: Hydra summon
+        <CooldownTime>k__BackingField: 30
+        _maxSummonCount: 1
+        _entityPrefab: {fileID: 6231648512285206155, guid: e8e6ae855a1152e4bafdd7365f9f468c, type: 3}

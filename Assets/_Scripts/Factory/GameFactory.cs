@@ -38,4 +38,11 @@ public class GameFactory : NetworkBehaviour
 
         return proj;
     }
+
+    public Entity SpawnEntity(Entity entityPrefab, Vector3 summonPosition, Quaternion rotation, NetworkBehaviour owner)
+    {
+        var summon = Instantiate(entityPrefab, summonPosition, rotation, null);
+        NetworkServer.Spawn(summon.gameObject, owner.gameObject);
+        return summon;
+    }
 }
