@@ -24,7 +24,7 @@ public class ProjectileShooter : NetworkBehaviour
 
         Projectile proj = Instantiate(_projectilePrefab, _shootPosition.position, Quaternion.LookRotation(shootDir));
 
-        ProjectileData data = new()
+        ProjectileData data = new(proj.netId)
         {
             SenderId = netId,
             Direction = shootDir

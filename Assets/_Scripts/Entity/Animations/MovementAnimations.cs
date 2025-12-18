@@ -47,10 +47,11 @@ public class MovementAnimations : NetworkBehaviour
 
     private void HandleMove()
     {
-        if (Movable.IsGrounded)
-            HandleGroundedMovement();
-        else
-            HandleAirborneMovement();
+        { }
+        //if (Movable.IsGrounded)
+        HandleGroundedMovement();
+        //else
+        //    HandleAirborneMovement();
     }
 
     private void HandleAirborneMovement()

@@ -36,8 +36,8 @@ MonoBehaviour:
             m_Bits: 256
           Type: 0
           Range: 0
-          SenderNetId: 0
+          SenderNetId: 3
           ReceiverNetId: 0
           AttackDirection: {x: 0, y: 0, z: 0}
-        _flightSpeed: 20
+        _flightSpeed: 265
         _projectilePrefab: {fileID: 9165549781829025688, guid: 4e89d65d3dfe26a4d8788a6b409d8797, type: 3}

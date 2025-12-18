@@ -200,13 +200,13 @@ public class Player : Entity
         //_menu.gameObject.SetActive(_isMenuActive);
     }
 
-    //private void LateUpdate()
-    //{
-    //    if (!CanDoActions())
-    //        return;
+    private void LateUpdate()
+    {
+        if (!CanDoActions())
+            return;
 
-    //    _headObject.transform.position = Camera.Transform.position;
-    //}
+        _headObject.transform.position = Camera.Transform.position;
+    }
 
     private bool CanDoActions()
         => isLocalPlayer || IsOffline;

@@ -15,16 +15,12 @@ public class ProjectileLaunchAttack : Attack
         var attacker = sender.GetComponentInChildren<IAttacker>();
         var rotatable = sender.GetComponent<IRotatable>();
 
-        ProjectileData data = new()
-        {
-            Direction = rotatable.Forward,
-            Speed = _flightSpeed,
-            SenderId = sender.netId,
-        };
-
         factory.SpawnProjectile(
             _projectilePrefab,
-            data,
+            rotatable.Forward,
+            _flightSpeed,
+            sender,
+            Damage,
             attacker.AttackPoint,
             Quaternion.LookRotation(rotatable.Forward),
             null);

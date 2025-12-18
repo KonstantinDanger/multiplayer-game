@@ -43,18 +43,8 @@ public class RayCastAttack : Attack
         Vector3 endPos;
 
         if (Physics.Raycast(startPosition, direction, out RaycastHit hit, Damage.Range, Damage.AttackLayers, QueryTriggerInteraction.Ignore))
-        {
             if (hit.collider.TryGetComponent(out IDamageable damageable))
-            {
-                Damage damage = new()
-                {
-                    Amount = Damage.Amount,
-                    SenderNetId = _sender.GetComponent<NetworkIdentity>().netId
-                };
-
-                damageable.TakeDamage(damage);
-            }
-        }
+                damageable.TakeDamage(Damage);
 
         endPos = startPosition + direction * Damage.Range;
         Vector3 attackPosition = startPosition + currentVelocity * Time.deltaTime;

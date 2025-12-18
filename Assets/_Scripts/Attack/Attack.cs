@@ -17,6 +17,12 @@ public abstract class Attack
         if (_inProcess)
             return;
 
+        if (sender != null)
+            Damage.SenderNetId = sender.netId;
+
+        if (target != null)
+            Damage.ReceiverNetId = target.netId;
+
         var coroutineHolder = ServiceLocator.Container.Resolve<CoroutineHolder>();
 
         if (RequireAlternatingAttacks())

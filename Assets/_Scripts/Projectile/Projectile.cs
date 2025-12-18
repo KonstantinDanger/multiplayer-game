@@ -17,6 +17,8 @@ public class Projectile : NetworkBehaviour
     [SerializeReference, SubclassSelector]
     private ProjectileCollisionReaction _collisionReaction;
 
+    public Collider Collider => _collider;
+
 #if UNITY_EDITOR
     protected override void OnValidate()
     {
@@ -31,22 +33,13 @@ public class Projectile : NetworkBehaviour
 #endif
     public void Initialize(ProjectileData data)
     {
-        Data = new(_collider)
-        {
-            SenderId = data.SenderId,
-            Direction = data.Direction,
-            Speed = data.Speed
-        };
+        Data = data;
 
         _collider.excludeLayers |= (1 << data.Sender.layer);
     }
 
     private void Start()
-    {
-        _movementMethod.Initialize(this);
-
-        Destroy(gameObject, _destroyTime);
-    }
+        => Destroy(gameObject, _destroyTime);
 
     private void Update()
     {

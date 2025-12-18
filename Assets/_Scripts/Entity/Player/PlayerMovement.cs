@@ -56,12 +56,14 @@ public class PlayerMovement : NetworkBehaviour, IMovable
     {
         direction.y = 0f;
         Vector3 targetVelocity = direction.normalized * speed;
+
         _horizontalVelocity = Vector3.SmoothDamp(
             Velocity,
             targetVelocity,
             ref _movementDelta,
             smoothness);
 
+        //_horizontalVelocity.y = 0f;
         _controller.Move(_horizontalVelocity * Time.deltaTime);
 
         OnMove?.Invoke();
