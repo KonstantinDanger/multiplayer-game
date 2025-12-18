@@ -15,6 +15,7 @@ public class MovementAnimations : NetworkBehaviour
     [SerializeField] private string _verticalInputParamName = "VerticalVelocity";
     [SerializeField] private string _horizontalInputParamName = "HorizontalVelocity";
     [SerializeField] private string _movementAngle = "MovementAngle";
+    [SerializeField] private string _airborneVelocityParamName = "AirborneVelocity";
 
     private IMovable Movable => _movable.Value;
     private IRotatable Rotatable => _rotatable.Value;
@@ -45,6 +46,21 @@ public class MovementAnimations : NetworkBehaviour
     }
 
     private void HandleMove()
+    {
+        if (Movable.IsGrounded)
+            HandleGroundedMovement();
+        else
+            HandleAirborneMovement();
+    }
+
+    private void HandleAirborneMovement()
+    {
+        float velocityY = Movable.Velocity.y;
+        velocityY = Mathf.Clamp(velocityY, -1, 1);
+        _anim.SetFloat(_airborneVelocityParamName, velocityY);
+    }
+
+    private void HandleGroundedMovement()
     {
         Vector3 velocity = Movable.Velocity;
         velocity.y = 0f;
