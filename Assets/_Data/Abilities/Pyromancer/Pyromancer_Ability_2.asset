@@ -20,21 +20,24 @@ MonoBehaviour:
     - rid: 4564918620506292294
       type: {class: AttackAbility, ns: , asm: Assembly-CSharp}
       data:
-        <Name>k__BackingField: Light Spread
-        <CooldownTime>k__BackingField: 1
+        <Name>k__BackingField: Fire pistols
+        <CooldownTime>k__BackingField: 10
         _attack:
-          rid: 4564918645034057794
-    - rid: 4564918645034057794
-      type: {class: RayCastAttack, ns: , asm: Assembly-CSharp}
+          rid: 9013964976533274693
+    - rid: 9013964976533274693
+      type: {class: ProjectileLaunchAttack, ns: , asm: Assembly-CSharp}
       data:
-        Amount: 8
-        TimeBetweenAttacks: 0
+        Amount: 30
+        TimeBetweenAttacks: 0.1
         Damage:
-          Amount: 6
+          Amount: 1
           AttackLayers:
             serializedVersion: 2
             m_Bits: 256
           Type: 0
           Range: 10
-        _verticalSpreadAngle: 10
-        _horizontalSpreadAngle: 10
+          SenderNetId: 3
+          ReceiverNetId: 0
+          AttackDirection: {x: 0, y: 0, z: 0}
+        _flightSpeed: 330
+        _projectilePrefab: {fileID: 8014522202720145984, guid: ebbfe0f2fd9bce4499cf0997f41c9df6, type: 3}

@@ -35,6 +35,9 @@ MonoBehaviour:
             serializedVersion: 2
             m_Bits: 256
           Type: 0
-          Range: 20
+          Range: 50
+          SenderNetId: 3
+          ReceiverNetId: 0
+          AttackDirection: {x: 0, y: 0, z: 0}
         _verticalSpreadAngle: 0
         _horizontalSpreadAngle: 0

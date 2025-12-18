@@ -187,7 +187,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5333139322379582824, guid: 6fe37b2e210253d4ca78eb06ca0754de, type: 3}
       propertyPath: m_Value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6317878465364098947, guid: 6fe37b2e210253d4ca78eb06ca0754de, type: 3}
       propertyPath: _reverseGauge

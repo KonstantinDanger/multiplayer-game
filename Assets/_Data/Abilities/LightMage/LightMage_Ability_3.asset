@@ -39,5 +39,5 @@ MonoBehaviour:
           SenderNetId: 0
           ReceiverNetId: 0
           AttackDirection: {x: 0, y: 0, z: 0}
-        _verticalSpreadAngle: 7
-        _horizontalSpreadAngle: 7
+        _verticalSpreadAngle: 2
+        _horizontalSpreadAngle: 2
