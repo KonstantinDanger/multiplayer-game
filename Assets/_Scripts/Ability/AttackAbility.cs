@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mirror;
+using System;
 using UnityEngine;
 
 [Serializable]
@@ -6,7 +7,7 @@ public class AttackAbility : Ability
 {
     [SerializeReference, SubclassSelector] private Attack _attack;
 
-    protected override void OnPerform(GameObject sender, GameObject target)
+    protected override void OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
     {
         _attack.Apply(sender, target);
 

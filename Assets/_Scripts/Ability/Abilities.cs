@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using Mirror;
+using System.Collections.Generic;
 
-public class Abilities : MonoBehaviour
+public class Abilities : NetworkBehaviour
 {
     private readonly List<AbilityHandler> _abilities = new();
 
@@ -23,10 +23,10 @@ public class Abilities : MonoBehaviour
     /// <summary>
     /// Method for calling primary ability (0 index)
     /// </summary>
-    public void Use(GameObject target = null)
-        => _abilities[0].Perform(gameObject, target);
+    public void Use(NetworkBehaviour target = null)
+        => _abilities[0].Perform(this, target);
 
-    public void Use(int index, GameObject target = null)
+    public void Use(int index, NetworkBehaviour target = null)
     {
         if (index > _abilities.Count)
             throw new System.Exception("Wrong index");
@@ -37,7 +37,7 @@ public class Abilities : MonoBehaviour
             return;
 
 
-        selected.Perform(gameObject, target);
+        selected.Perform(this, target);
     }
 
     public void Upgrade(Ability ability)

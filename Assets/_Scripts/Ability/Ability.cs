@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mirror;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ public abstract class Ability
     [field: SerializeField] public virtual float CooldownTime { get; private set; }
     [SerializeReference, SubclassSelector] private List<GameActions.Action> _actionsToPerform = new();
 
-    public void Perform(GameObject sender, GameObject target)
+    public void Perform(NetworkBehaviour sender, NetworkBehaviour target)
     {
         if (_actionsToPerform.Count != 0)
             _actionsToPerform.ForEach(action => action.Invoke());
@@ -20,7 +21,7 @@ public abstract class Ability
     public void AddAction(GameActions.Action action)
         => _actionsToPerform.Add(action);
 
-    protected abstract void OnPerform(GameObject sender, GameObject target);
+    protected abstract void OnPerform(NetworkBehaviour sender, NetworkBehaviour target);
 
     public override bool Equals(object obj)
     {

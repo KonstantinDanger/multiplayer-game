@@ -1,6 +1,7 @@
+using Mirror;
 using UnityEngine;
 
-public class ProjectileShooter : MonoBehaviour
+public class ProjectileShooter : NetworkBehaviour
 {
     [SerializeField] private Projectile _projectilePrefab;
 
@@ -25,7 +26,7 @@ public class ProjectileShooter : MonoBehaviour
 
         ProjectileData data = new()
         {
-            Sender = gameObject,
+            SenderId = netId,
             Direction = shootDir
         };
         proj.Initialize(data);

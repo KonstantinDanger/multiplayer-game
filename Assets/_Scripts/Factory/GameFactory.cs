@@ -20,4 +20,12 @@ public class GameFactory : NetworkBehaviour
 
         return text;
     }
+
+    public Projectile SpawnProjectile(Projectile projectile, ProjectileData data, Transform transform, Quaternion rotation, Transform parent = null)
+    {
+        Projectile proj = Instantiate(projectile, transform.position, rotation, parent);
+        proj.Initialize(data);
+        NetworkServer.Spawn(proj.gameObject, data.Sender);
+        return proj;
+    }
 }

@@ -33,7 +33,7 @@ public class Projectile : NetworkBehaviour
     {
         Data = new(_collider)
         {
-            Sender = data.Sender,
+            SenderId = data.SenderId,
             Direction = data.Direction,
             Speed = data.Speed
         };

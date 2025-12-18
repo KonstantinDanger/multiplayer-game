@@ -9,9 +9,9 @@ public class RayCastAttack : Attack
     [SerializeField, Range(0, 360)] private float _verticalSpreadAngle;
     [SerializeField, Range(0, 360)] private float _horizontalSpreadAngle;
 
-    private GameObject _sender;
+    private NetworkBehaviour _sender;
 
-    protected override void OnApply(GameObject sender, GameObject target)
+    protected override void OnApply(NetworkBehaviour sender, NetworkBehaviour target)
     {
         _sender = sender;
 

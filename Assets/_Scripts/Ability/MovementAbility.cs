@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mirror;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -8,14 +9,14 @@ public class MovementAbility : Ability
     [SerializeField] private float _warpDistance = 10;
     [SerializeField] private float _warpTime = 0.2f;
 
-    protected override void OnPerform(GameObject sender, GameObject target)
+    protected override void OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
     {
         IRotatable rotatable = sender.GetComponent<IRotatable>();
         IMovable movable = sender.GetComponent<IMovable>();
 
         var coroutineHolder = ServiceLocator.Container.Resolve<CoroutineHolder>();
 
-        coroutineHolder.StartCoroutine(WarpRoutine(sender, movable, rotatable));
+        coroutineHolder.StartCoroutine(WarpRoutine(sender.gameObject, movable, rotatable));
     }
 
     private IEnumerator WarpRoutine(GameObject sender, IMovable movable, IRotatable rotatable)

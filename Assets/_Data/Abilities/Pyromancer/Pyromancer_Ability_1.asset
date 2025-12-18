@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eedb7db48f6b7c44be8e8c890e9d4ae, type: 3}
+  m_Name: Pyromancer_Ability_1
+  m_EditorClassIdentifier: 
+  _ability:
+    rid: 9013964967232143431
+  references:
+    version: 2
+    RefIds:
+    - rid: 9013964967232143431
+      type: {class: AttackAbility, ns: , asm: Assembly-CSharp}
+      data:
+        <Name>k__BackingField: Fire fist
+        <CooldownTime>k__BackingField: 5
+        _attack:
+          rid: 9013964967232143432
+    - rid: 9013964967232143432
+      type: {class: ProjectileLaunchAttack, ns: , asm: Assembly-CSharp}
+      data:
+        Amount: 1
+        TimeBetweenAttacks: 0
+        Damage:
+          Amount: 35
+          AttackLayers:
+            serializedVersion: 2
+            m_Bits: 256
+          Type: 0
+          Range: 0
+          SenderNetId: 0
+          ReceiverNetId: 0
+          AttackDirection: {x: 0, y: 0, z: 0}
+        _flightSpeed: 20
+        _projectilePrefab: {fileID: 9165549781829025688, guid: 4e89d65d3dfe26a4d8788a6b409d8797, type: 3}

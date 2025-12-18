@@ -3,15 +3,16 @@
 public struct ProjectileData
 {
     public float Speed;
-    public GameObject Sender;
+    public uint SenderId;
     public Vector3 Direction;
 
-    public readonly Collider Collider;
+    public readonly Collider Collider; //Remove collider
+    public readonly GameObject Sender => Utils.NetIdToGameObject(SenderId);
 
     public ProjectileData(Collider col)
     {
         Speed = 0;
-        Sender = null;
+        SenderId = default;
         Direction = Vector3.zero;
         Collider = col;
     }

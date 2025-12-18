@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mirror;
+using System;
 using UnityEngine;
 
 [Serializable]
@@ -28,7 +29,7 @@ public class AbilityHandler : Ability, IGauge
     public AbilityHandler(Ability ability)
         => Ability = ability;
 
-    protected override void OnPerform(GameObject sender, GameObject target)
+    protected override void OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
     {
         if (!IsReadyToUse())
             return;

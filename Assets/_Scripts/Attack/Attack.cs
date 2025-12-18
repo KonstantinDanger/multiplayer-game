@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mirror;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ public abstract class Attack
 
     private bool _inProcess;
 
-    public void Apply(GameObject sender, GameObject target)
+    public void Apply(NetworkBehaviour sender, NetworkBehaviour target)
     {
         if (_inProcess)
             return;
@@ -29,12 +30,12 @@ public abstract class Attack
     }
 
 
-    protected abstract void OnApply(GameObject sender, GameObject target);
+    protected abstract void OnApply(NetworkBehaviour sender, NetworkBehaviour target);
 
     private bool RequireAlternatingAttacks()
         => Amount > 1 && TimeBetweenAttacks > 0f;
 
-    private IEnumerator AlternateAttacksRoutine(GameObject sender, GameObject target)
+    private IEnumerator AlternateAttacksRoutine(NetworkBehaviour sender, NetworkBehaviour target)
     {
         _inProcess = true;
 

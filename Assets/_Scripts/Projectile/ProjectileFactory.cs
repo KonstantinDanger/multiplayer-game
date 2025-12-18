@@ -1,14 +1,15 @@
+using Mirror;
 using UnityEngine;
 
 public class ProjectileFactory
 {
-    public Projectile Create(Projectile prefab, Transform shootPosition, Vector3 shootDirection, GameObject sender)
+    public Projectile Create(Projectile prefab, Transform shootPosition, Vector3 shootDirection, NetworkBehaviour sender)
     {
         var projectile = Object.Instantiate(prefab, shootPosition.position, Quaternion.LookRotation(shootDirection));
 
         ProjectileData data = new()
         {
-            Sender = sender,
+            SenderId = sender.netId,
             Direction = shootDirection
         };
 

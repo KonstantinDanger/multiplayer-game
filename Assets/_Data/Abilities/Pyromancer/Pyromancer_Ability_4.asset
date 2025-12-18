@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eedb7db48f6b7c44be8e8c890e9d4ae, type: 3}
+  m_Name: Pyromancer_Ability_4
+  m_EditorClassIdentifier: 
+  _ability:
+    rid: 4564918650709475396
+  references:
+    version: 2
+    RefIds:
+    - rid: 4564918650709475396
+      type: {class: AttackAbility, ns: , asm: Assembly-CSharp}
+      data:
+        <Name>k__BackingField: Ultimate
+        <CooldownTime>k__BackingField: 120
+        _attack:
+          rid: 4564918650709475398
+    - rid: 4564918650709475398
+      type: {class: RayCastAttack, ns: , asm: Assembly-CSharp}
+      data:
+        Amount: 100
+        TimeBetweenAttacks: 0.05
+        Damage:
+          Amount: 3
+          AttackLayers:
+            serializedVersion: 2
+            m_Bits: 256
+          Type: 0
+          Range: 30
+        _verticalSpreadAngle: 90
+        _horizontalSpreadAngle: 90
