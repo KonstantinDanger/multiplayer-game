@@ -42,15 +42,15 @@ public class FlyingEnemy : DefaultEnemy
             return;
         }
 
-        TargetPlayer = AggroHandler.CurrentTarget;
+        Target = AggroHandler.CurrentTarget;
 
-        if (TargetPlayer == null)
+        if (Target == null)
         {
             _currentState = State.Patrolling;
             return;
         }
 
-        float distanceToTarget = Vector3.Distance(transform.position, TargetPlayer.transform.position);
+        float distanceToTarget = Vector3.Distance(transform.position, Target.transform.position);
 
         switch (_currentState)
         {
@@ -60,7 +60,7 @@ public class FlyingEnemy : DefaultEnemy
                 break;
 
             case State.Approaching:
-                _flightController.FlyTowards(TargetPlayer.transform.position);
+                _flightController.FlyTowards(Target.transform.position);
 
                 if (distanceToTarget <= _meleeRange)
                     _currentState = State.MeleeAttacking;
@@ -87,18 +87,18 @@ public class FlyingEnemy : DefaultEnemy
 
     private void PerformMeleeAttack()
     {
-        if (TargetPlayer != null)
+        if (Target != null)
         {
-            AttackTarget(TargetPlayer);
-            _flightController.Retreat(TargetPlayer.transform.position, _retreatDistance);
+            AttackTarget(Target);
+            _flightController.Retreat(Target.transform.position, _retreatDistance);
         }
     }
 
     private void PerformRangedAttack()
     {
-        if (TargetPlayer != null)
+        if (Target != null)
         {
-            _projectileAttack.ExecuteAttack(TargetPlayer);
+            _projectileAttack.ExecuteAttack(Target);
             _projectileTimer = _projectileCooldown;
         }
     }

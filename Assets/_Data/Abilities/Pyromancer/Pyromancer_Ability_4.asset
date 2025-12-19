@@ -21,6 +21,6 @@ MonoBehaviour:
       type: {class: EntitySummonAbility, ns: , asm: Assembly-CSharp}
       data:
         <Name>k__BackingField: Hydra summon
-        <CooldownTime>k__BackingField: 30
-        _maxSummonCount: 1
+        <CooldownTime>k__BackingField: 1
+        _maxSummonCount: 2
         _entityPrefab: {fileID: 6231648512285206155, guid: e8e6ae855a1152e4bafdd7365f9f468c, type: 3}

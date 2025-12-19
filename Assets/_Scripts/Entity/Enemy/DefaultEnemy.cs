@@ -26,7 +26,7 @@ public class DefaultEnemy : Enemy
             if (!AggroHandler.IsAggroed)
             {
                 AggroHandler.Aggro(player);
-                TargetPlayer = player;
+                Target = player;
             }
         }
     }
@@ -41,7 +41,7 @@ public class DefaultEnemy : Enemy
         if (!AggroHandler.IsAggroed)
         {
             AggroHandler.Aggro(attacker);
-            TargetPlayer = attacker;
+            Target = attacker;
         }
     }
 
@@ -54,9 +54,9 @@ public class DefaultEnemy : Enemy
             return;
         }
 
-        TargetPlayer = AggroHandler.CurrentTarget;
+        Target = AggroHandler.CurrentTarget;
 
-        if (TargetPlayer == null)
+        if (Target == null)
         {
             _currentState = State.Patrolling;
             return;
@@ -70,22 +70,22 @@ public class DefaultEnemy : Enemy
                 break;
 
             case State.Chasing:
-                ChaseTarget(TargetPlayer);
+                ChaseTarget(Target);
 
-                if (AttackStrategy != null && AttackStrategy.IsInAttackRange(TargetPlayer))
+                if (AttackStrategy != null && AttackStrategy.IsInAttackRange(Target))
                     _currentState = State.Attacking;
                 break;
 
             case State.Attacking:
                 StopMovement();
-                AttackTarget(TargetPlayer);
+                AttackTarget(Target);
 
-                if (AttackStrategy != null && !AttackStrategy.IsInAttackRange(TargetPlayer))
+                if (AttackStrategy != null && !AttackStrategy.IsInAttackRange(Target))
                     _currentState = State.Chasing;
                 break;
         }
     }
 
     private void Patrol() =>
-        _patrolStrategy.SetPatrolOrigin(transform.position);
+        _patrolStrategy?.SetPatrolOrigin(transform.position);
 }

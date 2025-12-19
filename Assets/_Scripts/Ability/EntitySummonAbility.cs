@@ -13,14 +13,7 @@ public class EntitySummonAbility : Ability
 
     protected override void OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
     {
-        if (_summonInstances.Contains(null))
-        {
-            for (int i = 0; i < _summonInstances.Count; i++)
-            {
-                if (_summonInstances[i] == null)
-                    _summonInstances.RemoveAt(i);
-            }
-        }
+        DeleteNullEntities(_summonInstances);
 
         if (_summonInstances.Count == _maxSummonCount)
         {
@@ -46,5 +39,19 @@ public class EntitySummonAbility : Ability
 
         var instance = factory.SpawnEntity(_entityPrefab, summonPosition, rotation, owner: sender);
         _summonInstances.Add(instance);
+    }
+
+    private void DeleteNullEntities(List<Entity> summonInstances)
+    {
+        for (int i = 0; i < _summonInstances.Count; i++)
+        {
+            if (_summonInstances[i] == null)
+                _summonInstances.RemoveAt(i);
+        }
+    }
+
+    private void HandleEntityDemise()
+    {
+
     }
 }

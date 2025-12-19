@@ -27,7 +27,7 @@ public abstract class Enemy : Entity, IInputBrain
     #endregion
 
     protected float DetectionTimer;
-    protected Entity TargetPlayer;
+    protected Entity Target;
 
     protected override IInputBrain SetInputBrain() => this;
 

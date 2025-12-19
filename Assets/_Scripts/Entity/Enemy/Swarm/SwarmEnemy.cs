@@ -28,7 +28,7 @@ public class SwarmEnemy : Enemy
         if (!AggroHandler.IsAggroed)
         {
             AggroHandler.Aggro(player);
-            TargetPlayer = player;
+            Target = player;
 
             _swarmManager.AlertSwarm(player);
         }
@@ -36,14 +36,14 @@ public class SwarmEnemy : Enemy
 
     protected override void UpdateBehavior()
     {
-        if (!AggroHandler.IsAggroed || TargetPlayer == null)
+        if (!AggroHandler.IsAggroed || Target == null)
         {
             FlyIdle();
             return;
         }
 
         Vector3 swarmDirection = CalculateSwarmBehavior();
-        Vector3 targetDirection = (TargetPlayer.transform.position - transform.position).normalized;
+        Vector3 targetDirection = (Target.transform.position - transform.position).normalized;
 
         Vector3 finalDirection = (swarmDirection + targetDirection * _targetForce).normalized;
         Vector3 targetPosition = transform.position + finalDirection * 5f;
@@ -51,9 +51,9 @@ public class SwarmEnemy : Enemy
         _flightController.FlyTowards(targetPosition);
 
         // Attack if in range
-        if (AttackStrategy != null && AttackStrategy.IsInAttackRange(TargetPlayer))
+        if (AttackStrategy != null && AttackStrategy.IsInAttackRange(Target))
         {
-            AttackTarget(TargetPlayer);
+            AttackTarget(Target);
         }
     }
 

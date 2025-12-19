@@ -9,7 +9,7 @@ public class DamageSystem : NetworkBehaviour, IDamageable
     public event Action<Damage> OnDemise;
     public event Action OnValueChanged;
 
-    private List<DamageHandler> _damageHandlers;
+    private List<DamageHandler> _damageHandlers = new();
 
     private float _baseHealth;
     [SyncVar] private float _currentHealth;
@@ -23,10 +23,8 @@ public class DamageSystem : NetworkBehaviour, IDamageable
     {
         _baseHealth = baseHealth;
 
-        if (_damageHandlers == null)
-            _damageHandlers = new List<DamageHandler>();
-        else
-            _damageHandlers = damageHandlers.ToList();
+        if (damageHandlers != null)
+            _damageHandlers = damageHandlers?.ToList();
 
         _currentHealth = _baseHealth;
 
