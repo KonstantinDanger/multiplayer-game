@@ -90,6 +90,10 @@ PrefabInstance:
       propertyPath: _assetId
       value: 107356054
       objectReference: {fileID: 0}
+    - target: {fileID: 4415908192443426248, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
+      propertyPath: _anim
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4564464815998673794, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -129,6 +133,74 @@ PrefabInstance:
     - target: {fileID: 4564464815998673794, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301641284520053187, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
+      propertyPath: AttackStrategy
+      value: 9013964992859603014
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301641284520053187, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
+      propertyPath: 'managedReferences[9013964992859603014]'
+      value: Assembly-CSharp ProjectileLaunchAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301641284520053187, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
+      propertyPath: managedReferences[9013964992859603014].Amount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301641284520053187, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
+      propertyPath: managedReferences[9013964992859603014]._damage.Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301641284520053187, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
+      propertyPath: managedReferences[9013964992859603014]._flightSpeed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301641284520053187, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
+      propertyPath: managedReferences[9013964992859603014]._damage.Range
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301641284520053187, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
+      propertyPath: managedReferences[9013964992859603014]._damage.Amount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301641284520053187, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
+      propertyPath: managedReferences[9013964992859603014]._projectilePrefab
+      value: 
+      objectReference: {fileID: 8014522202720145984, guid: ebbfe0f2fd9bce4499cf0997f41c9df6, type: 3}
+    - target: {fileID: 5301641284520053187, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
+      propertyPath: managedReferences[9013964992859603014].TimeBetweenAttacks
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301641284520053187, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
+      propertyPath: managedReferences[9013964992859603014]._damage.SenderNetId
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301641284520053187, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
+      propertyPath: managedReferences[9013964992859603014]._damage.ReceiverNetId
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301641284520053187, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
+      propertyPath: managedReferences[9013964992859603014]._damage.AttackDirection.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301641284520053187, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
+      propertyPath: managedReferences[9013964992859603014]._damage.AttackDirection.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301641284520053187, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
+      propertyPath: managedReferences[9013964992859603014]._damage.AttackDirection.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301641284520053187, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
+      propertyPath: managedReferences[9013964992859603014]._damage.AttackLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5584410321399691949, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.431
+      objectReference: {fileID: 0}
+    - target: {fileID: 5584410321399691949, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.837
       objectReference: {fileID: 0}
     - target: {fileID: 5798718343062315758, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
       propertyPath: m_Name

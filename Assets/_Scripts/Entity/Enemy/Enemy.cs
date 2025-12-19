@@ -10,7 +10,7 @@ public abstract class Enemy : Entity, IInputBrain
     [Header("Enemy Components")]
     [SerializeReference, SubclassSelector] protected IDetectable<Player> Detector;
     [SerializeReference, SubclassSelector] protected IAggroHandler AggroHandler;
-    [SerializeReference, SubclassSelector] protected IAttackStrategy AttackStrategy;
+    [SerializeReference, SubclassSelector] protected Attack AttackStrategy;
     [SerializeReference, SubclassSelector] protected IPatrol _patrolStrategy;
 
     public EnemyConfig Config => _config;
@@ -84,11 +84,17 @@ public abstract class Enemy : Entity, IInputBrain
     {
         if (target == null || AttackStrategy == null) return;
 
-        if (AttackStrategy.CanAttack() && AttackStrategy.IsInAttackRange(target))
+        if (AttackStrategy.InProcess && IsInAttackRange(target, AttackStrategy.AttackRange))
         {
-            AttackStrategy.ExecuteAttack(target);
+            AttackStrategy.Apply(sender: this, target);
             AggroHandler?.RefreshAggro();
         }
+    }
+
+    protected bool IsInAttackRange(Entity target, float range)
+    {
+        float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
+        return distanceToTarget <= range;
     }
 
     public void StopMovement() { }

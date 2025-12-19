@@ -49,7 +49,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -120,24 +120,14 @@ MonoBehaviour:
     - rid: 9013964967232143427
       type: {class: DealDamageOnCollision, ns: , asm: Assembly-CSharp}
       data:
-        _damage:
-          Amount: 0
-          AttackLayers:
-            serializedVersion: 2
-            m_Bits: 0
-          Type: 0
-          Range: 0
-          SenderNetId: 0
-          ReceiverNetId: 0
-          AttackDirection: {x: 0, y: 0, z: 0}
         _afterCollision:
           rid: -2
     - rid: 9013964967232143428
       type: {class: RigidBodyMovement, ns: , asm: Assembly-CSharp}
       data:
-        MovementSpeed: 10
         _movementUpdateMethod: 1
         _rigidBody: {fileID: 5746517923366965007}
+        _forceMode: 2
 --- !u!54 &5746517923366965007
 Rigidbody:
   m_ObjectHideFlags: 0

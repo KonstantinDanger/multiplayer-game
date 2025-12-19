@@ -24,6 +24,8 @@ public class ProjectileLaunchAttack : Attack
             attacker.AttackPoint,
             Quaternion.LookRotation(rotatable.Forward),
             null);
+
+        attacker.InvokeAttack();
     }
 }
 

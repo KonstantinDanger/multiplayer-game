@@ -1,5 +1,107 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &976750348774673565
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1056940863355918947}
+  m_Layer: 8
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1056940863355918947
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976750348774673565}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.585, z: 0.609}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3638731989207340978}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8877073828086084000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3638731989207340978}
+  - component: {fileID: 3263139033486638191}
+  - component: {fileID: 9123369937257284870}
+  m_Layer: 8
+  m_Name: Attacker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3638731989207340978
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8877073828086084000}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1056940863355918947}
+  m_Father: {fileID: 8974813229951714124}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3263139033486638191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8877073828086084000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 470d33dced5736e498787a2aed80f26f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  <AttackPoint>k__BackingField: {fileID: 1056940863355918947}
+--- !u!114 &9123369937257284870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8877073828086084000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f93b3799b673d34da63634b118fa6a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  _anim: {fileID: 3464756085198946259}
+  _attacker:
+    _underlyingValue: {fileID: 3263139033486638191}
+  _attackAnimationName: Attack
+  _animationTransitionTime: 0.15
+  _layer: 0
 --- !u!1001 &1497798847657064770
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -66,6 +168,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7513606204529654286, guid: f3ca8b25bbc90dc4bb3668381906e35c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7418947672974435753}
+    - targetCorrespondingSourceObject: {fileID: 7513606204529654286, guid: f3ca8b25bbc90dc4bb3668381906e35c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3638731989207340978}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 532728802165586786, guid: f3ca8b25bbc90dc4bb3668381906e35c, type: 3}
       insertIndex: -1
@@ -113,6 +218,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 186b898d3978fd048be5de266f89e5ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   _damageableRef:
     _underlyingValue: {fileID: 2267410281914650354}
 --- !u!114 &2267410281914650354 stripped
@@ -200,6 +308,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 986e47519275ed14485299eeb5ff44b8, type: 3}
+--- !u!95 &3464756085198946259 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 986e47519275ed14485299eeb5ff44b8, type: 3}
+  m_PrefabInstance: {fileID: 7025576817954603586}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7418947672974435753 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 986e47519275ed14485299eeb5ff44b8, type: 3}

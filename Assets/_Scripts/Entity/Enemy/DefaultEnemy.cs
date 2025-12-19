@@ -72,7 +72,7 @@ public class DefaultEnemy : Enemy
             case State.Chasing:
                 ChaseTarget(Target);
 
-                if (AttackStrategy != null && AttackStrategy.IsInAttackRange(Target))
+                if (AttackStrategy != null && IsInAttackRange(Target, AttackStrategy.AttackRange))
                     _currentState = State.Attacking;
                 break;
 
@@ -80,7 +80,7 @@ public class DefaultEnemy : Enemy
                 StopMovement();
                 AttackTarget(Target);
 
-                if (AttackStrategy != null && !AttackStrategy.IsInAttackRange(Target))
+                if (AttackStrategy != null && !IsInAttackRange(Target, AttackStrategy.AttackRange))
                     _currentState = State.Chasing;
                 break;
         }

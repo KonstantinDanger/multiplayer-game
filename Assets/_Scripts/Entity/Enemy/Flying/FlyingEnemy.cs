@@ -9,7 +9,7 @@ public class FlyingEnemy : DefaultEnemy
     [SerializeField] private float _projectileCooldown = 3f;
 
     [SerializeField] private FlightController _flightController;
-    [SerializeReference, SubclassSelector] private IAttackStrategy _projectileAttack;
+    [SerializeReference, SubclassSelector] private Attack _projectileAttack;
 
     private float _projectileTimer;
 
@@ -98,7 +98,7 @@ public class FlyingEnemy : DefaultEnemy
     {
         if (Target != null)
         {
-            _projectileAttack.ExecuteAttack(Target);
+            _projectileAttack.Apply(sender: this, Target);
             _projectileTimer = _projectileCooldown;
         }
     }

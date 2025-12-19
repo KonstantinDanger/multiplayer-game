@@ -127,7 +127,7 @@ MonoBehaviour:
   _projectileCooldown: 3
   _flightController: {fileID: 6574974665529892162}
   _projectileAttack:
-    rid: -2
+    rid: 9013964992859603015
   references:
     version: 2
     RefIds:
@@ -146,6 +146,23 @@ MonoBehaviour:
         aggroTimeout: 8
         aggroRange: 15
         _selfTransform: {fileID: 4564464815998673794}
+    - rid: 9013964992859603015
+      type: {class: ProjectileLaunchAttack, ns: , asm: Assembly-CSharp}
+      data:
+        Amount: 1
+        TimeBetweenAttacks: 0
+        _damage:
+          Amount: 12
+          AttackLayers:
+            serializedVersion: 2
+            m_Bits: 128
+          Type: 0
+          Range: 0
+          SenderNetId: 0
+          ReceiverNetId: 0
+          AttackDirection: {x: 0, y: 0, z: 0}
+        _flightSpeed: 80
+        _projectilePrefab: {fileID: 8014522202720145984, guid: ebbfe0f2fd9bce4499cf0997f41c9df6, type: 3}
 --- !u!114 &6574974665529892162
 MonoBehaviour:
   m_ObjectHideFlags: 0

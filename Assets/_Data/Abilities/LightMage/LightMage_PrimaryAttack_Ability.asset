@@ -29,7 +29,7 @@ MonoBehaviour:
       data:
         Amount: 1
         TimeBetweenAttacks: 0
-        Damage:
+        _damage:
           Amount: 10
           AttackLayers:
             serializedVersion: 2

@@ -29,8 +29,8 @@ MonoBehaviour:
       data:
         Amount: 1
         TimeBetweenAttacks: 0
-        Damage:
-          Amount: 35
+        _damage:
+          Amount: 0
           AttackLayers:
             serializedVersion: 2
             m_Bits: 256
@@ -39,5 +39,5 @@ MonoBehaviour:
           SenderNetId: 3
           ReceiverNetId: 0
           AttackDirection: {x: 0, y: 0, z: 0}
-        _flightSpeed: 240
+        _flightSpeed: 200
         _projectilePrefab: {fileID: 9165549781829025688, guid: 4e89d65d3dfe26a4d8788a6b409d8797, type: 3}

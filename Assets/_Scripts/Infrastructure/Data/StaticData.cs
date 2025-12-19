@@ -27,7 +27,7 @@ public class StaticData : ScriptableObject
         private static readonly Dictionary<StatType, string> StatNames = new()
         {
             [StatType.Health] = "Health",
-            [StatType.Damage] = "Damage",
+            [StatType.Damage] = "_damage",
             [StatType.Defense] = "Defense",
             [StatType.MoveSpeed] = "Movement speed",
             [StatType.JumpHeight] = "Jump height",

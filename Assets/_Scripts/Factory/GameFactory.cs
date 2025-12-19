@@ -24,7 +24,8 @@ public class GameFactory : NetworkBehaviour
     public Projectile SpawnProjectile(Projectile projectile, Vector3 direction, float flightSpeed, NetworkBehaviour sender, Damage damage, Transform transform, Quaternion rotation, Transform parent = null)
     {
         Projectile proj = Instantiate(projectile, transform.position, rotation, parent);
-        NetworkServer.Spawn(proj.gameObject, sender.gameObject);
+
+        SpawnOnServer(proj.gameObject, sender.gameObject);
 
         ProjectileData data = new(proj.netId)
         {
@@ -34,6 +35,14 @@ public class GameFactory : NetworkBehaviour
             Damage = damage
         };
 
+        int excludeMask = ~0;
+
+        excludeMask &= ~(1 << 0);
+
+        excludeMask &= ~damage.AttackLayers.value;
+
+        proj.Collider.excludeLayers = excludeMask;
+
         proj.Initialize(data);
 
         return proj;
@@ -42,7 +51,18 @@ public class GameFactory : NetworkBehaviour
     public Entity SpawnEntity(Entity entityPrefab, Vector3 summonPosition, Quaternion rotation, NetworkBehaviour owner)
     {
         var summon = Instantiate(entityPrefab, summonPosition, rotation, null);
-        NetworkServer.Spawn(summon.gameObject, owner.gameObject);
+
+        SpawnOnServer(summon.gameObject, owner.gameObject);
+
+
         return summon;
+    }
+
+    private void SpawnOnServer(GameObject gameObject, GameObject owner)
+    {
+        if (owner != null)
+            NetworkServer.Spawn(gameObject, owner);
+        else
+            NetworkServer.Spawn(gameObject);
     }
 }
