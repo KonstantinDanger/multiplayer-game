@@ -5,6 +5,7 @@ using System.Linq;
 
 public class DamageSystem : NetworkBehaviour, IDamageable
 {
+
     public event Action<Damage> OnDamageTaken;
     public event Action<Damage> OnDemise;
     public event Action OnValueChanged;
@@ -32,7 +33,7 @@ public class DamageSystem : NetworkBehaviour, IDamageable
     }
 
     [Command(requiresAuthority = false)]
-    public void TakeDamage(Damage damage)
+    public virtual void TakeDamage(Damage damage)
     {
         if (_currentHealth <= 0)
             return;
