@@ -9,7 +9,5 @@ public class Attacker : NetworkBehaviour, IAttacker
     public event Action OnAttack;
 
     public void InvokeAttack()
-    {
-
-    }
+        => OnAttack?.Invoke();
 }

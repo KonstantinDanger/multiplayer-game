@@ -21,7 +21,7 @@ public class AttackAnimation : NetworkBehaviour
     private void HandleAttack()
         => CmdPlayAttackAnimation();
 
-    [Command]
+    [Command(requiresAuthority = false)]
     private void CmdPlayAttackAnimation()
         => RpcPlayAttackAnimation();
 

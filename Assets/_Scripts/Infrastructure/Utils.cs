@@ -5,6 +5,19 @@ using UnityEngine;
 
 public static class Utils
 {
+    public static void SpawnTemporarySphere(Vector3 position, float scale, float destroyTime = 1)
+    {
+        var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        if (sphere.TryGetComponent(out Collider col))
+            GameObject.Destroy(col);
+
+        sphere.GetComponent<Renderer>().material.color = Color.red;
+        sphere.transform.position = position;
+        sphere.transform.localScale = Vector3.one * scale;
+
+        GameObject.Destroy(sphere, destroyTime);
+    }
+
     public static Player ServerFindNetPlayerById(uint netId)
     {
         if (!NetworkServer.spawned.TryGetValue(netId, out NetworkIdentity identity))

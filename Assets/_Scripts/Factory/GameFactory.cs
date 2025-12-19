@@ -54,13 +54,12 @@ public class GameFactory : NetworkBehaviour
 
         SpawnOnServer(summon.gameObject, owner.gameObject);
 
-
         return summon;
     }
 
     private void SpawnOnServer(GameObject gameObject, GameObject owner)
     {
-        if (owner != null)
+        if (owner.TryGetComponent(out Player _))
             NetworkServer.Spawn(gameObject, owner);
         else
             NetworkServer.Spawn(gameObject);

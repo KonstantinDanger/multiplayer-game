@@ -264,6 +264,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9123369937257284870, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+      propertyPath: _anim
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2447300666758125202, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
     m_RemovedGameObjects:
@@ -333,7 +337,7 @@ MonoBehaviour:
   AggroHandler:
     rid: 4564918803227476034
   AttackStrategy:
-    rid: -2
+    rid: 9013964992859603018
   _patrolStrategy:
     rid: 4564918807990894659
   _fieldOfViewAngle: 120
@@ -342,8 +346,6 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 4564918803227476033
       type: {class: PlayerDetector, ns: , asm: Assembly-CSharp}
       data:
@@ -364,6 +366,22 @@ MonoBehaviour:
         patrolSpeed: 5
         waitTimeAtPoint: 2
         waypointReachedDistance: 0.5
+    - rid: 9013964992859603018
+      type: {class: MeleeAttack, ns: , asm: Assembly-CSharp}
+      data:
+        Amount: 1
+        TimeBetweenAttacks: 0
+        _damage:
+          Amount: 22
+          AttackLayers:
+            serializedVersion: 2
+            m_Bits: 128
+          Type: 0
+          Range: 0.5
+          SenderNetId: 0
+          ReceiverNetId: 0
+          AttackDirection: {x: 0, y: 0, z: 0}
+        _attackSplashRadius: 0.3
 --- !u!114 &1435455419400485427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,6 +433,7 @@ MonoBehaviour:
   _verticalInputParamName: VerticalVelocity
   _horizontalInputParamName: HorizontalVelocity
   _movementAngle: MovementAngle
+  _airborneVelocityParamName: AirborneVelocity
 --- !u!114 &6475008800849618527 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2267410281914650354, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}

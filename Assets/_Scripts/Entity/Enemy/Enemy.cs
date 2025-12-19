@@ -84,7 +84,7 @@ public abstract class Enemy : Entity, IInputBrain
     {
         if (target == null || AttackStrategy == null) return;
 
-        if (AttackStrategy.InProcess && IsInAttackRange(target, AttackStrategy.AttackRange))
+        if (!AttackStrategy.InProcess && IsInAttackRange(target, AttackStrategy.AttackRange))
         {
             AttackStrategy.Apply(sender: this, target);
             AggroHandler?.RefreshAggro();

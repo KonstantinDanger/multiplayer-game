@@ -15,6 +15,8 @@ public class ProjectileLaunchAttack : Attack
         var attacker = sender.GetComponentInChildren<IAttacker>();
         var rotatable = sender.GetComponent<IRotatable>();
 
+        attacker.InvokeAttack();
+
         factory.SpawnProjectile(
             _projectilePrefab,
             rotatable.Forward,
@@ -24,8 +26,6 @@ public class ProjectileLaunchAttack : Attack
             attacker.AttackPoint,
             Quaternion.LookRotation(rotatable.Forward),
             null);
-
-        attacker.InvokeAttack();
     }
 }
 
