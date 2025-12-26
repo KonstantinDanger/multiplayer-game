@@ -9,7 +9,7 @@ public class Player : Entity
     [SerializeField] private RayCastDamager _damager; //For testing
     [SerializeField] private Respawn _respawn;
     [SerializeField] private GameObject _headObject;
-    [SerializeField] private Abilities _abilities;
+    [SerializeField] private AbilityUser _abilities;
     [SerializeField] private ScriptableCharacterClass _characterClass;
     [SerializeField] private Level _level;
 
@@ -84,6 +84,7 @@ public class Player : Entity
         if (!CanDoActions())
             return;
 
+        _abilities.OnUpdate();
         _stateMachine.CurrentState.Update(Time.deltaTime);
 
         //UnityEngine.Debug.Log("Current state: " + _stateMachine.CurrentState);

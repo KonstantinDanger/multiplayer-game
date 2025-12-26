@@ -6,7 +6,6 @@ using UnityEngine;
 public class AbilityHandler : Ability, IGauge
 {
     public event Action OnValueChanged;
-
     public Ability Ability { get; private set; }
 
     public override float CooldownTime => Ability.CooldownTime;
@@ -34,10 +33,10 @@ public class AbilityHandler : Ability, IGauge
         if (!IsReadyToUse())
             return;
 
-        Ability.Perform(sender, target);
+        if (!Ability.Perform(sender, target))
+            return;
 
         SetNextUseTime();
-
     }
 
     public void Update()

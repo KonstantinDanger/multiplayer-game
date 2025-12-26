@@ -61,6 +61,6 @@ public class RayCastDamager : NetworkBehaviour, IAttacker
     //    OnAttack?.Invoke();
     //}
 
-    public void InvokeAttack()
+    public void PerformAttack()
         => OnAttack?.Invoke();
 }

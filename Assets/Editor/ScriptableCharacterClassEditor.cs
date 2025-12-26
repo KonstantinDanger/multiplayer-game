@@ -16,7 +16,7 @@ public class ScriptableCharacterClassEditor : Editor
 
         _abilitiesList.drawHeaderCallback = rect =>
         {
-            EditorGUI.LabelField(rect, "Abilities", EditorStyles.boldLabel);
+            EditorGUI.LabelField(rect, "AbilityUse", EditorStyles.boldLabel);
         };
 
         _abilitiesList.drawElementCallback = (rect, index, isActive, isFocused) =>

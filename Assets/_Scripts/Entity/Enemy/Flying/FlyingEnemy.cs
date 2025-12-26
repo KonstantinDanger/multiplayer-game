@@ -7,17 +7,13 @@ public class FlyingEnemy : DefaultEnemy
     [SerializeField] private float _meleeRange = 2f;
     [SerializeField] private float _retreatDistance = 8f;
     [SerializeField] private float _projectileCooldown = 3f;
-
     [SerializeField] private FlightController _flightController;
-    [SerializeReference, SubclassSelector] private Attack _projectileAttack;
-
-    private float _projectileTimer;
 
     private enum State
     {
         Patrolling,
         Approaching,
-        MeleeAttacking,
+        PerformingAbility,
         Retreating,
         RangedAttacking
     }
@@ -29,8 +25,6 @@ public class FlyingEnemy : DefaultEnemy
         base.Update();
 
         _flightController.MaintainFlightHeight();
-
-        _projectileTimer -= Time.deltaTime;
     }
 
     protected override void UpdateBehavior()
@@ -63,13 +57,13 @@ public class FlyingEnemy : DefaultEnemy
                 _flightController.FlyTowards(Target.transform.position);
 
                 if (distanceToTarget <= _meleeRange)
-                    _currentState = State.MeleeAttacking;
-                else if (_projectileTimer <= 0f && _projectileAttack != null)
-                    _currentState = State.RangedAttacking;
+                    _currentState = State.PerformingAbility;
+                //else if (_projectileTimer <= 0f && _projectileAttack != null)
+                //_currentState = State.RangedAttacking;
                 break;
 
-            case State.MeleeAttacking:
-                PerformMeleeAttack();
+            case State.PerformingAbility:
+                PerformAbility(Target);
                 _currentState = State.Retreating;
                 break;
 
@@ -77,29 +71,6 @@ public class FlyingEnemy : DefaultEnemy
                 if (!_flightController.IsRetreating)
                     _currentState = State.Approaching;
                 break;
-
-            case State.RangedAttacking:
-                PerformRangedAttack();
-                _currentState = State.Approaching;
-                break;
-        }
-    }
-
-    private void PerformMeleeAttack()
-    {
-        if (Target != null)
-        {
-            AttackTarget(Target);
-            _flightController.Retreat(Target.transform.position, _retreatDistance);
-        }
-    }
-
-    private void PerformRangedAttack()
-    {
-        if (Target != null)
-        {
-            _projectileAttack.Apply(sender: this, Target);
-            _projectileTimer = _projectileCooldown;
         }
     }
 

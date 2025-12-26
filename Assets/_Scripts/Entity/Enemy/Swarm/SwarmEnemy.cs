@@ -51,10 +51,10 @@ public class SwarmEnemy : Enemy
         _flightController.FlyTowards(targetPosition);
 
         // Attack if in range
-        if (AttackStrategy != null && IsInAttackRange(Target, AttackStrategy.AttackRange))
-        {
-            AttackTarget(Target);
-        }
+        //if (AttackStrategy != null && IsInAttackRange(Target, AttackStrategy.AttackRange))
+        //{
+        //    AttackTarget(Target);
+        //}
     }
 
     private Vector3 CalculateSwarmBehavior()

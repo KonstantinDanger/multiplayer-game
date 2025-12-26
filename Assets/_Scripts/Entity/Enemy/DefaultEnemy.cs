@@ -1,26 +1,19 @@
-﻿using UnityEngine;
-
-public class DefaultEnemy : Enemy
+﻿public class DefaultEnemy : Enemy
 {
-    [Header("Aggressive Settings")]
-    [SerializeField] private float _fieldOfViewAngle = 120f;
-    [SerializeField] private float _visionRange = 15f;
-    [SerializeField] private bool _isNeutral;
-
     private enum State
     {
         Patrolling,
         Chasing,
-        Attacking
+        AbilityUse
     }
 
     private State _currentState = State.Patrolling;
 
     protected override void OnPlayerDetected(Entity player)
     {
-        if (Detector.IsInFieldOfView(player, _fieldOfViewAngle, _visionRange))
+        if (Detector.IsInFieldOfView(player, Config.FieldOfViewAngle, Config.VisionRange))
         {
-            if (_isNeutral)
+            if (Config.IsNeutral)
                 return;
 
             if (!AggroHandler.IsAggroed)
@@ -72,20 +65,20 @@ public class DefaultEnemy : Enemy
             case State.Chasing:
                 ChaseTarget(Target);
 
-                if (AttackStrategy != null && IsInAttackRange(Target, AttackStrategy.AttackRange))
-                    _currentState = State.Attacking;
+                //if (AbilityUser != null)
+                //    _currentState = State.AbilityUse;
                 break;
 
-            case State.Attacking:
+            case State.AbilityUse:
                 StopMovement();
-                AttackTarget(Target);
+                PerformAbility(Target);
 
-                if (AttackStrategy != null && !IsInAttackRange(Target, AttackStrategy.AttackRange))
-                    _currentState = State.Chasing;
+                //if (AbilityUser != null)
+                //    _currentState = State.Chasing;
                 break;
         }
     }
 
     private void Patrol() =>
-        _patrolStrategy?.SetPatrolOrigin(transform.position);
+        PatrolStrategy?.SetPatrolOrigin(transform.position);
 }

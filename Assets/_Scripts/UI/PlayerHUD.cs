@@ -10,7 +10,7 @@ public class PlayerHUD : UI
 
     private Level _level;
 
-    public void Initialize(Abilities abilities, IDamageable damageable, Level level)
+    public void Initialize(AbilityUser abilities, IDamageable damageable, Level level)
     {
         _level = level;
 

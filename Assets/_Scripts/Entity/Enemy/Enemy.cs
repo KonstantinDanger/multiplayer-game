@@ -1,17 +1,15 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 
 public abstract class Enemy : Entity, IInputBrain
 {
     [SerializeField] private EnemyConfig _config;
-    [SerializeField] protected float _detectionRadius = 10f;
-    [SerializeField] protected float _detectionInterval = 5f;
 
     [Header("Enemy Components")]
     [SerializeReference, SubclassSelector] protected IDetectable<Player> Detector;
     [SerializeReference, SubclassSelector] protected IAggroHandler AggroHandler;
-    [SerializeReference, SubclassSelector] protected Attack AttackStrategy;
-    [SerializeReference, SubclassSelector] protected IPatrol _patrolStrategy;
+    [SerializeReference, SubclassSelector] protected IPatrol PatrolStrategy;
 
     public EnemyConfig Config => _config;
     public IAggroHandler AggroSystem => AggroHandler;
@@ -31,22 +29,27 @@ public abstract class Enemy : Entity, IInputBrain
 
     protected override IInputBrain SetInputBrain() => this;
 
+    protected override void OnAwake()
+        => AbilityUser.Initialize(_config
+            .Abilities
+            .ToList());
+
     protected override void OnStart()
     {
         base.OnStart();
 
-        _patrolStrategy?.Initialize(Movable, transform, transform);
+        PatrolStrategy?.Initialize(Movable, transform, transform);
     }
 
     protected override void Update()
     {
         //base.Update();
 
-        _patrolStrategy?.Update(Time.deltaTime);
+        PatrolStrategy?.Update(Time.deltaTime);
 
         DetectionTimer += Time.deltaTime;
 
-        if (DetectionTimer >= _detectionInterval)
+        if (DetectionTimer >= Config.DetectionInterval)
         {
             DetectPlayers();
             DetectionTimer = 0f;
@@ -61,7 +64,7 @@ public abstract class Enemy : Entity, IInputBrain
         if (AggroHandler != null && AggroHandler.IsAggroed)
             return;
 
-        Entity nearestPlayer = Detector.DetectNearestPlayer(_detectionRadius);
+        Entity nearestPlayer = Detector.DetectNearestPlayer(Config.DetectionRadius);
         if (nearestPlayer != null)
         {
             OnPlayerDetected(nearestPlayer);
@@ -80,15 +83,15 @@ public abstract class Enemy : Entity, IInputBrain
         Rotatable?.Rotate((target.transform.position - transform.position).normalized, RotationConfig.RotationSpeed);
     }
 
-    protected virtual void AttackTarget(Entity target)
+    protected virtual void PerformAbility(Entity target)
     {
-        if (target == null || AttackStrategy == null) return;
+        //if (AbilityUser.)
 
-        if (!AttackStrategy.InProcess && IsInAttackRange(target, AttackStrategy.AttackRange))
-        {
-            AttackStrategy.Apply(sender: this, target);
-            AggroHandler?.RefreshAggro();
-        }
+        //if (!AttackStrategy.InProcess && IsInAttackRange(target, AttackStrategy.AttackRange))
+        //{
+        //    AttackStrategy.Apply(sender: this, target);
+        //    AggroHandler?.RefreshAggro();
+        //}
     }
 
     protected bool IsInAttackRange(Entity target, float range)
@@ -103,7 +106,7 @@ public abstract class Enemy : Entity, IInputBrain
     {
         base.OnDamageTaken(damage);
 
-        _patrolStrategy?.ResetPatrol();
+        PatrolStrategy?.ResetPatrol();
     }
 
     protected override void OnDemise(Damage damage)

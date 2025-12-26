@@ -17,10 +17,15 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 4564918620506292297
       type: {class: MovementAbility, ns: , asm: Assembly-CSharp}
       data:
         <Name>k__BackingField: Flash
         <CooldownTime>k__BackingField: 3
+        _actionsToPerform: []
+        _performCondition:
+          rid: -2
         _warpDistance: 8
         _warpTime: 0.1

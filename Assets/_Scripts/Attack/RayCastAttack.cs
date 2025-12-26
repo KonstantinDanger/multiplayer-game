@@ -23,7 +23,7 @@ public class RayCastAttack : Attack
         Vector3 attackDirection = CalculateSpreadDirection(rotatable, rotatable.Forward);
 
         DoRayCast(attacker.AttackPoint.position, attackDirection, rayCastView, movable);
-        attacker.InvokeAttack();
+        attacker.PerformAttack();
     }
 
     protected Vector3 CalculateSpreadDirection(IRotatable rotatable, Vector3 direction)

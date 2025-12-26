@@ -1,7 +1,7 @@
 ﻿using Mirror;
 using System.Collections.Generic;
 
-public class Abilities : NetworkBehaviour
+public class AbilityUser : NetworkBehaviour, IAbilityUser
 {
     private readonly List<AbilityHandler> _abilities = new();
 
@@ -14,7 +14,7 @@ public class Abilities : NetworkBehaviour
             .Add(new AbilityHandler(ability)));
     }
 
-    private void Update()
+    public void OnUpdate()
     {
         foreach (var ability in _abilities)
             ability?.Update();
@@ -23,10 +23,10 @@ public class Abilities : NetworkBehaviour
     /// <summary>
     /// Method for calling primary ability (0 index)
     /// </summary>
-    public void Use(NetworkBehaviour target = null)
+    public virtual void Use(NetworkBehaviour target = null)
         => _abilities[0].Perform(this, target);
 
-    public void Use(int index, NetworkBehaviour target = null)
+    public virtual void Use(int index, NetworkBehaviour target = null)
     {
         if (index > _abilities.Count)
             throw new System.Exception("Wrong index");
@@ -36,12 +36,6 @@ public class Abilities : NetworkBehaviour
         if (selected == null)
             return;
 
-
         selected.Perform(this, target);
-    }
-
-    public void Upgrade(Ability ability)
-    {
-
     }
 }

@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: New Enemy Config
   m_EditorClassIdentifier: 
   <XpToDrop>k__BackingField: 600
+  _abilities:
+  - {fileID: 11400000, guid: defb1ee14590e974789089cb5fed3fa4, type: 2}

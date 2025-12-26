@@ -9,13 +9,21 @@ public abstract class Ability
     [field: SerializeField] public virtual string Name { get; private set; }
     [field: SerializeField] public virtual float CooldownTime { get; private set; }
     [SerializeReference, SubclassSelector] private List<GameActions.Action> _actionsToPerform = new();
+    [SerializeReference, SubclassSelector] private Condition _performCondition;
 
-    public void Perform(NetworkBehaviour sender, NetworkBehaviour target)
+    public Condition PerformCondition => _performCondition;
+
+    public bool Perform(NetworkBehaviour sender, NetworkBehaviour target)
     {
+        if (_performCondition != null && !_performCondition.Fulfilled(sender, target))
+            return false;
+
         if (_actionsToPerform.Count != 0)
             _actionsToPerform.ForEach(action => action.Invoke());
 
         OnPerform(sender, target);
+
+        return true;
     }
 
     public void AddAction(GameActions.Action action)
@@ -33,5 +41,5 @@ public abstract class Ability
     public override int GetHashCode()
         => base.GetHashCode();
 
-    public Ability Clone() => this;
+    public virtual Ability Clone() => this;
 }

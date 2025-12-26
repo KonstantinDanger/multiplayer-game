@@ -5,6 +5,19 @@ using UnityEngine;
 
 public static class Utils
 {
+    private static readonly Dictionary<Comparison, Func<float, float, bool>> ComparisonMap = new()
+    {
+        [Comparison.Equal] = (a, b) => a == b,
+        [Comparison.GreaterThan] = (a, b) => a > b,
+        [Comparison.LessThan] = (a, b) => a < b,
+    };
+
+    public static bool Compare(float a, float b, Comparison comparisonOption)
+    {
+        var compare = ComparisonMap[comparisonOption];
+        return compare(a, b);
+    }
+
     public static void SpawnTemporarySphere(Vector3 position, float scale, float destroyTime = 1)
     {
         var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);

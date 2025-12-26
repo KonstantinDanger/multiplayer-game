@@ -15,7 +15,7 @@ public class ProjectileLaunchAttack : Attack
         var attacker = sender.GetComponentInChildren<IAttacker>();
         var rotatable = sender.GetComponent<IRotatable>();
 
-        attacker.InvokeAttack();
+        attacker.PerformAttack();
 
         factory.SpawnProjectile(
             _projectilePrefab,
