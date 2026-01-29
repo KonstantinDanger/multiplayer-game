@@ -9,7 +9,7 @@ public class Player : Entity
     [SerializeField] private RayCastDamager _damager; //For testing
     [SerializeField] private Respawn _respawn;
     [SerializeField] private GameObject _headObject;
-    [SerializeField] private AbilityUser _abilities;
+    [SerializeField] private PlayerAbilityUser _abilities;
     [SerializeField] private ScriptableCharacterClass _characterClass;
     [SerializeField] private Level _level;
 

@@ -1,7 +1,7 @@
 ﻿using Mirror;
 using System.Collections.Generic;
 
-public class AbilityUser : NetworkBehaviour, IAbilityUser
+public class PlayerAbilityUser : NetworkBehaviour, IAbilityUser
 {
     private readonly List<AbilityHandler> _abilities = new();
 
