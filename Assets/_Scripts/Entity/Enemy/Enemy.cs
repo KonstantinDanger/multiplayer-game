@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using UnityEngine;
 
 public abstract class Enemy : Entity, IInputBrain
@@ -10,6 +9,8 @@ public abstract class Enemy : Entity, IInputBrain
     [SerializeReference, SubclassSelector] protected IDetectable<Player> Detector;
     [SerializeReference, SubclassSelector] protected IAggroHandler AggroHandler;
     [SerializeReference, SubclassSelector] protected IPatrol PatrolStrategy;
+
+    [SerializeField] private AIBrain _aiBrain;
 
     public EnemyConfig Config => _config;
     public IAggroHandler AggroSystem => AggroHandler;
@@ -30,9 +31,15 @@ public abstract class Enemy : Entity, IInputBrain
     protected override IInputBrain SetInputBrain() => this;
 
     protected override void OnAwake()
-        => AbilityUser.Initialize(_config
-            .Abilities
-            .ToList());
+    {
+        {
+            //AbilityUser.Initialize(_config
+            //        .Abilities
+            //        .ToList());
+        }
+
+        _aiBrain.Initialize(_config.AIActions);
+    }
 
     protected override void OnStart()
     {
@@ -45,6 +52,7 @@ public abstract class Enemy : Entity, IInputBrain
     {
         //base.Update();
 
+        _aiBrain.OnUpdate(Time.deltaTime, AggroHandler?.CurrentTarget);
         PatrolStrategy?.Update(Time.deltaTime);
 
         DetectionTimer += Time.deltaTime;
@@ -65,6 +73,7 @@ public abstract class Enemy : Entity, IInputBrain
             return;
 
         Entity nearestPlayer = Detector.DetectNearestPlayer(Config.DetectionRadius);
+
         if (nearestPlayer != null)
         {
             OnPlayerDetected(nearestPlayer);

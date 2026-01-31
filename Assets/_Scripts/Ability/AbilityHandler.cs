@@ -45,7 +45,7 @@ public class AbilityHandler : Ability, IGauge
             OnValueChanged?.Invoke();
     }
 
-    private bool IsReadyToUse()
+    public bool IsReadyToUse()
         => Time.time >= _nextUsageTime;
 
     private void SetNextUseTime()

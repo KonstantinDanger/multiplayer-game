@@ -1,13 +1,13 @@
 ﻿public class DefaultEnemy : Enemy
 {
-    private enum State
-    {
-        Patrolling,
-        Chasing,
-        AbilityUse
-    }
+    //private enum State
+    //{
+    //    Patrolling,
+    //    Chasing,
+    //    AbilityUse
+    //}
 
-    private State _currentState = State.Patrolling;
+    //private State _currentState = State.Patrolling;
 
     protected override void OnPlayerDetected(Entity player)
     {
@@ -40,45 +40,42 @@
 
     protected override void UpdateBehavior()
     {
-        if (!AggroHandler.IsAggroed)
-        {
-            _currentState = State.Patrolling;
-            Patrol();
-            return;
-        }
+        //if (!AggroHandler.IsAggroed)
+        //{
+        //    _currentState = State.Patrolling;
+        //    Patrol();
+        //    return;
+        //}
 
-        Target = AggroHandler.CurrentTarget;
+        //Target = AggroHandler.CurrentTarget;
 
-        if (Target == null)
-        {
-            _currentState = State.Patrolling;
-            return;
-        }
+        //if (Target == null)
+        //{
+        //    _currentState = State.Patrolling;
+        //    return;
+        //}
 
-        switch (_currentState)
-        {
-            case State.Patrolling:
-                if (AggroHandler.IsAggroed)
-                    _currentState = State.Chasing;
-                break;
+        //switch (_currentState)
+        //{
+        //    case State.Patrolling:
+        //        if (AggroHandler.IsAggroed)
+        //            _currentState = State.Chasing;
+        //        break;
 
-            case State.Chasing:
-                ChaseTarget(Target);
+        //    case State.Chasing:
+        //        ChaseTarget(Target);
 
-                //if (AbilityUser != null)
-                //    _currentState = State.AbilityUse;
-                break;
+        //        //if (AbilityUser != null)
+        //        //    _currentState = State.AbilityUse;
+        //        break;
 
-            case State.AbilityUse:
-                StopMovement();
-                PerformAbility(Target);
+        //    case State.AbilityUse:
+        //        StopMovement();
+        //        PerformAbility(Target);
 
-                //if (AbilityUser != null)
-                //    _currentState = State.Chasing;
-                break;
-        }
+        //        //if (AbilityUser != null)
+        //        //    _currentState = State.Chasing;
+        //        break;
+        //}
     }
-
-    private void Patrol() =>
-        PatrolStrategy?.SetPatrolOrigin(transform.position);
 }

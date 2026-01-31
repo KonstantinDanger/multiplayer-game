@@ -1,29 +1,28 @@
 ﻿using Mirror;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 [Serializable]
 public class AIBrain : NetworkBehaviour
 {
-    [SerializeField] private List<AIAction> _actions = new();
+    private List<AIAction> _actions = new();
 
-    private NetworkBehaviour _target;
-
-    private void Awake()
+    public void Initialize(IEnumerable<AIAction> actions)
     {
-        foreach (var action in _actions)
-            action?.Initialize(this);
+        _actions = new(actions);
+
+        foreach (var item in _actions)
+            item.Initialize(this);
     }
 
-    private void Update()
+    public void OnUpdate(float deltaTime, NetworkBehaviour target)
     {
         AIAction bestAction = null;
         float highestScore = -1;
 
         foreach (var action in _actions)
         {
-            float currentScore = action.CalculateUtilityScore(this, _target);
+            float currentScore = action.CalculateUtilityScore(this, target);
 
             if (highestScore < currentScore)
             {
@@ -34,7 +33,8 @@ public class AIBrain : NetworkBehaviour
 
         if (bestAction != null)
         {
-            bestAction.Execute(this, _target);
+            bestAction.Execute(this, target);
         }
+        UnityEngine.Debug.Log("Highest score " + highestScore);
     }
 }

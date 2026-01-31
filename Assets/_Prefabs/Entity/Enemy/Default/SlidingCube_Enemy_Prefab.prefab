@@ -469,6 +469,10 @@ PrefabInstance:
       propertyPath: _assetId
       value: 4119041645
       objectReference: {fileID: 0}
+    - target: {fileID: 4048761419557957035, guid: e5fe1cff9c07dc4408be67b5378d7f84, type: 3}
+      propertyPath: _anim
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4188451577050409953, guid: e5fe1cff9c07dc4408be67b5378d7f84, type: 3}
       propertyPath: m_LocalPosition.x
       value: -368.9248
@@ -578,6 +582,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 7715943145294844088}
   m_SourcePrefab: {fileID: 100100000, guid: e5fe1cff9c07dc4408be67b5378d7f84, type: 3}
+--- !u!114 &591413002969777563 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8813467058469061021, guid: e5fe1cff9c07dc4408be67b5378d7f84, type: 3}
+  m_PrefabInstance: {fileID: 8249089724785378310}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2845125904293703307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0588755726fc8634bbf8931f5e43075a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2845125904293703307 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6125262222170548877, guid: e5fe1cff9c07dc4408be67b5378d7f84, type: 3}
@@ -604,23 +619,21 @@ MonoBehaviour:
     _underlyingValue: {fileID: 7715943145294844088}
   _damageable:
     _underlyingValue: {fileID: 3143931818538115673}
+  _attacker:
+    _underlyingValue: {fileID: 0}
+  _abilityUser:
+    _underlyingValue: {fileID: 0}
   <MovementConfig>k__BackingField: {fileID: 11400000, guid: e3cb813506387f54dbb1d9c3eaa58da3, type: 2}
   <RotationConfig>k__BackingField: {fileID: 11400000, guid: 35c754a5163c48840abde2ccbebe65f2, type: 2}
   <DamageSystemConfig>k__BackingField: {fileID: 11400000, guid: d6fd6658551c3f9448b6f02de80c06af, type: 2}
   _config: {fileID: 11400000, guid: 98b41ea2d44f9b04889fef2af0e86c9f, type: 2}
-  _detectionRadius: 10
-  _detectionInterval: 5
   Detector:
     rid: 9013964992859603006
   AggroHandler:
     rid: 9013964992859603007
-  AttackStrategy:
+  PatrolStrategy:
     rid: -2
-  _patrolStrategy:
-    rid: -2
-  _fieldOfViewAngle: 120
-  _visionRange: 15
-  _isNeutral: 1
+  _aiBrain: {fileID: 591413002969777563}
   _moveInterval: 1.5
   references:
     version: 2

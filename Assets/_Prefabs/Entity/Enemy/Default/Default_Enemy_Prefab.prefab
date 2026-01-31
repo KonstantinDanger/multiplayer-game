@@ -82,6 +82,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1418038051021799968, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
       insertIndex: -1
       addedObject: {fileID: -4566607709360255179}
+    - targetCorrespondingSourceObject: {fileID: 1418038051021799968, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8813467058469061021}
   m_SourcePrefab: {fileID: 100100000, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
 --- !u!4 &4188451577050409953 stripped
 Transform:
@@ -119,26 +122,26 @@ MonoBehaviour:
     _underlyingValue: {fileID: 1435455419400485427}
   _damageable:
     _underlyingValue: {fileID: 6475008800849618527}
+  _attacker:
+    _underlyingValue: {fileID: 0}
+  _abilityUser:
+    _underlyingValue: {fileID: 0}
   <MovementConfig>k__BackingField: {fileID: 11400000, guid: e3cb813506387f54dbb1d9c3eaa58da3, type: 2}
   <RotationConfig>k__BackingField: {fileID: 11400000, guid: 35c754a5163c48840abde2ccbebe65f2, type: 2}
   <DamageSystemConfig>k__BackingField: {fileID: 11400000, guid: d6fd6658551c3f9448b6f02de80c06af, type: 2}
   _config: {fileID: 11400000, guid: 98b41ea2d44f9b04889fef2af0e86c9f, type: 2}
-  _detectionRadius: 10
-  _detectionInterval: 5
   Detector:
     rid: 4564918803227476033
   AggroHandler:
     rid: 4564918803227476034
-  AttackStrategy:
-    rid: 9013964992859603016
-  _patrolStrategy:
-    rid: 4564918807990894659
-  _fieldOfViewAngle: 120
-  _visionRange: 15
-  _isNeutral: 0
+  PatrolStrategy:
+    rid: -2
+  _aiBrain: {fileID: 8813467058469061021}
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 4564918803227476033
       type: {class: PlayerDetector, ns: , asm: Assembly-CSharp}
       data:
@@ -152,29 +155,6 @@ MonoBehaviour:
         aggroTimeout: 8
         aggroRange: 15
         _selfTransform: {fileID: 4188451577050409953}
-    - rid: 4564918807990894659
-      type: {class: Patrol, ns: , asm: Assembly-CSharp}
-      data:
-        patrolRadius: 5
-        patrolSpeed: 5
-        waitTimeAtPoint: 2
-        waypointReachedDistance: 0.5
-    - rid: 9013964992859603016
-      type: {class: MeleeAttack, ns: , asm: Assembly-CSharp}
-      data:
-        Amount: 1
-        TimeBetweenAttacks: 0
-        _damage:
-          Amount: 22
-          AttackLayers:
-            serializedVersion: 2
-            m_Bits: 128
-          Type: 0
-          Range: 0.2
-          SenderNetId: 0
-          ReceiverNetId: 0
-          AttackDirection: {x: 0, y: 0, z: 0}
-        _attackSplashRadius: 0.5
 --- !u!114 &1435455419400485427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,6 +180,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _agent: {fileID: 5603228043229722897}
+--- !u!114 &8813467058469061021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6125262222170548877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0588755726fc8634bbf8931f5e43075a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
 --- !u!114 &6475008800849618527 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2267410281914650354, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
