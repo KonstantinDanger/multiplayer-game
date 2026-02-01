@@ -12,14 +12,12 @@ public class EnemyConfig : ScriptableObject
 
     [field: SerializeField] public float DetectionRadius { get; private set; } = 10f;
     [field: SerializeField] public float DetectionInterval { get; private set; } = 5f; //Probably remove it to static field
-    [SerializeField] private List<AIAction> _aiActions = new();
+    [SerializeField] private List<ScriptableAIAction> _aiActions = new();
 
-    [SerializeReference] private List<ScriptableAbility> _abilities = new();
-
-    public IReadOnlyList<Ability> Abilities => _abilities
-        .Select(a => a.GetNew())
+    public IReadOnlyList<AIAction> AIActions
+        => _aiActions
+        .Select(sA => sA
+        .GetNew())
         .ToList();
-
-    public IReadOnlyList<AIAction> AIActions => _aiActions;
 }
 

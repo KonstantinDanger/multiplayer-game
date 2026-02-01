@@ -1,7 +1,8 @@
 ﻿using Mirror;
+using System;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "AI/UseAbilityAction", fileName = "UseAbilityAction")]
+[Serializable]
 public class UseAbilityAction : AIAction
 {
     [SerializeField] private ScriptableAbility _ability;
@@ -11,7 +12,7 @@ public class UseAbilityAction : AIAction
     public override void Initialize(NetworkBehaviour self)
         => _abilityHandler = new AbilityHandler(_ability.GetNew());
 
-    public override void Execute(NetworkBehaviour self, NetworkBehaviour target)
+    public override void Execute(Enemy self, NetworkBehaviour target)
     {
         if (!_abilityHandler.IsReadyToUse())
             return;

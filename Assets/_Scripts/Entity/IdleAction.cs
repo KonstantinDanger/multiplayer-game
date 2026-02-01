@@ -1,14 +1,9 @@
 ﻿using Mirror;
-using UnityEngine;
+using System;
 
-[CreateAssetMenu(menuName = "AI/IdleAction", fileName = "IdleAction")]
+[Serializable]
 public class IdleAction : AIAction
 {
-    private IMovable _movable;
-
-    public override void Initialize(NetworkBehaviour self)
-        => _movable = self.GetComponent<IMovable>();
-
-    public override void Execute(NetworkBehaviour self, NetworkBehaviour target)
-        => _movable.Move(self.transform.position, 0f);
+    public override void Execute(Enemy self, NetworkBehaviour target)
+        => self.Movable.Move(self.transform.position, 0f);
 }

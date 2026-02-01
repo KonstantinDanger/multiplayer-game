@@ -31,15 +31,7 @@ public abstract class Enemy : Entity, IInputBrain
     protected override IInputBrain SetInputBrain() => this;
 
     protected override void OnAwake()
-    {
-        {
-            //AbilityUser.Initialize(_config
-            //        .Abilities
-            //        .ToList());
-        }
-
-        _aiBrain.Initialize(_config.AIActions);
-    }
+        => _aiBrain.Initialize(this, _config.AIActions);
 
     protected override void OnStart()
     {

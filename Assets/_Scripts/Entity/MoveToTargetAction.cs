@@ -1,17 +1,12 @@
 ﻿using Mirror;
-using UnityEngine;
+using System;
 
-[CreateAssetMenu(menuName = "AI/MoveToTargetAction", fileName = "MoveToTargetAction")]
+[Serializable]
 public class MoveToTargetAction : AIAction
 {
-    private Enemy _enemy;
-
-    public override void Initialize(NetworkBehaviour self)
-        => _enemy = self.GetComponent<Enemy>();
-
-    public override void Execute(NetworkBehaviour self, NetworkBehaviour target)
+    public override void Execute(Enemy self, NetworkBehaviour target)
     {
-        _enemy.Movable.Move(target.transform.position, _enemy.MovementConfig.Speed);
-        _enemy.Rotatable?.Rotate((target.transform.position - self.transform.position).normalized, _enemy.RotationConfig.RotationSpeed);
+        self.Movable.Move(target.transform.position, self.MovementConfig.Speed);
+        self.Rotatable?.Rotate((target.transform.position - self.transform.position).normalized, self.RotationConfig.RotationSpeed);
     }
 }

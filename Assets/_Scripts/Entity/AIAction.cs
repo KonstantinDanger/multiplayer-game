@@ -1,10 +1,13 @@
 ﻿using Mirror;
+using System;
 using UnityEngine;
 
-public abstract class AIAction : ScriptableObject
+[Serializable]
+public abstract class AIAction
 {
     [SerializeReference, SubclassSelector] private Consideration _consideration;
+
+    public abstract void Execute(Enemy self, NetworkBehaviour target);
+    public float CalculateUtilityScore(Enemy self, NetworkBehaviour target) => _consideration.Evaluate(self, target);
     public virtual void Initialize(NetworkBehaviour self) { }
-    public abstract void Execute(NetworkBehaviour self, NetworkBehaviour target);
-    public float CalculateUtilityScore(NetworkBehaviour self, NetworkBehaviour target) => _consideration.Evaluate(self, target);
 }

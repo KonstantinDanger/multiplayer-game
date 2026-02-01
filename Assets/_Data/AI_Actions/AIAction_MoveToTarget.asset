@@ -9,16 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5355f5fda095090439ca0b2611171eb1, type: 3}
-  m_Name: UseAbilityAction_MeleeAttack
+  m_Script: {fileID: 11500000, guid: 1a72958a4f328dc45965321f7c6ba143, type: 3}
+  m_Name: AIAction_MoveToTarget
   m_EditorClassIdentifier: 
-  _consideration:
-    rid: 4552231747240067140
-  _ability: {fileID: 11400000, guid: defb1ee14590e974789089cb5fed3fa4, type: 2}
+  _action:
+    rid: 147410461514530888
   references:
     version: 2
     RefIds:
-    - rid: 4552231747240067140
+    - rid: 147410461514530888
+      type: {class: MoveToTargetAction, ns: , asm: Assembly-CSharp}
+      data:
+        _consideration:
+          rid: 147410461514530889
+    - rid: 147410461514530889
       type: {class: DistanceToTargetConsideration, ns: , asm: Assembly-CSharp}
       data:
         <ConsiderationCurve>k__BackingField:
@@ -27,31 +31,31 @@ MonoBehaviour:
           - serializedVersion: 3
             time: 0
             value: 1
-            inSlope: -1
-            outSlope: 0
+            inSlope: 0
+            outSlope: -0.38021338
             tangentMode: 69
             weightedMode: 0
             inWeight: 0
             outWeight: 0.33333334
           - serializedVersion: 3
-            time: 0.98163927
-            value: 1
-            inSlope: -0
-            outSlope: -2.5161474
-            tangentMode: 5
-            weightedMode: 0
-            inWeight: 0.33333334
-            outWeight: 0.33333334
+            time: 0.7949889
+            value: 0.6977346
+            inSlope: -0.9579004
+            outSlope: -0.9579004
+            tangentMode: 0
+            weightedMode: 3
+            inWeight: 0.11699559
+            outWeight: 0.42716184
           - serializedVersion: 3
             time: 1
             value: 0
-            inSlope: -4.132253
-            outSlope: -0.69595784
-            tangentMode: 1
+            inSlope: -3.4033985
+            outSlope: -3.4033985
+            tangentMode: 34
             weightedMode: 0
-            inWeight: 0.07491833
-            outWeight: 0.33333334
+            inWeight: 0.33333334
+            outWeight: 0
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-        _maxDistance: 1.5
+        _maxDistance: 10
