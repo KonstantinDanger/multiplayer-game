@@ -18,6 +18,7 @@ public class StaticData : ScriptableObject
     [field: SerializeField] public float ZoneDPS { get; private set; } = 10;
     [field: SerializeField] public DamageText DamageTextPrefab { get; private set; }
     [field: SerializeField] public PlayerHUD PlayerHUDPrefab { get; private set; }
+    [field: SerializeField] public AnimatorUpdaterConfig AnimatorUpdaterConfig { get; private set; }
 
     public override string ToString()
         => $"Static data";

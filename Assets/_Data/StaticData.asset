@@ -26,3 +26,4 @@ MonoBehaviour:
   <ZoneDPS>k__BackingField: 10
   <DamageTextPrefab>k__BackingField: {fileID: -8488073338923846487, guid: 6ca808c500f0cb44eb29573972d683a4, type: 3}
   <PlayerHUDPrefab>k__BackingField: {fileID: 7228371307025083929, guid: c1faf7b5186dc544289b7691b1aae290, type: 3}
+  <AnimatorUpdaterConfig>k__BackingField: {fileID: 11400000, guid: 10fafdb851d0ccc44aeda5c2746fb4e2, type: 2}

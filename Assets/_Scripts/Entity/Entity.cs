@@ -16,6 +16,7 @@ public class Entity : NetworkBehaviour, IDisposable
     [field: SerializeField] public MovementConfig MovementConfig { get; private set; }
     [field: SerializeField] public RotationConfig RotationConfig { get; private set; }
     [field: SerializeField] public DamageSystemConfig DamageSystemConfig { get; private set; }
+    [field: SerializeField] public Animator Animator { get; private set; }
 
     public IInputBrain InputBrain { get; private set; }
     public IMovable Movable => _movement.Value;
@@ -26,6 +27,12 @@ public class Entity : NetworkBehaviour, IDisposable
 
     private Vector2 MovementInput => InputBrain.MovementVector;
     private Vector2 RotationInput => InputBrain.Rotation;
+
+    private void OnValidate()
+    {
+        if (Animator == null)
+            Animator = GetComponentInChildren<Animator>();
+    }
 
     private void Awake()
     {

@@ -139,12 +139,15 @@ public class GameMatchState : GameState
 
     private void InitPlayers()
     {
+        Animator[] animators = GameObject.FindObjectsOfType<Animator>();
+
         foreach (var conn in NetworkServer.connections.Values)
         {
             Player player = conn.identity.GetComponent<Player>();
             player.ResetLevel();
             player.ToggleHUD(true);
             player.SetCanAttack(true);
+            player.InitializeAnimatorUpdater(animators);
             _players.Add(player);
         }
 

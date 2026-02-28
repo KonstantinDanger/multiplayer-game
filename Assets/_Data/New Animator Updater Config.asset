@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9cc92df3d5a21440b1f0f3031c13077, type: 3}
+  m_Name: New Animator Updater Config
+  m_EditorClassIdentifier: 
+  <StartingUpdateDistance>k__BackingField: 50
+  <EndingUpdateDistance>k__BackingField: 500
+  <DelayOverDistance>k__BackingField:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.20011494
+      value: 0.014957301
+      inSlope: 0.07723465
+      outSlope: 0.07723465
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.12118371
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 3.9703898
+      outSlope: 3.9703898
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.036905646
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  <MaxUpdateDelay>k__BackingField: 15

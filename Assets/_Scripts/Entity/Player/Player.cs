@@ -1,4 +1,5 @@
 using Mirror;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ public class Player : Entity
     private IRotatablePlayerCamera Camera => Rotatable as IRotatablePlayerCamera;
     public ScriptableCharacterClass CharacterClass => _characterClass;
 
+    private AnimatorUpdater _animatorUpdater;
     private bool _isMenuActive = true;
     private MainUI _playerUI;
     private LobbyUI _menu;
@@ -60,6 +62,10 @@ public class Player : Entity
             .GetNew()
             .Abilities
             .ToList());
+
+        var animatorUpdData = ServiceLocator.Container.Resolve<StaticData>().AnimatorUpdaterConfig;
+
+        _animatorUpdater = new(animatorUpdData);
     }
 
     protected override void HandleOnEnable()
@@ -86,6 +92,7 @@ public class Player : Entity
 
         _abilities.OnUpdate();
         _stateMachine.CurrentState.Update(Time.deltaTime);
+        _animatorUpdater.Update(Time.deltaTime);
 
         //UnityEngine.Debug.Log("Current state: " + _stateMachine.CurrentState);
 
@@ -156,6 +163,9 @@ public class Player : Entity
     [TargetRpc]
     public void SetCanAttack(bool canAttack)
         => Input.SetPlayerAttackInput(canAttack);
+
+    public void InitializeAnimatorUpdater(IEnumerable<Animator> animators)
+        => _animatorUpdater.Initialize(gameObject, animators);
 
     public void Spectate(bool active)
         => Input.SetPlayerInput(!active);
