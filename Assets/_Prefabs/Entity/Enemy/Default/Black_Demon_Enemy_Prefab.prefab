@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: c5ebaa781f2104f4b96eed7e7729e854, type: 3}
       propertyPath: m_LocalScale.x
-      value: 8.201762
+      value: 7.6943192
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c5ebaa781f2104f4b96eed7e7729e854, type: 3}
       propertyPath: m_LocalScale.y
-      value: 8.201762
+      value: 7.6943192
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c5ebaa781f2104f4b96eed7e7729e854, type: 3}
       propertyPath: m_LocalScale.z
-      value: 8.201762
+      value: 7.6943192
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c5ebaa781f2104f4b96eed7e7729e854, type: 3}
       propertyPath: m_LocalPosition.x
@@ -26,7 +26,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c5ebaa781f2104f4b96eed7e7729e854, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.33
+      value: 1.171
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c5ebaa781f2104f4b96eed7e7729e854, type: 3}
       propertyPath: m_LocalPosition.z
@@ -120,6 +120,18 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: df077bb0318568c48bbd00c925492398, type: 2}
+    - target: {fileID: 5465940246521907071, guid: c5ebaa781f2104f4b96eed7e7729e854, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465940246521907071, guid: c5ebaa781f2104f4b96eed7e7729e854, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465940246521907071, guid: c5ebaa781f2104f4b96eed7e7729e854, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5500239765526885891, guid: c5ebaa781f2104f4b96eed7e7729e854, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -267,7 +279,7 @@ PrefabInstance:
     - target: {fileID: 9123369937257284870, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
       propertyPath: _anim
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9065874890188062880}
     m_RemovedComponents:
     - {fileID: 2447300666758125202, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
     m_RemovedGameObjects:
@@ -341,14 +353,10 @@ MonoBehaviour:
     rid: 4564918803227476033
   AggroHandler:
     rid: 4564918803227476034
-  PatrolStrategy:
-    rid: -2
   _aiBrain: {fileID: 7848904612032011456}
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 4564918803227476033
       type: {class: PlayerDetector, ns: , asm: Assembly-CSharp}
       data:

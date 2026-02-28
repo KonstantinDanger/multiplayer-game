@@ -1,35 +1,20 @@
 ﻿using Mirror;
+using System;
 using UnityEngine;
 
+[Serializable]
 public class PatrolAction : AIAction
 {
-    private Vector3 _patrolDestination = Vector3.zero;
+    [SerializeField] private PatrolConfig _patrolConfig;
 
-    public override void Execute(Enemy self, NetworkBehaviour target)
+    private IPatrol _patrol;
+
+    public override void Initialize(NetworkBehaviour self)
     {
-        //if (distanceToPoint < 0.1f)
-        {
-            //start patrol idle timer 
-            //reset current patrol destination point
-            //score (weight) should be 0.0f
-            //return;
-        }
-
-        //if (idle patrol timer pass)
-        {
-            //if (point != Vector3.zero)
-            //return;
-
-            //PickRandomDestinationPoint();
-        }
-        //else
-        {
-            //return
-        }
-
-        //go to destination point
+        _patrol = self.GetComponent<IPatrol>();
+        _patrol.Initialize(_patrolConfig, self.GetComponent<IMovable>(), self.transform, self.transform);
     }
 
-    private Vector3 PickRandomDestinationPoint()
-        => _patrolDestination * UnityEngine.Random.Range(-1, 1);
+    public override void Execute(Enemy self, NetworkBehaviour target)
+        => _patrol.OnUpdate(Time.deltaTime);
 }

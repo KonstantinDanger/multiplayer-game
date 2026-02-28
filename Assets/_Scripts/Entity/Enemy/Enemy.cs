@@ -8,7 +8,6 @@ public abstract class Enemy : Entity, IInputBrain
     [Header("Enemy Components")]
     [SerializeReference, SubclassSelector] protected IDetectable<Player> Detector;
     [SerializeReference, SubclassSelector] protected IAggroHandler AggroHandler;
-    [SerializeReference, SubclassSelector] protected IPatrol PatrolStrategy;
 
     [SerializeField] private AIBrain _aiBrain;
 
@@ -33,19 +32,11 @@ public abstract class Enemy : Entity, IInputBrain
     protected override void OnAwake()
         => _aiBrain.Initialize(this, _config.AIActions);
 
-    protected override void OnStart()
-    {
-        base.OnStart();
-
-        PatrolStrategy?.Initialize(Movable, transform, transform);
-    }
-
     protected override void Update()
     {
         //base.Update();
 
         _aiBrain.OnUpdate(Time.deltaTime, AggroHandler?.CurrentTarget);
-        PatrolStrategy?.Update(Time.deltaTime);
 
         DetectionTimer += Time.deltaTime;
 
@@ -102,13 +93,6 @@ public abstract class Enemy : Entity, IInputBrain
     }
 
     public void StopMovement() { }
-
-    protected override void OnDamageTaken(Damage damage)
-    {
-        base.OnDamageTaken(damage);
-
-        PatrolStrategy?.ResetPatrol();
-    }
 
     protected override void OnDemise(Damage damage)
     {

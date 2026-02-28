@@ -588,7 +588,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2271489909096279403, guid: 617760f6ec3f69f41bb1f78db535919e, type: 3}
       propertyPath: sceneId
-      value: 2404738880
+      value: 480628395
       objectReference: {fileID: 0}
     - target: {fileID: 4188451577050409953, guid: 617760f6ec3f69f41bb1f78db535919e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -633,30 +633,6 @@ PrefabInstance:
     - target: {fileID: 6125262222170548877, guid: 617760f6ec3f69f41bb1f78db535919e, type: 3}
       propertyPath: m_Name
       value: Black_Demon_Enemy_Prefab (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8240144490476455423, guid: 617760f6ec3f69f41bb1f78db535919e, type: 3}
-      propertyPath: PatrolStrategy
-      value: 4552231747240067139
-      objectReference: {fileID: 0}
-    - target: {fileID: 8240144490476455423, guid: 617760f6ec3f69f41bb1f78db535919e, type: 3}
-      propertyPath: 'managedReferences[4552231747240067139]'
-      value: Assembly-CSharp Patrol
-      objectReference: {fileID: 0}
-    - target: {fileID: 8240144490476455423, guid: 617760f6ec3f69f41bb1f78db535919e, type: 3}
-      propertyPath: managedReferences[4552231747240067139].patrolSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8240144490476455423, guid: 617760f6ec3f69f41bb1f78db535919e, type: 3}
-      propertyPath: managedReferences[4552231747240067139].patrolRadius
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8240144490476455423, guid: 617760f6ec3f69f41bb1f78db535919e, type: 3}
-      propertyPath: managedReferences[4552231747240067139].waitTimeAtPoint
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8240144490476455423, guid: 617760f6ec3f69f41bb1f78db535919e, type: 3}
-      propertyPath: managedReferences[4552231747240067139].waypointReachedDistance
-      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
