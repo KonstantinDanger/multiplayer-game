@@ -76,7 +76,7 @@ public class GameMatchState : GameState
 
         if (_match.IsDeathmatchActive)
         {
-            HandlePlayerMatchLost(player);
+            //HandlePlayerMatchLost(player);
             return;
         }
 

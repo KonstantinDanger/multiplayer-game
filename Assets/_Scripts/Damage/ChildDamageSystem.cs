@@ -47,6 +47,6 @@ public class ChildDamageSystem : MonoBehaviour, IDamageable
         .TakeDamage(damage);
     }
 
-    public void Initialize(float baseHealth, IEnumerable<DamageHandler> damageHandlers) { }
+    public void Initialize(StatParameter baseHealth, IEnumerable<DamageHandler> damageHandlers) { }
     public void Respawn() { }
 }

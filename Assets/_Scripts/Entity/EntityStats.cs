@@ -1,18 +1,29 @@
+using System;
 using System.Collections.Generic;
 
-public readonly struct EntityStats
+public class EntityStats
 {
+    public Action<StatType, float> OnStatChange;
+
     private readonly Dictionary<StatType, float> _stats;
 
     public EntityStats(Dictionary<StatType, float> stats)
         => _stats = stats;
 
-    public readonly void AddStatMultiplier(StatType type, float value)
-        => _stats[type] += value;
+    public void AddStatMultiplier(StatType type, float value)
+    {
+        _stats[type] += value;
 
-    public readonly void RemoveStatMultiplier(StatType type, float value)
-    => _stats[type] -= value;
+        OnStatChange?.Invoke(type, _stats[type]);
+    }
 
-    public readonly float GetStatMultiplier(StatType type, float value)
+    public void RemoveStatMultiplier(StatType type, float value)
+    {
+        _stats[type] -= value;
+
+        OnStatChange?.Invoke(type, _stats[type]);
+    }
+
+    public float GetStatMultiplier(StatType type, float value)
     => _stats[type];
 }

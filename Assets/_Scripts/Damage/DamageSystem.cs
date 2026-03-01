@@ -3,9 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class DamageSystem : NetworkBehaviour, IDamageable
+public class DamageSystem : NetworkBehaviour, IDamageable, IStatConsumer
 {
-
     public event Action<Damage> OnDamageTaken;
     public event Action<Damage> OnDemise;
     public event Action OnValueChanged;
@@ -13,19 +12,26 @@ public class DamageSystem : NetworkBehaviour, IDamageable
     private List<DamageHandler> _damageHandlers = new();
 
     private float _baseHealth;
+
+    private float ScaledBaseHealth => _baseHealth * StatModifier.Multiplier;
+
     [SyncVar] private float _currentHealth;
     [SyncVar] private bool _isDead;
 
     public bool IsDead => _isDead;
     public float CurrentGaugeValue => _currentHealth;
-    public float MaxGaugeValue => _baseHealth;
+    public float MaxGaugeValue => ScaledBaseHealth;
 
-    public void Initialize(float baseHealth, IEnumerable<DamageHandler> damageHandlers)
+    public StatModifier StatModifier { get; set; }
+
+    public void Initialize(StatParameter baseHealth, IEnumerable<DamageHandler> damageHandlers)
     {
-        _baseHealth = baseHealth;
+        _baseHealth = baseHealth.Value;
 
         if (damageHandlers != null)
             _damageHandlers = damageHandlers?.ToList();
+
+        StatModifier = new StatModifier() { Multiplier = 1f, Stat = baseHealth.Stat };
 
         _currentHealth = _baseHealth;
 
@@ -88,7 +94,7 @@ public class DamageSystem : NetworkBehaviour, IDamageable
     [Command(requiresAuthority = false)]
     public void Respawn()
     {
-        _currentHealth = _baseHealth;
+        _currentHealth = ScaledBaseHealth;
         _isDead = false;
         RpcOnValueChanged();
     }

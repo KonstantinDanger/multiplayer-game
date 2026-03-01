@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Config/Damage_System_")]
 public class DamageSystemConfig : ScriptableObject
 {
-    [field: SerializeField, Range(1, 1000)] public float BaseHp { get; private set; } = 100;
+    [field: SerializeField] public StatParameter BaseHealth { get; private set; } = new(StatType.Health, 100);
     [field: SerializeField, Range(1, 30)] public float RespawnTime { get; private set; } = 5;
 
     [Space()]

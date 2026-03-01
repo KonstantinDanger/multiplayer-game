@@ -5,6 +5,17 @@ using UnityEngine;
 
 public static class Utils
 {
+    public static T GetInstancedCopyOf<T>(T target) where T : class
+    {
+        if (target == null)
+            return null;
+
+        string json = JsonUtility.ToJson(target);
+        T clone = JsonUtility.FromJson(json, target.GetType()) as T;
+
+        return clone;
+    }
+
     private static readonly Dictionary<Comparison, Func<float, float, bool>> ComparisonMap = new()
     {
         [Comparison.Equal] = (a, b) => a == b,

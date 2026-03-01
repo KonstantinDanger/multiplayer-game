@@ -3,9 +3,9 @@ using Mirror;
 using System;
 using UnityEngine;
 
-public class Entity : NetworkBehaviour, IDisposable
+public class Entity : NetworkBehaviour, IDisposable, IStatUser
 {
-    public EntityStats Stats = new(Utils.DefaultEntityStats());
+    public EntityStats Stats { get; } = new(Utils.DefaultEntityStats());
 
     [SerializeField] private InterfaceReference<IMovable> _movement;
     [SerializeField] private InterfaceReference<IRotatable> _rotatable;
@@ -30,7 +30,7 @@ public class Entity : NetworkBehaviour, IDisposable
     private void Awake()
     {
         InputBrain = SetInputBrain();
-        Damageable.Initialize(DamageSystemConfig.BaseHp, null);
+        Damageable.Initialize(DamageSystemConfig.BaseHealth, null);
 
         OnAwake();
     }
@@ -45,6 +45,7 @@ public class Entity : NetworkBehaviour, IDisposable
         InputBrain.JumpAction += HandleJump;
         Damageable.OnDamageTaken += OnDamageTaken;
         Damageable.OnDemise += OnDemise;
+        Stats.OnStatChange += HandleStatChange;
 
         HandleOnEnable();
     }
@@ -56,6 +57,7 @@ public class Entity : NetworkBehaviour, IDisposable
         InputBrain.JumpAction -= HandleJump;
         Damageable.OnDamageTaken -= OnDamageTaken;
         Damageable.OnDemise -= OnDemise;
+        Stats.OnStatChange -= HandleStatChange;
 
         HandleOnDisable();
     }
@@ -68,6 +70,26 @@ public class Entity : NetworkBehaviour, IDisposable
         InputBrain.Update();
 
         Rotatable.Rotate(RotationInput, RotationConfig.RotationSpeed);
+    }
+
+    private void HandleStatChange(StatType type, float statMultiplier)
+    {
+        IStatConsumer[] components = GetComponents<IStatConsumer>();
+
+        for (int i = 0; i < components.Length; i++)
+        {
+            IStatConsumer component = components[i];
+
+            if (component == null)
+                continue;
+
+            if (component.StatModifier.Stat != type)
+                continue;
+
+            StatModifier modifier = component.StatModifier;
+            modifier.Multiplier = statMultiplier;
+            component.StatModifier = modifier;
+        }
     }
 
     protected virtual void OnDamageTaken(Damage damage) { }

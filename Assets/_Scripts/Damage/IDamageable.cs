@@ -8,7 +8,7 @@ public interface IDamageable : IGauge
 
     public bool IsDead { get; }
 
-    void Initialize(float baseHealth, IEnumerable<DamageHandler> damageHandlers);
     void Respawn();
     void TakeDamage(Damage damage);
+    void Initialize(StatParameter baseHealth, IEnumerable<DamageHandler> damageHandlers);
 }

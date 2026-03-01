@@ -44,11 +44,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4389659091310345341}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69cf0bc25ed2201438f05b4ed27caf5d, type: 3}
+  m_Script: {fileID: 11500000, guid: 8565f95dceadc16409458b1d2809e644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _minRadius: 450
-  _maxRadius: 1600
+  _maxRadius: 2400
 --- !u!114 &7846779847051655936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,7 +58,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4389659091310345341}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bef63102a37c1d458ae15915cea52e2, type: 3}
+  m_Script: {fileID: 11500000, guid: d0f9e7f6147c2f54c88e23ff2c54b1b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _zone: {fileID: 274732617518039713}

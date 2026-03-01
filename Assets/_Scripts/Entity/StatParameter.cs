@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public class StatParameter
+public struct StatParameter
 {
     public StatParameter(StatType stat, float value)
     {
@@ -10,8 +10,8 @@ public class StatParameter
     }
 
     [field: SerializeField] public StatType Stat { get; private set; }
-    [field: SerializeField] public float Value { get; private set; }
+    [field: SerializeField, Range(0f, 1000f)] public float Value { get; set; }
 
-    public StatParameter Clone()
+    public readonly StatParameter Clone()
         => new StatParameter(Stat, Value);
 }

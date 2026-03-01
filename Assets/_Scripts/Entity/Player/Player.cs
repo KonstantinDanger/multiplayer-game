@@ -2,6 +2,7 @@ using Mirror;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : Entity
 {
@@ -89,6 +90,19 @@ public class Player : Entity
     {
         if (!CanDoActions())
             return;
+
+        if (Keyboard.current.hKey.wasPressedThisFrame)
+        {
+            Damageable.TakeDamage(new() { Amount = 50 });
+        }
+
+        if (Keyboard.current.gKey.wasPressedThisFrame)
+        {
+            Stats.AddStatMultiplier(StatType.Health, 0.1f);
+
+            UnityEngine.Debug.Log("pressed ");
+            UnityEngine.Debug.Log(Stats.GetStatMultiplier(StatType.Health, 0));
+        }
 
         _abilities.OnUpdate();
         _stateMachine.CurrentState.Update(Time.deltaTime);
