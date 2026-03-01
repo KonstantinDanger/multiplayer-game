@@ -2,31 +2,7 @@
 
 public class PeacefulEnemy : Enemy
 {
-    [Header("Peaceful Enemy Settings")]
-    [SerializeField] private float _fleeSpeed = 6f;
-    [SerializeField] private float _fleeDistance = 15f;
-    [SerializeField] private float _fleeDuration = 5f;
     [SerializeField] private SiblingNotifier _notifier;
-    [SerializeReference, SubclassSelector] private IFleeBehaviour _fleeBehaviour;
-
-    private bool _isFleeing;
-    private float _fleeTimer;
-    private Entity _fleeTarget;
-
-    protected override void Update()
-    {
-        base.Update();
-
-        if (_isFleeing)
-        {
-            _fleeTimer -= Time.deltaTime;
-            if (_fleeTimer <= 0f)
-            {
-                _isFleeing = false;
-                _fleeTarget = null;
-            }
-        }
-    }
 
     protected override void OnPlayerDetected(Entity player) { }
 
@@ -44,27 +20,13 @@ public class PeacefulEnemy : Enemy
     public void OnSiblingAttacked(Entity attacker)
         => FleeFrom(attacker);
 
-    private void FleeFrom(Entity target)
+    private void FleeFrom(Entity attacker)
     {
-        _isFleeing = true;
-        _fleeTimer = _fleeDuration;
-        _fleeTarget = target;
+        if (!transform.TryGetComponent(out ITargetTrackingMemory trackingMemory))
+            return;
+
+        trackingMemory.Memorize(attacker);
     }
 
-    protected override void UpdateBehavior()
-    {
-        if (_isFleeing && _fleeTarget != null)
-        {
-            Vector3 fleeDestination = _fleeBehaviour.GetFleeDestinationFrom(_fleeTarget.transform, transform, _fleeDistance);
-            Vector3 fleeDirection = fleeDestination - transform.position;
-
-            Movable.Move(fleeDestination, _fleeSpeed);
-
-            Rotatable?.Rotate(fleeDirection, RotationConfig.RotationSpeed);
-        }
-        else
-        {
-            StopMovement();
-        }
-    }
+    protected override void UpdateBehavior() { }
 }

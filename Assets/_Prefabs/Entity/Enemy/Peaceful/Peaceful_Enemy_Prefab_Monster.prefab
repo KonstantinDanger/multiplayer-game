@@ -122,6 +122,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 770297231326807634, guid: 2fc8c8f312227e343beb9dcec4029519, type: 3}
+      propertyPath: _anim
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2500640062761660037, guid: 2fc8c8f312227e343beb9dcec4029519, type: 3}
+      propertyPath: _config
+      value: 
+      objectReference: {fileID: 11400000, guid: 0319458f2888bbf43b87273550418d09, type: 2}
+    - target: {fileID: 2500640062761660037, guid: 2fc8c8f312227e343beb9dcec4029519, type: 3}
+      propertyPath: _enemyConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 0319458f2888bbf43b87273550418d09, type: 2}
     - target: {fileID: 3244076376997496466, guid: 2fc8c8f312227e343beb9dcec4029519, type: 3}
       propertyPath: _assetId
       value: 1900533021

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class Enemy : Entity, IInputBrain
 {
-    [SerializeField] private EnemyConfig _config;
+    [SerializeField] private EnemyConfig _enemyConfig;
 
     [Header("Enemy Components")]
     [SerializeReference, SubclassSelector] protected IDetectable<Player> Detector;
@@ -11,7 +11,7 @@ public abstract class Enemy : Entity, IInputBrain
 
     [SerializeField] private AIBrain _aiBrain;
 
-    public EnemyConfig Config => _config;
+    public EnemyConfig Config => _enemyConfig;
     public IAggroHandler AggroSystem => AggroHandler;
 
     #region InputBrain fields
@@ -30,7 +30,7 @@ public abstract class Enemy : Entity, IInputBrain
     protected override IInputBrain SetInputBrain() => this;
 
     protected override void OnAwake()
-        => _aiBrain.Initialize(this, _config.AIActions);
+        => _aiBrain.Initialize(this, _enemyConfig.AIActions);
 
     protected override void Update()
     {

@@ -1,16 +1,15 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-[Serializable]
-public class FleeBehaviour : IFleeBehaviour
+public class FleeDestinationPicker
 {
-    [SerializeField] private float _chaoticAngleVariation = 45f;
-    [SerializeField] private float _sineFrequency = 1.5f;
-    [SerializeField] private float _noiseAmount = 15f;
-
     private float _timeOffset;
     private float _noiseOffset;
     private bool _initialized = false;
+
+    private readonly FleeConfig _config;
+
+    public FleeDestinationPicker(FleeConfig config)
+        => _config = config;
 
     public Vector3 GetFleeDestinationFrom(Transform attacker, Transform self, float fleeDistance)
     {
@@ -23,12 +22,12 @@ public class FleeBehaviour : IFleeBehaviour
 
         Vector3 awayFromTarget = (self.position - attacker.position).normalized;
 
-        float sineValue = Mathf.Sin((Time.time + _timeOffset) * _sineFrequency);
-        float sineAngle = sineValue * _chaoticAngleVariation;
+        float sineValue = Mathf.Sin((Time.time + _timeOffset) * _config.SineFrequency);
+        float sineAngle = sineValue * _config.ChaoticAngleVariation;
 
         float noise1 = Mathf.PerlinNoise((Time.time + _noiseOffset) * 0.8f, _noiseOffset);
         float noise2 = Mathf.PerlinNoise(_noiseOffset, (Time.time + _noiseOffset) * 1.2f);
-        float noiseAngle = (noise1 - 0.5f) * _noiseAmount + (noise2 - 0.5f) * _noiseAmount * 0.5f;
+        float noiseAngle = (noise1 - 0.5f) * _config.NoiseAmount + (noise2 - 0.5f) * _config.NoiseAmount * 0.5f;
 
         float finalAngle = sineAngle + noiseAngle;
 

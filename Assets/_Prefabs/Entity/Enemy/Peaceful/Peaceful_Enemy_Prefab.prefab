@@ -101,6 +101,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1418038051021799968, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6595900978107497887}
+    - targetCorrespondingSourceObject: {fileID: 1418038051021799968, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1008523891125965303}
+    - targetCorrespondingSourceObject: {fileID: 1418038051021799968, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5421713383065343482}
   m_SourcePrefab: {fileID: 100100000, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
 --- !u!4 &621757109037350936 stripped
 Transform:
@@ -133,31 +139,29 @@ MonoBehaviour:
     _underlyingValue: {fileID: 3460745312512611894}
   _damageable:
     _underlyingValue: {fileID: 7735891674132778406}
+  _attacker:
+    _underlyingValue: {fileID: 0}
+  _abilityUser:
+    _underlyingValue: {fileID: 0}
   <MovementConfig>k__BackingField: {fileID: 11400000, guid: e3cb813506387f54dbb1d9c3eaa58da3, type: 2}
   <RotationConfig>k__BackingField: {fileID: 11400000, guid: 35c754a5163c48840abde2ccbebe65f2, type: 2}
   <DamageSystemConfig>k__BackingField: {fileID: 11400000, guid: d6fd6658551c3f9448b6f02de80c06af, type: 2}
-  _config: {fileID: 11400000, guid: 98b41ea2d44f9b04889fef2af0e86c9f, type: 2}
-  _detectionRadius: 10
-  _detectionInterval: 5
+  _enemyConfig: {fileID: 11400000, guid: 0319458f2888bbf43b87273550418d09, type: 2}
   Detector:
     rid: 4564918806144876609
   AggroHandler:
-    rid: -2
-  AttackStrategy:
-    rid: -2
-  _patrolStrategy:
-    rid: 4564918807990894658
-  _fleeSpeed: 6
-  _fleeDistance: 15
-  _fleeDuration: 5
+    rid: 3288031281872109638
+  _aiBrain: {fileID: 1008523891125965303}
   _notifier: {fileID: 6595900978107497887}
-  _fleeBehaviour:
-    rid: 4564918807990894657
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 3288031281872109638
+      type: {class: AggroHandler, ns: , asm: Assembly-CSharp}
+      data:
+        aggroTimeout: 8
+        aggroRange: 15
+        _selfTransform: {fileID: 0}
     - rid: 4564918806144876609
       type: {class: PlayerDetector, ns: , asm: Assembly-CSharp}
       data:
@@ -165,18 +169,6 @@ MonoBehaviour:
           serializedVersion: 2
           m_Bits: 128
         _transform: {fileID: 621757109037350936}
-    - rid: 4564918807990894657
-      type: {class: FleeBehaviour, ns: , asm: Assembly-CSharp}
-      data:
-        _chaoticAngleVariation: 33.55
-        _sineFrequency: 1.64
-        _noiseAmount: 67.4
-    - rid: 4564918807990894658
-      type: {class: Patrol, ns: , asm: Assembly-CSharp}
-      data:
-        patrolRadius: 10
-        waitTimeAtPoint: 2
-        waypointReachedDistance: 0.5
 --- !u!114 &3460745312512611894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,6 +208,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   notificationRadius: 15
   _debug: 0
+--- !u!114 &1008523891125965303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7458523687011287412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0588755726fc8634bbf8931f5e43075a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+--- !u!114 &5421713383065343482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7458523687011287412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3da38978f5cb50441bacc1ac2ab6a2c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
 --- !u!114 &7735891674132778406 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2267410281914650354, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
