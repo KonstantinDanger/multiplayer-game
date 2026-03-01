@@ -26,7 +26,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c5ebaa781f2104f4b96eed7e7729e854, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.171
+      value: -0.12
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c5ebaa781f2104f4b96eed7e7729e854, type: 3}
       propertyPath: m_LocalPosition.z
@@ -348,6 +348,7 @@ MonoBehaviour:
   <MovementConfig>k__BackingField: {fileID: 11400000, guid: e3cb813506387f54dbb1d9c3eaa58da3, type: 2}
   <RotationConfig>k__BackingField: {fileID: 11400000, guid: 35c754a5163c48840abde2ccbebe65f2, type: 2}
   <DamageSystemConfig>k__BackingField: {fileID: 11400000, guid: d6fd6658551c3f9448b6f02de80c06af, type: 2}
+  <Animator>k__BackingField: {fileID: 9065874890188062880}
   _config: {fileID: 11400000, guid: 98b41ea2d44f9b04889fef2af0e86c9f, type: 2}
   Detector:
     rid: 4564918803227476033

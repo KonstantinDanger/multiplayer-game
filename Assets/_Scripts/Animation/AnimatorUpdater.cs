@@ -17,24 +17,31 @@ public class AnimatorUpdater
 
         foreach (Animator entity in animators)
         {
-            if (entity == targetUpdater)
+            if (entity.transform.root.gameObject == targetUpdater)
                 continue;
 
             var anim = entity;
             anim.enabled = false;
 
-            _updateData.Add(new() { Animator = anim, LastUpdateTime = Time.time + Random.Range(0, _config.MaxUpdateDelay) });
+            _updateData.Add(new()
+            {
+                Animator = anim,
+                LastUpdateTime = Time.time + Random.Range(0, _config.MaxUpdateDelay)
+            });
         }
     }
 
     public void Update(float deltaTime)
     {
-        if (_target == null)
+        if (_target == null || _updateData.Count == 0)
             return;
 
         foreach (AnimatorUpdateData animatorData in _updateData)
         {
             Animator animator = animatorData.Animator;
+
+            if (animator == null)
+                continue;
 
             float distanceToTarget = Vector3.Distance(animator.transform.position, _target.transform.position);
 
@@ -44,13 +51,9 @@ public class AnimatorUpdater
             {
                 animator.Update(deltaTime);
 
-                UnityEngine.Debug.Log("update ");
-
-                UnityEngine.Debug.Log("object: " + animatorData.Animator.transform.root.gameObject.name);
             }
             else if (Time.time - animatorData.LastUpdateTime >= delay)
             {
-                UnityEngine.Debug.Log("calculate ");
                 animator.Update(Time.time - animatorData.LastUpdateTime);
                 animatorData.LastUpdateTime = Time.time;
             }
@@ -63,8 +66,6 @@ public class AnimatorUpdater
             return -1;
 
         float normalizedDistance = (distanceToTarget - _config.StartingUpdateDistance) / (_config.EndingUpdateDistance - _config.StartingUpdateDistance);
-
-        UnityEngine.Debug.Log("normalizedDistance " + normalizedDistance);
 
         return _config.DelayOverDistance.Evaluate(normalizedDistance) * _config.MaxUpdateDelay;
     }

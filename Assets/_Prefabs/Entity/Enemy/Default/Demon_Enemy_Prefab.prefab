@@ -1,12 +1,44 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4247046261404740723
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8714091955952671561}
+  m_Layer: 8
+  m_Name: Rig
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8714091955952671561
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4247046261404740723}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 46992798278503915}
+  m_Father: {fileID: 4188451577050409953}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &516870305979378176
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 4188451577050409953}
+    m_TransformParent: {fileID: 8714091955952671561}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: fd5d8730d6b1ab641ba9248ae7fd4730, type: 3}
       propertyPath: m_LocalScale.x
@@ -26,7 +58,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fd5d8730d6b1ab641ba9248ae7fd4730, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.062
+      value: -0.15
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fd5d8730d6b1ab641ba9248ae7fd4730, type: 3}
       propertyPath: m_LocalPosition.z
@@ -38,15 +70,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fd5d8730d6b1ab641ba9248ae7fd4730, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fd5d8730d6b1ab641ba9248ae7fd4730, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fd5d8730d6b1ab641ba9248ae7fd4730, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fd5d8730d6b1ab641ba9248ae7fd4730, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -68,6 +100,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 377b54770027efb459888435f3edc3ed, type: 2}
+    - target: {fileID: 5866666021909216657, guid: fd5d8730d6b1ab641ba9248ae7fd4730, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -195,7 +231,7 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8974813229951714124, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 46992798278503915}
+      addedObject: {fileID: 8714091955952671561}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1418038051021799968, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
       insertIndex: 3
@@ -261,14 +297,10 @@ MonoBehaviour:
     rid: 4564918803227476033
   AggroHandler:
     rid: 4564918803227476034
-  PatrolStrategy:
-    rid: -2
   _aiBrain: {fileID: 9083324515939393787}
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 4564918803227476033
       type: {class: PlayerDetector, ns: , asm: Assembly-CSharp}
       data:

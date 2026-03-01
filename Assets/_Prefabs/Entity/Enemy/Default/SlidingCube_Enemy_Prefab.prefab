@@ -475,15 +475,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4188451577050409953, guid: e5fe1cff9c07dc4408be67b5378d7f84, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -368.9248
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4188451577050409953, guid: e5fe1cff9c07dc4408be67b5378d7f84, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.16265869
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4188451577050409953, guid: e5fe1cff9c07dc4408be67b5378d7f84, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 73.55489
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4188451577050409953, guid: e5fe1cff9c07dc4408be67b5378d7f84, type: 3}
       propertyPath: m_LocalRotation.w
@@ -631,15 +631,11 @@ MonoBehaviour:
     rid: 9013964992859603006
   AggroHandler:
     rid: 9013964992859603007
-  PatrolStrategy:
-    rid: -2
   _aiBrain: {fileID: 591413002969777563}
   _moveInterval: 1.5
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 9013964992859603006
       type: {class: PlayerDetector, ns: , asm: Assembly-CSharp}
       data:
