@@ -14,6 +14,7 @@ public class Player : Entity
     [SerializeField] private PlayerAbilityUser _abilities;
     [SerializeField] private ScriptableCharacterClass _characterClass;
     [SerializeField] private Level _level;
+    [SerializeField] private Upgrader _upgrader;
 
     private IPlayerInputBrain Input => InputBrain as IPlayerInputBrain;
     private IRotatablePlayerCamera Camera => Rotatable as IRotatablePlayerCamera;
@@ -59,6 +60,7 @@ public class Player : Entity
         _isMenuActive = true;
         HandleMenuInvoked();
 
+        _upgrader.Initialize();
         _abilities.Initialize(_characterClass
             .GetNew()
             .Abilities
@@ -143,7 +145,7 @@ public class Player : Entity
     public void ToggleHUD(bool active)
     {
         _playerHUD.gameObject.SetActive(active);
-        _playerHUD.Initialize(_abilities, Damageable, _level);
+        _playerHUD.Initialize(_abilities, Damageable, _level, _upgrader);
     }
 
     [ClientRpc]

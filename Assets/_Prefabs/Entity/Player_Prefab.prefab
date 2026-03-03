@@ -294,6 +294,7 @@ GameObject:
   - component: {fileID: 3897486771464272008}
   - component: {fileID: 2237913142302332592}
   - component: {fileID: 1808158390437573916}
+  - component: {fileID: 8354765473121511370}
   m_Layer: 7
   m_Name: Player_Prefab
   m_TagString: Untagged
@@ -386,6 +387,10 @@ MonoBehaviour:
     _underlyingValue: {fileID: 2854472321422995004}
   _damageable:
     _underlyingValue: {fileID: 1705426453025376207}
+  _attacker:
+    _underlyingValue: {fileID: 0}
+  _abilityUser:
+    _underlyingValue: {fileID: 0}
   <MovementConfig>k__BackingField: {fileID: 11400000, guid: a7e9482648561ea44b509607f893e2bf, type: 2}
   <RotationConfig>k__BackingField: {fileID: 11400000, guid: 325f2402fcff7d34f9d0ba09f47f1dee, type: 2}
   <DamageSystemConfig>k__BackingField: {fileID: 11400000, guid: 9c4dc7eccd4e6c849b913c79dcde9de5, type: 2}
@@ -395,6 +400,7 @@ MonoBehaviour:
   _abilities: {fileID: 5132097041645439728}
   _characterClass: {fileID: 11400000, guid: 9f4fb1f6f2f5b31449d70feab0f1f33e, type: 2}
   _level: {fileID: 3897486771464272008}
+  _upgrader: {fileID: 8354765473121511370}
 --- !u!114 &2854472321422995004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -706,6 +712,24 @@ MonoBehaviour:
   - {fileID: 4904606795795637325}
   - {fileID: 5717934390974713111}
   - {fileID: 3433672104978875958}
+--- !u!114 &8354765473121511370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4047092069969861197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81e12d1c566f9b44aaed518c69829a27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  _level: {fileID: 3897486771464272008}
+  _config: {fileID: 11400000, guid: 8b77d7a26c4b00a4a8487ab2c5593ff7, type: 2}
+  _upgradeSchema: {fileID: 11400000, guid: 7afaee880ff60ee4eb0a39f839ea87de, type: 2}
 --- !u!1 &4641920328616467223
 GameObject:
   m_ObjectHideFlags: 0
