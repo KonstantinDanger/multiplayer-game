@@ -1,10 +1,9 @@
 using Steamworks;
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LobbyUI : UI, IDisposable
+public class LobbyUI : UI
 {
     [SerializeField] private TextMeshProUGUI _lobbyNameText;
     [SerializeField] private ELobbyType _lobbyType = ELobbyType.k_ELobbyTypePublic;
