@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1de947e5c8d6b2a4184e251d0415d735, type: 3}
   m_Name: New Enemy Config
   m_EditorClassIdentifier: 
-  <XpToDrop>k__BackingField: 600
+  <XpToDrop>k__BackingField: 6132
   <IsNeutral>k__BackingField: 0
   <FieldOfViewAngle>k__BackingField: 120
   <VisionRange>k__BackingField: 15

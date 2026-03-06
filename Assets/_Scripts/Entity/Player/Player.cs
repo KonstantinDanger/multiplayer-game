@@ -24,6 +24,7 @@ public class Player : Entity
     private bool _isMenuActive = true;
     private MainUI _playerUI;
     private LobbyUI _menu;
+    private UpgradeUI _upgradeUI;
     private PlayerHUD _playerHUD;
 
     private bool IsOffline =>
@@ -171,9 +172,13 @@ public class Player : Entity
 
         var data = ServiceLocator.Container.Resolve<StaticData>();
         var hudPrefab = data.PlayerHUDPrefab;
+        var upgradeUIPrefab = data.UpgradeUIPrefab;
 
         _playerUI = Instantiate(data.UIPrefab, transform);
         _playerHUD = Instantiate(hudPrefab, _playerUI.transform);
+        _upgradeUI = Instantiate(upgradeUIPrefab, _playerUI.transform);
+
+        _upgradeUI.Initialize(_upgrader);
     }
 
     [TargetRpc]

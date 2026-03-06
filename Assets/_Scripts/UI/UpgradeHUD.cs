@@ -2,14 +2,14 @@
 
 public class UpgradeHUD : MonoBehaviour
 {
-    [SerializeField] private GameObject _availableUpgradesNotifier;
+    [SerializeField] private UpgradeNotifier _upgradesNotifier;
 
     private Upgrader _upgrader;
 
     public void Initialize(Upgrader upgrader)
     {
         _upgrader = upgrader;
-
+        HandleUpgradeAmountChange(_upgrader.GivenUpgradesCount);
         _upgrader.OnUpgradeAmountChange += HandleUpgradeAmountChange;
     }
 
@@ -17,5 +17,5 @@ public class UpgradeHUD : MonoBehaviour
         => _upgrader.OnUpgradeAmountChange -= HandleUpgradeAmountChange;
 
     private void HandleUpgradeAmountChange(int upgradesAmount)
-        => _availableUpgradesNotifier.SetActive(upgradesAmount > 0);
+        => _upgradesNotifier.gameObject.SetActive(upgradesAmount > 0);
 }

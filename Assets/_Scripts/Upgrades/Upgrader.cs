@@ -44,6 +44,9 @@ public class Upgrader : NetworkBehaviour
 
     private void HandleLevelChange(int level)
     {
+        if (level == 1 && _levelCounter == 0)
+            return;
+
         _levelCounter++;
 
         int clampedLevel = _levelCounter % _config.GiveUpgradeEachLevel;

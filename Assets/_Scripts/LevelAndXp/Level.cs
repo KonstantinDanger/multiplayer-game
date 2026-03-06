@@ -59,9 +59,10 @@ public class Level : NetworkBehaviour, IGauge
     [Server]
     private void LevelUp(float xpRemainder)
     {
-        _xp = xpRemainder;
+        _xp = 0;
         _level++;
         _xpPerLevel = GetNextXpPerLevel(Lvl);
+        AddXp(xpRemainder);
     }
 
     private float GetNextXpPerLevel(int level)
