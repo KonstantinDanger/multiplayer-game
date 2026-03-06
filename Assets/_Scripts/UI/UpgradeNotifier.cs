@@ -26,19 +26,15 @@ public class UpgradeNotifier : MonoBehaviour
         if (string.IsNullOrEmpty(_keyToPressText))
             throw new System.Exception("_keyToPressText is empty!");
 
+        string keyName = GetCurrentDeviceUpgradeKey();
         string[] strings = _keyToPressText.Split(new[] { '{', '}' }, System.StringSplitOptions.RemoveEmptyEntries);
         string str = "";
 
         foreach (string s in strings)
         {
-            if (s == "}" || s == "key")
+            if (s == "key")
             {
-                continue;
-            }
-
-            if (s == "{")
-            {
-                str += $" {_keyReference.action.bindings[0].name}";
+                str += $" {keyName}";
                 continue;
             }
 
@@ -46,5 +42,14 @@ public class UpgradeNotifier : MonoBehaviour
         }
 
         return str;
+    }
+
+    private string GetCurrentDeviceUpgradeKey()
+    {
+        string readable = InputControlPath.ToHumanReadableString(
+            _keyReference.action.bindings[0].effectivePath,
+            InputControlPath.HumanReadableStringOptions.OmitDevice);
+
+        return readable;
     }
 }

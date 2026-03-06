@@ -14,6 +14,7 @@ public class PlayerInput : IPlayerInputBrain
     public event Action OnMenuInvoked;
     public event Action AttackAction;
     public event Action<int> AbilityAction;
+    public event Action OnUpgradeMenuInvoked;
 
     public bool IsSprinting { get; private set; }
 
@@ -26,6 +27,7 @@ public class PlayerInput : IPlayerInputBrain
 
         _actions.Player.Jump.performed += _ => JumpAction?.Invoke();
         _actions.UI.Menu.performed += _ => OnMenuInvoked?.Invoke();
+        _actions.UI.Upgrade.performed += _ => OnUpgradeMenuInvoked?.Invoke();
 
         _actions.Player.Sprint.started += _ => IsSprinting = true;
         _actions.Player.Sprint.canceled += _ => IsSprinting = false;

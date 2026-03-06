@@ -22,6 +22,7 @@ public class Player : Entity
 
     private AnimatorUpdater _animatorUpdater;
     private bool _isMenuActive = true;
+    private bool _isUpgrading = false;
     private MainUI _playerUI;
     private LobbyUI _menu;
     private UpgradeUI _upgradeUI;
@@ -58,9 +59,6 @@ public class Player : Entity
         _stateMachine = new PlayerStateMachine(this);
         //_menu = ServiceLocator.Container.Resolve<LobbyUI>();
 
-        _isMenuActive = true;
-        HandleMenuInvoked();
-
         _upgrader.Initialize();
         _abilities.Initialize(_characterClass
             .GetNew()
@@ -77,6 +75,7 @@ public class Player : Entity
         Input.OnMenuInvoked += HandleMenuInvoked;
         Input.AttackAction += HandleAttack;
         Input.AbilityAction += HandleAbility;
+        Input.OnUpgradeMenuInvoked += HandleUpgradeMenuInvoked;
     }
 
     protected override void HandleOnDisable()
@@ -84,6 +83,7 @@ public class Player : Entity
         Input.OnMenuInvoked -= HandleMenuInvoked;
         Input.AttackAction -= HandleAttack;
         Input.AbilityAction -= HandleAbility;
+        Input.OnUpgradeMenuInvoked -= HandleUpgradeMenuInvoked;
     }
 
     protected override void OnStart()
@@ -206,6 +206,28 @@ public class Player : Entity
 
         _abilities.Use();
         //_damager.InflictDamage(Camera.Transform.position, Camera.Transform.forward);
+    }
+
+    private void HandleUpgradeMenuInvoked()
+    {
+        if (!CanDoActions())
+            return;
+
+        _isUpgrading = !_isUpgrading;
+
+        if (!Damageable.IsDead)
+            Input.SetPlayerInput(!_isUpgrading);
+
+        if (_isUpgrading)
+        {
+            Camera.ShowCursor();
+        }
+        else
+        {
+            Camera.HideCursor();
+        }
+
+        _upgradeUI.gameObject.SetActive(_isUpgrading);
     }
 
     private void HandleMenuInvoked()
