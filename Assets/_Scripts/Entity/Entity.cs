@@ -17,19 +17,14 @@ public class Entity : NetworkBehaviour, IDisposable, IStatUser
     [field: SerializeField] public RotationConfig RotationConfig { get; private set; }
     [field: SerializeField] public DamageSystemConfig DamageSystemConfig { get; private set; }
 
-    public IInputBrain InputBrain { get; private set; }
     public IMovable Movable => _movement.Value;
     public IRotatable Rotatable => _rotatable.Value;
     public IDamageable Damageable => _damageable.Value;
     public IAttacker Attacker => _attacker.Value;
     protected IAbilityUser AbilityUser => _abilityUser.Value;
 
-    private Vector2 MovementInput => InputBrain.MovementVector;
-    private Vector2 RotationInput => InputBrain.Rotation;
-
     private void Awake()
     {
-        InputBrain = SetInputBrain();
         Damageable.Initialize(DamageSystemConfig.BaseHealth, null);
 
         OnAwake();
@@ -40,9 +35,6 @@ public class Entity : NetworkBehaviour, IDisposable, IStatUser
 
     private void OnEnable()
     {
-        InputBrain.Enable();
-
-        InputBrain.JumpAction += HandleJump;
         Damageable.OnDamageTaken += OnDamageTaken;
         Damageable.OnDemise += OnDemise;
         Stats.OnStatChange += HandleStatChange;
@@ -52,9 +44,6 @@ public class Entity : NetworkBehaviour, IDisposable, IStatUser
 
     private void OnDisable()
     {
-        InputBrain.Disable();
-
-        InputBrain.JumpAction -= HandleJump;
         Damageable.OnDamageTaken -= OnDamageTaken;
         Damageable.OnDemise -= OnDemise;
         Stats.OnStatChange -= HandleStatChange;
@@ -62,15 +51,8 @@ public class Entity : NetworkBehaviour, IDisposable, IStatUser
         HandleOnDisable();
     }
 
-    protected virtual IInputBrain SetInputBrain()
-        => null;
-
     protected virtual void Update()
-    {
-        InputBrain.Update();
-
-        Rotatable.Rotate(RotationInput, RotationConfig.RotationSpeed);
-    }
+    { }
 
     private void HandleStatChange(StatType type, float statMultiplier)
     {
@@ -103,9 +85,6 @@ public class Entity : NetworkBehaviour, IDisposable, IStatUser
     protected virtual void OnAwake() { }
 
     protected virtual void OnStart() { }
-
-    protected virtual void HandleJump()
-        => Movable.Jump(MovementConfig.JumpHeight, MovementConfig.Gravity);
 
     public virtual void Dispose() { }
 }

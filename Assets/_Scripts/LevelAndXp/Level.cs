@@ -8,9 +8,9 @@ public class Level : NetworkBehaviour, IGauge
     public Action<float> OnXpReceived;
 
     [SyncVar(hook = nameof(OnLevelSync))] private int _level;
-    [SyncVar] private int _maxLevel;
     [SyncVar(hook = nameof(OnXpSync))] private float _xp;
     [SyncVar(hook = nameof(OnXpPerLevelSync))] private float _xpPerLevel;
+    [SyncVar] private int _maxLevel;
 
     public int Lvl => _level;
     public int MaxLvl => _maxLevel;

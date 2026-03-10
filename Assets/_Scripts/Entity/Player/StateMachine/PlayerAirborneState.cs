@@ -23,12 +23,12 @@ public class PlayerAirborneState : PlayerState
             return;
         }
 
-        Vector3 movementDirection = GetMovementDirection(player.InputBrain.MovementVector) * CachedVelocity.magnitude;
+        Vector3 movementDirection = GetMovementDirection(player.Input.MovementVector) * CachedVelocity.magnitude;
 
         const float airMovementThreshold = 0.08f;
 
         if (movementDirection.magnitude > airMovementThreshold)
-            CachedVelocity = Vector3.Lerp(CachedVelocity, movementDirection, Time.deltaTime * player.MovementConfig.AirMovementSpeedMultiplier);
+            CachedVelocity = Vector3.Lerp(CachedVelocity, movementDirection, deltaTime * player.MovementConfig.AirMovementSpeedMultiplier);
 
         player.Movable.Move(CachedVelocity, CachedVelocity.magnitude, player.MovementConfig.MovementSmoothness);
     }

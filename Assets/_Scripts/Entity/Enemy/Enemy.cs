@@ -1,70 +1,66 @@
-﻿using System;
+﻿using AYellowpaper;
 using UnityEngine;
 
-public abstract class Enemy : Entity, IInputBrain
+public abstract class Enemy : Entity
 {
     [SerializeField] private EnemyConfig _enemyConfig;
 
     [Header("Enemy Components")]
-    [SerializeReference, SubclassSelector] protected IDetectable<Player> Detector;
-    [SerializeReference, SubclassSelector] protected IAggroHandler AggroHandler;
-
+    [SerializeField] private InterfaceReference<ITargetDetector> TargetDetectorRef;
+    [SerializeField] private InterfaceReference<ITargetTrackingMemory> TargetTrackingMemoryRef;
     [SerializeField] private AIBrain _aiBrain;
 
     public EnemyConfig Config => _enemyConfig;
-    public IAggroHandler AggroSystem => AggroHandler;
 
-    #region InputBrain fields
-    public Vector2 MovementVector => throw new NotImplementedException();
-    public Vector2 Rotation => throw new NotImplementedException();
-    public bool IsSprinting => throw new NotImplementedException();
-
-    public event Action JumpAction;
-    public event Action AttackAction;
-    public event Action<int> AbilityAction;
-    #endregion
+    protected ITargetTrackingMemory TargetTrackingMemory => TargetTrackingMemoryRef.Value;
+    protected ITargetDetector TargetDetector => TargetDetectorRef.Value;
 
     protected float DetectionTimer;
-    public Entity Target { get; protected set; }
 
-    protected override IInputBrain SetInputBrain() => this;
+    protected override void OnValidate()
+    {
+        base.OnValidate();
+
+        if (TargetDetector == null)
+            TargetDetectorRef.Value = GetComponent<ITargetDetector>();
+
+        if (TargetTrackingMemory == null)
+            TargetTrackingMemoryRef.Value = GetComponent<ITargetTrackingMemory>();
+
+        if (_aiBrain == null)
+            _aiBrain = GetComponent<AIBrain>();
+    }
 
     protected override void OnAwake()
         => _aiBrain.Initialize(this, _enemyConfig.AIActions);
 
     protected override void Update()
     {
-        //base.Update();
-
-        _aiBrain.OnUpdate(Time.deltaTime, AggroHandler?.CurrentTarget);
+        _aiBrain.OnUpdate(Time.deltaTime, TargetTrackingMemory.Target);
 
         DetectionTimer += Time.deltaTime;
 
         if (DetectionTimer >= Config.DetectionInterval)
         {
-            DetectPlayers();
+            DetectTargets();
             DetectionTimer = 0f;
         }
-
-        AggroHandler?.OnUpdate(Time.deltaTime);
-        UpdateBehavior();
     }
 
-    protected virtual void DetectPlayers()
+    protected virtual void DetectTargets()
     {
-        if (AggroHandler != null && AggroHandler.IsAggroed)
+        if (TargetTrackingMemory.Target)
             return;
 
-        Entity nearestPlayer = Detector.DetectNearestPlayer(Config.DetectionRadius);
+        Entity nearestPlayer = TargetDetector.DetectNearestTarget(Config.DetectionRadius);
 
         if (nearestPlayer != null)
         {
-            OnPlayerDetected(nearestPlayer);
+            OnTargetDetected(nearestPlayer);
         }
     }
 
-    protected abstract void OnPlayerDetected(Entity player);
-    protected abstract void UpdateBehavior();
+    protected abstract void OnTargetDetected(Entity player);
 
     protected virtual void ChaseTarget(Entity target)
     {
@@ -75,33 +71,10 @@ public abstract class Enemy : Entity, IInputBrain
         Rotatable?.Rotate((target.transform.position - transform.position).normalized, RotationConfig.RotationSpeed);
     }
 
-    protected virtual void PerformAbility(Entity target)
-    {
-        //if (AbilityUser.)
-
-        //if (!AttackStrategy.InProcess && IsInAttackRange(target, AttackStrategy.AttackRange))
-        //{
-        //    AttackStrategy.Apply(sender: this, target);
-        //    AggroHandler?.RefreshAggro();
-        //}
-    }
-
-    protected bool IsInAttackRange(Entity target, float range)
-    {
-        float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
-        return distanceToTarget <= range;
-    }
-
-    public void StopMovement() { }
-
     protected override void OnDemise(Damage damage)
     {
         base.OnDemise(damage);
 
         Destroy(gameObject);
     }
-
-    void IInputBrain.Update() => Update();
-    public void Enable() { }
-    public void Disable() { }
 }

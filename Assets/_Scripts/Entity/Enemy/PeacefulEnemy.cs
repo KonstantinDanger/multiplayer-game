@@ -4,7 +4,7 @@ public class PeacefulEnemy : Enemy
 {
     [SerializeField] private SiblingNotifier _notifier;
 
-    protected override void OnPlayerDetected(Entity player) { }
+    protected override void OnTargetDetected(Entity player) { }
 
     protected override void OnDamageTaken(Damage damage)
     {
@@ -27,6 +27,4 @@ public class PeacefulEnemy : Enemy
 
         trackingMemory.Memorize(attacker);
     }
-
-    protected override void UpdateBehavior() { }
 }

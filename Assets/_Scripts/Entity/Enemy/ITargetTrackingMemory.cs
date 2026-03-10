@@ -2,8 +2,8 @@
 
 public interface ITargetTrackingMemory
 {
+    public bool IsTracking { get; }
     NetworkBehaviour Target { get; }
-    void Initialize(TargetTrackingConfig config);
     void Memorize(NetworkBehaviour target);
     void Forget();
 }

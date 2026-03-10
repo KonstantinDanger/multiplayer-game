@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class TargetTrackingMemory : NetworkBehaviour, ITargetTrackingMemory
 {
+    [SerializeField] private TargetTrackingConfig _config;
     public NetworkBehaviour Target { get; private set; }
 
-    private TargetTrackingConfig _config;
+    public bool IsTracking => Target != null;
+
     private IEnumerator _forgetTargetRoutine;
 
-    public void Initialize(TargetTrackingConfig config)
-    {
-        _config = config;
-        _forgetTargetRoutine = ForgetTargetRoutine();
-    }
+    private void Start()
+        => _forgetTargetRoutine = ForgetTargetRoutine();
 
     public void Memorize(NetworkBehaviour target)
     {

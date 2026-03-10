@@ -21,29 +21,29 @@ public class SwarmEnemy : Enemy
     {
         base.Update();
         _flightController.MaintainFlightHeight();
+        UpdateBehavior();
     }
 
-    protected override void OnPlayerDetected(Entity player)
+    protected override void OnTargetDetected(Entity player)
     {
-        if (!AggroHandler.IsAggroed)
+        if (!TargetTrackingMemory.IsTracking)
         {
-            AggroHandler.Aggro(player);
-            Target = player;
+            TargetTrackingMemory.Memorize(player);
 
             _swarmManager.AlertSwarm(player);
         }
     }
 
-    protected override void UpdateBehavior()
+    private void UpdateBehavior()
     {
-        if (!AggroHandler.IsAggroed || Target == null)
+        if (!TargetTrackingMemory.IsTracking)
         {
             FlyIdle();
             return;
         }
 
         Vector3 swarmDirection = CalculateSwarmBehavior();
-        Vector3 targetDirection = (Target.transform.position - transform.position).normalized;
+        Vector3 targetDirection = (TargetTrackingMemory.Target.transform.position - transform.position).normalized;
 
         Vector3 finalDirection = (swarmDirection + targetDirection * _targetForce).normalized;
         Vector3 targetPosition = transform.position + finalDirection * 5f;

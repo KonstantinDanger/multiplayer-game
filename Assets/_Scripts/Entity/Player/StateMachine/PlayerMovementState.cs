@@ -4,15 +4,15 @@ public class PlayerMovementState : PlayerGroundedState
 {
     private MovementConfig MovementConfig { get; }
     private IMovable Movable { get; }
-    private IInputBrain InputBrain { get; }
+    private IPlayerInputBrain InputBrain { get; }
 
     private Vector2 MovementInput => InputBrain.MovementVector;
 
-    public PlayerMovementState(Player player, IStateMachine sfm) : base(player, sfm)
+    public PlayerMovementState(Player player, IStateMachine fsm) : base(player, fsm)
     {
         MovementConfig = player.MovementConfig;
         Movable = player.Movable;
-        InputBrain = player.InputBrain;
+        InputBrain = player.Input;
     }
 
     protected override void OnUpdate(float deltaTime)

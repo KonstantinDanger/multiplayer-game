@@ -245,9 +245,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1418038051021799968, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3815294379760866614}
-    - targetCorrespondingSourceObject: {fileID: 1418038051021799968, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 9083324515939393787}
   m_SourcePrefab: {fileID: 100100000, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
 --- !u!4 &4188451577050409953 stripped
 Transform:
@@ -293,27 +290,11 @@ MonoBehaviour:
   <RotationConfig>k__BackingField: {fileID: 11400000, guid: 35c754a5163c48840abde2ccbebe65f2, type: 2}
   <DamageSystemConfig>k__BackingField: {fileID: 11400000, guid: d6fd6658551c3f9448b6f02de80c06af, type: 2}
   _enemyConfig: {fileID: 11400000, guid: 98b41ea2d44f9b04889fef2af0e86c9f, type: 2}
-  Detector:
-    rid: 4564918803227476033
-  AggroHandler:
-    rid: 4564918803227476034
-  _aiBrain: {fileID: 9083324515939393787}
-  references:
-    version: 2
-    RefIds:
-    - rid: 4564918803227476033
-      type: {class: PlayerDetector, ns: , asm: Assembly-CSharp}
-      data:
-        _layersToDetect:
-          serializedVersion: 2
-          m_Bits: 384
-        _transform: {fileID: 4188451577050409953}
-    - rid: 4564918803227476034
-      type: {class: AggroHandler, ns: , asm: Assembly-CSharp}
-      data:
-        aggroTimeout: 8
-        aggroRange: 15
-        _selfTransform: {fileID: 4188451577050409953}
+  TargetDetectorRef:
+    _underlyingValue: {fileID: 7283977176551359321}
+  TargetTrackingMemoryRef:
+    _underlyingValue: {fileID: 8000739011326451782}
+  _aiBrain: {fileID: 6704321744617439969}
 --- !u!114 &1435455419400485427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,21 +347,6 @@ MonoBehaviour:
   _horizontalInputParamName: HorizontalVelocity
   _movementAngle: MovementAngle
   _airborneVelocityParamName: AirborneVelocity
---- !u!114 &9083324515939393787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6125262222170548877}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0588755726fc8634bbf8931f5e43075a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
 --- !u!114 &6475008800849618527 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2267410281914650354, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
@@ -390,5 +356,38 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d14b814c8c935047994fac6c0897593, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6704321744617439969 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -7231049775026165172, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+  m_PrefabInstance: {fileID: 5092638318533552301}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6125262222170548877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0588755726fc8634bbf8931f5e43075a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7283977176551359321 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2574173564829281268, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+  m_PrefabInstance: {fileID: 5092638318533552301}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6125262222170548877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 965b8109c7598d04997a58505ceb528b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8000739011326451782 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -6222573717444818709, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+  m_PrefabInstance: {fileID: 5092638318533552301}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6125262222170548877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3da38978f5cb50441bacc1ac2ab6a2c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

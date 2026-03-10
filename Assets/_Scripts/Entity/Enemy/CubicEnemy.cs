@@ -9,7 +9,7 @@ public class CubicEnemy : DefaultEnemy
 
     protected override void OnDamageTaken(Damage damage)
     {
-        if (AggroHandler.IsAggroed)
+        if (TargetTrackingMemory.IsTracking)
             return;
 
         base.OnDamageTaken(damage);
@@ -19,7 +19,7 @@ public class CubicEnemy : DefaultEnemy
 
     protected override void ChaseTarget(Entity target)
     {
-        if (!AggroHandler.IsAggroed)
+        if (!TargetTrackingMemory.IsTracking)
         {
             StopCoroutine(ChangeDirectionsRoutine());
             return;
@@ -30,7 +30,12 @@ public class CubicEnemy : DefaultEnemy
 
     private Vector3 ChangeMovePosition()
     {
-        Vector3 targetPos = Target.transform.position;
+        var target = TargetTrackingMemory.Target;
+
+        if (target == null)
+            return Vector3.zero;
+
+        Vector3 targetPos = target.transform.position;
 
         if (transform.position.y >= targetPos.y + 3 || transform.position.y <= targetPos.y - 3)
         {

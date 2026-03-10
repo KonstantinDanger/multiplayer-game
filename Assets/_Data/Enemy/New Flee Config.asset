@@ -15,6 +15,6 @@ MonoBehaviour:
   <ChaoticAngleVariation>k__BackingField: 45
   <SineFrequency>k__BackingField: 1.5
   <NoiseAmount>k__BackingField: 15
-  <FleeSpeed>k__BackingField: 15
+  <FleeSpeed>k__BackingField: 6
   <FleeDistance>k__BackingField: 15
   <RotationSpeed>k__BackingField: 360

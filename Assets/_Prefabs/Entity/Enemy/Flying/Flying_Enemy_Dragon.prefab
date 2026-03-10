@@ -144,6 +144,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5301641284520053187, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
+      propertyPath: _enemyConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 98b41ea2d44f9b04889fef2af0e86c9f, type: 2}
+    - target: {fileID: 5301641284520053187, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
       propertyPath: AttackStrategy
       value: 9013964992859603014
       objectReference: {fileID: 0}

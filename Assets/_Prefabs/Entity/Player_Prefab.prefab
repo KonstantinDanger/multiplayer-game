@@ -390,7 +390,7 @@ MonoBehaviour:
   _attacker:
     _underlyingValue: {fileID: 0}
   _abilityUser:
-    _underlyingValue: {fileID: 0}
+    _underlyingValue: {fileID: 5132097041645439728}
   <MovementConfig>k__BackingField: {fileID: 11400000, guid: a7e9482648561ea44b509607f893e2bf, type: 2}
   <RotationConfig>k__BackingField: {fileID: 11400000, guid: 325f2402fcff7d34f9d0ba09f47f1dee, type: 2}
   <DamageSystemConfig>k__BackingField: {fileID: 11400000, guid: 9c4dc7eccd4e6c849b913c79dcde9de5, type: 2}

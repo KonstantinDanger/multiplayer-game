@@ -27,9 +27,9 @@ public class SwarmManager : MonoBehaviour
     {
         foreach (SwarmEnemy member in _swarmMembers)
         {
-            if (member != null && !member.GetComponent<AggroHandler>().IsAggroed)
+            if (member != null && !member.GetComponent<TargetTrackingMemory>().IsTracking)
             {
-                member.GetComponent<AggroHandler>().Aggro(target);
+                member.GetComponent<TargetTrackingMemory>().Memorize(target);
             }
         }
     }

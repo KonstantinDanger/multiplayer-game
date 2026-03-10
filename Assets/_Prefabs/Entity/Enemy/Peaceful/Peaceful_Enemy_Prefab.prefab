@@ -104,15 +104,23 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1418038051021799968, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1008523891125965303}
-    - targetCorrespondingSourceObject: {fileID: 1418038051021799968, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5421713383065343482}
   m_SourcePrefab: {fileID: 100100000, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
 --- !u!4 &621757109037350936 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8974813229951714124, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
   m_PrefabInstance: {fileID: 8371098650520142676}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6739891872334105535 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -6222573717444818709, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+  m_PrefabInstance: {fileID: 8371098650520142676}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7458523687011287412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3da38978f5cb50441bacc1ac2ab6a2c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7458523687011287412 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1418038051021799968, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
@@ -149,19 +157,13 @@ MonoBehaviour:
   _enemyConfig: {fileID: 11400000, guid: 0319458f2888bbf43b87273550418d09, type: 2}
   Detector:
     rid: 4564918806144876609
-  AggroHandler:
-    rid: 3288031281872109638
+  TargetTrackingMemoryRef:
+    _underlyingValue: {fileID: 6739891872334105535}
   _aiBrain: {fileID: 1008523891125965303}
   _notifier: {fileID: 6595900978107497887}
   references:
     version: 2
     RefIds:
-    - rid: 3288031281872109638
-      type: {class: AggroHandler, ns: , asm: Assembly-CSharp}
-      data:
-        aggroTimeout: 8
-        aggroRange: 15
-        _selfTransform: {fileID: 0}
     - rid: 4564918806144876609
       type: {class: PlayerDetector, ns: , asm: Assembly-CSharp}
       data:
@@ -218,21 +220,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0588755726fc8634bbf8931f5e43075a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
---- !u!114 &5421713383065343482
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7458523687011287412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3da38978f5cb50441bacc1ac2ab6a2c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncDirection: 0

@@ -28,6 +28,5 @@ public class FleeAction : AIAction
         _movable.Move(fleeDestination, _config.FleeSpeed);
 
         _rotatable?.Rotate(fleeDirection, _config.RotationSpeed);
-
     }
 }

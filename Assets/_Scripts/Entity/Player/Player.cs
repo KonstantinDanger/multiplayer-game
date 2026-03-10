@@ -16,9 +16,10 @@ public class Player : Entity
     [SerializeField] private Level _level;
     [SerializeField] private Upgrader _upgrader;
 
-    private IPlayerInputBrain Input => InputBrain as IPlayerInputBrain;
-    private IRotatablePlayerCamera Camera => Rotatable as IRotatablePlayerCamera;
     public ScriptableCharacterClass CharacterClass => _characterClass;
+    public IPlayerInputBrain Input { get; private set; }
+    private IRotatablePlayerCamera Camera => Rotatable as IRotatablePlayerCamera;
+    private Vector2 RotationInput => Input.Rotation;
 
     private AnimatorUpdater _animatorUpdater;
     private bool _isMenuActive = true;
@@ -31,9 +32,6 @@ public class Player : Entity
     private bool IsOffline =>
         !NetworkClient.active &&
         !NetworkServer.active;
-
-    protected override IInputBrain SetInputBrain()
-        => new PlayerInput();
 
     public override void OnStartClient()
     {
@@ -56,6 +54,7 @@ public class Player : Entity
 
     protected override void OnAwake()
     {
+        Input = new PlayerInput();
         _stateMachine = new PlayerStateMachine(this);
         //_menu = ServiceLocator.Container.Resolve<LobbyUI>();
 
@@ -72,6 +71,8 @@ public class Player : Entity
 
     protected override void HandleOnEnable()
     {
+        Input.Enable();
+        Input.JumpAction += HandleJump;
         Input.OnMenuInvoked += HandleMenuInvoked;
         Input.AttackAction += HandleAttack;
         Input.AbilityAction += HandleAbility;
@@ -80,6 +81,8 @@ public class Player : Entity
 
     protected override void HandleOnDisable()
     {
+        Input.Disable();
+        Input.JumpAction -= HandleJump;
         Input.OnMenuInvoked -= HandleMenuInvoked;
         Input.AttackAction -= HandleAttack;
         Input.AbilityAction -= HandleAbility;
@@ -94,6 +97,7 @@ public class Player : Entity
         if (!CanDoActions())
             return;
 
+        //For testing
         if (Keyboard.current.hKey.wasPressedThisFrame)
         {
             Damageable.TakeDamage(new() { Amount = 50 });
@@ -106,12 +110,15 @@ public class Player : Entity
             UnityEngine.Debug.Log("pressed ");
             UnityEngine.Debug.Log(Stats.GetStatMultiplier(StatType.Health, 0));
         }
+        //UnityEngine.Debug.Log("Current state: " + _stateMachine.CurrentState);
+        //For testing
+        Rotatable.Rotate(RotationInput, RotationConfig.RotationSpeed);
 
+        Input.Update();
         _abilities.OnUpdate();
         _stateMachine.CurrentState.Update(Time.deltaTime);
         _animatorUpdater.Update(Time.deltaTime);
 
-        //UnityEngine.Debug.Log("Current state: " + _stateMachine.CurrentState);
 
         base.Update();
     }
@@ -123,12 +130,12 @@ public class Player : Entity
         Destroy(_playerHUD);
     }
 
-    protected override void HandleJump()
+    private void HandleJump()
     {
         if (!CanDoActions())
             return;
 
-        base.HandleJump();
+        Movable.Jump(MovementConfig.JumpHeight, MovementConfig.Gravity);
     }
 
     protected override void OnDemise(Damage damage)
