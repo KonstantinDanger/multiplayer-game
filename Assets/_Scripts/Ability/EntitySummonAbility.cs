@@ -11,7 +11,7 @@ public class EntitySummonAbility : Ability
 
     private readonly List<Entity> _summonInstances = new();
 
-    protected override void OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
+    protected override bool OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
     {
         DeleteNullEntities(_summonInstances);
 
@@ -39,6 +39,8 @@ public class EntitySummonAbility : Ability
 
         var instance = factory.SpawnEntity(_entityPrefab, summonPosition, rotation, owner: sender);
         _summonInstances.Add(instance);
+
+        return true;
     }
 
     private void DeleteNullEntities(List<Entity> summonInstances)

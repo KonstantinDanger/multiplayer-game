@@ -10,7 +10,6 @@ public class Entity : NetworkBehaviour, IDisposable, IStatUser
     [SerializeField] private InterfaceReference<IMovable> _movement;
     [SerializeField] private InterfaceReference<IRotatable> _rotatable;
     [SerializeField] private InterfaceReference<IDamageable> _damageable;
-    [SerializeField] private InterfaceReference<IAttacker> _attacker;
     [SerializeField] private InterfaceReference<IAbilityUser> _abilityUser;
 
     [field: SerializeField] public MovementConfig MovementConfig { get; private set; }
@@ -20,12 +19,11 @@ public class Entity : NetworkBehaviour, IDisposable, IStatUser
     public IMovable Movable => _movement.Value;
     public IRotatable Rotatable => _rotatable.Value;
     public IDamageable Damageable => _damageable.Value;
-    public IAttacker Attacker => _attacker.Value;
     protected IAbilityUser AbilityUser => _abilityUser.Value;
 
     private void Awake()
     {
-        Damageable.Initialize(DamageSystemConfig.BaseHealth, null);
+        Damageable.Initialize(DamageSystemConfig.BaseHealth, DamageSystemConfig.DamageHandlers);
 
         OnAwake();
     }

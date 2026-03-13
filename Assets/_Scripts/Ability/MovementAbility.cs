@@ -9,7 +9,7 @@ public class MovementAbility : Ability
     [SerializeField] private float _warpDistance = 10;
     [SerializeField] private float _warpTime = 0.2f;
 
-    protected override void OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
+    protected override bool OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
     {
         IRotatable rotatable = sender.GetComponent<IRotatable>();
         IMovable movable = sender.GetComponent<IMovable>();
@@ -17,6 +17,8 @@ public class MovementAbility : Ability
         var coroutineHolder = ServiceLocator.Container.Resolve<CoroutineHolder>();
 
         coroutineHolder.StartCoroutine(WarpRoutine(sender.gameObject, movable, rotatable));
+
+        return true;
     }
 
     private IEnumerator WarpRoutine(GameObject sender, IMovable movable, IRotatable rotatable)

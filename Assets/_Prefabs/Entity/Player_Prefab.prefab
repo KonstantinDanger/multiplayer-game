@@ -290,11 +290,12 @@ GameObject:
   - component: {fileID: 6200438880601125725}
   - component: {fileID: 6335237973204876179}
   - component: {fileID: 3776799554345185147}
-  - component: {fileID: 5132097041645439728}
   - component: {fileID: 3897486771464272008}
   - component: {fileID: 2237913142302332592}
   - component: {fileID: 1808158390437573916}
   - component: {fileID: 8354765473121511370}
+  - component: {fileID: 5132097041645439728}
+  - component: {fileID: 5661195370401756730}
   m_Layer: 7
   m_Name: Player_Prefab
   m_TagString: Untagged
@@ -546,21 +547,6 @@ MonoBehaviour:
   _damageable:
     _underlyingValue: {fileID: 1705426453025376207}
   _textSpawnTransform: {fileID: 427621367933063959}
---- !u!114 &5132097041645439728
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4047092069969861197}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b99ce5c7b306a1a4e92f3106ab022f1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
 --- !u!114 &3897486771464272008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -730,6 +716,41 @@ MonoBehaviour:
   _level: {fileID: 3897486771464272008}
   _config: {fileID: 11400000, guid: 8b77d7a26c4b00a4a8487ab2c5593ff7, type: 2}
   _upgradeSchema: {fileID: 11400000, guid: 7afaee880ff60ee4eb0a39f839ea87de, type: 2}
+--- !u!114 &5132097041645439728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4047092069969861197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b99ce5c7b306a1a4e92f3106ab022f1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+--- !u!114 &5661195370401756730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4047092069969861197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f93b3799b673d34da63634b118fa6a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  _animator: {fileID: 3459466666786068578}
+  _abilityUser:
+    _underlyingValue: {fileID: 5132097041645439728}
+  _animationTransitionTime: 0.15
+  _layer: 1
 --- !u!1 &4641920328616467223
 GameObject:
   m_ObjectHideFlags: 0
@@ -742,9 +763,8 @@ GameObject:
   - component: {fileID: 535201948563966287}
   - component: {fileID: 6606694751097510699}
   - component: {fileID: 4521963623633174931}
-  - component: {fileID: 3418564144528050209}
   m_Layer: 7
-  m_Name: Damager
+  m_Name: AbilityUser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -912,27 +932,6 @@ MonoBehaviour:
   lineDuration: 0.05
   lineColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   lineWidth: 0.05
---- !u!114 &3418564144528050209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4641920328616467223}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f93b3799b673d34da63634b118fa6a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  _anim: {fileID: 3459466666786068578}
-  _attacker:
-    _underlyingValue: {fileID: 535201948563966287}
-  _attackAnimationName: Attack
-  _animationTransitionTime: 0
-  _layer: 1
 --- !u!1 &4953229127229854935
 GameObject:
   m_ObjectHideFlags: 0

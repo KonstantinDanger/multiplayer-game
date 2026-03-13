@@ -21,7 +21,10 @@ MonoBehaviour:
       type: {class: AttackAbility, ns: , asm: Assembly-CSharp}
       data:
         <Name>k__BackingField: Light Ray
-        <CooldownTime>k__BackingField: 1
+        <CooldownTime>k__BackingField: 0.65
+        <PreparationAnimation>k__BackingField: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
+        <UsageAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
+        <UsagePrepareTime>k__BackingField: 0.35
         _attack:
           rid: 4564918645034057793
     - rid: 4564918645034057793

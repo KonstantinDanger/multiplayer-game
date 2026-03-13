@@ -1,5 +1,6 @@
 ﻿using Mirror;
 using System;
+using System.Collections;
 using UnityEngine;
 
 [Serializable]
@@ -7,9 +8,6 @@ public class AbilityHandler : Ability, IGauge
 {
     public event Action OnValueChanged;
     public Ability Ability { get; private set; }
-
-    public override float CooldownTime => Ability.CooldownTime;
-    public override string Name => Ability.Name;
 
     public float CurrentGaugeValue
     {
@@ -20,23 +18,33 @@ public class AbilityHandler : Ability, IGauge
             return Mathf.Clamp(elapsedTime, 0f, CooldownTime);
         }
     }
-
     public float MaxGaugeValue => CooldownTime;
 
     private float _nextUsageTime = 0;
 
-    public AbilityHandler(Ability ability)
-        => Ability = ability;
+    private readonly CoroutineHolder _coroutineHolder;
 
-    protected override void OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
+    public AbilityHandler(Ability ability)
+    {
+        Ability = ability;
+
+        Name = ability.Name;
+        CooldownTime = ability.CooldownTime;
+        PreparationAnimation = ability.PreparationAnimation;
+        UsageAnimation = ability.UsageAnimation;
+        UsagePrepareTime = ability.UsagePrepareTime;
+
+        _coroutineHolder = ServiceLocator.Container.Resolve<CoroutineHolder>();
+    }
+
+    protected override bool OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
     {
         if (!IsReadyToUse())
-            return;
+            return false;
 
-        if (!Ability.Perform(sender, target))
-            return;
+        _coroutineHolder.StartCoroutine(OnPerformRoutine(sender, target));
 
-        SetNextUseTime();
+        return true;
     }
 
     public void Update()
@@ -46,8 +54,28 @@ public class AbilityHandler : Ability, IGauge
     }
 
     public bool IsReadyToUse()
-        => Time.time >= _nextUsageTime;
+        => Time.time >= _nextUsageTime && !IsPerforming;
 
     private void SetNextUseTime()
         => _nextUsageTime = Time.time + CooldownTime;
+
+    private IEnumerator OnPerformRoutine(NetworkBehaviour sender, NetworkBehaviour target)
+    {
+        IsPerforming = true;
+
+        if (UsagePrepareTime > 0)
+            yield return PrepareUsageRoutine();
+
+        if (!Ability.Perform(sender, target))
+            yield break;
+
+        SetNextUseTime();
+
+        IsPerforming = false;
+    }
+
+    private IEnumerator PrepareUsageRoutine()
+    {
+        yield return new WaitForSeconds(UsagePrepareTime);
+    }
 }

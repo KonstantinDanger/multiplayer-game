@@ -6,5 +6,5 @@ public class ScriptableAbility : ScriptableObject
     [SerializeReference, SubclassSelector] private Ability _ability;
 
     public Ability GetNew()
-        => _ability.Clone();
+        => Utils.GetInstancedCopyOf(_ability);
 }

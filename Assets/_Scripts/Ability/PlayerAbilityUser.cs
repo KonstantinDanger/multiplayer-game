@@ -1,4 +1,5 @@
 ﻿using Mirror;
+using System;
 using System.Collections.Generic;
 
 public class PlayerAbilityUser : NetworkBehaviour, IAbilityUser
@@ -6,6 +7,8 @@ public class PlayerAbilityUser : NetworkBehaviour, IAbilityUser
     private readonly List<AbilityHandler> _abilities = new();
 
     public IReadOnlyList<AbilityHandler> Handlers => _abilities;
+
+    public event Action<UseAbilityData> OnAbilityStartUsing;
 
     public void Initialize(List<Ability> abilities)
     {
@@ -24,7 +27,23 @@ public class PlayerAbilityUser : NetworkBehaviour, IAbilityUser
     /// Method for calling primary ability (0 index)
     /// </summary>
     public virtual void Use(NetworkBehaviour target = null)
-        => _abilities[0].Perform(this, target);
+    {
+        AbilityHandler ability = _abilities[0];
+
+        if (ability.Perform(this, target))
+        {
+            UseAbilityData data = new UseAbilityData()
+            {
+                UsagePreparationAnimDuration = ability.PreparationAnimation.averageDuration,
+                PreparationAnimationName = ability.PreparationAnimation.name,
+                UsagePreparationTime = ability.UsagePrepareTime,
+
+                UsageAnimationName = ability.UsageAnimation.name,
+            };
+
+            OnAbilityStartUsing.Invoke(data);
+        }
+    }
 
     public virtual void Use(int index, NetworkBehaviour target = null)
     {

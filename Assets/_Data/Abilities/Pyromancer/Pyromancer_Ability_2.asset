@@ -22,6 +22,9 @@ MonoBehaviour:
       data:
         <Name>k__BackingField: Fire pistols
         <CooldownTime>k__BackingField: 10
+        <PreparationAnimation>k__BackingField: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
+        <UsageAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
+        <UsagePrepareTime>k__BackingField: 0.2
         _attack:
           rid: 9013964976533274693
     - rid: 9013964976533274693
@@ -29,14 +32,14 @@ MonoBehaviour:
       data:
         Amount: 30
         TimeBetweenAttacks: 0.1
-        Damage:
-          Amount: 1
+        _damage:
+          Amount: 0
           AttackLayers:
             serializedVersion: 2
-            m_Bits: 256
+            m_Bits: 0
           Type: 0
-          Range: 10
-          SenderNetId: 3
+          Range: 0
+          SenderNetId: 0
           ReceiverNetId: 0
           AttackDirection: {x: 0, y: 0, z: 0}
         _flightSpeed: 330

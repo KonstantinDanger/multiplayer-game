@@ -60,7 +60,7 @@ public abstract class Enemy : Entity
         }
     }
 
-    protected abstract void OnTargetDetected(Entity player);
+    protected virtual void OnTargetDetected(Entity player) { }
 
     protected virtual void ChaseTarget(Entity target)
     {

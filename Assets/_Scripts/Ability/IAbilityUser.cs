@@ -1,8 +1,11 @@
 ﻿using Mirror;
+using System;
 using System.Collections.Generic;
 
 public interface IAbilityUser
 {
+    event Action<UseAbilityData> OnAbilityStartUsing;
+
     IReadOnlyList<AbilityHandler> Handlers { get; }
 
     void Initialize(List<Ability> abilities);
