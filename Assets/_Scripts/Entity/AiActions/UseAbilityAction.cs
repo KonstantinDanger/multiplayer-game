@@ -7,16 +7,14 @@ public class UseAbilityAction : AIAction
 {
     [SerializeField] private ScriptableAbility _ability;
 
-    private AbilityHandler _abilityHandler;
+    private IAbilityUser _abilityUser;
 
     public override void Initialize(NetworkBehaviour self)
-        => _abilityHandler = new AbilityHandler(_ability.GetNew());
+    {
+        _abilityUser = self.GetComponent<IAbilityUser>();
+        _abilityUser.Add(_ability.GetNew());
+    }
 
     public override void Execute(Enemy self, NetworkBehaviour target)
-    {
-        if (!_abilityHandler.IsReadyToUse())
-            return;
-
-        _abilityHandler.Perform(self, target);
-    }
+        => _abilityUser.Use(target);
 }

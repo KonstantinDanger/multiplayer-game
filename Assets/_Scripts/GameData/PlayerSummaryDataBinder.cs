@@ -5,8 +5,9 @@ public class PlayerSummaryDataBinder
 
     private readonly IDamageable _damageable;
     private readonly Level _level;
+    private readonly Currency _matchCurrency;
 
-    public PlayerSummaryDataBinder(Player player, PlayerMatchSummaryData summaryData)
+    public PlayerSummaryDataBinder(Player player, PlayerMatchSummaryData summaryData, Wallet wallet)
     {
         _player = player;
         _summaryData = summaryData;
@@ -15,6 +16,7 @@ public class PlayerSummaryDataBinder
         _level = _player.GetComponent<Level>();
 
         _summaryData.UsedClassName = _player.CharacterClass.ClassName;
+        _matchCurrency = wallet.MatchCurrency;
     }
 
     public void Bind()
@@ -22,7 +24,7 @@ public class PlayerSummaryDataBinder
         _damageable.OnDamageTaken += HandleDamageTaken;
         _damageable.OnDemise += HandleDemise;
         _level.OnLevelChanged += HandleLevelUp;
-        _level.OnXpReceived += HandleXpReceived;
+        _matchCurrency.OnCurrencyChanged += HandleCurrencyReceived;
     }
 
     public void Unbind()
@@ -30,7 +32,7 @@ public class PlayerSummaryDataBinder
         _damageable.OnDamageTaken -= HandleDamageTaken;
         _damageable.OnDemise -= HandleDemise;
         _level.OnLevelChanged -= HandleLevelUp;
-        _level.OnXpReceived -= HandleXpReceived;
+        _matchCurrency.OnCurrencyChanged -= HandleCurrencyReceived;
     }
 
     private void HandleDamageTaken(Damage damage)
@@ -50,11 +52,11 @@ public class PlayerSummaryDataBinder
     private void HandleLevelUp(int level)
         => _summaryData.ReachedLevel = level;
 
-    private void HandleXpReceived(float amount)
+    private void HandleCurrencyReceived(int amount)
     {
         if (amount <= 0)
             return;
 
-        _summaryData.TotalXpReceived += amount;
+        _summaryData.TotalCurrencyReceived += amount;
     }
 }

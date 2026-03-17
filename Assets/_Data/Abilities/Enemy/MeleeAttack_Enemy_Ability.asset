@@ -22,16 +22,11 @@ MonoBehaviour:
       data:
         <Name>k__BackingField: Melee attack
         <CooldownTime>k__BackingField: 1
-        _actionsToPerform: []
-        _performCondition:
-          rid: 9013965155010084938
+        <PreparationAnimation>k__BackingField: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
+        <UsageAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
+        <UsagePrepareTime>k__BackingField: 0.2
         _attack:
           rid: 9013965155010084939
-    - rid: 9013965155010084938
-      type: {class: DistanceCondition, ns: , asm: Assembly-CSharp}
-      data:
-        _comparisonOption: 2
-        _camparableValue: 0.8
     - rid: 9013965155010084939
       type: {class: MeleeAttack, ns: , asm: Assembly-CSharp}
       data:

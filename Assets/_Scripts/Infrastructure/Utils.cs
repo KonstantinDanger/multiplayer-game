@@ -50,7 +50,7 @@ public static class Utils
         return identity.GetComponent<Player>();
     }
 
-    public static Func<int, float> DefaultXpIncreaseFormula = (lvl) =>
+    public static Func<int, float> DefaultCurrencyIncreaseFormula = (lvl) =>
     {
         //TODO: get this formula from static data
         float defaultXpPerLevel = 1000;

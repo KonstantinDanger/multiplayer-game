@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-public class PlayerAbilityUser : NetworkBehaviour, IAbilityUser
+public class AbilityUser : NetworkBehaviour, IAbilityUser
 {
     private readonly List<AbilityHandler> _abilities = new();
 
@@ -11,17 +11,16 @@ public class PlayerAbilityUser : NetworkBehaviour, IAbilityUser
     public event Action<UseAbilityData> OnAbilityStartUsing;
 
     public void Initialize(List<Ability> abilities)
-    {
-        abilities
-            .ForEach(ability => _abilities
-            .Add(new AbilityHandler(ability)));
-    }
+        => abilities.ForEach(ability => Add(ability));
 
     public void OnUpdate()
     {
         foreach (var ability in _abilities)
             ability?.Update();
     }
+
+    public void Add(Ability ability)
+        => _abilities.Add(new(ability));
 
     /// <summary>
     /// Method for calling primary ability (0 index)

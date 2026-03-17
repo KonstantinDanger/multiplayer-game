@@ -128,8 +128,9 @@ public class GameMatchState : GameState
             };
 
             PlayerMatchSummaryData summaryData = gameData.GameMatchData.AddNewSummaryForPlayerData(data);
-
-            PlayerSummaryDataBinder binder = new(player, summaryData);
+            Wallet wallet = player.GetComponent<Wallet>();
+            wallet.MatchCurrency = new();
+            PlayerSummaryDataBinder binder = new(player, summaryData, wallet);
 
             binder.Bind();
 

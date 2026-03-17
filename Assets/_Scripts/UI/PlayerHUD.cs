@@ -6,28 +6,36 @@ public class PlayerHUD : UI
     [SerializeField] private AbilitiesHUD _abilitiesHUD;
     [SerializeField] private UpgradeHUD _upgradeHUD;
     [SerializeField] private GaugeBar _healthGauge;
-    [SerializeField] private GaugeBar _xpGauge;
     [SerializeField] private TextMeshProUGUI _levelText;
+    [SerializeField] private TextMeshProUGUI _currencyText;
 
     private Level _level;
+    private Currency _matchCurrency;
 
-    public void Initialize(PlayerAbilityUser abilities, IDamageable damageable, Level level, Upgrader upgrader)
+    public void Initialize(AbilityUser abilities, IDamageable damageable, Level level, Upgrader upgrader, Wallet wallet)
     {
         _level = level;
+        _matchCurrency = wallet.MatchCurrency;
 
         _abilitiesHUD.Initialize(abilities);
         _healthGauge.Initialize(gauge: damageable);
-        _xpGauge.Initialize(gauge: _level);
         _upgradeHUD.Initialize(upgrader);
 
         _level.OnValueChanged += HandleLevelChanged;
+        _matchCurrency.OnCurrencyChanged += HandleCurrencyChanged;
 
         HandleLevelChanged();
     }
 
-    private void OnDestroy()
-        => _level.OnValueChanged -= HandleLevelChanged;
-
     private void HandleLevelChanged()
-        => _levelText.text = $"Lvl: {_level.Lvl} / {_level.MaxLvl}";
+    => _levelText.text = $"Lvl: {_level.Lvl} / {_level.MaxLvl}";
+
+    private void HandleCurrencyChanged(int amount)
+        => _currencyText.text = _matchCurrency.Amount.ToString();
+
+    private void OnDestroy()
+    {
+        _level.OnValueChanged -= HandleLevelChanged;
+        _matchCurrency.OnCurrencyChanged -= HandleCurrencyChanged;
+    }
 }

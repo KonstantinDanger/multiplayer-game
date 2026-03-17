@@ -5,7 +5,7 @@ public class AbilitiesHUD : MonoBehaviour
 {
     [SerializeField] private List<AbilityCell> _abilityCells = new();
 
-    public void Initialize(PlayerAbilityUser abilities)
+    public void Initialize(AbilityUser abilities)
     {
         for (int i = 0; i < _abilityCells.Count; i++)
         {

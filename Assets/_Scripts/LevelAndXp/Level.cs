@@ -1,87 +1,65 @@
 using Mirror;
 using System;
 
-public class Level : NetworkBehaviour, IGauge
+public partial class Level : NetworkBehaviour
 {
     public event Action OnValueChanged;
     public Action<int> OnLevelChanged;
-    public Action<float> OnXpReceived;
 
     [SyncVar(hook = nameof(OnLevelSync))] private int _level;
-    [SyncVar(hook = nameof(OnXpSync))] private float _xp;
-    [SyncVar(hook = nameof(OnXpPerLevelSync))] private float _xpPerLevel;
+    [SyncVar(hook = nameof(OnXpPerLevelSync))] private int _currencyPerLevel;
     [SyncVar] private int _maxLevel;
 
     public int Lvl => _level;
     public int MaxLvl => _maxLevel;
-    public float Xp => _xp;
-    public float XpPerLevel => _xpPerLevel;
-    public float CurrentGaugeValue => Xp;
-    public float MaxGaugeValue => XpPerLevel;
 
-    private Func<int, float> _xpPerLevelIncreaseFunction;
+    private Func<int, float> _currencyPerLevelIncreaseFunction;
 
     [Server]
-    public void Initialize(Func<int, float> xpIncreaseFunc = null, int level = 1, int maxLevel = 10, float xp = 0)
+    public void Initialize(Func<int, float> xpIncreaseFunc = null, int level = 1, int maxLevel = 10)
     {
         _level = level;
         _maxLevel = maxLevel;
-        _xp = xp;
 
         if (xpIncreaseFunc != null)
-            _xpPerLevelIncreaseFunction = xpIncreaseFunc;
+            _currencyPerLevelIncreaseFunction = xpIncreaseFunc;
 
-        _xpPerLevel = GetNextXpPerLevel(_level);
+        _currencyPerLevel = GetNextCurrencyPerLevel(_level);
 
         OnLevelChanged?.Invoke(_level);
-        OnXpReceived?.Invoke(_xp);
         OnValueChanged?.Invoke();
     }
 
     [Command(requiresAuthority = false)]
-    public void AddXp(float amount)
+    public void TryLevelUp(Currency currency)
     {
         if (Lvl >= MaxLvl)
             return;
 
-        if (amount <= 0)
+        if (!currency.Withdraw(_currencyPerLevel))
             return;
 
-        _xp += amount;
-
-        if (Xp >= XpPerLevel)
-        {
-            float xpRemainder = Xp - XpPerLevel;
-            LevelUp(xpRemainder);
-        }
+        LevelUp();
     }
 
     [Server]
-    private void LevelUp(float xpRemainder)
+    private void LevelUp()
     {
-        _xp = 0;
         _level++;
-        _xpPerLevel = GetNextXpPerLevel(Lvl);
-        AddXp(xpRemainder);
+        _currencyPerLevel = GetNextCurrencyPerLevel(Lvl);
     }
 
-    private float GetNextXpPerLevel(int level)
+    private int GetNextCurrencyPerLevel(int level)
     {
-        if (_xpPerLevelIncreaseFunction == null)
-            _xpPerLevelIncreaseFunction = Utils.DefaultXpIncreaseFormula;
+        if (_currencyPerLevelIncreaseFunction == null)
+            _currencyPerLevelIncreaseFunction = Utils.DefaultCurrencyIncreaseFormula;
 
-        return _xpPerLevelIncreaseFunction(level);
+        return (int)_currencyPerLevelIncreaseFunction(level);
     }
 
     private void OnLevelSync(int oldLevel, int newLevel)
         => OnLevelChanged?.Invoke(newLevel);
 
-    private void OnXpPerLevelSync(float oldXpPerLevel, float newXpPerLevel)
+    private void OnXpPerLevelSync(int oldXpPerLevel, int newXpPerLevel)
         => OnValueChanged?.Invoke();
-
-    private void OnXpSync(float oldXp, float newXp)
-    {
-        OnXpReceived?.Invoke(newXp - oldXp);
-        OnValueChanged?.Invoke();
-    }
 }

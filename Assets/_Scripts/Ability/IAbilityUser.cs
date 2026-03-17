@@ -12,4 +12,5 @@ public interface IAbilityUser
     void OnUpdate();
     void Use(NetworkBehaviour target = null);
     void Use(int index, NetworkBehaviour target = null);
+    void Add(Ability ability);
 }

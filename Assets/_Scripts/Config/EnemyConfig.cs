@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Enemy/Config")]
 public class EnemyConfig : ScriptableObject
 {
-    [field: SerializeField, Range(0f, 100000f)] public float XpToDrop { get; private set; }
+    [field: SerializeField, Range(0, 100000)] public int CurrencyDrop { get; private set; }
     [field: SerializeField] public bool IsNeutral { get; private set; }
     [field: SerializeField] public float FieldOfViewAngle { get; private set; } = 120f;
     [field: SerializeField] public float VisionRange { get; private set; } = 15f;

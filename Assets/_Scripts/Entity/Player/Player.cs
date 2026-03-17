@@ -11,10 +11,11 @@ public class Player : Entity
     [SerializeField] private RayCastDamager _damager; //For testing
     [SerializeField] private Respawn _respawn;
     [SerializeField] private GameObject _headObject;
-    [SerializeField] private PlayerAbilityUser _abilities;
+    [SerializeField] private AbilityUser _abilities;
     [SerializeField] private ScriptableCharacterClass _characterClass;
     [SerializeField] private Level _level;
     [SerializeField] private Upgrader _upgrader;
+    [SerializeField] private Wallet _wallet;
 
     public ScriptableCharacterClass CharacterClass => _characterClass;
     public IPlayerInputBrain Input { get; private set; }
@@ -153,7 +154,7 @@ public class Player : Entity
     public void ToggleHUD(bool active)
     {
         _playerHUD.gameObject.SetActive(active);
-        _playerHUD.Initialize(_abilities, Damageable, _level, _upgrader);
+        _playerHUD.Initialize(_abilities, Damageable, _level, _upgrader, _wallet);
     }
 
     [ClientRpc]

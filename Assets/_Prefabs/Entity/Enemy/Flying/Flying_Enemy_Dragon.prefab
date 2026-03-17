@@ -152,6 +152,10 @@ PrefabInstance:
       value: 9013964992859603014
       objectReference: {fileID: 0}
     - target: {fileID: 5301641284520053187, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
+      propertyPath: _abilityUser._underlyingValue
+      value: 
+      objectReference: {fileID: 4320886150369610306}
+    - target: {fileID: 5301641284520053187, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
       propertyPath: 'managedReferences[9013964992859603014]'
       value: Assembly-CSharp ProjectileLaunchAttack
       objectReference: {fileID: 0}
@@ -219,6 +223,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Flying_Enemy_Dragon
       objectReference: {fileID: 0}
+    - target: {fileID: 6576200432795033080, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
+      propertyPath: _animator
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3344618377020399581, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
@@ -228,6 +236,17 @@ PrefabInstance:
       addedObject: {fileID: 3950947291457848457}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
+--- !u!114 &4320886150369610306 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8362763484965608921, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
+  m_PrefabInstance: {fileID: 5762459194994464667}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b99ce5c7b306a1a4e92f3106ab022f1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8115594875196060697 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4564464815998673794, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}

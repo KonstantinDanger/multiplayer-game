@@ -228,6 +228,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 1772050968601804086, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+      propertyPath: _animator
+      value: 
+      objectReference: {fileID: 9065874890188062880}
     - target: {fileID: 6106239776272415403, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
       propertyPath: _damageableRef._underlyingValue
       value: 
@@ -338,10 +342,8 @@ MonoBehaviour:
     _underlyingValue: {fileID: 1435455419400485427}
   _damageable:
     _underlyingValue: {fileID: 6475008800849618527}
-  _attacker:
-    _underlyingValue: {fileID: 0}
   _abilityUser:
-    _underlyingValue: {fileID: 0}
+    _underlyingValue: {fileID: 8175971769113810362}
   <MovementConfig>k__BackingField: {fileID: 11400000, guid: e3cb813506387f54dbb1d9c3eaa58da3, type: 2}
   <RotationConfig>k__BackingField: {fileID: 11400000, guid: 35c754a5163c48840abde2ccbebe65f2, type: 2}
   <DamageSystemConfig>k__BackingField: {fileID: 11400000, guid: d6fd6658551c3f9448b6f02de80c06af, type: 2}
@@ -445,5 +447,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3da38978f5cb50441bacc1ac2ab6a2c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8175971769113810362 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4024613402228473111, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+  m_PrefabInstance: {fileID: 5092638318533552301}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6125262222170548877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b99ce5c7b306a1a4e92f3106ab022f1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
