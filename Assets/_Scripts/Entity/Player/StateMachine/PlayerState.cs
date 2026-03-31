@@ -26,7 +26,6 @@ public class PlayerState : IState
     protected Vector3 GetMovementDirection(Vector2 movementVector)
     {
         Vector3 v = player.transform.right * movementVector.x + player.transform.forward * movementVector.y;
-        v = Vector3.ClampMagnitude(v, 1f);
-        return v;
+        return Vector3.ClampMagnitude(v, 1f);
     }
 }

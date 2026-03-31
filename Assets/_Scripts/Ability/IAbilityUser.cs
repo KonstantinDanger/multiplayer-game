@@ -10,7 +10,7 @@ public interface IAbilityUser
 
     void Initialize(List<Ability> abilities);
     void OnUpdate();
-    void Use(NetworkBehaviour target = null);
-    void Use(int index, NetworkBehaviour target = null);
+    Ability Use(NetworkBehaviour target = null);
+    Ability Use(int index, NetworkBehaviour target = null);
     void Add(Ability ability);
 }

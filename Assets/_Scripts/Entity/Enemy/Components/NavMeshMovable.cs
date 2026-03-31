@@ -13,6 +13,14 @@ public class NavMeshMovable : MonoBehaviour, IMovable
 
     public event Action OnMove;
 
+    private void Update()
+    {
+        if (!name.Contains("Demon"))
+            return;
+
+        UnityEngine.Debug.Log("velocity magn " + _agent.velocity.magnitude);
+    }
+
     public void ResetVerticalVelocity() => throw new NotImplementedException();
     public void Move(Vector3 position, float speed, float smoothness = 0.03f)
     {

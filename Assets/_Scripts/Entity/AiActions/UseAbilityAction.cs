@@ -9,6 +9,8 @@ public class UseAbilityAction : AIAction
 
     private IAbilityUser _abilityUser;
 
+    private Ability _selectedAbility;
+
     public override void Initialize(NetworkBehaviour self)
     {
         _abilityUser = self.GetComponent<IAbilityUser>();
@@ -16,5 +18,16 @@ public class UseAbilityAction : AIAction
     }
 
     public override void Execute(Enemy self, NetworkBehaviour target)
-        => _abilityUser.Use(target);
+    {
+        IsLocked = true;
+        _selectedAbility = _abilityUser.Use(target);
+
+        if (_selectedAbility == null)
+        {
+            IsLocked = false;
+            return;
+        }
+
+        IsLocked = _selectedAbility.IsPerforming;
+    }
 }

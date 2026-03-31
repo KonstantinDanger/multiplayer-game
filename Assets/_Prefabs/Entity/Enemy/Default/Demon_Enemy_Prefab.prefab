@@ -172,6 +172,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 1772050968601804086, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+      propertyPath: _animator
+      value: 
+      objectReference: {fileID: 6216901973352486801}
     - target: {fileID: 6106239776272415403, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
       propertyPath: _damageableRef._underlyingValue
       value: 
@@ -282,8 +286,6 @@ MonoBehaviour:
     _underlyingValue: {fileID: 1435455419400485427}
   _damageable:
     _underlyingValue: {fileID: 6475008800849618527}
-  _attacker:
-    _underlyingValue: {fileID: 0}
   _abilityUser:
     _underlyingValue: {fileID: 0}
   <MovementConfig>k__BackingField: {fileID: 11400000, guid: e3cb813506387f54dbb1d9c3eaa58da3, type: 2}

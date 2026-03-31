@@ -2,34 +2,49 @@
 
 public class PlayerAirborneState : PlayerState
 {
-    public PlayerAirborneState(Player player, StateMachine stateMachine) : base(player, stateMachine) { }
+    private readonly MovementConfig _cfg;
+
+    private Vector3 _acceleration;
 
     private Vector3 CachedVelocity { get; set; }
+
+    public PlayerAirborneState(Player player, StateMachine stateMachine) : base(player, stateMachine)
+        => _cfg = player.MovementConfig;
 
     protected override void OnEnter()
     {
         CachedVelocity = player.Movable.Velocity;
-        CachedVelocity = new(CachedVelocity.x, 0f, CachedVelocity.z);
+        _acceleration = Vector3.zero;
+    }
+
+    protected override void OnExit()
+    {
+        CachedVelocity = Vector3.zero;
+        _acceleration = Vector3.zero;
     }
 
     protected override void OnUpdate(float deltaTime)
     {
-        player.Movable.ApplyGravity(player.MovementConfig.Gravity, player.MovementConfig.MaxFallSpeed);
+        player.Movable.ApplyGravity(_cfg.Gravity, _cfg.MaxFallSpeed);
 
         if (player.Movable.IsGrounded)
         {
             ChangeTo<PlayerMovementState>();
-            CachedVelocity = Vector3.zero;
             return;
         }
 
-        Vector3 movementDirection = GetMovementDirection(player.Input.MovementVector) * CachedVelocity.magnitude;
+        Vector3 movementDirection = GetMovementDirection(player.Input.MovementVector);
+        _acceleration = deltaTime * _cfg.AirMovementAcceleration * movementDirection;
+        CachedVelocity += _acceleration;
+        float maxSpeed = _cfg.Speed * _cfg.AirMovementSpeedMultiplier;
+        CachedVelocity = Vector3.ClampMagnitude(CachedVelocity, maxSpeed);
+        player.Movable.Move(CachedVelocity, maxSpeed);
 
-        const float airMovementThreshold = 0.08f;
+        //const float airMovementThreshold = 0.08f;
 
-        if (movementDirection.magnitude > airMovementThreshold)
-            CachedVelocity = Vector3.Lerp(CachedVelocity, movementDirection, deltaTime * player.MovementConfig.AirMovementSpeedMultiplier);
+        //if (movementDirection.magnitude > airMovementThreshold)
+        //    CachedVelocity = Vector3.Lerp(CachedVelocity, movementDirection, deltaTime * player.MovementConfig.AirMovementSpeedMultiplier);
 
-        player.Movable.Move(CachedVelocity, CachedVelocity.magnitude, player.MovementConfig.MovementSmoothness);
+        //player.Movable.Move(CachedVelocity, CachedVelocity.magnitude, _cfg.MovementSmoothness);
     }
 }

@@ -25,7 +25,7 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
     /// <summary>
     /// Method for calling primary ability (0 index)
     /// </summary>
-    public virtual void Use(NetworkBehaviour target = null)
+    public virtual Ability Use(NetworkBehaviour target = null)
     {
         AbilityHandler ability = _abilities[0];
 
@@ -42,9 +42,11 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
 
             OnAbilityStartUsing.Invoke(data);
         }
+
+        return ability;
     }
 
-    public virtual void Use(int index, NetworkBehaviour target = null)
+    public virtual Ability Use(int index, NetworkBehaviour target = null)
     {
         if (index > _abilities.Count)
             throw new System.Exception("Wrong index");
@@ -52,8 +54,10 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
         AbilityHandler selected = _abilities[index];
 
         if (selected == null)
-            return;
+            return null;
 
         selected.Perform(this, target);
+
+        return selected;
     }
 }

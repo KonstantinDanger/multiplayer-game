@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Speed>k__BackingField: 10
   <SprintSpeed>k__BackingField: 13
-  <MovementSmoothness>k__BackingField: 0.12
+  <MovementSmoothness>k__BackingField: 0.03
   <JumpHeight>k__BackingField: 1.2
   <Gravity>k__BackingField: -14.715
   <MaxFallSpeed>k__BackingField: 30
-  <AirMovementSpeedMultiplier>k__BackingField: 50
+  <AirMovementSpeedMultiplier>k__BackingField: 0.96
+  <AirMovementAcceleration>k__BackingField: 70
