@@ -1,7 +1,8 @@
 using Mirror;
 using System;
 
-public partial class Level : NetworkBehaviour
+
+public class Level : NetworkBehaviour
 {
     public event Action OnValueChanged;
     public Action<int> OnLevelChanged;
@@ -12,6 +13,7 @@ public partial class Level : NetworkBehaviour
 
     public int Lvl => _level;
     public int MaxLvl => _maxLevel;
+    public int RequiredCurrencyForUpgrade => _currencyPerLevel;
 
     private Func<int, float> _currencyPerLevelIncreaseFunction;
 

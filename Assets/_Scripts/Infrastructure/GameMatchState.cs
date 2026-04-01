@@ -33,8 +33,8 @@ public class GameMatchState : GameState
         InitSpawnPositions();
         InitZone();
         InitMatch();
-        InitPlayers();
         InitializeMatchData(_gameData);
+        InitPlayers();
 
         Events.OnPlayerDemise += HandlePlayerDemise;
     }
@@ -129,7 +129,7 @@ public class GameMatchState : GameState
 
             PlayerMatchSummaryData summaryData = gameData.GameMatchData.AddNewSummaryForPlayerData(data);
             Wallet wallet = player.GetComponent<Wallet>();
-            wallet.MatchCurrency = new();
+            wallet.MatchCurrency.Reset();
             PlayerSummaryDataBinder binder = new(player, summaryData, wallet);
 
             binder.Bind();

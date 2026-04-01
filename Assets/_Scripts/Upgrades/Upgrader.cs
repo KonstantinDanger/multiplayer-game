@@ -32,7 +32,7 @@ public class Upgrader : NetworkBehaviour
         _picker = new(upgradeSchema, _config);
     }
 
-    public IEnumerable<Upgrade> GiveUpgrade()
+    public IEnumerable<Upgrade> GiveUpgrades()
     {
         if (_givenUpgradesCount == 0)
             return null;

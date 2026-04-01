@@ -28,6 +28,7 @@ public class Player : Entity
     private MainUI _playerUI;
     private LobbyUI _menu;
     private UpgradeUI _upgradeUI;
+    private LevelUpUI _levelUpUI;
     private PlayerHUD _playerHUD;
 
     private bool IsOffline =>
@@ -181,12 +182,15 @@ public class Player : Entity
         var data = ServiceLocator.Container.Resolve<StaticData>();
         var hudPrefab = data.PlayerHUDPrefab;
         var upgradeUIPrefab = data.UpgradeUIPrefab;
+        var levelUpUIPrefab = data.LevelUpUIPrefab;
 
         _playerUI = Instantiate(data.UIPrefab, transform);
         _playerHUD = Instantiate(hudPrefab, _playerUI.transform);
-        _upgradeUI = Instantiate(upgradeUIPrefab, _playerUI.transform);
+        _levelUpUI = Instantiate(levelUpUIPrefab, _playerUI.transform);
+        _upgradeUI = Instantiate(upgradeUIPrefab, _levelUpUI.transform);
 
-        _upgradeUI.Initialize(_upgrader);
+        _upgradeUI.Initialize(gameObject, _upgrader);
+        _levelUpUI.Initialize(_level, _wallet.MatchCurrency);
     }
 
     [TargetRpc]
@@ -235,7 +239,7 @@ public class Player : Entity
             Camera.HideCursor();
         }
 
-        _upgradeUI.gameObject.SetActive(_isUpgrading);
+        _levelUpUI.gameObject.SetActive(_isUpgrading);
     }
 
     private void HandleMenuInvoked()

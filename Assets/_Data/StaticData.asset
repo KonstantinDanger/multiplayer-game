@@ -28,3 +28,4 @@ MonoBehaviour:
   <PlayerHUDPrefab>k__BackingField: {fileID: 7228371307025083929, guid: c1faf7b5186dc544289b7691b1aae290, type: 3}
   <AnimatorUpdaterConfig>k__BackingField: {fileID: 11400000, guid: 10fafdb851d0ccc44aeda5c2746fb4e2, type: 2}
   <UpgradeUIPrefab>k__BackingField: {fileID: 5931549716523885884, guid: 6eaac92dba242f04fab5098e5a04a15d, type: 3}
+  <LevelUpUIPrefab>k__BackingField: {fileID: 5691341653311973390, guid: 866d4249dfca0204fb755735d160b53c, type: 3}

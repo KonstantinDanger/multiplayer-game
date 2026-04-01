@@ -34,4 +34,7 @@ public class Currency
 
         return true;
     }
+
+    public void Reset()
+        => Amount = 0;
 }

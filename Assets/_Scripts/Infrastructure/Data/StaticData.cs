@@ -20,6 +20,7 @@ public class StaticData : ScriptableObject
     [field: SerializeField] public PlayerHUD PlayerHUDPrefab { get; private set; }
     [field: SerializeField] public AnimatorUpdaterConfig AnimatorUpdaterConfig { get; private set; }
     [field: SerializeField] public UpgradeUI UpgradeUIPrefab { get; private set; }
+    [field: SerializeField] public LevelUpUI LevelUpUIPrefab { get; private set; }
 
     public override string ToString()
         => $"Static data";
