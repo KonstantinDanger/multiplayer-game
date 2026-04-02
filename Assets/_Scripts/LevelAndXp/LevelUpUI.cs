@@ -50,7 +50,7 @@ public class LevelUpUI : MonoBehaviour
         => HandleCurrencyChanged(_matchCurrency.Amount);
 
     private void HandleLevelUp()
-        => _level.TryLevelUp(_matchCurrency);
+        => _level.TryLevelUp();
 
     private void HandleCurrencyChanged(int amount)
     {

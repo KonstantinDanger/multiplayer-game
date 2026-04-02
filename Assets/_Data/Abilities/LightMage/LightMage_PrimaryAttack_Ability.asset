@@ -24,7 +24,7 @@ MonoBehaviour:
         <CooldownTime>k__BackingField: 0.65
         <PreparationAnimation>k__BackingField: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
         <UsageAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
-        <UsagePrepareTime>k__BackingField: 0.35
+        <UsagePrepareTime>k__BackingField: 0.25
         _attack:
           rid: 4564918645034057793
     - rid: 4564918645034057793
@@ -33,7 +33,7 @@ MonoBehaviour:
         Amount: 1
         TimeBetweenAttacks: 0
         _damage:
-          Amount: 10
+          Amount: 50
           AttackLayers:
             serializedVersion: 2
             m_Bits: 256

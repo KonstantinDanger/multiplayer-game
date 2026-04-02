@@ -1,7 +1,6 @@
 using Mirror;
 using System;
 
-
 public class Level : NetworkBehaviour
 {
     public event Action OnValueChanged;
@@ -16,6 +15,7 @@ public class Level : NetworkBehaviour
     public int RequiredCurrencyForUpgrade => _currencyPerLevel;
 
     private Func<int, float> _currencyPerLevelIncreaseFunction;
+    private Wallet _wallet;
 
     [Server]
     public void Initialize(Func<int, float> xpIncreaseFunc = null, int level = 1, int maxLevel = 10)
@@ -32,11 +32,19 @@ public class Level : NetworkBehaviour
         OnValueChanged?.Invoke();
     }
 
+    public override void OnStartServer()
+        => _wallet = GetComponent<Wallet>();
+
+    public override void OnStartClient()
+        => _wallet = GetComponent<Wallet>();
+
     [Command(requiresAuthority = false)]
-    public void TryLevelUp(Currency currency)
+    public void TryLevelUp()
     {
         if (Lvl >= MaxLvl)
             return;
+
+        Currency currency = _wallet.MatchCurrency;
 
         if (!currency.Withdraw(_currencyPerLevel))
             return;
