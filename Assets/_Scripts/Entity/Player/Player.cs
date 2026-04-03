@@ -110,7 +110,13 @@ public class Player : Entity
             Stats.AddStatMultiplier(StatType.Health, 0.1f);
 
             UnityEngine.Debug.Log("pressed ");
-            UnityEngine.Debug.Log(Stats.GetStatMultiplier(StatType.Health, 0));
+            UnityEngine.Debug.Log(Stats.GetStatMultiplier(StatType.Health));
+        }
+
+        if (Keyboard.current.iKey.wasPressedThisFrame)
+        {
+            UnityEngine.Debug.Log("Current player max health: " + Damageable.MaxGaugeValue);
+
         }
         //UnityEngine.Debug.Log("Current state: " + _stateMachine.CurrentState);
         //For testing

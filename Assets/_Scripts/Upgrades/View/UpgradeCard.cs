@@ -12,6 +12,7 @@ public class UpgradeCard : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _statsDescription;
 
     private GameObject _owner;
+    private UpgradeInfo _info;
     private Upgrade _upgrade;
     private event Action OnObtain;
 
@@ -21,11 +22,22 @@ public class UpgradeCard : MonoBehaviour
     private void OnDisable()
         => _obtainButton.onClick.RemoveListener(Obtain);
 
-    public void Initialize(GameObject owner, Upgrade upgrade, Action onObtain)
+    public void Initialize(GameObject owner, Upgrade upgrade, UpgradeInfo info, Action onObtain)
     {
         _owner = owner;
+        _info = info;
         _upgrade = upgrade;
         OnObtain = onObtain;
+
+        InitializeView();
+    }
+
+    private void InitializeView()
+    {
+        _icon.sprite = _info.Sprite;
+        _upgradeName.text = _info.Name;
+        _description.text = _info.FormattedDescription;
+        _statsDescription.text = _info.StatsDescription;
     }
 
     private void Obtain()

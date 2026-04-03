@@ -4,5 +4,15 @@ using UnityEngine;
 [Serializable]
 public abstract class Upgrade
 {
-    public abstract void Perform(GameObject target);
+    private Action OnUpgrade;
+
+    public void Perform(GameObject target)
+    {
+        OnPerform(target);
+        OnUpgrade?.Invoke();
+    }
+
+    protected abstract void OnPerform(GameObject target);
+    public void Construct(Action onUpgrade)
+        => OnUpgrade = onUpgrade;
 }

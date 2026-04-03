@@ -27,12 +27,12 @@ public class Upgrader : NetworkBehaviour
 
     public void Initialize()
     {
-        var upgradeSchema = _upgradeSchema.GetUpgradeSchema();
+        IEnumerable<UpgradeNode> upgradeSchema = _upgradeSchema.GetUpgradeSchema();
 
         _picker = new(upgradeSchema, _config);
     }
 
-    public IEnumerable<Upgrade> GiveUpgrades()
+    public IEnumerable<ScriptableUpgrade> GiveUpgrades()
     {
         if (_givenUpgradesCount == 0)
             return null;

@@ -24,6 +24,6 @@ public class EntityStats
         OnStatChange?.Invoke(type, _stats[type]);
     }
 
-    public float GetStatMultiplier(StatType type, float value)
+    public float GetStatMultiplier(StatType type)
     => _stats[type];
 }

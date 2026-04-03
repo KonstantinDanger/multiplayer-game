@@ -4,7 +4,7 @@ using UnityEngine;
 [Serializable]
 public class AbilityUpgrade : Upgrade
 {
-    public override void Perform(GameObject target) { }
+    protected override void OnPerform(GameObject target) { }
 }
 
 

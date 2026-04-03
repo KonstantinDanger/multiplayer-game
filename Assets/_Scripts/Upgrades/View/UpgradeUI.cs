@@ -27,10 +27,10 @@ public class UpgradeUI : MonoBehaviour
     private void OnDestroy()
         => _upgrader.OnUpgradeAmountChange -= HandleUpgradeAmountChange;
 
-    public void AddUpgradeCard(Upgrade upgrade)
+    public void AddUpgradeCard(Upgrade upgrade, UpgradeInfo info)
     {
         UpgradeCard card = Instantiate(_cardPrefab, _grid.transform);
-        card.Initialize(_owner, upgrade, OnObtain);
+        card.Initialize(_owner, upgrade, info, OnObtain);
         _cards.Add(card);
     }
 
@@ -41,9 +41,12 @@ public class UpgradeUI : MonoBehaviour
 
         gameObject.SetActive(true);
 
-        List<Upgrade> upgrades = _upgrader.GiveUpgrades().ToList();
+        List<ScriptableUpgrade> upgrades = _upgrader.GiveUpgrades().ToList();
 
-        upgrades.ForEach(upgrade => AddUpgradeCard(upgrade));
+        upgrades.ForEach(upgrade
+            => AddUpgradeCard(
+                upgrade.GetNew(),
+                upgrade.GetInfo()));
     }
 
     private void OnObtain()

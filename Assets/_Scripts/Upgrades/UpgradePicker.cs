@@ -13,20 +13,20 @@ public class UpgradePicker
         _config = config;
     }
 
-    public IEnumerable<Upgrade> GetRandomizedAvailableUpgrades()
+    public IEnumerable<ScriptableUpgrade> GetRandomizedAvailableUpgrades()
     {
-        Upgrade[] availables = GetAvailableUpgrades().ToArray();
+        ScriptableUpgrade[] availables = GetAvailableUpgrades().ToArray();
 
         if (availables.Count() <= _config.MaxUpgradesAtTime)
             return availables;
 
-        Upgrade[] shuffled = new Upgrade[_config.MaxUpgradesAtTime];
+        ScriptableUpgrade[] shuffled = new ScriptableUpgrade[_config.MaxUpgradesAtTime];
 
         for (int i = 0; i < availables.Length - 1; i++)
         {
             int rnd = Random.Range(i, availables.Length);
 
-            Upgrade tmp = availables[i];
+            ScriptableUpgrade tmp = availables[i];
             availables[i] = availables[rnd];
             availables[rnd] = tmp;
         }
@@ -37,9 +37,9 @@ public class UpgradePicker
         return shuffled;
     }
 
-    private IEnumerable<Upgrade> GetAvailableUpgrades()
+    private IEnumerable<ScriptableUpgrade> GetAvailableUpgrades()
     {
-        var result = new List<Upgrade>();
+        var result = new List<ScriptableUpgrade>();
         var visited = new HashSet<UpgradeNode>();
 
         foreach (var node in _schema)
@@ -50,7 +50,7 @@ public class UpgradePicker
         return result;
     }
 
-    private static void Traverse(UpgradeNode node, List<Upgrade> result, HashSet<UpgradeNode> visited)
+    private static void Traverse(UpgradeNode node, List<ScriptableUpgrade> result, HashSet<UpgradeNode> visited)
     {
         if (node == null)
             return;
@@ -62,7 +62,12 @@ public class UpgradePicker
 
         if (node.IsUnlocked)
         {
-            result.Add(node.Upgrade.GetNew());
+            //Upgrade upgrade = node.Upgrade.GetNew();
+            //UpgradeInfo info = node.Upgrade.GetInfo();
+
+            //upgrade.Construct(node.Unlock);
+
+            result.Add(node.Upgrade);
             return;
         }
 

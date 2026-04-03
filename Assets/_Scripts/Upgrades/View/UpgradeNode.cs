@@ -7,16 +7,15 @@ public class UpgradeNode
 {
     [SerializeField] private ScriptableUpgrade _upgradeRef;
     [SerializeField] private List<UpgradeNode> _nextUpgrades = new();
+    [field: SerializeField] public bool IsUnlocked { get; private set; }
 
-    public UpgradeNode(ScriptableUpgrade upgradeRef, List<UpgradeNode> nextUpgrades, bool isUnlocked)
+    private UpgradeNode(ScriptableUpgrade upgradeRef, List<UpgradeNode> nextUpgrades, bool isUnlocked)
     {
         _upgradeRef = upgradeRef;
         _nextUpgrades = nextUpgrades;
         IsUnlocked = isUnlocked;
-        IsUnlocked = true;
     }
 
-    public bool IsUnlocked { get; private set; } = true;
     public ScriptableUpgrade Upgrade => _upgradeRef;
     public IReadOnlyList<UpgradeNode> NextUpgrades => _nextUpgrades;
 
