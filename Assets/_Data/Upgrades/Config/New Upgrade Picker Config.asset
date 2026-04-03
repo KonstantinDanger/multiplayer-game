@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: New Upgrade Picker Config
   m_EditorClassIdentifier: 
   <MaxUpgradesAtTime>k__BackingField: 3
+  <GiveUpgradeEachLevel>k__BackingField: 2

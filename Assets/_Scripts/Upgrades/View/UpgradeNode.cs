@@ -13,9 +13,10 @@ public class UpgradeNode
         _upgradeRef = upgradeRef;
         _nextUpgrades = nextUpgrades;
         IsUnlocked = isUnlocked;
+        IsUnlocked = true;
     }
 
-    public bool IsUnlocked { get; private set; }
+    public bool IsUnlocked { get; private set; } = true;
     public ScriptableUpgrade Upgrade => _upgradeRef;
     public IReadOnlyList<UpgradeNode> NextUpgrades => _nextUpgrades;
 

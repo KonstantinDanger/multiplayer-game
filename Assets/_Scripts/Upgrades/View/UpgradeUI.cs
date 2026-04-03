@@ -51,6 +51,8 @@ public class UpgradeUI : MonoBehaviour
         foreach (UpgradeCard card in _cards)
             Destroy(card.gameObject);
 
+        _cards.Clear();
+
         gameObject.SetActive(false);
     }
 }

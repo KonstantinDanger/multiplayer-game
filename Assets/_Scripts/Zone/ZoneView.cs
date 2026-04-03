@@ -12,7 +12,6 @@ public class ZoneView : MonoBehaviour
             Debug.LogError("Zone view object should not be same object with a Zone component.");
             _viewObject = null;
         }
-
     }
 
     private void OnEnable()
@@ -24,4 +23,3 @@ public class ZoneView : MonoBehaviour
     private void HandleZoneShrink(float zoneRadius)
         => _viewObject.localScale = 2 * zoneRadius * Vector3.one;
 }
-

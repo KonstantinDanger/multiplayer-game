@@ -37,8 +37,6 @@ public class Upgrader : NetworkBehaviour
         if (_givenUpgradesCount == 0)
             return null;
 
-        _givenUpgradesCount--;
-        OnUpgradeAmountChange?.Invoke(_givenUpgradesCount);
         return _picker.GetRandomizedAvailableUpgrades();
     }
 
