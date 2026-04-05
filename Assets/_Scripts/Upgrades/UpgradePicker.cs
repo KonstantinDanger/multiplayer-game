@@ -22,7 +22,7 @@ public class UpgradePicker
 
         ScriptableUpgrade[] shuffled = new ScriptableUpgrade[_config.MaxUpgradesAtTime];
 
-        for (int i = 0; i < availables.Length - 1; i++)
+        for (int i = 0; i <= availables.Length - 1; i++)
         {
             int rnd = Random.Range(i, availables.Length);
 
@@ -31,7 +31,7 @@ public class UpgradePicker
             availables[rnd] = tmp;
         }
 
-        for (int i = 0; i < _config.MaxUpgradesAtTime - 1; i++)
+        for (int i = 0; i <= _config.MaxUpgradesAtTime - 1; i++)
             shuffled[i] = availables[i];
 
         return shuffled;

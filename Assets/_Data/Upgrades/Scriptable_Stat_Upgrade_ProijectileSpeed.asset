@@ -10,10 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a89de4ff67cdd1c42b860a662dd12275, type: 3}
-  m_Name: Scriptable_Stat_Upgrade 3
+  m_Name: Scriptable_Stat_Upgrade_ProijectileSpeed
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Stat upgrade 3
-  <Sprite>k__BackingField: {fileID: 0}
+  _upgradeInfo:
+    <Name>k__BackingField: Projectile speed
+    <Sprite>k__BackingField: {fileID: 21300000, guid: 6885cf7d85687ba4dab8eaf20bf0d5e1, type: 3}
+    <StatsDescription>k__BackingField: 
+    <RawDescription>k__BackingField: Enhances {Stat} of all projectiles by +{Value}
+      multiplier from base
   _upgrade:
     rid: 3288031289381486842
   references:
@@ -23,5 +27,5 @@ MonoBehaviour:
       type: {class: StatUpgrade, ns: , asm: Assembly-CSharp}
       data:
         _statParameter:
-          <Stat>k__BackingField: 0
+          <Stat>k__BackingField: 5
           <Value>k__BackingField: 0.1

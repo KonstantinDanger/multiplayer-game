@@ -35,7 +35,7 @@ public class StaticData : ScriptableObject
             [StatType.MoveSpeed] = "Movement speed",
             [StatType.JumpHeight] = "Jump height",
             [StatType.projectileSpeed] = "Speed of all projectiles",
-            [StatType.projectileRadius] = "Radius of all projectiles",
+            [StatType.projectileScale] = "Radius of all projectiles",
             [StatType.splashRadius] = "Radius of all splash attacks",
         };
 

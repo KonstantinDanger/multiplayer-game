@@ -6,6 +6,6 @@ public enum StatType
     MoveSpeed = 3,
     JumpHeight = 4,
     projectileSpeed = 5,
-    projectileRadius = 6,
+    projectileScale = 6,
     splashRadius = 7,
 }

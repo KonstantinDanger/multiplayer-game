@@ -21,9 +21,10 @@ public class GameFactory : NetworkBehaviour
         return text;
     }
 
-    public Projectile SpawnProjectile(Projectile projectile, Vector3 direction, float flightSpeed, NetworkBehaviour sender, Damage damage, Transform transform, Quaternion rotation, Transform parent = null)
+    public Projectile SpawnProjectile(Projectile projectile, Vector3 direction, float flightSpeed, NetworkBehaviour sender, Damage damage, Transform transform, Quaternion rotation, float scaleMultiplier = 1, Transform parent = null)
     {
         Projectile proj = Instantiate(projectile, transform.position, rotation, parent);
+        proj.transform.localScale *= scaleMultiplier;
 
         SpawnOnServer(proj.gameObject, sender.gameObject);
 
