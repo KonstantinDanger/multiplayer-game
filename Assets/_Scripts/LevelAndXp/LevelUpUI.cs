@@ -35,6 +35,7 @@ public class LevelUpUI : MonoBehaviour
         _matchCurrency = matchCurrency;
 
         _level.OnLevelChanged += HandleLevelChanged;
+        _level.OnCurrencyPerLevelChanged += HandleCurrencyPerLevelChanged;
         _matchCurrency.OnCurrencyChanged += HandleCurrencyChanged;
 
         _defaultTextColor = _levelPreviewText.color;
@@ -43,14 +44,21 @@ public class LevelUpUI : MonoBehaviour
     private void OnDestroy()
     {
         _level.OnLevelChanged -= HandleLevelChanged;
+        _level.OnCurrencyPerLevelChanged -= HandleCurrencyPerLevelChanged;
         _matchCurrency.OnCurrencyChanged -= HandleCurrencyChanged;
     }
+
+    private void HandleCurrencyPerLevelChanged()
+        => SetPriceText(IsUpgradeEnabled());
 
     private void HandleLevelChanged(int level)
         => HandleCurrencyChanged(_matchCurrency.Amount);
 
     private void HandleLevelUp()
-        => _level.TryLevelUp();
+    {
+        _level.TryLevelUp();
+        HandleCurrencyChanged(0);
+    }
 
     private void HandleCurrencyChanged(int amount)
     {
@@ -66,12 +74,31 @@ public class LevelUpUI : MonoBehaviour
         && _level.Lvl < _level.MaxLvl;
 
     private void SetLevelLabel(bool upgradeEnabled)
-        => _levelPreviewText.text = upgradeEnabled ? $"Lvl {_level.Lvl} -> {_level.Lvl + 1}" : $"Lvl {_level.Lvl}";
+    {
+        if (IsLevelMaxedOut())
+        {
+            _levelPreviewText.text = "Max level reached";
+            return;
+        }
+
+        _levelPreviewText.text = upgradeEnabled ? $"Lvl {_level.Lvl} -> {_level.Lvl + 1}" : $"Lvl {_level.Lvl}";
+    }
+
     private void SetButton(bool upgradeEnabled)
-        => _levelUpButton.gameObject.SetActive(upgradeEnabled);
+        => _levelUpButton.gameObject.SetActive(upgradeEnabled && !IsLevelMaxedOut());
+
     private void SetPriceText(bool upgradeEnabled)
     {
+        if (IsLevelMaxedOut())
+        {
+            _levelUpPriceText.gameObject.SetActive(false);
+            return;
+        }
+
         _levelUpPriceText.color = upgradeEnabled ? _defaultTextColor : _lockedTextColor;
         _levelUpPriceText.text = $"{_level.RequiredCurrencyForUpgrade}";
     }
+
+    private bool IsLevelMaxedOut()
+        => _level.Lvl == _level.MaxLvl;
 }

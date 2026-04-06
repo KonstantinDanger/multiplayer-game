@@ -21,7 +21,7 @@ public class PlayerHUD : UI
         _healthGauge.Initialize(gauge: damageable);
         _upgradeHUD.Initialize(upgrader);
 
-        _level.OnValueChanged += HandleLevelChanged;
+        _level.OnCurrencyPerLevelChanged += HandleLevelChanged;
         _matchCurrency.OnCurrencyChanged += HandleCurrencyChanged;
 
         HandleLevelChanged();
@@ -35,7 +35,7 @@ public class PlayerHUD : UI
 
     private void OnDestroy()
     {
-        _level.OnValueChanged -= HandleLevelChanged;
+        _level.OnCurrencyPerLevelChanged -= HandleLevelChanged;
         _matchCurrency.OnCurrencyChanged -= HandleCurrencyChanged;
     }
 }

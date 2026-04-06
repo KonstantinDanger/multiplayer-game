@@ -3,11 +3,11 @@ using System;
 
 public class Level : NetworkBehaviour
 {
-    public event Action OnValueChanged;
+    public event Action OnCurrencyPerLevelChanged;
     public Action<int> OnLevelChanged;
 
     [SyncVar(hook = nameof(OnLevelSync))] private int _level;
-    [SyncVar(hook = nameof(OnXpPerLevelSync))] private int _currencyPerLevel;
+    [SyncVar(hook = nameof(OnCurrencyPerLevelSync))] private int _currencyPerLevel;
     [SyncVar] private int _maxLevel;
 
     public int Lvl => _level;
@@ -29,7 +29,7 @@ public class Level : NetworkBehaviour
         _currencyPerLevel = GetNextCurrencyPerLevel(_level);
 
         OnLevelChanged?.Invoke(_level);
-        OnValueChanged?.Invoke();
+        OnCurrencyPerLevelChanged?.Invoke();
     }
 
     public override void OnStartServer()
@@ -70,6 +70,6 @@ public class Level : NetworkBehaviour
     private void OnLevelSync(int oldLevel, int newLevel)
         => OnLevelChanged?.Invoke(newLevel);
 
-    private void OnXpPerLevelSync(int oldXpPerLevel, int newXpPerLevel)
-        => OnValueChanged?.Invoke();
+    private void OnCurrencyPerLevelSync(int oldXpPerLevel, int newXpPerLevel)
+        => OnCurrencyPerLevelChanged?.Invoke();
 }

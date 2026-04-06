@@ -38,6 +38,9 @@ public class UpgradeCard : MonoBehaviour
         _upgradeName.text = _info.Name;
         _description.text = _info.FormattedDescription;
         _statsDescription.text = _info.StatsDescription;
+
+        if (string.IsNullOrEmpty(_info.FormattedDescription))
+            Debug.LogError("No formatted description available!");
     }
 
     private void Obtain()

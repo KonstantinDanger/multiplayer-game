@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _upgradeInfo:
     <Name>k__BackingField: Damage
-    <Sprite>k__BackingField: {fileID: 0}
+    <Sprite>k__BackingField: {fileID: 21300000, guid: 5f046c28cdf663941ad397ecfe35209d, type: 3}
     <StatsDescription>k__BackingField: 
     <RawDescription>k__BackingField: Increases all damage {Stat} output by +{Value}
       multiplier
