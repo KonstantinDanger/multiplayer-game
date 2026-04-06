@@ -16,8 +16,8 @@ MonoBehaviour:
     <Name>k__BackingField: Projectile speed
     <Sprite>k__BackingField: {fileID: 21300000, guid: 6885cf7d85687ba4dab8eaf20bf0d5e1, type: 3}
     <StatsDescription>k__BackingField: 
-    <RawDescription>k__BackingField: Enhances {Stat} of all projectiles by +{Value}
-      multiplier from base
+    <RawDescription>k__BackingField: Enhances {Stat} of all projectiles by +{Value}*(100)%
+      from base
   _upgrade:
     rid: 3288031289381486842
   references:

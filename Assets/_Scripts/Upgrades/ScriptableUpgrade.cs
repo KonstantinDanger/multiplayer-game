@@ -26,16 +26,28 @@ public class ScriptableUpgrade : ScriptableObject
         if (string.IsNullOrEmpty(rawText) || source == null)
             return rawText;
 
-        return Regex.Replace(rawText, @"\{(\w+)\}", m =>
+        return Regex.Replace(rawText, @"\{(\w+)\}(?:\*\(([\d.-]+)\))?", m =>
         {
             string targetName = m.Groups[1].Value;
-            string result = FindMemberValue(source, targetName);
+            string multiplierStr = m.Groups[2].Value;
 
-            return result ?? $"<color=red>[{targetName} Not Found]</color>";
+            object result = FindMemberValue(source, targetName);
+
+            if (result == null)
+                return $"\"[{targetName}\" Not Found]";
+
+            if (result is Single numResult && !String.IsNullOrEmpty(multiplierStr))
+            {
+                Single multiplier = Single.Parse(multiplierStr);
+
+                return (numResult * multiplier).ToString();
+            }
+
+            return result.ToString();
         });
     }
 
-    private string FindMemberValue(object obj, string name)
+    private object FindMemberValue(object obj, string name)
     {
         if (obj == null)
             return null;
@@ -44,11 +56,11 @@ public class ScriptableUpgrade : ScriptableObject
 
         PropertyInfo prop = type.GetProperty(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.IgnoreCase);
         if (prop != null)
-            return prop.GetValue(obj)?.ToString();
+            return prop.GetValue(obj);
 
         FieldInfo field = type.GetField(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.IgnoreCase);
         if (field != null)
-            return field.GetValue(obj)?.ToString();
+            return field.GetValue(obj);
 
         // Recursively search through nested structs and classes
         foreach (FieldInfo f in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
@@ -61,7 +73,7 @@ public class ScriptableUpgrade : ScriptableObject
             if (nestedValue == null)
                 continue;
 
-            string found = FindMemberValue(nestedValue, name);
+            object found = FindMemberValue(nestedValue, name);
             if (found != null)
                 return found;
         }
