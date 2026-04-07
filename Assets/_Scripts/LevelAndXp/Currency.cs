@@ -11,7 +11,7 @@ public class Currency
     public Currency(int amount)
         => Amount = amount;
 
-    public bool Add(int amount)
+    public virtual bool Add(int amount)
     {
         if (amount <= 0)
             return false;
@@ -23,7 +23,7 @@ public class Currency
         return true;
     }
 
-    public bool Withdraw(int amount)
+    public virtual bool Withdraw(int amount)
     {
         if (amount > Amount)
             return false;

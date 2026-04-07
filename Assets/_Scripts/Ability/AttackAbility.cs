@@ -9,10 +9,13 @@ public class AttackAbility : Ability
 
     protected override bool OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
     {
-        _attack.Apply(sender, target);
+        if (sender == null)
+            return false;
 
-        {//UnityEngine.Debug.Log($"Ability \'{Name}\' performed");
-        }
+        int myLayer = sender.gameObject.layer;
+        LayerMask attackMask = _attack.Damage.AttackLayers & ~(1 << myLayer);
+        _attack.Damage.SetAttackLayers(attackMask);
+        _attack.Apply(sender, target);
 
         return true;
     }

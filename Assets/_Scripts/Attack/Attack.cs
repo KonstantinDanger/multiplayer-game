@@ -8,11 +8,10 @@ public abstract class Attack
 {
     [SerializeField, Range(1, 1000)] protected int Amount = 1;
     [SerializeField, Range(0, 5)] protected float TimeBetweenAttacks = 0;
-    [SerializeField] private Damage _damage;
+    [SerializeField] public Damage Damage;
 
     private bool _inProcess;
     public bool InProcess => _inProcess;
-    public Damage Damage => _damage;
     public float AttackRange => Damage.Range;
 
     public void Apply(NetworkBehaviour sender, NetworkBehaviour target)
@@ -21,10 +20,10 @@ public abstract class Attack
             return;
 
         if (sender != null)
-            _damage.SenderNetId = sender.netId;
+            Damage.SenderNetId = sender.netId;
 
         if (target != null)
-            _damage.ReceiverNetId = target.netId;
+            Damage.ReceiverNetId = target.netId;
 
         var coroutineHolder = ServiceLocator.Container.Resolve<CoroutineHolder>();
 

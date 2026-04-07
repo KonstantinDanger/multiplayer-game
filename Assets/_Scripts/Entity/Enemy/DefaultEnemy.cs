@@ -4,7 +4,7 @@
     {
         base.OnDamageTaken(damage);
 
-        if (!damage.Sender.TryGetComponent(out Player attacker))
+        if (!damage.Sender.TryGetComponent(out Entity attacker))
             return;
 
         if (!TargetTrackingMemory.IsTracking)

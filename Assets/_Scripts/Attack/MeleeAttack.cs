@@ -22,7 +22,12 @@ public class MeleeAttack : Attack
 
         for (int i = 0; i < targetCount; i++)
             if (_targets[i].TryGetComponent(out IDamageable damageable))
+            {
                 damageable.TakeDamage(Damage);
+
+                var name = _targets[i].name;
+                UnityEngine.Debug.Log($"{sender.name}'s attack targets " + name);
+            }
 
         attacker.PerformAttack();
     }

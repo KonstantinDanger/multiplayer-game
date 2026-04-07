@@ -5,6 +5,17 @@ using UnityEngine;
 
 public static class Utils
 {
+    public static string GetLayerNamesFromMask(LayerMask mask)
+    {
+        string str = "";
+
+        for (int i = 0; i < 32; i++)
+            if ((mask.value & (1 << i)) != 0)
+                str += $"{LayerMask.LayerToName(i)} | ";
+
+        return str;
+    }
+
     public static T GetInstancedCopyOf<T>(T target) where T : class
     {
         if (target == null)

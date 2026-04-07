@@ -9,6 +9,8 @@ public class TargetDetector : NetworkBehaviour, ITargetDetector
     [SerializeField] private LayerMask _layersToDetect;
     [SerializeField] private Transform _transform;
 
+    private readonly Collider[] _targets = new Collider[8];
+
     public Entity DetectNearestTarget(float detectionRadius)
     {
         var entities = DetectAllEntities(detectionRadius);
@@ -35,12 +37,19 @@ public class TargetDetector : NetworkBehaviour, ITargetDetector
 
     private List<Entity> DetectAllEntities(float detectionRadius)
     {
-        Collider[] hits = Physics.OverlapSphere(_transform.position, detectionRadius, _layersToDetect);
+        int targets = Physics.OverlapSphereNonAlloc(_transform.position, detectionRadius, _targets, _layersToDetect);
         List<Entity> entities = new();
 
-        foreach (var hit in hits)
-            if (hit.TryGetComponent(out Player player))
-                entities.Add(player);
+        for (int i = 0; i < targets; i++)
+            if (_targets[i].TryGetComponent(out Entity entity))
+                if (entity.gameObject != gameObject)
+                    entities.Add(entity);
+
+        if (targets != 0)
+        {
+            entities.ForEach(e => UnityEngine.Debug.Log(e.name));
+
+        }
 
         return entities;
     }
@@ -56,4 +65,7 @@ public class TargetDetector : NetworkBehaviour, ITargetDetector
         float angle = Vector3.Angle(_transform.forward, dirToTarget);
         return angle <= fovAngle / 2f;
     }
+
+    public void ChangeTargetLayers(LayerMask layersToDetect)
+        => _layersToDetect = layersToDetect;
 }

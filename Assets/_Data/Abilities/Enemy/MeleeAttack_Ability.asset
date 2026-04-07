@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4eedb7db48f6b7c44be8e8c890e9d4ae, type: 3}
-  m_Name: MeleeAttack_Enemy_Ability
+  m_Name: MeleeAttack_Ability
   m_EditorClassIdentifier: 
   _ability:
     rid: 9013965155010084937
@@ -32,13 +32,13 @@ MonoBehaviour:
       data:
         Amount: 1
         TimeBetweenAttacks: 0
-        _damage:
+        Damage:
           Amount: 10
           AttackLayers:
             serializedVersion: 2
-            m_Bits: 128
+            m_Bits: 896
           Type: 0
-          Range: 1
+          Range: 0.5
           SenderNetId: 0
           ReceiverNetId: 0
           AttackDirection: {x: 0, y: 0, z: 0}

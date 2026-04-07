@@ -13,7 +13,7 @@ public abstract class Enemy : Entity
     public EnemyConfig Config => _enemyConfig;
 
     protected ITargetTrackingMemory TargetTrackingMemory => TargetTrackingMemoryRef.Value;
-    protected ITargetDetector TargetDetector => TargetDetectorRef.Value;
+    public ITargetDetector TargetDetector => TargetDetectorRef.Value;
 
     protected float DetectionTimer;
 
@@ -52,15 +52,16 @@ public abstract class Enemy : Entity
         if (TargetTrackingMemory.Target)
             return;
 
-        Entity nearestPlayer = TargetDetector.DetectNearestTarget(Config.DetectionRadius);
+        Entity nearest = TargetDetector.DetectNearestTarget(Config.DetectionRadius);
 
-        if (nearestPlayer != null)
+        if (nearest != null)
         {
-            OnTargetDetected(nearestPlayer);
+            OnTargetDetected(nearest);
         }
     }
 
-    protected virtual void OnTargetDetected(Entity player) { }
+    protected virtual void OnTargetDetected(Entity entity)
+        => TargetTrackingMemory.Memorize(entity);
 
     protected virtual void ChaseTarget(Entity target)
     {

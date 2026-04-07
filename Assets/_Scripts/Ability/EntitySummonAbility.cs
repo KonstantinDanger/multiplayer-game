@@ -7,6 +7,8 @@ using UnityEngine;
 public class EntitySummonAbility : Ability
 {
     [SerializeField, Range(1, 20)] private int _maxSummonCount;
+    [SerializeField] private string _summonLayerName;
+    [SerializeField] private LayerMask _layersToDetect;
     [SerializeField] private Entity _entityPrefab;
 
     private readonly List<Entity> _summonInstances = new();
@@ -37,18 +39,19 @@ public class EntitySummonAbility : Ability
         Quaternion rotation = Quaternion.LookRotation(forwardDirection);
         //Temporary decision.
 
-        var instance = factory.SpawnEntity(_entityPrefab, summonPosition, rotation, owner: sender);
+        Entity instance = factory.SpawnEntity(_entityPrefab, summonPosition, rotation, owner: sender);
         _summonInstances.Add(instance);
+        (instance as Enemy).Summonify(_layersToDetect, _summonLayerName, sender);
 
         return true;
     }
 
     private void DeleteNullEntities(List<Entity> summonInstances)
     {
-        for (int i = 0; i < _summonInstances.Count; i++)
+        for (int i = 0; i < summonInstances.Count; i++)
         {
-            if (_summonInstances[i] == null)
-                _summonInstances.RemoveAt(i);
+            if (summonInstances[i] == null)
+                summonInstances.RemoveAt(i);
         }
     }
 

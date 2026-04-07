@@ -13,6 +13,9 @@ public struct Damage
     [HideInInspector] public uint ReceiverNetId;
     [HideInInspector] public Vector3 AttackDirection;
 
+    public void SetAttackLayers(LayerMask layers)
+        => AttackLayers = layers;
+
     public readonly GameObject Sender
         => Utils.NetIdToGameObject(SenderNetId);
     public readonly GameObject Receiver
