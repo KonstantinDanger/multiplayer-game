@@ -167,6 +167,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c5ebaa781f2104f4b96eed7e7729e854, type: 3}
       insertIndex: -1
       addedObject: {fileID: 48576169112377336}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c5ebaa781f2104f4b96eed7e7729e854, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7189729277207257075}
   m_SourcePrefab: {fileID: 100100000, guid: c5ebaa781f2104f4b96eed7e7729e854, type: 3}
 --- !u!1 &2340615433407070304 stripped
 GameObject:
@@ -190,6 +193,42 @@ MonoBehaviour:
   syncInterval: 0
   clientAuthority: 0
   animator: {fileID: 9065874890188062880}
+--- !u!114 &7189729277207257075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2340615433407070304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 726325959c0cb064597e2f1bd5eb6b21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lengthFromHeelToToes: 0.1502
+  maxRotationAngle: 60
+  ankleHeightOffset: 0.0235
+  enableIKPositioning: 1
+  enableIKRotating: 1
+  globalWeight: 1
+  leftFootWeight: 1
+  rightFootWeight: 1
+  smoothTime: 0.075
+  raySphereRadius: 0.05
+  rayCastRange: 1.077
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  ignoreTriggers: 1
+  leftFootRayStartHeight: 0.5
+  rightFootRayStartHeight: 0.5
+  enableFootLifting: 1
+  floorRange: 0.7
+  enableBodyPositioning: 1
+  crouchRange: 0.25
+  stretchRange: 0
+  giveWorldHeightOffset: 0
+  worldHeightOffset: 0
 --- !u!4 &3112086270419327706 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c5ebaa781f2104f4b96eed7e7729e854, type: 3}

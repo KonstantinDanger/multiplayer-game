@@ -60,7 +60,7 @@ namespace SteamAudio
             }
             else
             {
-                Debug.Log(string.Format("Loaded HRTF: {0}.", (sofaFileName != null) ? sofaFileName : "default"));
+                //Debug.Log(string.Format("Loaded HRTF: {0}.", (sofaFileName != null) ? sofaFileName : "default"));
             }
 
             if (sofaData != IntPtr.Zero)
@@ -69,25 +69,16 @@ namespace SteamAudio
             }
         }
 
-        public HRTF(HRTF hrtf)
-        {
-            mHRTF = API.iplHRTFRetain(hrtf.Get());
-        }
+        public HRTF(HRTF hrtf) => mHRTF = API.iplHRTFRetain(hrtf.Get());
 
         ~HRTF()
         {
             Release();
         }
 
-        public void Release()
-        {
-            API.iplHRTFRelease(ref mHRTF);
-        }
+        public void Release() => API.iplHRTFRelease(ref mHRTF);
 
-        public IntPtr Get()
-        {
-            return mHRTF;
-        }
+        public IntPtr Get() => mHRTF;
 
         private float dBToGain(float gaindB)
         {
@@ -96,7 +87,7 @@ namespace SteamAudio
             if (gaindB <= kMinDBLevel)
                 return 0.0f;
 
-            return  (float) Math.Pow(10.0, (double) gaindB * (1.0 / 20.0));
+            return (float)Math.Pow(10.0, (double)gaindB * (1.0 / 20.0));
         }
     }
 }

@@ -32,14 +32,14 @@ MonoBehaviour:
       data:
         Amount: 1
         TimeBetweenAttacks: 0
-        _damage:
-          Amount: 50
+        Damage:
+          Amount: 34
           AttackLayers:
             serializedVersion: 2
             m_Bits: 256
           Type: 0
-          Range: 50
-          SenderNetId: 3
+          Range: 20
+          SenderNetId: 0
           ReceiverNetId: 0
           AttackDirection: {x: 0, y: 0, z: 0}
         _verticalSpreadAngle: 0
