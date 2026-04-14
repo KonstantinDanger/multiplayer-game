@@ -32,8 +32,8 @@ MonoBehaviour:
       data:
         Amount: 8
         TimeBetweenAttacks: 0
-        _damage:
-          Amount: 0
+        Damage:
+          Amount: 5
           AttackLayers:
             serializedVersion: 2
             m_Bits: 0

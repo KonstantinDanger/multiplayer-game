@@ -7,9 +7,11 @@ AnimatorOverrideController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: DragonAnimator
-  m_Controller: {fileID: 9100000, guid: 85ffc6150df8f5744bfae61def4ca13d, type: 2}
+  m_Controller: {fileID: 9100000, guid: 377b54770027efb459888435f3edc3ed, type: 2}
   m_Clips:
-  - m_OriginalClip: {fileID: -1498010087492872569, guid: 04288f606e6859546893b1a8d7321f07, type: 3}
-    m_OverrideClip: {fileID: 7694884907994696138, guid: 7d69422ec8db01445ba100f915ef1a9e, type: 3}
-  - m_OriginalClip: {fileID: 417885616478531319, guid: 04288f606e6859546893b1a8d7321f07, type: 3}
+  - m_OriginalClip: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
     m_OverrideClip: {fileID: 7978209408939244724, guid: 7d69422ec8db01445ba100f915ef1a9e, type: 3}
+  - m_OriginalClip: {fileID: 3094330708855449807, guid: 9508ccae6dd32b54cb61bd81eda00380, type: 3}
+    m_OverrideClip: {fileID: 7694884907994696138, guid: 7d69422ec8db01445ba100f915ef1a9e, type: 3}
+  - m_OriginalClip: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
+    m_OverrideClip: {fileID: -742960075402540438, guid: 7d69422ec8db01445ba100f915ef1a9e, type: 3}

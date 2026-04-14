@@ -222,7 +222,7 @@ public class Player : Entity
         if (!CanDoActions())
             return;
 
-        _abilities.Use();
+        _abilities.Use(0);
         //_damager.InflictDamage(Camera.Transform.position, Camera.Transform.forward);
     }
 

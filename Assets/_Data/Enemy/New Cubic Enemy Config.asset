@@ -12,12 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1de947e5c8d6b2a4184e251d0415d735, type: 3}
   m_Name: New Cubic Enemy Config
   m_EditorClassIdentifier: 
-  <XpToDrop>k__BackingField: 600
+  <CurrencyDrop>k__BackingField: 0
   <IsNeutral>k__BackingField: 0
-  <FieldOfViewAngle>k__BackingField: 120
-  <VisionRange>k__BackingField: 15
-  <DetectionRadius>k__BackingField: 10
-  <DetectionInterval>k__BackingField: 2
+  <TargetDetectionConfig>k__BackingField: {fileID: 11400000, guid: 8104fd2cada7a1f45af32fa586a2348c, type: 2}
   _aiActions:
   - {fileID: 11400000, guid: 9944aadf376d07f4daa81f6b405f0ccd, type: 2}
   - {fileID: 11400000, guid: eaec4432d8489504eb15b77b7d0d8b75, type: 2}

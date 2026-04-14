@@ -36,13 +36,13 @@ public class GameFactory : NetworkBehaviour
             Damage = damage
         };
 
-        int excludeMask = ~0;
+        //int excludeMask = ~0;
 
-        excludeMask &= ~(1 << 0);
+        //excludeMask &= ~(1 << 0);
 
-        excludeMask &= ~damage.AttackLayers.value;
+        //excludeMask &= ~damage.AttackLayers.value;
 
-        proj.Collider.excludeLayers = excludeMask;
+        //proj.Collider.excludeLayers = excludeMask;
 
         proj.Initialize(data);
 

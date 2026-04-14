@@ -22,26 +22,12 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
     public void Add(Ability ability)
         => _abilities.Add(new(ability));
 
-    /// <summary>
-    /// Method for calling primary ability (0 index)
-    /// </summary>
-    public virtual Ability Use(NetworkBehaviour target = null)
+    public virtual Ability Use(Ability abilityToUse, NetworkBehaviour target = null)
     {
-        AbilityHandler ability = _abilities[0];
+        AbilityHandler ability = _abilities.Find(handler => handler.Ability.Equals(abilityToUse));
 
         if (ability.Perform(this, target))
-        {
-            UseAbilityData data = new UseAbilityData()
-            {
-                UsagePreparationAnimDuration = ability.PreparationAnimation.averageDuration,
-                PreparationAnimationName = ability.PreparationAnimation.name,
-                UsagePreparationTime = ability.UsagePrepareTime,
-
-                UsageAnimationName = ability.UsageAnimation.name,
-            };
-
-            OnAbilityStartUsing.Invoke(data);
-        }
+            OnAbilityStartUsing.Invoke(SetupData(ability));
 
         return ability;
     }
@@ -56,8 +42,21 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
         if (selected == null)
             return null;
 
-        selected.Perform(this, target);
+        if (selected.Perform(this, target))
+            OnAbilityStartUsing.Invoke(SetupData(selected));
 
         return selected;
+    }
+
+    private UseAbilityData SetupData(Ability ability)
+    {
+        return new UseAbilityData()
+        {
+            UsagePreparationAnimDuration = ability.PreparationAnimation.averageDuration,
+            PreparationAnimationName = ability.PreparationAnimation.name,
+            UsagePreparationTime = ability.UsagePrepareTime,
+
+            UsageAnimationName = ability.UsageAnimation.name,
+        };
     }
 }

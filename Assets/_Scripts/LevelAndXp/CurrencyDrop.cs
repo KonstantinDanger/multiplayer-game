@@ -16,7 +16,12 @@ public class CurrencyDrop : NetworkBehaviour
 
     private void HandleDrop(Damage damage)
     {
-        Wallet wallet = damage.Sender.GetComponent<Wallet>();
+        if (!damage.Sender)
+            return;
+
+        if (!damage.Sender.TryGetComponent(out Wallet wallet))
+            return;
+
         EnemyConfig config = GetComponent<Enemy>().Config;
 
         int drop = config.CurrencyDrop;

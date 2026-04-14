@@ -6,36 +6,17 @@ public class FlightController : MonoBehaviour, IFlightController
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float rotationSpeed = 5f;
     [SerializeField] private float heightAdjustmentSpeed = 2f;
-    [SerializeField] private float retreatDuration = 2f;
     [SerializeField] private float bobAmplitude = 0.3f;
     [SerializeField] private float bobFrequency = 1f;
     [SerializeField] private LayerMask _groundLayer;
 
-    private bool isRetreating;
-    private float retreatTimer;
-    private Vector3 retreatDirection;
     private float bobTimer;
 
-    public bool IsRetreating => isRetreating;
-
     private void Update()
-    {
-        bobTimer += Time.deltaTime * bobFrequency;
-
-        if (isRetreating)
-        {
-            retreatTimer -= Time.deltaTime;
-            if (retreatTimer <= 0f)
-            {
-                isRetreating = false;
-            }
-        }
-    }
+        => bobTimer += Time.deltaTime * bobFrequency;
 
     public void FlyTowards(Vector3 targetPosition, float customHeight = -1f)
     {
-        if (isRetreating) return;
-
         float desiredHeight = customHeight > 0 ? customHeight : flightHeight;
 
         // Target position with height
@@ -66,44 +47,6 @@ public class FlightController : MonoBehaviour, IFlightController
                 targetRotation,
                 rotationSpeed * Time.deltaTime
             );
-        }
-    }
-
-    public void Retreat(Vector3 fromPosition, float distance)
-    {
-        isRetreating = true;
-        retreatTimer = retreatDuration;
-
-        // Calculate retreat direction (away from target)
-        retreatDirection = (transform.position - fromPosition).normalized;
-        Vector3 retreatTarget = transform.position + retreatDirection * distance;
-        retreatTarget.y = transform.position.y + flightHeight;
-
-        StartCoroutine(RetreatCoroutine(retreatTarget));
-    }
-
-    private System.Collections.IEnumerator RetreatCoroutine(Vector3 retreatTarget)
-    {
-        while (isRetreating)
-        {
-            transform.position = Vector3.MoveTowards(
-                transform.position,
-                retreatTarget,
-                moveSpeed * 1.5f * Time.deltaTime
-            );
-
-            // Look in retreat direction
-            if (retreatDirection != Vector3.zero)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(retreatDirection);
-                transform.rotation = Quaternion.Slerp(
-                    transform.rotation,
-                    targetRotation,
-                    rotationSpeed * Time.deltaTime
-                );
-            }
-
-            yield return null;
         }
     }
 

@@ -353,8 +353,37 @@ ModelImporter:
       name: Object_5|Dragon_Boss_05_projectileAttack
       takeName: Object_5|Dragon_Boss_05_skill03
       internalID: 7978209408939244724
-      firstFrame: 32
+      firstFrame: 36
       lastFrame: 44
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Object_5|Dragon_Boss_05_skill03_preparation
+      takeName: Object_5|Dragon_Boss_05_skill03
+      internalID: -742960075402540438
+      firstFrame: 0
+      lastFrame: 31
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

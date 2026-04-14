@@ -39,7 +39,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: LightMage_Cast
+      name: AbilityUse
       takeName: Untitled
       internalID: 3094330708855449807
       firstFrame: 5
@@ -186,7 +186,7 @@ ModelImporter:
       maskSource: {fileID: 31900000, guid: 89527f5525238ee44b3182458d85143a, type: 2}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: LightMage_Prepare
+      name: AbilityUsePreparation
       takeName: HumanM@MagicAttackDirect1H01_R - Cast
       internalID: -3685351510310962205
       firstFrame: 0

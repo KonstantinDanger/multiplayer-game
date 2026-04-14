@@ -5,7 +5,7 @@ using UnityEngine;
 [Serializable]
 public class DistanceToTargetConsideration : CurvedConsideration
 {
-    [SerializeField, Range(0f, 100000f)] private float _maxDistance;
+    [SerializeField] private TargetDetectionConfig _detectionConfig;
 
     public override float Evaluate(NetworkBehaviour sender, NetworkBehaviour target)
     {
@@ -13,7 +13,7 @@ public class DistanceToTargetConsideration : CurvedConsideration
             return 0.0f;
 
         float _distanceToTarget = Vector3.Distance(target.transform.position, sender.transform.position);
-        float normalizedValue = Mathf.Clamp01(_distanceToTarget / _maxDistance);
+        float normalizedValue = Mathf.Clamp01(_distanceToTarget / _detectionConfig.VisionRange);
         float score = ConsiderationCurve.Evaluate(normalizedValue);
 
         return score;

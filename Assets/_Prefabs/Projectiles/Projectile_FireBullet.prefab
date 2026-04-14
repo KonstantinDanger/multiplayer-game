@@ -102,6 +102,10 @@ PrefabInstance:
       propertyPath: _assetId
       value: 1148177924
       objectReference: {fileID: 0}
+    - target: {fileID: 5746517923366965007, guid: d50c0d7d71c33ae4f8a4d246a04bcc38, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5806848949953003524, guid: d50c0d7d71c33ae4f8a4d246a04bcc38, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

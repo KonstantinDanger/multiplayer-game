@@ -11,9 +11,9 @@ public class TargetDetector : NetworkBehaviour, ITargetDetector
 
     private readonly Collider[] _targets = new Collider[8];
 
-    public Entity DetectNearestTarget(float detectionRadius)
+    public Entity DetectNearestTarget(float detectionRadius, float fieldOfViewAngle)
     {
-        var entities = DetectAllEntities(detectionRadius);
+        var entities = DetectAllEntities(detectionRadius, fieldOfViewAngle);
 
         if (entities.Count == 0)
             return null;
@@ -35,7 +35,7 @@ public class TargetDetector : NetworkBehaviour, ITargetDetector
         return nearest;
     }
 
-    private List<Entity> DetectAllEntities(float detectionRadius)
+    private List<Entity> DetectAllEntities(float detectionRadius, float fieldOfView)
     {
         int targets = Physics.OverlapSphereNonAlloc(_transform.position, detectionRadius, _targets, _layersToDetect);
         List<Entity> entities = new();
@@ -43,25 +43,15 @@ public class TargetDetector : NetworkBehaviour, ITargetDetector
         for (int i = 0; i < targets; i++)
             if (_targets[i].TryGetComponent(out Entity entity))
                 if (entity.gameObject != gameObject)
-                    entities.Add(entity);
-
-        if (targets != 0)
-        {
-            entities.ForEach(e => UnityEngine.Debug.Log(e.name));
-
-        }
+                    if (IsInFieldOfView(entity, fieldOfView))
+                        entities.Add(entity);
 
         return entities;
     }
 
-    public bool IsInFieldOfView(Entity target, float fovAngle, float maxDistance)
+    public bool IsInFieldOfView(Entity target, float fovAngle)
     {
         Vector3 dirToTarget = (target.transform.position - _transform.position).normalized;
-        float distance = Vector3.Distance(_transform.position, target.transform.position);
-
-        if (distance > maxDistance)
-            return false;
-
         float angle = Vector3.Angle(_transform.forward, dirToTarget);
         return angle <= fovAngle / 2f;
     }

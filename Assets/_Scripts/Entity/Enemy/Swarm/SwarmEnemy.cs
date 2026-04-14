@@ -49,12 +49,6 @@ public class SwarmEnemy : Enemy
         Vector3 targetPosition = transform.position + finalDirection * 5f;
 
         _flightController.FlyTowards(targetPosition);
-
-        // Attack if in range
-        //if (AttackStrategy != null && IsInAttackRange(Target, AttackStrategy.AttackRange))
-        //{
-        //    AttackTarget(Target);
-        //}
     }
 
     private Vector3 CalculateSwarmBehavior()

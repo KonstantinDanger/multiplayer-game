@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a72958a4f328dc45965321f7c6ba143, type: 3}
+  m_Name: AIAction_MoveToTarget_Dragon
+  m_EditorClassIdentifier: 
+  _action:
+    rid: 147410461514530888
+  references:
+    version: 2
+    RefIds:
+    - rid: 147410461514530888
+      type: {class: MoveToTargetAction, ns: , asm: Assembly-CSharp}
+      data:
+        _consideration:
+          rid: 4662330950030196851
+    - rid: 4662330950030196851
+      type: {class: DistanceToTargetConsideration, ns: , asm: Assembly-CSharp}
+      data:
+        <ConsiderationCurve>k__BackingField:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0.39858246
+            value: 0.005167365
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 136
+            weightedMode: 2
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 0.4551296
+            value: 0.96766394
+            inSlope: 0.5093739
+            outSlope: 0.0033541243
+            tangentMode: 1
+            weightedMode: 3
+            inWeight: 0.33281684
+            outWeight: 1
+          - serializedVersion: 3
+            time: 0.49205324
+            value: 0.109352626
+            inSlope: -28.551147
+            outSlope: 2.016785
+            tangentMode: 1
+            weightedMode: 3
+            inWeight: 0.42762646
+            outWeight: 0.351209
+          - serializedVersion: 3
+            time: 0.8253229
+            value: 0.97384936
+            inSlope: 0.72200805
+            outSlope: Infinity
+            tangentMode: 97
+            weightedMode: 3
+            inWeight: 0.2825033
+            outWeight: 0.31648737
+          - serializedVersion: 3
+            time: 0.9948509
+            value: 0.98007435
+            inSlope: 0.11892325
+            outSlope: 0.11892325
+            tangentMode: 0
+            weightedMode: 3
+            inWeight: 0.28465864
+            outWeight: 0.42716184
+          - serializedVersion: 3
+            time: 1
+            value: 0
+            inSlope: -190.338
+            outSlope: -190.338
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        _detectionConfig: {fileID: 11400000, guid: 8104fd2cada7a1f45af32fa586a2348c, type: 2}

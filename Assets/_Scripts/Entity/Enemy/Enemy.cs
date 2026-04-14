@@ -11,6 +11,7 @@ public abstract class Enemy : Entity
     [SerializeField] private AIBrain _aiBrain;
 
     public EnemyConfig Config => _enemyConfig;
+    public TargetDetectionConfig DetectionConfig => _enemyConfig.TargetDetectionConfig;
 
     protected ITargetTrackingMemory TargetTrackingMemory => TargetTrackingMemoryRef.Value;
     public ITargetDetector TargetDetector => TargetDetectorRef.Value;
@@ -32,7 +33,10 @@ public abstract class Enemy : Entity
     }
 
     protected override void OnAwake()
-        => _aiBrain.Initialize(this, _enemyConfig.AIActions);
+    {
+        _aiBrain.Initialize(this, _enemyConfig.AIActions);
+        DetectionTimer = DetectionConfig.DetectionInterval;
+    }
 
     protected override void Update()
     {
@@ -40,7 +44,7 @@ public abstract class Enemy : Entity
 
         DetectionTimer += Time.deltaTime;
 
-        if (DetectionTimer >= Config.DetectionInterval)
+        if (DetectionTimer >= DetectionConfig.DetectionInterval)
         {
             DetectTargets();
             DetectionTimer = 0f;
@@ -52,10 +56,13 @@ public abstract class Enemy : Entity
         if (TargetTrackingMemory.Target)
             return;
 
-        Entity nearest = TargetDetector.DetectNearestTarget(Config.DetectionRadius);
+        Entity nearest = TargetDetector.DetectNearestTarget(DetectionConfig.DetectionRadius, DetectionConfig.FieldOfViewAngle);
 
         if (nearest != null)
         {
+            if (Vector3.Distance(transform.position, nearest.transform.position) > DetectionConfig.VisionRange)
+                return;
+
             OnTargetDetected(nearest);
         }
     }

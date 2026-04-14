@@ -14,10 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CurrencyDrop>k__BackingField: 2000
   <IsNeutral>k__BackingField: 0
-  <FieldOfViewAngle>k__BackingField: 120
-  <VisionRange>k__BackingField: 15
-  <DetectionRadius>k__BackingField: 10
-  <DetectionInterval>k__BackingField: 2
+  <TargetDetectionConfig>k__BackingField: {fileID: 11400000, guid: 8104fd2cada7a1f45af32fa586a2348c, type: 2}
   _aiActions:
   - {fileID: 11400000, guid: 9944aadf376d07f4daa81f6b405f0ccd, type: 2}
   - {fileID: 11400000, guid: 83f9bdbc27cc4ac47bbb48cd9ac05b1c, type: 2}

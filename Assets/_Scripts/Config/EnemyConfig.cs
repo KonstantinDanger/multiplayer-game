@@ -7,11 +7,9 @@ public class EnemyConfig : ScriptableObject
 {
     [field: SerializeField, Range(0, 100000)] public int CurrencyDrop { get; private set; }
     [field: SerializeField] public bool IsNeutral { get; private set; }
-    [field: SerializeField] public float FieldOfViewAngle { get; private set; } = 120f;
-    [field: SerializeField] public float VisionRange { get; private set; } = 15f;
+    [field: SerializeField] public TargetDetectionConfig TargetDetectionConfig { get; private set; }
 
-    [field: SerializeField] public float DetectionRadius { get; private set; } = 10f;
-    [field: SerializeField] public float DetectionInterval { get; private set; } = 5f; //Probably remove it to static field
+
     [SerializeField] private List<ScriptableAIAction> _aiActions = new();
 
     public IReadOnlyList<AIAction> AIActions

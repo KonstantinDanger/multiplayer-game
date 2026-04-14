@@ -18,3 +18,5 @@ MonoBehaviour:
   <JumpHeight>k__BackingField: 2
   <Gravity>k__BackingField: -9.81
   <MaxFallSpeed>k__BackingField: 30
+  <AirMovementSpeedMultiplier>k__BackingField: 2
+  <AirMovementAcceleration>k__BackingField: 150

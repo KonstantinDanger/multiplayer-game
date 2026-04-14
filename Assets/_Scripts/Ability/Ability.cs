@@ -22,7 +22,11 @@ public abstract class Ability
     {
         Ability other = obj as Ability;
 
-        return other.Name == Name;
+        return other.Name == Name
+            && other.CooldownTime == CooldownTime
+            && other.UsagePrepareTime == UsagePrepareTime
+            && other.PreparationAnimation.name == PreparationAnimation.name
+            && other.UsageAnimation.name == UsageAnimation.name;
     }
 
     public override int GetHashCode()
