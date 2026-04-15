@@ -9,6 +9,5 @@ public class MovementConfig : ScriptableObject
     [field: SerializeField, Range(1, 10)] public float JumpHeight { get; private set; } = 2f;
     [field: SerializeField, Range(-100, 0)] public float Gravity { get; private set; } = -9.81f;
     [field: SerializeField, Range(1, 50)] public float MaxFallSpeed { get; private set; } = 30f;
-    [field: SerializeField, Range(0, 2)] public float AirMovementSpeedMultiplier { get; private set; } = 66f;
     [field: SerializeField, Range(1, 500)] public float AirMovementAcceleration { get; private set; } = 150f;
 }

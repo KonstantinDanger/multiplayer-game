@@ -3,24 +3,30 @@
 public class PlayerAirborneState : PlayerState
 {
     private readonly MovementConfig _cfg;
+    private readonly CharacterController _characterController;
 
     private Vector3 _acceleration;
-
     private Vector3 CachedVelocity { get; set; }
 
+    private float _maxSpeed;
+
     public PlayerAirborneState(Player player, StateMachine stateMachine) : base(player, stateMachine)
-        => _cfg = player.MovementConfig;
+    {
+        _cfg = player.MovementConfig;
+        _characterController = player.GetComponent<CharacterController>();
+    }
 
     protected override void OnEnter()
     {
         CachedVelocity = player.Movable.Velocity;
-        _acceleration = Vector3.zero;
-    }
+        Vector3 modified = CachedVelocity;
+        modified.y = 0f;
+        CachedVelocity = modified;
 
-    protected override void OnExit()
-    {
-        CachedVelocity = Vector3.zero;
         _acceleration = Vector3.zero;
+
+        _maxSpeed = CachedVelocity.magnitude;
+        _maxSpeed = Mathf.Clamp(_maxSpeed, _cfg.Speed, _cfg.SprintSpeed);
     }
 
     protected override void OnUpdate(float deltaTime)
@@ -33,18 +39,16 @@ public class PlayerAirborneState : PlayerState
             return;
         }
 
+        MaintainAirborneVelocity(deltaTime);
+    }
+
+    private void MaintainAirborneVelocity(float deltaTime)
+    {
         Vector3 movementDirection = GetMovementDirection(player.Input.MovementVector);
         _acceleration = deltaTime * _cfg.AirMovementAcceleration * movementDirection;
         CachedVelocity += _acceleration;
-        float maxSpeed = _cfg.Speed * _cfg.AirMovementSpeedMultiplier;
-        CachedVelocity = Vector3.ClampMagnitude(CachedVelocity, maxSpeed);
-        player.Movable.Move(CachedVelocity, maxSpeed);
 
-        //const float airMovementThreshold = 0.08f;
-
-        //if (movementDirection.magnitude > airMovementThreshold)
-        //    CachedVelocity = Vector3.Lerp(CachedVelocity, movementDirection, deltaTime * player.MovementConfig.AirMovementSpeedMultiplier);
-
-        //player.Movable.Move(CachedVelocity, CachedVelocity.magnitude, _cfg.MovementSmoothness);
+        CachedVelocity = Vector3.ClampMagnitude(CachedVelocity, _maxSpeed);
+        player.Movable.Move(CachedVelocity, CachedVelocity.magnitude);
     }
 }
