@@ -6,8 +6,8 @@ public class ServiceLocator
     private static ServiceLocator _instance;
     public static ServiceLocator Container => _instance ??= new ServiceLocator();
 
-    private Dictionary<Type, object> _services = new();
-    private Dictionary<Type, object> _cachedServices = new();
+    private readonly Dictionary<Type, object> _services = new();
+    private readonly Dictionary<Type, object> _cachedServices = new();
 
     /// <summary>
     /// "cached" means that the service will be added to the cached map, that will be cleared on dispose

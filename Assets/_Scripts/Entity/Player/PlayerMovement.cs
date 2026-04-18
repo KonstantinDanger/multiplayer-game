@@ -9,7 +9,6 @@ public class PlayerMovement : NetworkBehaviour, IMovable
     public event Action OnMove;
 
     [SerializeField] private CharacterController _controller;
-    [SerializeField] private NetworkTransformBase _netTransform;
     [SerializeField] private float _groundedSnapForce = 5f;
 
     public Vector3 Velocity => new(_horizontalVelocity.x, _verticalVelocity, _horizontalVelocity.z);

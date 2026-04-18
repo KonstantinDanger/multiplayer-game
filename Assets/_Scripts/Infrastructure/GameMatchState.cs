@@ -163,7 +163,11 @@ public class GameMatchState : GameState
     }
 
     private void InitZone()
-        => _zone = _factory.SpawnZone(_data.ZonePrefab, Vector3.zero);
+    {
+        Map map = Resolve<Map>(resolveCached: true);
+
+        _zone = _factory.SpawnZone(_data.ZonePrefab, map.MapCenter.position);
+    }
 
     private void TryDamagePlayersOutOfZone(IEnumerable<Player> playersOutOfZone, float damage)
     {

@@ -47,8 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8565f95dceadc16409458b1d2809e644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minRadius: 450
-  _maxRadius: 2400
+  _minRadius: 350
+  _maxRadius: 1355
 --- !u!114 &7846779847051655936
 MonoBehaviour:
   m_ObjectHideFlags: 0

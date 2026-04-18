@@ -3,7 +3,12 @@ guid: 7d69422ec8db01445ba100f915ef1a9e
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Dragon_Boss_05
+    second: {fileID: 2100000, guid: c9925126dedd6be4289ae079656035cb, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
