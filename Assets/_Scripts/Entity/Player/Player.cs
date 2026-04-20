@@ -61,10 +61,7 @@ public class Player : Entity
         //_menu = ServiceLocator.Container.Resolve<LobbyUI>();
 
         _upgrader.Initialize();
-        _abilities.Initialize(_characterClass
-            .GetNew()
-            .Abilities
-            .ToList());
+        SetCharacterClass(_characterClass);
 
         var animatorUpdData = ServiceLocator.Container.Resolve<StaticData>().AnimatorUpdaterConfig;
 
@@ -208,6 +205,17 @@ public class Player : Entity
 
     public void Spectate(bool active)
         => Input.SetPlayerInput(!active);
+
+    public void SetCharacterClass(ScriptableCharacterClass @class)
+    {
+        if (!@class)
+            throw new System.Exception("No class found!");
+
+        _abilities.Initialize(@class
+            .GetNew()
+            .Abilities
+            .ToList());
+    }
 
     private void HandleAbility(int index)
     {

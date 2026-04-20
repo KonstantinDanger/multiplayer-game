@@ -1,8 +1,11 @@
 using System;
+using UnityEngine;
 
+[Serializable]
 public class Currency
 {
-    public int Amount { get; private set; }
+
+    [field: SerializeField] public int Amount { get; private set; }
     public event Action<int> OnCurrencyChanged;
 
     public Currency()

@@ -16,6 +16,7 @@ MonoBehaviour:
   <LobbySceneName>k__BackingField: LobbyScene
   <GameSceneName>k__BackingField: GameScene
   <GameMatchData>k__BackingField: {fileID: 11400000, guid: e09cdb4750cc76b41ac5fba99e6bbf8b, type: 2}
+  <ClassList>k__BackingField: {fileID: 11400000, guid: a24aed73219724c469588c0574a5972b, type: 2}
   <PlayerPrefab>k__BackingField: {fileID: 5774164757867739405, guid: c5444d263f9ec8c4683f98070a3bff52, type: 3}
   <UIPrefab>k__BackingField: {fileID: 1105170729983489811, guid: fd064af28e613ed46a4f3134ac2d4112, type: 3}
   <LobbyUIPrefab>k__BackingField: {fileID: 7930260647628692699, guid: 42c61504473b8484cb5e6b5c6aeefdf7, type: 3}
