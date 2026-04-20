@@ -12,6 +12,7 @@ public class PlayerMovement : NetworkBehaviour, IMovable
     [SerializeField] private float _groundedSnapForce = 5f;
 
     public Vector3 Velocity => new(_horizontalVelocity.x, _verticalVelocity, _horizontalVelocity.z);
+    public Vector3 MoveDirection { get; private set; }
 
     public bool IsGravityActive { get; set; } = true;
 
@@ -19,8 +20,8 @@ public class PlayerMovement : NetworkBehaviour, IMovable
 
     private Vector3 _externalForce;
     private Vector3 _movementDelta;
-    private float _verticalVelocity;
     private Vector3 _horizontalVelocity;
+    private float _verticalVelocity;
 
     public void ApplyGravity(float gravity, float maxFallSpeed)
     {
@@ -53,6 +54,8 @@ public class PlayerMovement : NetworkBehaviour, IMovable
 
     public void Move(Vector3 direction, float speed, float smoothness)
     {
+        MoveDirection = direction;
+
         direction.y = 0f;
         Vector3 targetVelocity = direction.normalized * speed;
 

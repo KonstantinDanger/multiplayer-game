@@ -7,6 +7,7 @@ public interface IMovable
     bool IsGrounded { get; }
     bool IsGravityActive { get; set; }
     Vector3 Velocity { get; }
+    Vector3 MoveDirection { get; }
     void ResetVerticalVelocity();
     void Move(Vector3 direction, float speed, float smoothness = 0.03f);
     void ApplyGravity(float gravity, float maxFallSpeed);

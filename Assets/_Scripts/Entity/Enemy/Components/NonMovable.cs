@@ -12,6 +12,7 @@ public class NonMovable : MonoBehaviour, IMovable
 
     public bool IsGravityActive { get; set; }
     public Vector3 Velocity { get; private set; }
+    public Vector3 MoveDirection => Vector3.zero;
 
     public bool IsGrounded => true;
 

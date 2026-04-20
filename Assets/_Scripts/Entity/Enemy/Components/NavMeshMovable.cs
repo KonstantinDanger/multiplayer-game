@@ -8,6 +8,7 @@ public class NavMeshMovable : MonoBehaviour, IMovable
 
     public bool IsGravityActive { get; set; }
     public Vector3 Velocity => _agent.velocity;
+    public Vector3 MoveDirection => Velocity.normalized;
 
     public bool IsGrounded => true;
 

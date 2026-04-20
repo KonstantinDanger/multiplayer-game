@@ -7,6 +7,7 @@ public class CubicSlideMovable : MonoBehaviour, IMovable
     public bool IsGravityActive { get; set; }
 
     public Vector3 Velocity { get; private set; }
+    public Vector3 MoveDirection => Velocity.normalized;
 
     public event Action OnMove;
 

@@ -6,6 +6,8 @@ using UnityEngine;
 [Serializable]
 public class MovementAbility : Ability
 {
+    [Header("If set to false - direction will be forward from rotatable")]
+    [SerializeField] private bool _directional;
     [SerializeField] private float _warpDistance = 10;
     [SerializeField] private float _warpTime = 0.2f;
 
@@ -23,20 +25,18 @@ public class MovementAbility : Ability
 
     private IEnumerator WarpRoutine(GameObject sender, IMovable movable, IRotatable rotatable)
     {
-        float warpEndTime = Time.time + _warpTime;
+        float warpTimeEnd = Time.time + _warpTime;
+        float moveSpeed = _warpDistance / _warpTime;
 
-        Vector3 startPosition = sender.transform.position;
-        Vector3 forward = rotatable.Forward;
+        Vector3 moveDir = _directional ? movable.MoveDirection : rotatable.Forward;
+        moveDir = moveDir == Vector3.zero ? sender.transform.forward : moveDir;
+        moveDir.Normalize();
 
         movable.IsGravityActive = false;
 
-        while (Time.time < warpEndTime)
+        while (Time.time < warpTimeEnd)
         {
-            Vector3 moveDirection = forward.normalized * _warpDistance;
-
-            Vector3 movementDelta = Vector3.Lerp(startPosition, moveDirection, Time.time / warpEndTime);
-
-            movable.Move(movementDelta, _warpDistance / _warpTime);
+            movable.Move(moveDir, moveSpeed, 0f);
 
             yield return null;
         }
