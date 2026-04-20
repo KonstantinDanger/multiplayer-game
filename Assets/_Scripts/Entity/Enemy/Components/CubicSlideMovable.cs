@@ -15,7 +15,7 @@ public class CubicSlideMovable : MonoBehaviour, IMovable
     public void ApplyGravity(float gravity, float maxFallSpeed) { }
     public void Jump(float jumpHeight, float gravity) { }
 
-    public void Move(Vector3 direction, float speed, float smoothness = 0.03F)
+    public void Move(Vector3 direction, float speed, bool resetVerticalDirection = true, float smoothness = 0.03F)
     {
         //Velocity = Vector3.Lerp(Velocity, direction, speed * Time.deltaTime);
         //transform.position = Velocity;

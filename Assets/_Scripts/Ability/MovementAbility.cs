@@ -8,6 +8,7 @@ public class MovementAbility : Ability
 {
     [Header("If set to false - direction will be forward from rotatable")]
     [SerializeField] private bool _directional;
+    [SerializeField] private bool _resetVerticalDirection = true;
     [SerializeField] private float _warpDistance = 10;
     [SerializeField] private float _warpTime = 0.2f;
 
@@ -36,7 +37,7 @@ public class MovementAbility : Ability
 
         while (Time.time < warpTimeEnd)
         {
-            movable.Move(moveDir, moveSpeed, 0f);
+            movable.Move(moveDir, moveSpeed, _resetVerticalDirection, 0f);
 
             yield return null;
         }

@@ -9,7 +9,7 @@ public interface IMovable
     Vector3 Velocity { get; }
     Vector3 MoveDirection { get; }
     void ResetVerticalVelocity();
-    void Move(Vector3 direction, float speed, float smoothness = 0.03f);
+    void Move(Vector3 direction, float speed, bool resetVerticalDirection = true, float smoothness = 0.03f);
     void ApplyGravity(float gravity, float maxFallSpeed);
     void Jump(float jumpHeight, float gravity);
     void AddExternalForce(Vector3 force);

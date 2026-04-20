@@ -20,7 +20,7 @@ public class NonMovable : MonoBehaviour, IMovable
     public void AddExternalForce(Vector3 force) { }
     public void ApplyGravity(float gravity, float maxFallSpeed) { }
     public void Jump(float jumpHeight, float gravity) { }
-    public void Move(Vector3 direction, float speed, float smoothness = 0.03F) { }
+    public void Move(Vector3 direction, float speed, bool resetVerticalDirection = true, float smoothness = 0.03F) { }
     public void ResetVerticalVelocity() { }
     public void UpdateExternalForce(float drag) { }
     public void Warp(Vector3 position) { }

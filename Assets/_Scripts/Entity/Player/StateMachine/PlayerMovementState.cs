@@ -22,7 +22,7 @@ public class PlayerMovementState : PlayerGroundedState
             MovementConfig.SprintSpeed : MovementConfig.Speed;
 
         Vector3 movementDirection = GetMovementDirection(MovementInput);
-        Movable.Move(movementDirection, currentSpeed, MovementConfig.MovementSmoothness);
+        Movable.Move(movementDirection, currentSpeed, true, MovementConfig.MovementSmoothness);
         Movable.ApplyGravity(MovementConfig.Gravity, MovementConfig.MaxFallSpeed);
 
         base.OnUpdate(deltaTime);

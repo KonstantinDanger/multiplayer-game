@@ -52,11 +52,13 @@ public class PlayerMovement : NetworkBehaviour, IMovable
         _verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
     }
 
-    public void Move(Vector3 direction, float speed, float smoothness)
+    public void Move(Vector3 direction, float speed, bool resetVerticalDirection = true, float smoothness = 0.03f)
     {
         MoveDirection = direction;
 
-        direction.y = 0f;
+        if (resetVerticalDirection)
+            direction.y = 0f;
+
         Vector3 targetVelocity = direction.normalized * speed;
 
         _horizontalVelocity = Vector3.SmoothDamp(

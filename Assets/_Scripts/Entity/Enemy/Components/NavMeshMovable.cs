@@ -15,7 +15,7 @@ public class NavMeshMovable : MonoBehaviour, IMovable
     public event Action OnMove;
 
     public void ResetVerticalVelocity() => throw new NotImplementedException();
-    public void Move(Vector3 position, float speed, float smoothness = 0.03f)
+    public void Move(Vector3 position, float speed, bool resetVerticalDirection = true, float smoothness = 0.03f)
     {
         if (!_agent.isOnNavMesh)
         {
