@@ -11,7 +11,12 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
     public event Action<UseAbilityData> OnAbilityStartUsing;
 
     public void Initialize(List<Ability> abilities)
-        => abilities.ForEach(ability => Add(ability));
+    {
+        if (_abilities.Count > 0)
+            _abilities.Clear();
+
+        abilities.ForEach(ability => Add(ability));
+    }
 
     public void OnUpdate()
     {

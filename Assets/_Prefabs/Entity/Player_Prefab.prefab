@@ -428,7 +428,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   _controller: {fileID: 856957943013325311}
-  _netTransform: {fileID: 6977470396741698936}
   _groundedSnapForce: 5
 --- !u!114 &5774164757867739405
 MonoBehaviour:
@@ -460,7 +459,7 @@ MonoBehaviour:
   _respawn: {fileID: 6200438880601125725}
   _headObject: {fileID: 5788501455925746250}
   _abilities: {fileID: 5132097041645439728}
-  _characterClass: {fileID: 11400000, guid: 9f4fb1f6f2f5b31449d70feab0f1f33e, type: 2}
+  _baseCharacterClass: {fileID: 11400000, guid: 9f4fb1f6f2f5b31449d70feab0f1f33e, type: 2}
   _level: {fileID: 3897486771464272008}
   _upgrader: {fileID: 8354765473121511370}
   _wallet: {fileID: 3853550027420888497}

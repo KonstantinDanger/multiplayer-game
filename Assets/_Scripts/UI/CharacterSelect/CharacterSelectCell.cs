@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ClassSelectCell : MonoBehaviour
+public class CharacterSelectCell : MonoBehaviour
 {
     [SerializeField] private Button _selectButton;
     [SerializeField] private Image _classPreviewImage;
@@ -17,21 +17,27 @@ public class ClassSelectCell : MonoBehaviour
         _player = player;
 
         _selectButton.onClick.AddListener(HandleCharacterSelect);
+
+        Setup(_class.PreviewSprite);
     }
 
     private void OnDestroy()
         => _selectButton.onClick.RemoveListener(HandleCharacterSelect);
 
+    private void Setup(Sprite previewSprite)
+    {
+        _classPreviewImage.sprite = previewSprite;
+
+        _selectButton.enabled = true;
+    }
+
     private void HandleCharacterSelect()
     {
         if (_player.CharacterClass == _class)
         {
-            _selectButton.enabled = false;
-
             return;
         }
 
-        _selectButton.enabled = true;
         _player.SetCharacterClass(_class);
     }
 }

@@ -1,13 +1,21 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterSelectUI : MonoBehaviour
 {
-    private CharacterClassList _classes;
+    [SerializeField] private CharacterSelectCell _cellPrefab;
+    [SerializeField] private Transform _gridContent;
 
-    public void Initialize(CharacterClassList list)
+    private Player _player;
+    private CharacterClassList _classes;
+    private readonly List<CharacterSelectCell> _cells = new();
+
+    public void Initialize(CharacterClassList list, Player player)
     {
         _classes = list;
+        _player = player;
 
+        Clear();
         DrawClasses(_classes);
     }
 
@@ -17,7 +25,17 @@ public class CharacterSelectUI : MonoBehaviour
 
         foreach (var c in classes)
         {
+            var cell = Instantiate(_cellPrefab, _gridContent);
+            cell.Initialize(c.Key, c.Value, _player);
+            _cells.Add(cell);
+        }
+    }
 
+    private void Clear()
+    {
+        foreach (var c in _cells)
+        {
+            Destroy(c.gameObject);
         }
     }
 }

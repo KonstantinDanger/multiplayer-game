@@ -12,12 +12,12 @@ public class Player : Entity
     [SerializeField] private Respawn _respawn;
     [SerializeField] private GameObject _headObject;
     [SerializeField] private AbilityUser _abilities;
-    [SerializeField] private ScriptableCharacterClass _characterClass;
+    [SerializeField] private ScriptableCharacterClass _baseCharacterClass;
     [SerializeField] private Level _level;
     [SerializeField] private Upgrader _upgrader;
     [SerializeField] private Wallet _wallet;
 
-    public ScriptableCharacterClass CharacterClass => _characterClass;
+    public ScriptableCharacterClass CharacterClass { get; private set; }
     public IPlayerInputBrain Input { get; private set; }
     private IRotatablePlayerCamera Camera => Rotatable as IRotatablePlayerCamera;
     private Vector2 RotationInput => Input.Rotation;
@@ -61,7 +61,7 @@ public class Player : Entity
         //_menu = ServiceLocator.Container.Resolve<LobbyUI>();
 
         _upgrader.Initialize();
-        SetCharacterClass(_characterClass);
+        SetCharacterClass(_baseCharacterClass);
 
         var animatorUpdData = ServiceLocator.Container.Resolve<StaticData>().AnimatorUpdaterConfig;
 
@@ -117,13 +117,13 @@ public class Player : Entity
         }
         //UnityEngine.Debug.Log("Current state: " + _stateMachine.CurrentState);
         //For testing
+
         Rotatable.Rotate(RotationInput, RotationConfig.RotationSpeed);
 
         Input.Update();
         _abilities.OnUpdate();
         _stateMachine.CurrentState.Update(Time.deltaTime);
         _animatorUpdater.Update(Time.deltaTime);
-
 
         base.Update();
     }
@@ -186,14 +186,17 @@ public class Player : Entity
         var hudPrefab = data.PlayerHUDPrefab;
         var upgradeUIPrefab = data.UpgradeUIPrefab;
         var levelUpUIPrefab = data.LevelUpUIPrefab;
+        var charSelectUIPrefab = data.CharacterSelectUI;
 
         _playerUI = Instantiate(data.UIPrefab, transform);
         _playerHUD = Instantiate(hudPrefab, _playerUI.transform);
         _levelUpUI = Instantiate(levelUpUIPrefab, _playerUI.transform);
         _upgradeUI = Instantiate(upgradeUIPrefab, _levelUpUI.transform);
+        var charSelectInstance = Instantiate(charSelectUIPrefab, _playerUI.transform);
 
         _upgradeUI.Initialize(gameObject, _upgrader);
         _levelUpUI.Initialize(_level, _wallet.MatchCurrency);
+        charSelectInstance.Initialize(data.ClassList, this);
     }
 
     [TargetRpc]
@@ -211,7 +214,9 @@ public class Player : Entity
         if (!@class)
             throw new System.Exception("No class found!");
 
-        _abilities.Initialize(@class
+        CharacterClass = @class;
+
+        _abilities.Initialize(CharacterClass
             .GetNew()
             .Abilities
             .ToList());

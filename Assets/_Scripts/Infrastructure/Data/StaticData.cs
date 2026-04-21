@@ -10,18 +10,21 @@ public class StaticData : ScriptableObject
     [field: SerializeField] public GameMatchConfig GameMatchData { get; private set; }
     [field: SerializeField] public CharacterClassList ClassList { get; private set; }
     [field: SerializeField] public Player PlayerPrefab { get; private set; }
-    [field: SerializeField] public MainUI UIPrefab { get; private set; }
-    [field: SerializeField] public LobbyUI LobbyUIPrefab { get; private set; }
-    [field: SerializeField] public PlayerInfoUI PlayerInfoUI { get; private set; }
     [field: SerializeField] public CustomNetworkManager NetworkManagerPrefab { get; private set; }
     [field: SerializeField] public Zone ZonePrefab { get; internal set; }
     [field: SerializeField] public GameFactory GameFactoryPrefab { get; private set; }
     [field: SerializeField] public float ZoneDPS { get; private set; } = 10;
     [field: SerializeField] public DamageText DamageTextPrefab { get; private set; }
+
+    //UI
+    [field: SerializeField] public MainUI UIPrefab { get; private set; }
+    [field: SerializeField] public LobbyUI LobbyUIPrefab { get; private set; }
+    [field: SerializeField] public PlayerInfoUI PlayerInfoUI { get; private set; }
     [field: SerializeField] public PlayerHUD PlayerHUDPrefab { get; private set; }
     [field: SerializeField] public AnimatorUpdaterConfig AnimatorUpdaterConfig { get; private set; }
     [field: SerializeField] public UpgradeUI UpgradeUIPrefab { get; private set; }
     [field: SerializeField] public LevelUpUI LevelUpUIPrefab { get; private set; }
+    [field: SerializeField] public CharacterSelectUI CharacterSelectUI { get; private set; }
 
     public override string ToString()
         => $"Static data";
