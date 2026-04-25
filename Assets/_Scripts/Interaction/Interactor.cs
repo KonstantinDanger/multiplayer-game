@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Interactor : MonoBehaviour
 {
+    [SerializeReference, SubclassSelector] private IInteractionStrategy _interactionStrategy = new InteractionStrategyWithClosest();
+
     [SerializeField, Range(0.01f, 5f)] private float _interactionRange = 0.5f;
     [SerializeField] private LayerMask _interactionLayer;
     [SerializeField] private Transform _interactionPoint;
@@ -17,19 +20,19 @@ public class Interactor : MonoBehaviour
     //  public float InteractionTime;
     //}
 
-    private IInteractionStrategy _interactionStrategy = new InteractionStrategyWithClosest();
 
     public float InteractionTime => _interactionTime;
 
     public InteractionInfo Interact()
     {
-        DistinctedList<IInteractable> list = new();
+        List<IInteractable> list = new();
 
         Collider[] cols = Physics.OverlapSphere(_interactionPoint.position, _interactionRange);
 
         foreach (Collider col in cols)
             if (col.TryGetComponent(out IInteractable interactable))
-                list.Add(interactable);
+                if (!list.Contains(interactable))
+                    list.Add(interactable);
 
         if (list.Count == 0)
             return new InteractionInfo(InteractionResult.Failure, null);

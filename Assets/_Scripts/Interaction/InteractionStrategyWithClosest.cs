@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
+[Serializable]
 public class InteractionStrategyWithClosest : IInteractionStrategy
 {
     public IInteractable GetInteractor(IEnumerable<IInteractable> objects)
-    {
-        return objects?.First();
-    }
+        => objects?.First();
 }

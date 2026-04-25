@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 public class InteractableTrigger : MonoBehaviour, IInteractable
 {
-    [field: SerializeField] public float InteractionTime { get; private set; }
+    [field: SerializeField, Range(0f, 100f)] public float InteractionTime { get; private set; } = 1f;
 
     public UnityEvent OnTriggered;
 

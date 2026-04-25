@@ -15,6 +15,7 @@ public class PlayerInput : IPlayerInputBrain
     public event Action AttackAction;
     public event Action<int> AbilityAction;
     public event Action OnUpgradeMenuInvoked;
+    public event Action OnInteraction;
 
     public bool IsSprinting { get; private set; }
 
@@ -31,6 +32,8 @@ public class PlayerInput : IPlayerInputBrain
 
         _actions.Player.Sprint.started += _ => IsSprinting = true;
         _actions.Player.Sprint.canceled += _ => IsSprinting = false;
+
+        _actions.Player.Interact.performed += _ => OnInteraction?.Invoke();
     }
 
     public void Update()

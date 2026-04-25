@@ -1,4 +1,4 @@
-﻿public struct InteractionInfo
+﻿public readonly struct InteractionInfo
 {
     public readonly InteractionResult Result;
     public readonly IInteractable Interactable;

@@ -8,10 +8,13 @@ public class RequireKeyItem : DoorUnlockCondition
 
     public override bool Fulfilled(GameObject interactor)
     {
-        if (!interactor.TryGetComponent(out Inventory inventory))
+        if (!RequiredItem.TryGetComponent(out IItem item))
             return false;
 
-        if (!inventory.Has(RequiredItem))
+        if (!interactor.TryGetComponent(out IInventory inventory))
+            return false;
+
+        if (!inventory.Has(item))
             return false;
 
         return true;

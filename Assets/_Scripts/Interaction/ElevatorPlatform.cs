@@ -23,10 +23,12 @@ public class ElevatorPlatform : MonoBehaviour
     {
         GameObject go = collision.gameObject;
 
-        if (IsPlayer(go, out Player player))
+        if (IsEntity(go, out Entity entity))
         {
-            player.Movement.ResetVerticalVelocity();
-            player.Movement.ApplyGravity = false;
+            IMovable movable = entity.GetComponent<IMovable>();
+
+            movable.ResetVerticalVelocity();
+            movable.IsGravityActive = false;
         }
 
         go.transform.SetParent(ObjectsHolder, false);
@@ -36,19 +38,15 @@ public class ElevatorPlatform : MonoBehaviour
     {
         GameObject go = collision.gameObject;
 
-        if (IsPlayer(go, out Player player))
-            player.Movement.ApplyGravity = true;
+        if (IsEntity(go, out Entity entity))
+        {
+            IMovable movable = entity.GetComponent<IMovable>();
+            movable.IsGravityActive = true;
+        }
 
         go.transform.SetParent(null, true);
     }
 
-    private bool IsPlayer(GameObject gameObject, out Player player)
-    {
-        return gameObject.TryGetComponent(out player);
-    }
-
-    private void SetParentTo(GameObject gameObject, Transform parent)
-    {
-        gameObject.transform.SetParent(parent);
-    }
+    private bool IsEntity(GameObject gameObject, out Entity entity)
+        => gameObject.TryGetComponent(out entity);
 }

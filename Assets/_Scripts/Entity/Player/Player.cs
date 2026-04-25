@@ -16,6 +16,7 @@ public class Player : Entity
     [SerializeField] private Level _level;
     [SerializeField] private Upgrader _upgrader;
     [SerializeField] private Wallet _wallet;
+    [SerializeField] private Interactor _interactor;
 
     public ScriptableCharacterClass CharacterClass { get; private set; }
     public IPlayerInputBrain Input { get; private set; }
@@ -76,6 +77,7 @@ public class Player : Entity
         Input.AttackAction += HandleAttack;
         Input.AbilityAction += HandleAbility;
         Input.OnUpgradeMenuInvoked += HandleUpgradeMenuInvoked;
+        Input.OnInteraction += HandleInteraction;
     }
 
     protected override void HandleOnDisable()
@@ -86,6 +88,7 @@ public class Player : Entity
         Input.AttackAction -= HandleAttack;
         Input.AbilityAction -= HandleAbility;
         Input.OnUpgradeMenuInvoked -= HandleUpgradeMenuInvoked;
+        Input.OnInteraction -= HandleInteraction;
     }
 
     protected override void OnStart()
@@ -221,6 +224,9 @@ public class Player : Entity
             .Abilities
             .ToList());
     }
+
+    private void HandleInteraction()
+        => _interactor.Interact();
 
     private void HandleAbility(int index)
     {
