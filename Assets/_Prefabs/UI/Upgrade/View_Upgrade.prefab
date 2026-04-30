@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 4135226741372108653}
   - component: {fileID: 5931549716523885884}
   m_Layer: 5
-  m_Name: Upgrade_UI
+  m_Name: View_Upgrade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -109,9 +109,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4513797194790111878}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 166af63d33e884747a420855837b71ce, type: 3}
+  m_Script: {fileID: 11500000, guid: 0be58d6866886c74e858ba6c6c0d6c7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <PersistentThroughScenes>k__BackingField: 1
   _cardPrefab: {fileID: 1674413802376998263, guid: ea52c7c81baa8af4d8928ffc3fcb5be6, type: 3}
   _grid: {fileID: 2982885905210792629}
 --- !u!1 &5098215243441571620

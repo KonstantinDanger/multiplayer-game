@@ -1,13 +1,26 @@
 ﻿using System;
+using TypeReferences;
 using UnityEngine;
 
-[Serializable]
 public class InteractionAction_InvokeUI : InteractionAction
 {
-    [SerializeField] private Type _uiElementType;
+    [SerializeField, Inherits(typeof(UIView))]
+    private TypeReference _uiTypeReference;
 
     public override void Act()
     {
-        //somehow activate corresponding ui and put it to ui stack
+        GameUI ui = ServiceLocator.Container.Resolve<GameUI>();
+
+        // 1. view adds itself to the game ui stack
+        // 2. we get game ui ref
+        // 3. get view subclass type
+        // 4. call method "OpenViewByType"
+
+        Type type = _uiTypeReference.Type;
+
+        if (!typeof(UIView).IsAssignableFrom(type))
+            throw new Exception($"\"Type {type}\" does not inherit from UIView type");
+
+        ui.OpenViewOfType(type);
     }
 }

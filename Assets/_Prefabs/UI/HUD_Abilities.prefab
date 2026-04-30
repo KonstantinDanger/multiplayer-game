@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 7669174044648882026}
   - component: {fileID: 3614376262148016320}
   m_Layer: 0
-  m_Name: AbilitiesHUD
+  m_Name: HUD_Abilities
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

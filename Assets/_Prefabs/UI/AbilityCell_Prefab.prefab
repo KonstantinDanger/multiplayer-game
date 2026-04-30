@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2571293361598861198}
   - component: {fileID: 1500734968509978950}
   m_Layer: 5
-  m_Name: AbilityCell
+  m_Name: AbilityCell_Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class UpgradeHUD : MonoBehaviour
+public class UpgradeHUD : HUD
 {
     [SerializeField] private UpgradeNotifier _upgradesNotifier;
 

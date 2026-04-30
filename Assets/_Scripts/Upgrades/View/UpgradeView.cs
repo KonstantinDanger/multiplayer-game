@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 /// An instance of upgrade UI should be instantiated within LevelUp UI
 /// </summary>
-public class UpgradeUI : MonoBehaviour
+public class UpgradeView : UIView
 {
     [SerializeField] private UpgradeCard _cardPrefab;
     [SerializeField] private LayoutGroup _grid;

@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelUpUI : MonoBehaviour
+public class LevelUpView : UIView
 {
     [SerializeField] private Button _levelUpButton;
     [SerializeField] private TextMeshProUGUI _levelPreviewText;

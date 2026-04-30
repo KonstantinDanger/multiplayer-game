@@ -1,24 +1,6 @@
-﻿using Mirror;
-using System;
+﻿using UnityEngine;
 
-public class UI : NetworkBehaviour, IDisposable
+public class UI : MonoBehaviour
 {
-    //[SerializeField] private bool _persistent = false;
-
-    //public bool Persistent => _persistent;
-
-    //private void OnValidate()
-    //{
-    //    if (this is MainUI)
-    //        _persistent = true;
-    //}
-
-    //private void Start()
-    //{
-    //    if (this is MainUI)
-    //        if (!_persistent)
-    //            _persistent = true;
-    //}
-
-    public virtual void Dispose() { }
+    [field: SerializeField] public bool PersistentThroughScenes { get; private set; } = true;
 }

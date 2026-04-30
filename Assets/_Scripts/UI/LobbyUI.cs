@@ -34,7 +34,7 @@ public class LobbyUI : UI
         _hostButton.onClick.AddListener(HandleStartHost);
     }
 
-    public override void Dispose()
+    public void OnDestroy()
     {
         _lobby.OnLobbyCreated -= HandleLobbyCreated;
         _lobby.OnJoinRequested -= HandleJoinRequest;

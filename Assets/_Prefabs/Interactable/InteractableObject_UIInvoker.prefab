@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 625759232916196963, guid: 23e05a843351c814abd42a1f921f0205, type: 3}
       propertyPath: m_Name
-      value: InteractableObject_Base
+      value: InteractableObject_UIInvoker
       objectReference: {fileID: 0}
     - target: {fileID: 6108034086727273122, guid: 23e05a843351c814abd42a1f921f0205, type: 3}
       propertyPath: m_LocalPosition.x
@@ -55,5 +55,30 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 625759232916196963, guid: 23e05a843351c814abd42a1f921f0205, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 153285829890882161}
   m_SourcePrefab: {fileID: 100100000, guid: 23e05a843351c814abd42a1f921f0205, type: 3}
+--- !u!1 &6701829031202723253 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 625759232916196963, guid: 23e05a843351c814abd42a1f921f0205, type: 3}
+  m_PrefabInstance: {fileID: 6174023090207005654}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &153285829890882161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6701829031202723253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 982fe95c6c78aa34a98b62df40fdba87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiTypeReference:
+    GuidAssignmentFailed: 0
+    GUID: 
+    _typeNameAndAssembly: 
+    _suppressLogs: 0

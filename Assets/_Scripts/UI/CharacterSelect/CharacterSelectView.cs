@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterSelectUI : MonoBehaviour
+public class CharacterSelectView : UIView
 {
     [SerializeField] private CharacterSelectCell _cellPrefab;
     [SerializeField] private Transform _gridContent;

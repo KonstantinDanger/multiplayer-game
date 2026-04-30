@@ -24,12 +24,12 @@ public class Player : Entity
     private Vector2 RotationInput => Input.Rotation;
 
     private AnimatorUpdater _animatorUpdater;
-    private bool _isMenuActive = true;
+    private bool _isMenuActive = false;
     private bool _isUpgrading = false;
-    private MainUI _playerUI;
+    private GameUI _playerUI;
     private LobbyUI _menu;
-    private UpgradeUI _upgradeUI;
-    private LevelUpUI _levelUpUI;
+    private UpgradeView _upgradeUI;
+    private LevelUpView _levelUpUI;
     private PlayerHUD _playerHUD;
 
     private bool IsOffline =>
@@ -73,7 +73,7 @@ public class Player : Entity
     {
         Input.Enable();
         Input.JumpAction += HandleJump;
-        Input.OnMenuInvoked += HandleMenuInvoked;
+        Input.OnMenuInvoked += HandleUICancel;
         Input.AttackAction += HandleAttack;
         Input.AbilityAction += HandleAbility;
         Input.OnUpgradeMenuInvoked += HandleUpgradeMenuInvoked;
@@ -84,7 +84,7 @@ public class Player : Entity
     {
         Input.Disable();
         Input.JumpAction -= HandleJump;
-        Input.OnMenuInvoked -= HandleMenuInvoked;
+        Input.OnMenuInvoked -= HandleUICancel;
         Input.AttackAction -= HandleAttack;
         Input.AbilityAction -= HandleAbility;
         Input.OnUpgradeMenuInvoked -= HandleUpgradeMenuInvoked;
@@ -191,15 +191,26 @@ public class Player : Entity
         var levelUpUIPrefab = data.LevelUpUIPrefab;
         var charSelectUIPrefab = data.CharacterSelectUI;
 
+        //Game ui spawn
         _playerUI = Instantiate(data.UIPrefab, transform);
+        _playerUI.Initialize(HandleViewOpen, HandleAllViewsClose);
+
         _playerHUD = Instantiate(hudPrefab, _playerUI.transform);
         _levelUpUI = Instantiate(levelUpUIPrefab, _playerUI.transform);
         _upgradeUI = Instantiate(upgradeUIPrefab, _levelUpUI.transform);
-        var charSelectInstance = Instantiate(charSelectUIPrefab, _playerUI.transform);
+        CharacterSelectView charSelectInstance = Instantiate(charSelectUIPrefab, _playerUI.transform);
 
         _upgradeUI.Initialize(gameObject, _upgrader);
         _levelUpUI.Initialize(_level, _wallet.MatchCurrency);
         charSelectInstance.Initialize(data.ClassList, this);
+
+        //UI addition to the Game ui
+        _playerUI.Add(_playerHUD);
+        _playerUI.Add(_levelUpUI);
+        _playerUI.Add(_upgradeUI);
+        _playerUI.Add(charSelectInstance);
+
+        ServiceLocator.Container.RegisterSingle(_playerUI);
     }
 
     [TargetRpc]
@@ -245,6 +256,24 @@ public class Player : Entity
         //_damager.InflictDamage(Camera.Transform.position, Camera.Transform.forward);
     }
 
+    private void HandleViewOpen()
+    {
+        if (!CanDoActions())
+            return;
+
+        Camera.ShowCursor();
+        Input.SetPlayerInput(false);
+    }
+
+    private void HandleAllViewsClose()
+    {
+        if (!CanDoActions())
+            return;
+
+        Camera.HideCursor();
+        Input.SetPlayerInput(true);
+    }
+
     private void HandleUpgradeMenuInvoked()
     {
         if (!CanDoActions())
@@ -267,24 +296,29 @@ public class Player : Entity
         _levelUpUI.gameObject.SetActive(_isUpgrading);
     }
 
-    private void HandleMenuInvoked()
+    private void HandleUICancel()
     {
         if (!CanDoActions())
             return;
 
-        _isMenuActive = !_isMenuActive;
+        if (Damageable.IsDead)
+            return;
 
-        if (!Damageable.IsDead)
-            Input.SetPlayerInput(!_isMenuActive);
+        if (_playerUI.HasStackedUIViews)
+        {
+            _playerUI.CloseView();
+            return;
+        }
+
+        _isMenuActive = !_isMenuActive;
 
         if (_isMenuActive)
         {
-            Camera.ShowCursor();
+            HandleViewOpen();
+            return;
         }
-        else
-        {
-            Camera.HideCursor();
-        }
+
+        HandleAllViewsClose();
 
         //Input.SetUiInput(_isMenuActive);
 

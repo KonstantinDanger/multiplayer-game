@@ -18,6 +18,8 @@ public class PlayerCamera : NetworkBehaviour, IRotatablePlayerCamera
 
     public event Action<float> OnRotate;
 
+    private bool _isLocked;
+
     public void Initialize(bool isLocalPlayer)
     {
         if (!isLocalPlayer)
@@ -31,6 +33,9 @@ public class PlayerCamera : NetworkBehaviour, IRotatablePlayerCamera
 
     public void Rotate(Vector3 direction, float speed)
     {
+        if (_isLocked)
+            return;
+
         float verticalDelta = direction.y * speed * Time.deltaTime;
         _horizontalRotation = direction.x * speed * Time.deltaTime;
 
@@ -48,11 +53,13 @@ public class PlayerCamera : NetworkBehaviour, IRotatablePlayerCamera
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        _isLocked = false;
     }
 
     public void ShowCursor()
     {
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
+        _isLocked = true;
     }
 }

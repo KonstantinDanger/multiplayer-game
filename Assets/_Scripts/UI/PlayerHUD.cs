@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-public class PlayerHUD : UI
+public class PlayerHUD : HUD
 {
     [SerializeField] private AbilitiesHUD _abilitiesHUD;
     [SerializeField] private UpgradeHUD _upgradeHUD;

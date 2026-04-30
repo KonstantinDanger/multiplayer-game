@@ -1922,6 +1922,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 904934914451813546, guid: 30c365dcb3a695b46a8411bb8558e63f, type: 3}
+      propertyPath: _uiTypeReference.GUID
+      value: b4c9600c32dff8249836f5ec30868246
+      objectReference: {fileID: 0}
+    - target: {fileID: 904934914451813546, guid: 30c365dcb3a695b46a8411bb8558e63f, type: 3}
+      propertyPath: _uiTypeReference._typeNameAndAssembly
+      value: CharacterSelectView, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 1136310964183031727, guid: 30c365dcb3a695b46a8411bb8558e63f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.63488
@@ -2116,6 +2124,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  <PersistentThroughScenes>k__BackingField: 1
   _container: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -17,14 +17,14 @@ public class StaticData : ScriptableObject
     [field: SerializeField] public DamageText DamageTextPrefab { get; private set; }
 
     //UI
-    [field: SerializeField] public MainUI UIPrefab { get; private set; }
+    [field: SerializeField] public GameUI UIPrefab { get; private set; }
     [field: SerializeField] public LobbyUI LobbyUIPrefab { get; private set; }
     [field: SerializeField] public PlayerInfoUI PlayerInfoUI { get; private set; }
     [field: SerializeField] public PlayerHUD PlayerHUDPrefab { get; private set; }
     [field: SerializeField] public AnimatorUpdaterConfig AnimatorUpdaterConfig { get; private set; }
-    [field: SerializeField] public UpgradeUI UpgradeUIPrefab { get; private set; }
-    [field: SerializeField] public LevelUpUI LevelUpUIPrefab { get; private set; }
-    [field: SerializeField] public CharacterSelectUI CharacterSelectUI { get; private set; }
+    [field: SerializeField] public UpgradeView UpgradeUIPrefab { get; private set; }
+    [field: SerializeField] public LevelUpView LevelUpUIPrefab { get; private set; }
+    [field: SerializeField] public CharacterSelectView CharacterSelectUI { get; private set; }
 
     public override string ToString()
         => $"Static data";

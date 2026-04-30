@@ -1029,7 +1029,7 @@ GameObject:
   - component: {fileID: 4983252399168543752}
   - component: {fileID: 5691341653311973390}
   m_Layer: 5
-  m_Name: LevelUp_UI
+  m_Name: View_LevelUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1065,13 +1065,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7495701822647394250}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92be4b187a1dd66428bd5cc67a81bc7d, type: 3}
+  m_Script: {fileID: 11500000, guid: ad4a4f8dcec8bc549a213b73f5759ffd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <PersistentThroughScenes>k__BackingField: 1
   _levelUpButton: {fileID: 2112315271593733850}
   _levelPreviewText: {fileID: 5556349463245802343}
   _levelUpPriceText: {fileID: 560780810330877935}
-  _lockedTextColor: {r: 0.764151, g: 0.108814366, b: 0, a: 1}
+  _lockedTextColor: {r: 0.4245283, g: 0, b: 0, a: 0}
 --- !u!1 &7526642000992589774
 GameObject:
   m_ObjectHideFlags: 0

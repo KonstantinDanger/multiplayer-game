@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilitiesHUD : MonoBehaviour
+public class AbilitiesHUD : HUD
 {
     [SerializeField] private List<AbilityCell> _abilityCells = new();
 
