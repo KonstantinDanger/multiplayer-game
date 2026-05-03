@@ -14,7 +14,7 @@ public class ServiceLocator
     /// </summary>
     public void RegisterSingle<T>(T service, bool cached = false)
     {
-        Type type = service.GetType();
+        Type type = typeof(T);
 
         if (cached)
         {

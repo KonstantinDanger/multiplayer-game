@@ -1,14 +1,5 @@
 {
   "dependencies": {
-    "com.plonkabartosz.ikfootplacement": {
-      "version": "https://github.com/plonkabartosz/IKFootPlacement.git",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.animation.rigging": "1.1.1"
-      },
-      "hash": "fc4425755f9f219d0d18163e36b25b6d675812d7"
-    },
     "com.rlabrecque.steamworks.net": {
       "version": "https://github.com/rlabrecque/Steamworks.NET.git?path=/com.rlabrecque.steamworks.net#2025.162.1",
       "depth": 0,

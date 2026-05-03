@@ -17,7 +17,7 @@ Material:
   m_InvalidKeywords:
   - _BLEND_MODE_OVERLAY
   m_LightmapFlags: 2
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -78,12 +78,12 @@ Material:
     - _Edge_Sharpness: 50
     - _Emission: 1
     - _Emission_Tiling: 1
-    - _Metallic: 0.5
+    - _Metallic: 0.701
     - _Metallic_Tiling: 1
     - _Offset: 1.39
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Smoothness: 0.5
+    - _Smoothness: 0
     - _Tiling: 1
     m_Colors:
     - _Dirt_Color: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 0}
