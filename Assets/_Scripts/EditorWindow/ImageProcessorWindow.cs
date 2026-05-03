@@ -114,8 +114,6 @@ namespace Assets._Scripts.CustomEditorWindow
 
                 foreach (var item in textures)
                 {
-                    //Remove texture manipulation by references in future!
-
                     Texture2D result = new Texture2D(item.width, item.height);
                     result.SetPixels(item.GetPixels());
                     result.Apply();
@@ -151,7 +149,6 @@ namespace Assets._Scripts.CustomEditorWindow
                         float[] sumG = new float[(int)_intensityLevels + 1];
                         float[] sumB = new float[(int)_intensityLevels + 1];
 
-                        // Scan the neighborhood (the "brush" size)
                         for (int ny = -_radius; ny <= _radius; ny++)
                         {
                             for (int nx = -_radius; nx <= _radius; nx++)
@@ -160,7 +157,6 @@ namespace Assets._Scripts.CustomEditorWindow
                                 int iy = Mathf.Clamp(y + ny, 0, height - 1);
                                 Color col = sourcePixels[iy * width + ix];
 
-                                // Calculate intensity level for this pixel
                                 float gray = (col.r + col.g + col.b) / 3.0f;
                                 int intensity = (int)((gray * _intensityLevels));
 
@@ -171,7 +167,6 @@ namespace Assets._Scripts.CustomEditorWindow
                             }
                         }
 
-                        // Find the most frequent intensity
                         int maxIndex = 0;
                         int maxCount = 0;
                         for (int i = 0; i < intensityCount.Length; i++)
@@ -183,7 +178,6 @@ namespace Assets._Scripts.CustomEditorWindow
                             }
                         }
 
-                        // The final pixel color is the average of the most frequent intensity
                         resultPixels[y * width + x] = new Color(
                             sumR[maxIndex] / maxCount,
                             sumG[maxIndex] / maxCount,
