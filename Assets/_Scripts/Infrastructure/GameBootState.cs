@@ -4,7 +4,7 @@ public class GameBootState : GameState
 {
     private readonly StaticData _staticData;
     private SceneLoader _sceneLoader;
-    private RaytracedAudioSources _sources;
+    private CustomNetworkManager _networkManager;
 
     public GameBootState(IStateMachine stateMachine, ServiceLocator container) : base(stateMachine, container)
         => _staticData = Resolve<StaticData>();
@@ -12,7 +12,9 @@ public class GameBootState : GameState
     public override void OnEnter()
     {
         InitializeServices();
+        _networkManager = Resolve<CustomNetworkManager>();
 
+        // Offline async scene load
         _sceneLoader.LoadSceneAsync(_staticData.StartingSceneName, OnLoadStarted, OnLoadEnded);
     }
 
@@ -22,16 +24,14 @@ public class GameBootState : GameState
 
         _sceneLoader = new(coroutineHolder);
         GameFactory factory = Object.Instantiate(_staticData.GameFactoryPrefab, coroutineHolder.transform.parent);
-        var netManager = factory.CreateNetworkManager(_staticData.NetworkManagerPrefab, coroutineHolder.transform);
+        //var netManager = factory.CreateNetworkManager(_staticData.NetworkManagerPrefab, coroutineHolder.transform);
 
         PersistentGameData persistentGameData = new PersistentGameData();
-        _sources = new RaytracedAudioSources();
 
-        Bind(_sources);
         Bind(persistentGameData);
         Bind(_sceneLoader);
         Bind(factory);
-        Bind(netManager);
+        //Bind(netManager);
     }
 
     private void OnLoadStarted() { }

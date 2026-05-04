@@ -39,7 +39,7 @@ public class EntitySummonAbility : Ability
         Quaternion rotation = Quaternion.LookRotation(forwardDirection);
         //Temporary decision.
 
-        Entity instance = factory.SpawnEntity(_entityPrefab, summonPosition, rotation, owner: sender);
+        Entity instance = factory.SummonEntity(_entityPrefab, summonPosition, rotation, owner: sender);
         _summonInstances.Add(instance);
         (instance as Enemy).Summonify(_layersToDetect, _summonLayerName, sender);
 

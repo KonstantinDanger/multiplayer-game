@@ -6,8 +6,15 @@ using UnityEngine;
 public class UpgradeNode
 {
     [SerializeField] private ScriptableUpgrade _upgradeRef;
-    [SerializeField] private List<UpgradeNode> _nextUpgrades = new();
+    [SerializeReference, SubclassSelector] private List<UpgradeNode> _nextUpgrades = new();
     [field: SerializeField] public bool IsUnlocked { get; private set; }
+
+    public UpgradeNode()
+    {
+        _upgradeRef = null;
+        _nextUpgrades = new();
+        IsUnlocked = false;
+    }
 
     private UpgradeNode(ScriptableUpgrade upgradeRef, List<UpgradeNode> nextUpgrades, bool isUnlocked)
     {
@@ -24,8 +31,17 @@ public class UpgradeNode
 
     public UpgradeNode Copy()
     {
+        if (_nextUpgrades.Count == 0)
+            return null;
+
         List<UpgradeNode> copiedNextUpgrades = new();
-        _nextUpgrades?.ForEach(n => copiedNextUpgrades.Add(n.Copy()));
+        _nextUpgrades?.ForEach(node =>
+        {
+            if (node == null)
+                return;
+
+            copiedNextUpgrades.Add(node.Copy());
+        });
 
         return new(_upgradeRef, copiedNextUpgrades, IsUnlocked);
     }

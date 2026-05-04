@@ -47,14 +47,7 @@ public class GameLobbyState : GameState
     {
         Player player = Utils.ServerFindNetPlayerById(netId);
 
-
         player.Damageable.Respawn();
-    }
-
-    [TargetRpc]
-    private void TargetRespawn()
-    {
-
     }
 
     private void HandlePlayerAdded(Player player)

@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class GameFactory : NetworkBehaviour
 {
-    public CustomNetworkManager CreateNetworkManager(CustomNetworkManager networkManagerPrefab, Transform transform)
-        => Instantiate(networkManagerPrefab, transform);
-
     [Server]
     public Zone SpawnZone(Zone zonePrefab, Vector3 position)
     {
@@ -49,7 +46,7 @@ public class GameFactory : NetworkBehaviour
         return proj;
     }
 
-    public Entity SpawnEntity(Entity entityPrefab, Vector3 summonPosition, Quaternion rotation, NetworkBehaviour owner)
+    public Entity SummonEntity(Entity entityPrefab, Vector3 summonPosition, Quaternion rotation, NetworkBehaviour owner)
     {
         var summon = Instantiate(entityPrefab, summonPosition, rotation, null);
 

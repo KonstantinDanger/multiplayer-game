@@ -5,12 +5,7 @@ using UnityEngine;
 
 public class CustomNetworkManager : NetworkManager
 {
-    [SerializeField] private PlayersInfo _playersInfo;
-    [SerializeField] private Lobby _lobby;
-
     public Action<string> OnServerSceneLoaded;
-
-    public Lobby Lobby => _lobby;
 
     public override void OnClientConnect()
     {
