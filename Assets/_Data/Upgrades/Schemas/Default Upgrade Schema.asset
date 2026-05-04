@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _upgradeNodes:
   - _upgradeRef: {fileID: 11400000, guid: 9fcafd4ee3a25154aa621270da3b7ed8, type: 2}
-    _nextUpgrades:
-    - rid: -2
+    _nextUpgrades: []
     <IsUnlocked>k__BackingField: 1
   - _upgradeRef: {fileID: 11400000, guid: 33721cdc548ffd440abb441948fc4157, type: 2}
     _nextUpgrades: []
@@ -28,6 +27,4 @@ MonoBehaviour:
     <IsUnlocked>k__BackingField: 1
   references:
     version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    RefIds: []

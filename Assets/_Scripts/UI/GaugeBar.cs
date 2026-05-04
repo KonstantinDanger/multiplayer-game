@@ -22,6 +22,9 @@ public class GaugeBar : MonoBehaviour
         _initialized = true;
     }
 
+    private void OnDestroy()
+        => Gauge.OnValueChanged -= HandleValueChanged;
+
     private void HandleValueChanged()
     {
         float value = Gauge.CurrentGaugeValue / Gauge.MaxGaugeValue;

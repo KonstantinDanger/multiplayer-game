@@ -31,16 +31,11 @@ public class UpgradeNode
 
     public UpgradeNode Copy()
     {
-        if (_nextUpgrades.Count == 0)
-            return null;
-
         List<UpgradeNode> copiedNextUpgrades = new();
         _nextUpgrades?.ForEach(node =>
         {
-            if (node == null)
-                return;
-
-            copiedNextUpgrades.Add(node.Copy());
+            if (node != null)
+                copiedNextUpgrades.Add(node.Copy());
         });
 
         return new(_upgradeRef, copiedNextUpgrades, IsUnlocked);

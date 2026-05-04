@@ -4,7 +4,6 @@ public class GameBootState : GameState
 {
     private readonly StaticData _staticData;
     private SceneLoader _sceneLoader;
-    private CustomNetworkManager _networkManager;
 
     public GameBootState(IStateMachine stateMachine, ServiceLocator container) : base(stateMachine, container)
         => _staticData = Resolve<StaticData>();
@@ -12,7 +11,6 @@ public class GameBootState : GameState
     public override void OnEnter()
     {
         InitializeServices();
-        _networkManager = Resolve<CustomNetworkManager>();
 
         // Offline async scene load
         _sceneLoader.LoadSceneAsync(_staticData.StartingSceneName, OnLoadStarted, OnLoadEnded);

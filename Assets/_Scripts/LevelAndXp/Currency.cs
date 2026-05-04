@@ -4,7 +4,6 @@ using UnityEngine;
 [Serializable]
 public class Currency
 {
-
     [field: SerializeField] public int Amount { get; private set; }
     public event Action<int> OnCurrencyChanged;
 

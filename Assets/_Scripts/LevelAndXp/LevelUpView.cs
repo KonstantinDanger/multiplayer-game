@@ -22,6 +22,8 @@ public class LevelUpView : UIView
     {
         HandleCurrencyChanged(_matchCurrency.Amount);
 
+        SetButton(IsUpgradeEnabled());
+
         _levelUpButton.onClick.AddListener(HandleLevelUp);
     }
 
