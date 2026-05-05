@@ -44,10 +44,10 @@ public class Level : NetworkBehaviour
         if (Lvl >= MaxLvl)
             return;
 
-        Currency currency = _wallet.MatchCurrency;
-
-        if (!currency.Withdraw(_currencyPerLevel))
+        if (!_wallet.CanWithdraw(CurrencyType.Match, _currencyPerLevel))
             return;
+
+        _wallet.Withdraw(CurrencyType.Match, _currencyPerLevel);
 
         LevelUp();
     }

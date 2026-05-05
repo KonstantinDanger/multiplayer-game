@@ -13,14 +13,16 @@ public class LevelUpView : UIView
     private Color _defaultTextColor;
 
     private Level _level;
-    private Currency _matchCurrency;
+    private Wallet _wallet;
+
+    private const CurrencyType CurrencyTypeToWithdraw = CurrencyType.Match;
 
     private void Awake()
         => gameObject.SetActive(false);
 
     private void OnEnable()
     {
-        HandleCurrencyChanged(_matchCurrency.Amount);
+        HandleCurrencyChanged();
 
         SetButton(IsUpgradeEnabled());
 
@@ -30,15 +32,14 @@ public class LevelUpView : UIView
     private void OnDisable()
         => _levelUpButton.onClick.RemoveListener(HandleLevelUp);
 
-    public void Initialize(Level level, Currency matchCurrency)
+    public void Initialize(Level level, Wallet wallet)
     {
         _level = level;
-
-        _matchCurrency = matchCurrency;
+        _wallet = wallet;
 
         _level.OnLevelChanged += HandleLevelChanged;
         _level.OnCurrencyPerLevelChanged += HandleCurrencyPerLevelChanged;
-        _matchCurrency.OnCurrencyChanged += HandleCurrencyChanged;
+        _wallet.OnCurrencyChange += HandleCurrencyChanged;
 
         _defaultTextColor = _levelPreviewText.color;
     }
@@ -47,22 +48,22 @@ public class LevelUpView : UIView
     {
         _level.OnLevelChanged -= HandleLevelChanged;
         _level.OnCurrencyPerLevelChanged -= HandleCurrencyPerLevelChanged;
-        _matchCurrency.OnCurrencyChanged -= HandleCurrencyChanged;
+        _wallet.OnCurrencyChange -= HandleCurrencyChanged;
     }
 
     private void HandleCurrencyPerLevelChanged()
         => SetPriceText(IsUpgradeEnabled());
 
     private void HandleLevelChanged(int level)
-        => HandleCurrencyChanged(_matchCurrency.Amount);
+        => HandleCurrencyChanged();
 
     private void HandleLevelUp()
     {
         _level.TryLevelUp();
-        HandleCurrencyChanged(0);
+        HandleCurrencyChanged();
     }
 
-    private void HandleCurrencyChanged(int amount)
+    private void HandleCurrencyChanged(CurrencyType type = 0, int delta = 0, int total = 0)
     {
         bool upgradeEnabled = IsUpgradeEnabled();
 
@@ -72,7 +73,7 @@ public class LevelUpView : UIView
     }
 
     private bool IsUpgradeEnabled()
-        => _matchCurrency.Amount >= _level.RequiredCurrencyForUpgrade
+        => _wallet.GetAmount(CurrencyTypeToWithdraw) >= _level.RequiredCurrencyForUpgrade
         && _level.Lvl < _level.MaxLvl;
 
     private void SetLevelLabel(bool upgradeEnabled)

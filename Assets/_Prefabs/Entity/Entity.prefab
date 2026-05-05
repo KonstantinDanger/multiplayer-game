@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3837012872083763152}
   - component: {fileID: 846172872803219376}
   - component: {fileID: 1297180303954842318}
+  - component: {fileID: 7930315797519154311}
   m_Layer: 0
   m_Name: Entity
   m_TagString: Untagged
@@ -108,6 +109,9 @@ MonoBehaviour:
     _underlyingValue: {fileID: 0}
   _damageable:
     _underlyingValue: {fileID: 846172872803219376}
+  _abilityUser:
+    _underlyingValue: {fileID: 0}
+  <Stats>k__BackingField: {fileID: 7930315797519154311}
   <MovementConfig>k__BackingField: {fileID: 0}
   <RotationConfig>k__BackingField: {fileID: 0}
   <DamageSystemConfig>k__BackingField: {fileID: 11400000, guid: d6fd6658551c3f9448b6f02de80c06af, type: 2}
@@ -149,3 +153,18 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &7930315797519154311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532728802165586786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5756ff2d59d773408b2f99b94d6aa03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0

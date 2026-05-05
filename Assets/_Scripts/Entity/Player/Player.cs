@@ -1,5 +1,4 @@
 using Mirror;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -118,6 +117,11 @@ public class Player : Entity
             UnityEngine.Debug.Log("Current player max health: " + Damageable.MaxGaugeValue);
 
         }
+
+
+        UnityEngine.Debug.Log("Wallet " + _wallet.ToString());
+        UnityEngine.Debug.Log("Stats => " + Stats.ToString());
+
         //UnityEngine.Debug.Log("Current state: " + _stateMachine.CurrentState);
         //For testing
 
@@ -201,7 +205,7 @@ public class Player : Entity
         CharacterSelectView charSelectInstance = Instantiate(charSelectUIPrefab, _playerUI.transform);
 
         _upgradeUI.Initialize(gameObject, _upgrader);
-        _levelUpUI.Initialize(_level, _wallet.MatchCurrency);
+        _levelUpUI.Initialize(_level, _wallet);
         charSelectInstance.Initialize(data.ClassList, this);
 
         //UI addition to the Game ui
@@ -217,8 +221,9 @@ public class Player : Entity
     public void SetCanAttack(bool canAttack)
         => Input.SetPlayerAttackInput(canAttack);
 
-    public void InitializeAnimatorUpdater(IEnumerable<Animator> animators)
-        => _animatorUpdater.Initialize(gameObject, animators);
+    [TargetRpc]
+    public void InitializeAnimatorUpdater()
+        => _animatorUpdater.Initialize(gameObject);
 
     public void Spectate(bool active)
         => Input.SetPlayerInput(!active);

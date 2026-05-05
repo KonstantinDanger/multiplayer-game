@@ -25,7 +25,7 @@ public class CurrencyDrop : NetworkBehaviour
         EnemyConfig config = GetComponent<Enemy>().Config;
 
         int drop = config.CurrencyDrop;
-        wallet.MatchCurrency.Add(drop);
+        wallet.Add(CurrencyType.Match, drop);
 
         //CmdHandleXpDrop(damage);
     }

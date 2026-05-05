@@ -22,7 +22,16 @@ public class DamageSystem : NetworkBehaviour, IDamageable, IStatConsumer
     public float CurrentGaugeValue => _currentHealth;
     public float MaxGaugeValue => ScaledBaseHealth;
 
-    public StatModifier StatModifier { get; set; }
+    [SyncVar] private StatModifier _statModifier;
+    public StatModifier StatModifier
+    {
+        get => _statModifier;
+        set
+        {
+            RpcOnValueChanged();
+            _statModifier = value;
+        }
+    }
 
     public void Initialize(StatParameter baseHealth, IEnumerable<DamageHandler> damageHandlers)
     {

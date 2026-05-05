@@ -11,16 +11,20 @@ public class AnimatorUpdater
     public AnimatorUpdater(AnimatorUpdaterConfig config)
         => _config = config;
 
-    public void Initialize(GameObject targetUpdater, IEnumerable<Animator> animators)
+    public void Initialize(GameObject targetUpdater)
     {
+        Animator[] animators = Object.FindObjectsOfType<Animator>();
+        Animator senderAnimator = targetUpdater.GetComponentInChildren<Animator>();
+
         _target = targetUpdater;
 
         foreach (Animator entity in animators)
         {
-            if (entity.transform.root.gameObject == targetUpdater)
+            Animator anim = entity;
+
+            if (anim == senderAnimator)
                 continue;
 
-            var anim = entity;
             anim.enabled = false;
 
             _updateData.Add(new()

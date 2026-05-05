@@ -8,9 +8,6 @@ using UnityEngine;
 public class RayCastDamager : NetworkBehaviour, IAttacker
 {
     [SerializeField] private RayCastView _rayCastView;
-    [SerializeField] private LayerMask _damageLayers;
-    [SerializeField] private float _damage;
-    [SerializeField] private float _range;
     [SerializeField] private Transform _attackPoint;
 
     public event Action OnAttack;

@@ -21,6 +21,7 @@ public class RayCastAttack : Attack
         var rotatable = sender.GetComponent<IRotatable>();
 
         Vector3 attackDirection = CalculateSpreadDirection(rotatable, rotatable.Forward);
+        Damage.SenderNetId = sender.netId;
 
         DoRayCast(attacker.AttackPoint.position, attackDirection, rayCastView, movable);
         attacker.PerformAttack();
@@ -44,12 +45,22 @@ public class RayCastAttack : Attack
 
         if (Physics.Raycast(startPosition, direction, out RaycastHit hit, Damage.Range, Damage.AttackLayers, QueryTriggerInteraction.Ignore))
             if (hit.collider.TryGetComponent(out IDamageable damageable))
-                damageable.TakeDamage(Damage);
+                damageable.TakeDamage(SetupDamage(Damage, Damage.Sender));
 
         endPos = startPosition + direction * Damage.Range;
         Vector3 attackPosition = startPosition + currentVelocity * Time.deltaTime;
 
         rayCastView.StartBulletView(attackPosition, endPos);
+    }
+
+    private Damage SetupDamage(Damage baseDamage, GameObject sender)
+    {
+        if (!sender.TryGetComponent(out EntityStats stats))
+            return baseDamage;
+
+        Damage damage = baseDamage;
+        damage.Amount *= stats.GetStatMultiplier(StatType.Damage);
+        return damage;
     }
 }
 

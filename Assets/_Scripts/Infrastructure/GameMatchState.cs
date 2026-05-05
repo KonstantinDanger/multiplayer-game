@@ -129,7 +129,7 @@ public class GameMatchState : GameState
 
             PlayerMatchSummaryData summaryData = gameData.GameMatchData.AddNewSummaryForPlayerData(data);
             Wallet wallet = player.GetComponent<Wallet>();
-            wallet.MatchCurrency.Reset();
+            wallet.ResetCurrency(CurrencyType.Match);
             PlayerSummaryDataBinder binder = new(player, summaryData, wallet);
 
             binder.Bind();
@@ -140,15 +140,13 @@ public class GameMatchState : GameState
 
     private void InitPlayers()
     {
-        Animator[] animators = GameObject.FindObjectsOfType<Animator>();
-
         foreach (var conn in NetworkServer.connections.Values)
         {
             Player player = conn.identity.GetComponent<Player>();
             player.ResetLevel();
             player.ToggleHUD(true);
             player.SetCanAttack(true);
-            player.InitializeAnimatorUpdater(animators);
+            player.InitializeAnimatorUpdater();
             _players.Add(player);
         }
 

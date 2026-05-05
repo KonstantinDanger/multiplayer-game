@@ -118,6 +118,7 @@ MonoBehaviour:
     _underlyingValue: {fileID: 1048808889151452850}
   _abilityUser:
     _underlyingValue: {fileID: 2748083160195073367}
+  <Stats>k__BackingField: {fileID: 8573242880729493203}
   <MovementConfig>k__BackingField: {fileID: 11400000, guid: e3cb813506387f54dbb1d9c3eaa58da3, type: 2}
   <RotationConfig>k__BackingField: {fileID: 11400000, guid: 35c754a5163c48840abde2ccbebe65f2, type: 2}
   <DamageSystemConfig>k__BackingField: {fileID: 11400000, guid: d6fd6658551c3f9448b6f02de80c06af, type: 2}
@@ -149,7 +150,6 @@ MonoBehaviour:
   moveSpeed: 5
   rotationSpeed: 5
   heightAdjustmentSpeed: 2
-  retreatDuration: 2
   bobAmplitude: 0.3
   bobFrequency: 1
   _groundLayer:
@@ -232,5 +232,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3da38978f5cb50441bacc1ac2ab6a2c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8573242880729493203 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7422826612740363923, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+  m_PrefabInstance: {fileID: 1295184582101153856}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167910388214004320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5756ff2d59d773408b2f99b94d6aa03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

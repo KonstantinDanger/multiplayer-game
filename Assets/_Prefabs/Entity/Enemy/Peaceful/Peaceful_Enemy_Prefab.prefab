@@ -105,6 +105,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1008523891125965303}
   m_SourcePrefab: {fileID: 100100000, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+--- !u!114 &1075087010514585233 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8847150142803576261, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+  m_PrefabInstance: {fileID: 8371098650520142676}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7458523687011287412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5756ff2d59d773408b2f99b94d6aa03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4897191040296681027 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4024613402228473111, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
@@ -166,6 +177,7 @@ MonoBehaviour:
     _underlyingValue: {fileID: 7735891674132778406}
   _abilityUser:
     _underlyingValue: {fileID: 4897191040296681027}
+  <Stats>k__BackingField: {fileID: 1075087010514585233}
   <MovementConfig>k__BackingField: {fileID: 11400000, guid: e3cb813506387f54dbb1d9c3eaa58da3, type: 2}
   <RotationConfig>k__BackingField: {fileID: 11400000, guid: 35c754a5163c48840abde2ccbebe65f2, type: 2}
   <DamageSystemConfig>k__BackingField: {fileID: 11400000, guid: d6fd6658551c3f9448b6f02de80c06af, type: 2}

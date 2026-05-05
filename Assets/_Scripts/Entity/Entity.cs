@@ -5,13 +5,12 @@ using UnityEngine;
 
 public class Entity : NetworkBehaviour, IDisposable, IStatUser
 {
-    public EntityStats Stats { get; } = new(Utils.DefaultEntityStats());
-
     [SerializeField] private InterfaceReference<IMovable> _movement;
     [SerializeField] private InterfaceReference<IRotatable> _rotatable;
     [SerializeField] private InterfaceReference<IDamageable> _damageable;
     [SerializeField] private InterfaceReference<IAbilityUser> _abilityUser;
 
+    [field: SerializeField] public EntityStats Stats { get; private set; }
     [field: SerializeField] public MovementConfig MovementConfig { get; private set; }
     [field: SerializeField] public RotationConfig RotationConfig { get; private set; }
     [field: SerializeField] public DamageSystemConfig DamageSystemConfig { get; private set; }
@@ -24,12 +23,9 @@ public class Entity : NetworkBehaviour, IDisposable, IStatUser
     private void Awake()
     {
         Damageable.Initialize(DamageSystemConfig.BaseHealth, DamageSystemConfig.DamageHandlers);
-
+        Stats.Initialize(Utils.DefaultEntityStats());
         OnAwake();
     }
-
-    private void Start()
-        => OnStart();
 
     private void OnEnable()
     {
@@ -49,16 +45,20 @@ public class Entity : NetworkBehaviour, IDisposable, IStatUser
         HandleOnDisable();
     }
 
+    private void Start()
+        => OnStart();
+
     protected virtual void Update()
     { }
 
+    [Command(requiresAuthority = false)]
     private void HandleStatChange(StatType type, float statMultiplier)
     {
-        IStatConsumer[] components = GetComponents<IStatConsumer>();
+        IStatConsumer[] statConsumers = GetComponents<IStatConsumer>();
 
-        for (int i = 0; i < components.Length; i++)
+        for (int i = 0; i < statConsumers.Length; i++)
         {
-            IStatConsumer component = components[i];
+            IStatConsumer component = statConsumers[i];
 
             if (component == null)
                 continue;

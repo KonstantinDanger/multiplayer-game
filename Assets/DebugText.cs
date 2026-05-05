@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class DebugText : MonoBehaviour
 {
-
     [SerializeField] private GameObject _rootCanvas;
     [SerializeField] private TextMeshProUGUI _debugText;
 

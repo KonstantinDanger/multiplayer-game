@@ -2,10 +2,10 @@ using System;
 using UnityEngine;
 
 [Serializable]
+[Obsolete("Replaced with dictionary <CurrencyType, int (value)> within Wallet class")]
 public class Currency
 {
     [field: SerializeField] public int Amount { get; private set; }
-    public event Action<int> OnCurrencyChanged;
 
     public Currency()
         => Amount = 0;
@@ -20,8 +20,6 @@ public class Currency
 
         Amount += amount;
 
-        OnCurrencyChanged?.Invoke(amount);
-
         return true;
     }
 
@@ -32,11 +30,11 @@ public class Currency
 
         Amount -= amount;
 
-        OnCurrencyChanged?.Invoke(-amount);
-
         return true;
     }
 
     public void Reset()
         => Amount = 0;
+
+    public override string ToString() => $"Amount: {Amount}";
 }

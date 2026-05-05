@@ -361,6 +361,7 @@ GameObject:
   - component: {fileID: 5661195370401756730}
   - component: {fileID: 3853550027420888497}
   - component: {fileID: 4253901531179820546}
+  - component: {fileID: 2373194893316870481}
   m_Layer: 7
   m_Name: Player_Prefab
   m_TagString: Untagged
@@ -454,6 +455,7 @@ MonoBehaviour:
     _underlyingValue: {fileID: 1705426453025376207}
   _abilityUser:
     _underlyingValue: {fileID: 5132097041645439728}
+  <Stats>k__BackingField: {fileID: 2373194893316870481}
   <MovementConfig>k__BackingField: {fileID: 11400000, guid: a7e9482648561ea44b509607f893e2bf, type: 2}
   <RotationConfig>k__BackingField: {fileID: 11400000, guid: 325f2402fcff7d34f9d0ba09f47f1dee, type: 2}
   <DamageSystemConfig>k__BackingField: {fileID: 11400000, guid: 9c4dc7eccd4e6c849b913c79dcde9de5, type: 2}
@@ -827,6 +829,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a131bfc52b5d37e45bca5f78352e7747, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
 --- !u!114 &4253901531179820546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -854,6 +859,21 @@ MonoBehaviour:
     - rid: 4662331208128790612
       type: {class: InteractionStrategyWithClosest, ns: , asm: Assembly-CSharp}
       data: 
+--- !u!114 &2373194893316870481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4047092069969861197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5756ff2d59d773408b2f99b94d6aa03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
 --- !u!1 &4641920328616467223
 GameObject:
   m_ObjectHideFlags: 0

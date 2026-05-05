@@ -36,10 +36,7 @@ namespace Mirror
 
         protected readonly IDictionary<TKey, TValue> objects;
 
-        public SyncIDictionary(IDictionary<TKey, TValue> objects)
-        {
-            this.objects = objects;
-        }
+        public SyncIDictionary(IDictionary<TKey, TValue> objects) => this.objects = objects;
 
         public int Count => objects.Count;
         public bool IsReadOnly => !IsWritable();
