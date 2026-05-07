@@ -62,11 +62,7 @@ public class Level : NetworkBehaviour
     {
         _level++;
         ServerOnLevelChange?.Invoke(_level);
-        //RpcOnLevelChange(Lvl);
-
         _currencyPerLevel = GetNextCurrencyPerLevel(Lvl);
-        //RpcOnCurrencyPerLevelChange();
-
     }
 
     private int GetNextCurrencyPerLevel(int level)
@@ -79,4 +75,7 @@ public class Level : NetworkBehaviour
 
     private void RpcOnCurrencyPerLevelChange(int old, int newCurr) => ClientOnCurrencyPerLevelChange?.Invoke();
     private void RpcOnLevelChange(int old, int level) => ClientOnLevelChange?.Invoke(level);
+
+    public override string ToString()
+        => $"Level info: Level = {Lvl} | MaxLvl = {MaxLvl} | CurrencyPerLevel = {_currencyPerLevel}";
 }

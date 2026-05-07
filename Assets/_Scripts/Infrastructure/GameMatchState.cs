@@ -144,6 +144,7 @@ public class GameMatchState : GameState
         {
             Player player = conn.identity.GetComponent<Player>();
             player.ResetLevel();
+            player.Damageable.Respawn();
             player.ToggleHUD(true);
             player.SetCanAttack(true);
             player.InitializeAnimatorUpdater();

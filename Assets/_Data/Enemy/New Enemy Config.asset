@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1de947e5c8d6b2a4184e251d0415d735, type: 3}
   m_Name: New Enemy Config
   m_EditorClassIdentifier: 
-  <CurrencyDrop>k__BackingField: 2000
+  <CurrencyDrop>k__BackingField: 10000
   <IsNeutral>k__BackingField: 0
   <TargetDetectionConfig>k__BackingField: {fileID: 11400000, guid: 8104fd2cada7a1f45af32fa586a2348c, type: 2}
   _aiActions:

@@ -32,18 +32,10 @@ public class Upgrader : NetworkBehaviour
     }
 
     public IEnumerable<ScriptableUpgrade> GiveUpgrades()
-    {
-        UnityEngine.Debug.Log("Give upgrades ");
-
-        if (_givenUpgradesCount == 0)
-            return null;
-
-        return _picker.GetRandomizedAvailableUpgrades();
-    }
+        => _picker.GetRandomizedAvailableUpgrades();
 
     private void HandleLevelChange(int level)
     {
-
         if (level == 1 && _levelCounter == 0)
             return;
 
@@ -57,8 +49,6 @@ public class Upgrader : NetworkBehaviour
 
     private void AddUpgrade()
     {
-        UnityEngine.Debug.Log("Handle ADD UPGRADE");
-
         _givenUpgradesCount++;
         RpcOnUpgradeAmountChange(_givenUpgradesCount);
     }

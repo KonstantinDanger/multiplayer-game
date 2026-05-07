@@ -118,10 +118,10 @@ public class Player : Entity
 
         }
 
-
         //UnityEngine.Debug.Log("Wallet " + _wallet.ToString());
         //UnityEngine.Debug.Log("Stats => " + Stats.ToString());
 
+        //UnityEngine.Debug.Log(_level);
         //UnityEngine.Debug.Log("Current state: " + _stateMachine.CurrentState);
         //For testing
 
