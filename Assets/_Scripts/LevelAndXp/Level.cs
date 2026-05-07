@@ -3,11 +3,12 @@ using System;
 
 public class Level : NetworkBehaviour
 {
-    public event Action OnCurrencyPerLevelChanged;
-    public Action<int> OnLevelChanged;
+    public event Action ClientOnCurrencyPerLevelChange;
+    public Action<int> ServerOnLevelChange;
+    public Action<int> ClientOnLevelChange;
 
-    [SyncVar(hook = nameof(OnLevelSync))] private int _level;
-    [SyncVar(hook = nameof(OnCurrencyPerLevelSync))] private int _currencyPerLevel;
+    [SyncVar(hook = nameof(RpcOnLevelChange))] private int _level;
+    [SyncVar(hook = nameof(RpcOnCurrencyPerLevelChange))] private int _currencyPerLevel;
     [SyncVar] private int _maxLevel;
 
     public int Lvl => _level;
@@ -25,11 +26,12 @@ public class Level : NetworkBehaviour
 
         if (xpIncreaseFunc != null)
             _currencyPerLevelIncreaseFunction = xpIncreaseFunc;
+        else
+            _currencyPerLevelIncreaseFunction = Utils.DefaultCurrencyIncreaseFormula;
 
-        _currencyPerLevel = GetNextCurrencyPerLevel(_level);
+        _currencyPerLevel = GetNextCurrencyPerLevel(level);
 
-        OnLevelChanged?.Invoke(_level);
-        OnCurrencyPerLevelChanged?.Invoke();
+        ServerOnLevelChange?.Invoke(level);
     }
 
     public override void OnStartServer()
@@ -40,6 +42,10 @@ public class Level : NetworkBehaviour
 
     [Command(requiresAuthority = false)]
     public void TryLevelUp()
+        => ServerTryLevelUp();
+
+    [Server]
+    private void ServerTryLevelUp()
     {
         if (Lvl >= MaxLvl)
             return;
@@ -52,11 +58,15 @@ public class Level : NetworkBehaviour
         LevelUp();
     }
 
-    [Server]
     private void LevelUp()
     {
         _level++;
+        ServerOnLevelChange?.Invoke(_level);
+        //RpcOnLevelChange(Lvl);
+
         _currencyPerLevel = GetNextCurrencyPerLevel(Lvl);
+        //RpcOnCurrencyPerLevelChange();
+
     }
 
     private int GetNextCurrencyPerLevel(int level)
@@ -67,9 +77,6 @@ public class Level : NetworkBehaviour
         return (int)_currencyPerLevelIncreaseFunction(level);
     }
 
-    private void OnLevelSync(int oldLevel, int newLevel)
-        => OnLevelChanged?.Invoke(newLevel);
-
-    private void OnCurrencyPerLevelSync(int oldXpPerLevel, int newXpPerLevel)
-        => OnCurrencyPerLevelChanged?.Invoke();
+    private void RpcOnCurrencyPerLevelChange(int old, int newCurr) => ClientOnCurrencyPerLevelChange?.Invoke();
+    private void RpcOnLevelChange(int old, int level) => ClientOnLevelChange?.Invoke(level);
 }

@@ -11,7 +11,8 @@ public class Wallet : NetworkBehaviour
     /// 2) Currency delta (changed amount)
     /// 3) Total left amount
     /// </summary>
-    public event Action<CurrencyType, int, int> OnCurrencyChange;
+    public event Action<CurrencyType, int, int> ClientOnCurrencyChange;
+    public event Action<CurrencyType, int, int> ServerOnCurrencyChange;
 
     private readonly SyncDictionary<CurrencyType, int> _currencies = new()
     {
@@ -28,37 +29,26 @@ public class Wallet : NetworkBehaviour
     }
 
     public void Add(CurrencyType type, int amount)
-        => CmdAdd(type, amount);
+        => ChangeCurrency(type, amount, (a) => _currencies[type] += a);
 
     public void Withdraw(CurrencyType type, int amount)
-        => CmdWithdraw(type, amount);
+        => ChangeCurrency(type, amount, (a) => _currencies[type] -= a);
 
     public void ResetCurrency(CurrencyType type)
-        => CmdReset(type);
+    {
+        int delta = _currencies[type];
+
+        _currencies[type] = 0;
+
+        ServerOnCurrencyChange?.Invoke(type, delta, _currencies[type]);
+        RpcOnCurrencyChange(type, delta, _currencies[type]);
+    }
 
     public int GetAmount(CurrencyType type)
         => _currencies[type];
 
     public bool CanWithdraw(CurrencyType type, int remainingAmount)
         => _currencies[type] >= remainingAmount;
-
-    [Command(requiresAuthority = false)]
-    private void CmdAdd(CurrencyType type, int amount)
-        => ChangeCurrency(type, amount, (a) => _currencies[type] += a);
-
-    [Command(requiresAuthority = false)]
-    private void CmdWithdraw(CurrencyType type, int amount)
-        => ChangeCurrency(type, amount, (a) => _currencies[type] -= a);
-
-    [Command(requiresAuthority = false)]
-    private void CmdReset(CurrencyType type)
-    {
-        int delta = _currencies[type];
-
-        _currencies[type] = 0;
-
-        RpcOnCurrencyChange(type, delta, _currencies[0]);
-    }
 
     private void ChangeCurrency(CurrencyType type, int amount, Action<int> changeFunc)
     {
@@ -72,7 +62,7 @@ public class Wallet : NetworkBehaviour
 
     [ClientRpc]
     private void RpcOnCurrencyChange(CurrencyType type, int delta, int totalLeft)
-        => OnCurrencyChange?.Invoke(type, delta, totalLeft);
+        => ClientOnCurrencyChange?.Invoke(type, delta, totalLeft);
 
     public override string ToString()
         => $"{string.Join(" | ", _currencies.Select(kvp => $"{kvp.Key}: {kvp.Value}"))}";

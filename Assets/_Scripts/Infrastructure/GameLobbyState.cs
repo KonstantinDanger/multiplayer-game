@@ -52,6 +52,9 @@ public class GameLobbyState : GameState
 
     private void HandlePlayerAdded(Player player)
     {
+        if (!NetworkServer.active)
+            return;
+
         player.Spectate(false);
         player.SetCanAttack(false);
         player.ResetLevel();

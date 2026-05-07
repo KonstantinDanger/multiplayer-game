@@ -5,8 +5,12 @@ using System.Linq;
 
 public class DamageSystem : NetworkBehaviour, IDamageable, IStatConsumer
 {
-    public event Action<Damage> OnDamageTaken;
-    public event Action<Damage> OnDemise;
+    public event Action<Damage> ServerOnDamageTaken;
+    public event Action<Damage> ServerOnDemise;
+
+    public event Action<Damage> ClientOnDamageTaken;
+    public event Action<Damage> ClientOnDemise;
+
     public event Action OnValueChanged;
 
     private List<DamageHandler> _damageHandlers = new();
@@ -49,6 +53,15 @@ public class DamageSystem : NetworkBehaviour, IDamageable, IStatConsumer
 
     [Command(requiresAuthority = false)]
     public virtual void TakeDamage(Damage damage)
+        => ServerTakeDamage(damage);
+
+
+    [Command(requiresAuthority = false)]
+    public void Respawn()
+        => ServerRespawn();
+
+    [Server]
+    private void ServerTakeDamage(Damage damage)
     {
         if (_currentHealth <= 0)
             return;
@@ -89,26 +102,28 @@ public class DamageSystem : NetworkBehaviour, IDamageable, IStatConsumer
         if (_currentHealth <= 0f)
         {
             _currentHealth = 0f;
+            ServerOnDemise?.Invoke(damage);
             RpcOnDemise(damage);
             _isDead = true;
         }
         else
         {
+            ServerOnDamageTaken?.Invoke(damage);
             RpcOnDamageTaken(damage);
         }
 
         RpcOnValueChanged();
     }
 
-    [Command(requiresAuthority = false)]
-    public void Respawn()
+    [Server]
+    private void ServerRespawn()
     {
         _currentHealth = ScaledBaseHealth;
         _isDead = false;
         RpcOnValueChanged();
     }
 
-    [ClientRpc] private void RpcOnDamageTaken(Damage damage) => OnDamageTaken?.Invoke(damage);
-    [ClientRpc] private void RpcOnDemise(Damage damage) => OnDemise?.Invoke(damage);
+    [ClientRpc] private void RpcOnDamageTaken(Damage damage) => ClientOnDamageTaken?.Invoke(damage);
+    [ClientRpc] private void RpcOnDemise(Damage damage) => ClientOnDemise?.Invoke(damage);
     [ClientRpc] private void RpcOnValueChanged() => OnValueChanged?.Invoke();
 }

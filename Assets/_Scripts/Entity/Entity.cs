@@ -29,8 +29,8 @@ public class Entity : NetworkBehaviour, IDisposable, IStatUser
 
     private void OnEnable()
     {
-        Damageable.OnDamageTaken += OnDamageTaken;
-        Damageable.OnDemise += OnDemise;
+        Damageable.ServerOnDamageTaken += OnDamageTaken;
+        Damageable.ServerOnDemise += OnDemise;
         Stats.OnStatChange += HandleStatChange;
 
         HandleOnEnable();
@@ -38,8 +38,8 @@ public class Entity : NetworkBehaviour, IDisposable, IStatUser
 
     private void OnDisable()
     {
-        Damageable.OnDamageTaken -= OnDamageTaken;
-        Damageable.OnDemise -= OnDemise;
+        Damageable.ServerOnDamageTaken -= OnDamageTaken;
+        Damageable.ServerOnDemise -= OnDemise;
         Stats.OnStatChange -= HandleStatChange;
 
         HandleOnDisable();

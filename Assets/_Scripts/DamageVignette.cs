@@ -29,10 +29,10 @@ public class DamageVignette : MonoBehaviour
         }
     }
     private void OnEnable()
-    => Damageable.OnDamageTaken += HandleDamageTaken;
+    => Damageable.ServerOnDamageTaken += HandleDamageTaken;
 
     private void OnDisable()
-        => Damageable.OnDamageTaken -= HandleDamageTaken;
+        => Damageable.ServerOnDamageTaken -= HandleDamageTaken;
 
     private void HandleDamageTaken(Damage damage)
     {

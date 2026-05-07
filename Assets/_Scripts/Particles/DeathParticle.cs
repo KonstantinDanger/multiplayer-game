@@ -26,9 +26,9 @@ public class DeathParticle : MonoBehaviour
         => CreateParticleSystem();
 
     private void OnEnable()
-        => _damageable.Value.OnDemise += HandleOnDemise;
+        => _damageable.Value.ServerOnDemise += HandleOnDemise;
     private void OnDisable()
-    => _damageable.Value.OnDemise -= HandleOnDemise;
+    => _damageable.Value.ServerOnDemise -= HandleOnDemise;
 
     private void HandleOnDemise(Damage damage)
         => TriggerDeathEffect();

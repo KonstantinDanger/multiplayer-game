@@ -21,11 +21,11 @@ public class UpgradeView : UIView
 
         _upgrader = upgrader;
 
-        _upgrader.OnUpgradeAmountChange += HandleUpgradeAmountChange;
+        _upgrader.ClientOnUpgradeAmountChange += HandleUpgradeAmountChange;
     }
 
     private void OnDestroy()
-        => _upgrader.OnUpgradeAmountChange -= HandleUpgradeAmountChange;
+        => _upgrader.ClientOnUpgradeAmountChange -= HandleUpgradeAmountChange;
 
     public void AddUpgradeCard(Upgrade upgrade, UpgradeInfo info)
     {

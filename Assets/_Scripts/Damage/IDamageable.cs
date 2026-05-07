@@ -3,8 +3,11 @@ using System.Collections.Generic;
 
 public interface IDamageable : IGauge
 {
-    event Action<Damage> OnDamageTaken;
-    event Action<Damage> OnDemise;
+    event Action<Damage> ServerOnDamageTaken;
+    event Action<Damage> ServerOnDemise;
+
+    event Action<Damage> ClientOnDamageTaken;
+    event Action<Damage> ClientOnDemise;
 
     public bool IsDead { get; }
 

@@ -10,12 +10,12 @@ public class UpgradeHUD : HUD
     {
         _upgrader = upgrader;
         HandleUpgradeAmountChange(_upgrader.GivenUpgradesCount);
-        _upgrader.OnUpgradeAmountChange += HandleUpgradeAmountChange;
+        _upgrader.ClientOnUpgradeAmountChange += HandleUpgradeAmountChange;
     }
 
     private void OnDestroy()
-        => _upgrader.OnUpgradeAmountChange -= HandleUpgradeAmountChange;
+        => _upgrader.ClientOnUpgradeAmountChange -= HandleUpgradeAmountChange;
 
     private void HandleUpgradeAmountChange(int upgradesAmount)
-        => _upgradesNotifier.gameObject.SetActive(upgradesAmount > 0);
+    {/*_upgradesNotifier.gameObject.SetActive(upgradesAmount > 0);*/}
 }

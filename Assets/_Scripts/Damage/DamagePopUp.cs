@@ -14,7 +14,7 @@ public class DamagePopUp : NetworkBehaviour
 
 
     private void OnEnable()
-        => Damageable.OnDamageTaken += HandleDamageTaken;
+        => Damageable.ServerOnDamageTaken += HandleDamageTaken;
 
     private void Start()
     {
@@ -23,7 +23,7 @@ public class DamagePopUp : NetworkBehaviour
     }
 
     private void OnDisable()
-        => Damageable.OnDamageTaken -= HandleDamageTaken;
+        => Damageable.ServerOnDamageTaken -= HandleDamageTaken;
 
     private void HandleDamageTaken(Damage damage)
         => RpcHandleDamageTaken(damage);

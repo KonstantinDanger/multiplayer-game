@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Upgrader : NetworkBehaviour
 {
-    public Action<int> OnUpgradeAmountChange;
+    public Action<int> ClientOnUpgradeAmountChange;
 
     [SerializeField] private Level _level;
     [SerializeField] private UpgradeConfig _config;
@@ -13,17 +13,16 @@ public class Upgrader : NetworkBehaviour
 
     private UpgradePicker _picker;
 
-    private int _givenUpgradesCount;
-
-    private int _levelCounter;
+    [SyncVar] private int _givenUpgradesCount;
+    [SyncVar] private int _levelCounter;
 
     public int GivenUpgradesCount => _givenUpgradesCount;
 
     private void OnEnable()
-        => _level.OnLevelChanged += HandleLevelChange;
+        => _level.ServerOnLevelChange += HandleLevelChange;
 
     private void OnDisable()
-        => _level.OnLevelChanged -= HandleLevelChange;
+        => _level.ServerOnLevelChange -= HandleLevelChange;
 
     public void Initialize()
     {
@@ -34,6 +33,8 @@ public class Upgrader : NetworkBehaviour
 
     public IEnumerable<ScriptableUpgrade> GiveUpgrades()
     {
+        UnityEngine.Debug.Log("Give upgrades ");
+
         if (_givenUpgradesCount == 0)
             return null;
 
@@ -42,6 +43,7 @@ public class Upgrader : NetworkBehaviour
 
     private void HandleLevelChange(int level)
     {
+
         if (level == 1 && _levelCounter == 0)
             return;
 
@@ -55,7 +57,13 @@ public class Upgrader : NetworkBehaviour
 
     private void AddUpgrade()
     {
+        UnityEngine.Debug.Log("Handle ADD UPGRADE");
+
         _givenUpgradesCount++;
-        OnUpgradeAmountChange?.Invoke(_givenUpgradesCount);
+        RpcOnUpgradeAmountChange(_givenUpgradesCount);
     }
+
+    [ClientRpc]
+    private void RpcOnUpgradeAmountChange(int upgradeAmount)
+        => ClientOnUpgradeAmountChange?.Invoke(upgradeAmount);
 }

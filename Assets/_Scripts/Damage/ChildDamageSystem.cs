@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mirror;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ using UnityEngine;
 /// Instead, it has multiple colliders in children, whose detect 
 /// damage and redirect to the root
 /// </summary>
-public class ChildDamageSystem : MonoBehaviour, IDamageable
+public class ChildDamageSystem : NetworkBehaviour, IDamageable
 {
     [SerializeField] private Transform _rootTransform;
     [SerializeField] private bool _validate = true;
@@ -21,14 +22,20 @@ public class ChildDamageSystem : MonoBehaviour, IDamageable
     public float CurrentGaugeValue => RootDamageable.CurrentGaugeValue;
     public float MaxGaugeValue => RootDamageable.MaxGaugeValue;
 
-    public event Action<Damage> OnDamageTaken;
-    public event Action<Damage> OnDemise;
+    public event Action<Damage> ServerOnDamageTaken;
+    public event Action<Damage> ServerOnDemise;
+
+    public event Action<Damage> ClientOnDamageTaken;
+    public event Action<Damage> ClientOnDemise;
+
     public event Action OnValueChanged;
 
-    private void OnValidate()
+    protected override void OnValidate()
     {
         if (!_validate)
             return;
+
+        base.OnValidate();
 
         if (!_rootTransform)
             _rootTransform = transform.root;
@@ -37,7 +44,14 @@ public class ChildDamageSystem : MonoBehaviour, IDamageable
             _rootTransform = null;
     }
 
+    [Command(requiresAuthority = false)]
     public void TakeDamage(Damage damage)
+        => ServerTakeDamage(damage);
+
+    public void Initialize(StatParameter baseHealth, IEnumerable<DamageHandler> damageHandlers) { }
+    public void Respawn() { }
+
+    private void ServerTakeDamage(Damage damage)
     {
         if (RootDamageable == (this as IDamageable))
             return;
@@ -46,7 +60,4 @@ public class ChildDamageSystem : MonoBehaviour, IDamageable
         .GetComponent<IDamageable>()
         .TakeDamage(damage);
     }
-
-    public void Initialize(StatParameter baseHealth, IEnumerable<DamageHandler> damageHandlers) { }
-    public void Respawn() { }
 }

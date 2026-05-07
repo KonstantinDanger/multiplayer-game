@@ -119,8 +119,8 @@ public class Player : Entity
         }
 
 
-        UnityEngine.Debug.Log("Wallet " + _wallet.ToString());
-        UnityEngine.Debug.Log("Stats => " + Stats.ToString());
+        //UnityEngine.Debug.Log("Wallet " + _wallet.ToString());
+        //UnityEngine.Debug.Log("Stats => " + Stats.ToString());
 
         //UnityEngine.Debug.Log("Current state: " + _stateMachine.CurrentState);
         //For testing
@@ -175,12 +175,7 @@ public class Player : Entity
     public void RefillHealth()
         => Damageable.Respawn();
 
-    [TargetRpc]
     public void ResetLevel()
-        => CmdResetLevel();
-
-    [Command]
-    private void CmdResetLevel()
         => _level.Initialize();
 
     [TargetRpc]

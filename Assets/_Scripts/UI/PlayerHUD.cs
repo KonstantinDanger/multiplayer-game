@@ -19,21 +19,21 @@ public class PlayerHUD : HUD
         _abilitiesHUD.Initialize(abilities);
         _healthGauge.Initialize(gauge: damageable);
 
-        _level.OnCurrencyPerLevelChanged += HandleLevelChanged;
-        _wallet.OnCurrencyChange += HandleCurrencyChanged;
+        _level.ClientOnLevelChange += HandleLevelChange;
+        _wallet.ClientOnCurrencyChange += HandleCurrencyChange;
 
-        HandleLevelChanged();
+        HandleLevelChange(_level.Lvl);
     }
 
     private void OnDestroy()
     {
-        _level.OnCurrencyPerLevelChanged -= HandleLevelChanged;
-        _wallet.OnCurrencyChange -= HandleCurrencyChanged;
+        _level.ClientOnLevelChange -= HandleLevelChange;
+        _wallet.ClientOnCurrencyChange -= HandleCurrencyChange;
     }
 
-    private void HandleLevelChanged()
-    => _levelText.text = $"Lvl: {_level.Lvl} / {_level.MaxLvl}";
+    private void HandleLevelChange(int level)
+    => _levelText.text = $"Lvl: {level} / {_level.MaxLvl}";
 
-    private void HandleCurrencyChanged(CurrencyType type, int delta, int total)
+    private void HandleCurrencyChange(CurrencyType type, int delta, int total)
         => _currencyText.text = total.ToString();
 }

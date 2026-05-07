@@ -21,18 +21,18 @@ public class PlayerSummaryDataBinder
 
     public void Bind()
     {
-        _damageable.OnDamageTaken += HandleDamageTaken;
-        _damageable.OnDemise += HandleDemise;
-        _level.OnLevelChanged += HandleLevelUp;
-        _wallet.OnCurrencyChange += HandleCurrencyReceived;
+        _damageable.ServerOnDamageTaken += HandleDamageTaken;
+        _damageable.ServerOnDemise += HandleDemise;
+        _level.ServerOnLevelChange += HandleLevelUp;
+        _wallet.ServerOnCurrencyChange += HandleCurrencyReceived;
     }
 
     public void Unbind()
     {
-        _damageable.OnDamageTaken -= HandleDamageTaken;
-        _damageable.OnDemise -= HandleDemise;
-        _level.OnLevelChanged -= HandleLevelUp;
-        _wallet.OnCurrencyChange -= HandleCurrencyReceived;
+        _damageable.ServerOnDamageTaken -= HandleDamageTaken;
+        _damageable.ServerOnDemise -= HandleDemise;
+        _level.ServerOnLevelChange -= HandleLevelUp;
+        _wallet.ServerOnCurrencyChange -= HandleCurrencyReceived;
     }
 
     private void HandleDamageTaken(Damage damage)

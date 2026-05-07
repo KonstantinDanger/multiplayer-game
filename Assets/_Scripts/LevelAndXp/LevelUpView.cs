@@ -22,7 +22,7 @@ public class LevelUpView : UIView
 
     private void OnEnable()
     {
-        HandleCurrencyChanged();
+        HandleCurrencyChange();
 
         SetButton(IsUpgradeEnabled());
 
@@ -37,33 +37,33 @@ public class LevelUpView : UIView
         _level = level;
         _wallet = wallet;
 
-        _level.OnLevelChanged += HandleLevelChanged;
-        _level.OnCurrencyPerLevelChanged += HandleCurrencyPerLevelChanged;
-        _wallet.OnCurrencyChange += HandleCurrencyChanged;
+        _level.ClientOnLevelChange += HandleLevelChange;
+        _level.ClientOnCurrencyPerLevelChange += HandleCurrencyPerLevelChange;
+        _wallet.ClientOnCurrencyChange += HandleCurrencyChange;
 
         _defaultTextColor = _levelPreviewText.color;
     }
 
     private void OnDestroy()
     {
-        _level.OnLevelChanged -= HandleLevelChanged;
-        _level.OnCurrencyPerLevelChanged -= HandleCurrencyPerLevelChanged;
-        _wallet.OnCurrencyChange -= HandleCurrencyChanged;
+        _level.ClientOnLevelChange -= HandleLevelChange;
+        _level.ClientOnCurrencyPerLevelChange -= HandleCurrencyPerLevelChange;
+        _wallet.ClientOnCurrencyChange -= HandleCurrencyChange;
     }
 
-    private void HandleCurrencyPerLevelChanged()
+    private void HandleCurrencyPerLevelChange()
         => SetPriceText(IsUpgradeEnabled());
 
-    private void HandleLevelChanged(int level)
-        => HandleCurrencyChanged();
+    private void HandleLevelChange(int level)
+        => HandleCurrencyChange();
 
     private void HandleLevelUp()
     {
         _level.TryLevelUp();
-        HandleCurrencyChanged();
+        HandleCurrencyChange();
     }
 
-    private void HandleCurrencyChanged(CurrencyType type = 0, int delta = 0, int total = 0)
+    private void HandleCurrencyChange(CurrencyType type = 0, int delta = 0, int total = 0)
     {
         bool upgradeEnabled = IsUpgradeEnabled();
 
