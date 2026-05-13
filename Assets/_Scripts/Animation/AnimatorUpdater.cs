@@ -13,8 +13,11 @@ public class AnimatorUpdater
 
     public void Initialize(GameObject targetUpdater)
     {
-        Animator[] animators = Object.FindObjectsOfType<Animator>();
+        Animator[] animators = Object.FindObjectsByType<Animator>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         Animator senderAnimator = targetUpdater.GetComponentInChildren<Animator>();
+
+        UnityEngine.Debug.Log("targetUpdater " + targetUpdater);
+        UnityEngine.Debug.Log("animators.length " + animators.Length);
 
         _target = targetUpdater;
 

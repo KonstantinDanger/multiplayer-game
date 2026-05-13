@@ -173,7 +173,12 @@ public class Player : Entity
         => _respawn.Execute(this.netId, DamageSystemConfig.RespawnTime);
 
     public void RefillHealth()
-        => Damageable.Respawn();
+    {
+        if (!CanDoActions())
+            return;
+
+        Damageable.Respawn();
+    }
 
     public void ResetLevel()
         => _level.Initialize();
@@ -237,7 +242,12 @@ public class Player : Entity
     }
 
     private void HandleInteraction()
-        => _interactor.Interact();
+    {
+        if (!CanDoActions())
+            return;
+
+        _interactor.Interact();
+    }
 
     private void HandleAbility(int index)
     {
