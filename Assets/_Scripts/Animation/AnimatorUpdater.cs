@@ -16,9 +16,6 @@ public class AnimatorUpdater
         Animator[] animators = Object.FindObjectsByType<Animator>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         Animator senderAnimator = targetUpdater.GetComponentInChildren<Animator>();
 
-        UnityEngine.Debug.Log("targetUpdater " + targetUpdater);
-        UnityEngine.Debug.Log("animators.length " + animators.Length);
-
         _target = targetUpdater;
 
         foreach (Animator entity in animators)
@@ -48,6 +45,9 @@ public class AnimatorUpdater
             Animator animator = animatorData.Animator;
 
             if (animator == null)
+                continue;
+
+            if (!animator.gameObject.activeInHierarchy)
                 continue;
 
             float distanceToTarget = Vector3.Distance(animator.transform.position, _target.transform.position);

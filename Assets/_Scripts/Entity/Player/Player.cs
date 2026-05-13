@@ -130,7 +130,9 @@ public class Player : Entity
         Input.Update();
         _abilities.OnUpdate();
         _stateMachine.CurrentState.Update(Time.deltaTime);
-        _animatorUpdater.Update(Time.deltaTime);
+
+        if (isLocalPlayer)
+            _animatorUpdater.Update(Time.deltaTime);
 
         base.Update();
     }

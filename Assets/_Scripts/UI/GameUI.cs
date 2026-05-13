@@ -24,6 +24,9 @@ public class GameUI : MonoBehaviour
             return;
 
         _ui.Add(ui);
+
+        if (ui is UIView view)
+            view.Initialize(this);
     }
 
     public void OpenViewOfType(Type viewType)
