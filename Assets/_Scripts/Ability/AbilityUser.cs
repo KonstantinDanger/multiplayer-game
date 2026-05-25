@@ -27,15 +27,24 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
     public void Add(Ability ability)
         => _abilities.Add(new(ability));
 
-    public virtual Ability Use(Ability abilityToUse, NetworkBehaviour target = null)
-    {
-        AbilityHandler ability = _abilities.Find(handler => handler.Ability.Equals(abilityToUse));
+    /// <summary>
+    /// Returns -1 if target ability is not found
+    /// </summary>
+    /// <param name="abilityToUse"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public int FindIndexOf(Ability abilityToUse)
+        => _abilities.FindIndex(handler => handler.Ability.Equals(abilityToUse));
 
-        if (ability.Perform(this, target))
-            OnAbilityStartUsing.Invoke(SetupData(ability));
+    //public virtual Ability Use(Ability abilityToUse, NetworkBehaviour target = null)
+    //{
+    //    AbilityHandler ability = _abilities.Find(handler => handler.Ability.Equals(abilityToUse));
 
-        return ability;
-    }
+    //    if (ability.Perform(this, target))
+    //        OnAbilityStartUsing.Invoke(SetupData(ability));
+
+    //    return ability;
+    //}
 
     public virtual Ability Use(int index, NetworkBehaviour target = null)
     {

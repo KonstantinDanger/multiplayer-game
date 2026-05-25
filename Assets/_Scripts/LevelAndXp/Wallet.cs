@@ -28,12 +28,15 @@ public class Wallet : NetworkBehaviour
         }
     }
 
+    [Server]
     public void Add(CurrencyType type, int amount)
         => ChangeCurrency(type, amount, (a) => _currencies[type] += a);
 
+    [Server]
     public void Withdraw(CurrencyType type, int amount)
         => ChangeCurrency(type, amount, (a) => _currencies[type] -= a);
 
+    [Server]
     public void ResetCurrency(CurrencyType type)
     {
         int delta = _currencies[type];

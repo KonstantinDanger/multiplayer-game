@@ -39,7 +39,11 @@ public class Projectile : NetworkBehaviour
     }
 
     private void Start()
-        => Destroy(gameObject, _destroyTime);
+        => Invoke(nameof(Destroy), _destroyTime);
+
+    private void Destroy()
+        => NetworkServer.Destroy(gameObject);
+
 
     private void Update()
     {

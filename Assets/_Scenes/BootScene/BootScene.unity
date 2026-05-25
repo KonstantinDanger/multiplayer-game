@@ -872,7 +872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2984d3c7b97d6fb43bd39fba287133c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _netManager: {fileID: 8638753538948294093, guid: 240b62a2517c9754dbd6061d973eb5f4, type: 3}
+  _netManager: {fileID: 8638753538948294093, guid: 56669ef53dcd1284f93c2282215647bc, type: 3}
   _gamePrefab: {fileID: 2406198174544154514, guid: 50ff5dfcf3451d84d97e231eccef6f79, type: 3}
 --- !u!4 &1109667031
 Transform:

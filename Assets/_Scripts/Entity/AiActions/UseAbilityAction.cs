@@ -24,7 +24,9 @@ public class UseAbilityAction : AIAction
     public override void Execute(Enemy self, NetworkBehaviour target)
     {
         IsLocked = true;
-        _runtimeSelectedAbility = _abilityUser.Use(_abilityToUse, target);
+        int abilityIndex = _abilityUser.FindIndexOf(_abilityToUse);
+        //_runtimeSelectedAbility = _abilityUser.Use(_abilityToUse, target);
+        _runtimeSelectedAbility = _abilityUser.Use(abilityIndex, target);
 
         Vector3 rotationDir = target.transform.position - self.transform.position;
         _rotator.Rotate(rotationDir, self.RotationConfig.RotationSpeed);

@@ -32,10 +32,11 @@ public abstract class Enemy : Entity
             _aiBrain = GetComponent<AIBrain>();
     }
 
-    protected override void OnAwake()
+    private void Awake()
     {
         _aiBrain.Initialize(this, _enemyConfig.AIActions);
         DetectionTimer = DetectionConfig.DetectionInterval;
+
     }
 
     protected override void Update()

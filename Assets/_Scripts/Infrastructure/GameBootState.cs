@@ -33,5 +33,5 @@ public class GameBootState : GameState
     }
 
     private void OnLoadStarted() { }
-    private void OnLoadEnded() => GoTo<GameLobbyState>();
+    private void OnLoadEnded() => GoTo<GameOfflineLobbyState>();
 }

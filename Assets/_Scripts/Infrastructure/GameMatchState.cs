@@ -36,7 +36,7 @@ public class GameMatchState : GameState
         InitializeMatchData(_gameData);
         InitPlayers();
 
-        Events.OnPlayerDemise += HandlePlayerDemise;
+        Events.ServerOnPlayerDemise += HandlePlayerDemise;
     }
 
     public override void Update(float deltaTime)
@@ -56,7 +56,7 @@ public class GameMatchState : GameState
 
     public override void OnExit()
     {
-        Events.OnPlayerDemise -= HandlePlayerDemise;
+        Events.ServerOnPlayerDemise -= HandlePlayerDemise;
 
         _dataBinders
             .ForEach(dataB => dataB
@@ -147,7 +147,7 @@ public class GameMatchState : GameState
             player.Damageable.Respawn();
             player.ToggleHUD(true);
             player.SetCanAttack(true);
-            player.InitializeAnimatorUpdater();
+            player.GetComponent<AnimatorUpdater>().Initialize(player.gameObject);
             _players.Add(player);
         }
 

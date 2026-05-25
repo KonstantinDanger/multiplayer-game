@@ -1,3 +1,4 @@
+using AYellowpaper;
 using Mirror;
 using System.Linq;
 using UnityEngine;
@@ -9,7 +10,6 @@ public class Player : Entity
 
     [SerializeField] private RayCastDamager _damager; //For testing
     [SerializeField] private Respawn _respawn;
-    [SerializeField] private GameObject _headObject;
     [SerializeField] private AbilityUser _abilities;
     [SerializeField] private ScriptableCharacterClass _baseCharacterClass;
     [SerializeField] private Level _level;
@@ -17,16 +17,16 @@ public class Player : Entity
     [SerializeField] private Wallet _wallet;
     [SerializeField] private Interactor _interactor;
 
-    public ScriptableCharacterClass CharacterClass { get; private set; }
-    public IPlayerInputBrain Input { get; private set; }
-    private IRotatablePlayerCamera Camera => Rotatable as IRotatablePlayerCamera;
-    private Vector2 RotationInput => Input.Rotation;
+    [SerializeField] private InterfaceReference<IPlayerInputBrain> _inputRef;
 
-    private AnimatorUpdater _animatorUpdater;
+    public ScriptableCharacterClass CharacterClass { get; private set; }
+    public IPlayerInputBrain Input => _inputRef.Value;
+    public IRotatablePlayerCamera Camera => Rotatable as IRotatablePlayerCamera;
+
     private bool _isMenuActive = false;
     private bool _isUpgrading = false;
     private GameUI _playerUI;
-    private LobbyUI _menu;
+    private LobbyView _menu;
     private UpgradeView _upgradeUI;
     private LevelUpView _levelUpUI;
     private PlayerHUD _playerHUD;
@@ -34,6 +34,47 @@ public class Player : Entity
     private bool IsOffline =>
         !NetworkClient.active &&
         !NetworkServer.active;
+
+    private void Awake()
+    {
+        Input.Initialize();
+
+        if (CanDoActions())
+            _stateMachine = new PlayerStateMachine(this);
+
+        SetCharacterClass(_baseCharacterClass);
+    }
+
+    protected override void HandleOnEnable()
+    {
+        if (!CanDoActions())
+            return;
+
+        Input.Enable();
+        Input.JumpAction += HandleJump;
+        Input.OnMenuInvoked += HandleUICancel;
+        Input.AttackAction += HandleAttack;
+        Input.AbilityAction += HandleAbility;
+        Input.OnUpgradeMenuInvoked += HandleUpgradeMenuInvoked;
+        Input.OnInteraction += HandleInteraction;
+    }
+
+    protected override void HandleOnDisable()
+    {
+        if (!CanDoActions())
+            return;
+
+        Input.Disable();
+        Input.JumpAction -= HandleJump;
+        Input.OnMenuInvoked -= HandleUICancel;
+        Input.AttackAction -= HandleAttack;
+        Input.AbilityAction -= HandleAbility;
+        Input.OnUpgradeMenuInvoked -= HandleUpgradeMenuInvoked;
+        Input.OnInteraction -= HandleInteraction;
+    }
+
+    private void Start()
+        => Camera.Initialize(CanDoActions());
 
     public override void OnStartClient()
     {
@@ -46,59 +87,26 @@ public class Player : Entity
             gameObject.layer = StaticData.Constants.EnemyLayer;
     }
 
-    public override void OnStartServer()
+    protected override void OnEntityStartServer()
     {
-        base.OnStartServer();
-
         if (isLocalPlayer && isServer)
             gameObject.name += " (Server)";
-    }
 
-    protected override void OnAwake()
-    {
-        Input = new PlayerInput();
-        _stateMachine = new PlayerStateMachine(this);
-        //_menu = ServiceLocator.Container.Resolve<LobbyUI>();
+        if (_stateMachine == null)
+            _stateMachine = new PlayerStateMachine(this);
 
         _upgrader.Initialize();
-        SetCharacterClass(_baseCharacterClass);
-
-        var animatorUpdData = ServiceLocator.Container.Resolve<StaticData>().AnimatorUpdaterConfig;
-
-        _animatorUpdater = new(animatorUpdData);
     }
-
-    protected override void HandleOnEnable()
-    {
-        Input.Enable();
-        Input.JumpAction += HandleJump;
-        Input.OnMenuInvoked += HandleUICancel;
-        Input.AttackAction += HandleAttack;
-        Input.AbilityAction += HandleAbility;
-        Input.OnUpgradeMenuInvoked += HandleUpgradeMenuInvoked;
-        Input.OnInteraction += HandleInteraction;
-    }
-
-    protected override void HandleOnDisable()
-    {
-        Input.Disable();
-        Input.JumpAction -= HandleJump;
-        Input.OnMenuInvoked -= HandleUICancel;
-        Input.AttackAction -= HandleAttack;
-        Input.AbilityAction -= HandleAbility;
-        Input.OnUpgradeMenuInvoked -= HandleUpgradeMenuInvoked;
-        Input.OnInteraction -= HandleInteraction;
-    }
-
-    protected override void OnStart()
-        => Camera.Initialize(CanDoActions());
 
     protected override void Update()
     {
+        if (isServer || IsOffline)
+            _stateMachine.CurrentState.Update(Time.deltaTime);
+
         if (!CanDoActions())
             return;
 
-        //For testing
+        #region For testing
         if (Keyboard.current.hKey.wasPressedThisFrame)
         {
             Damageable.TakeDamage(new() { Amount = 50 });
@@ -115,34 +123,32 @@ public class Player : Entity
         if (Keyboard.current.iKey.wasPressedThisFrame)
         {
             UnityEngine.Debug.Log("Current player max health: " + Damageable.MaxGaugeValue);
-
         }
-
         //UnityEngine.Debug.Log("Wallet " + _wallet.ToString());
         //UnityEngine.Debug.Log("Stats => " + Stats.ToString());
 
         //UnityEngine.Debug.Log(_level);
         //UnityEngine.Debug.Log("Current state: " + _stateMachine.CurrentState);
-        //For testing
+        #endregion
 
-        Rotatable.Rotate(RotationInput, RotationConfig.RotationSpeed);
+        Input.UpdateLogic();
 
-        Input.Update();
+        if (IsOffline)
+            HandleLocomotion(Input.MovementVector, Input.Rotation, Input.IsSprinting);
+        else
+            CmdHandleLocomotion(Input.MovementVector, Input.Rotation, Input.IsSprinting);
+
         _abilities.OnUpdate();
-        _stateMachine.CurrentState.Update(Time.deltaTime);
-
-        if (isLocalPlayer)
-            _animatorUpdater.Update(Time.deltaTime);
 
         base.Update();
     }
 
-    public override void Dispose()
-    {
-        base.Dispose();
+    [Command(requiresAuthority = false)]
+    private void CmdHandleLocomotion(Vector2 movement, Vector2 rotation, bool isSprinting)
+        => HandleLocomotion(movement, rotation, isSprinting);
 
-        Destroy(_playerHUD);
-    }
+    private void HandleLocomotion(Vector2 movement, Vector2 rotation, bool isSprinting)
+        => Rotatable.Rotate(rotation, RotationConfig.RotationSpeed);
 
     private void HandleJump()
     {
@@ -163,13 +169,6 @@ public class Player : Entity
     private void CmdOnDemise(uint netId)
         => Events.InvokePlayerDemise(netId);
 
-    [TargetRpc]
-    public void ToggleHUD(bool active)
-    {
-        _playerHUD.gameObject.SetActive(active);
-        _playerHUD.Initialize(_abilities, Damageable, _level, _upgrader, _wallet);
-    }
-
     [ClientRpc]
     public void Respawn()
         => _respawn.Execute(this.netId, DamageSystemConfig.RespawnTime);
@@ -186,47 +185,10 @@ public class Player : Entity
         => _level.Initialize();
 
     [TargetRpc]
-    public void CreateUI()
-    {
-        if (!CanDoActions())
-            return;
-
-        var data = ServiceLocator.Container.Resolve<StaticData>();
-        var hudPrefab = data.PlayerHUDPrefab;
-        var upgradeUIPrefab = data.UpgradeUIPrefab;
-        var levelUpUIPrefab = data.LevelUpUIPrefab;
-        var charSelectUIPrefab = data.CharacterSelectUI;
-
-        //Game ui spawn
-        _playerUI = Instantiate(data.UIPrefab, transform);
-        _playerUI.Initialize(HandleViewOpen, HandleAllViewsClose);
-
-        _playerHUD = Instantiate(hudPrefab, _playerUI.transform);
-        _levelUpUI = Instantiate(levelUpUIPrefab, _playerUI.transform);
-        _upgradeUI = Instantiate(upgradeUIPrefab, _levelUpUI.transform);
-        CharacterSelectView charSelectInstance = Instantiate(charSelectUIPrefab, _playerUI.transform);
-
-        _upgradeUI.Initialize(gameObject, _upgrader);
-        _levelUpUI.Initialize(_level, _wallet);
-        charSelectInstance.Initialize(data.ClassList, this);
-
-        //UI addition to the Game ui
-        _playerUI.Add(_playerHUD);
-        _playerUI.Add(_levelUpUI);
-        _playerUI.Add(_upgradeUI);
-        _playerUI.Add(charSelectInstance);
-
-        ServiceLocator.Container.RegisterSingle(_playerUI);
-    }
-
-    [TargetRpc]
     public void SetCanAttack(bool canAttack)
         => Input.SetPlayerAttackInput(canAttack);
 
     [TargetRpc]
-    public void InitializeAnimatorUpdater()
-        => _animatorUpdater.Initialize(gameObject);
-
     public void Spectate(bool active)
         => Input.SetPlayerInput(!active);
 
@@ -248,24 +210,79 @@ public class Player : Entity
         if (!CanDoActions())
             return;
 
-        _interactor.Interact();
+        if (IsOffline)
+        {
+            _interactor.Interact();
+            return;
+        }
+
+        CmdHandleInteraction();
     }
 
+    [Command(requiresAuthority = false)]
+    private void CmdHandleInteraction()
+        => _interactor.Interact();
+
+    #region Ability
     private void HandleAbility(int index)
     {
         if (!CanDoActions() || index == 0)
             return;
 
-        _abilities.Use(index);
+        CmdHandleAbility(index);
     }
+
+    [Command]
+    private void CmdHandleAbility(int index)
+        => _abilities.Use(index);
 
     private void HandleAttack()
     {
         if (!CanDoActions())
             return;
 
-        _abilities.Use(0);
+        CmdHandleAbility(0);
         //_damager.InflictDamage(Camera.Transform.position, Camera.Transform.forward);
+    }
+    #endregion
+
+    #region UI
+    public void CreateUI()
+    {
+        var data = ServiceLocator.Container.Resolve<StaticData>();
+        var hudPrefab = data.PlayerHUDPrefab;
+        var upgradeUIPrefab = data.UpgradeUIPrefab;
+        var levelUpUIPrefab = data.LevelUpUIPrefab;
+        var charSelectUIPrefab = data.CharacterSelectUI;
+
+        //Game ui spawn
+        _playerUI = Instantiate(data.UIPrefab, transform);
+        _playerUI.Initialize(HandleViewOpen, HandleAllViewsClose);
+
+        _playerHUD = Instantiate(hudPrefab, _playerUI.transform);
+        _levelUpUI = Instantiate(levelUpUIPrefab, _playerUI.transform);
+        _upgradeUI = Instantiate(upgradeUIPrefab, _levelUpUI.transform);
+        CharacterSelectView charSelectInstance = Instantiate(charSelectUIPrefab, _playerUI.transform);
+        _menu = Instantiate(data.LobbyUIPrefab, _playerUI.transform);
+
+        _upgradeUI.Initialize(gameObject, _upgrader);
+        _levelUpUI.Initialize(_level, _wallet);
+        charSelectInstance.Initialize(data.ClassList, this);
+        _menu.Initialize(ServiceLocator.Container.Resolve<ILobby>());
+
+        //UI addition to the Game ui
+        _playerUI.Add(_playerHUD);
+        _playerUI.Add(_levelUpUI);
+        _playerUI.Add(_upgradeUI);
+        _playerUI.Add(charSelectInstance);
+
+        ServiceLocator.Container.RegisterSingle(_playerUI);
+    }
+
+    public void ToggleHUD(bool active)
+    {
+        _playerHUD.gameObject.SetActive(active);
+        _playerHUD.Initialize(_abilities, Damageable, _level, _upgrader, _wallet);
     }
 
     private void HandleViewOpen()
@@ -327,6 +344,7 @@ public class Player : Entity
         if (_isMenuActive)
         {
             HandleViewOpen();
+            _menu.gameObject.SetActive(_isMenuActive);
             return;
         }
 
@@ -334,17 +352,23 @@ public class Player : Entity
 
         //Input.SetUiInput(_isMenuActive);
 
-        //_menu.gameObject.SetActive(_isMenuActive);
+        _menu.gameObject.SetActive(_isMenuActive);
     }
 
-    private void LateUpdate()
-    {
-        if (!CanDoActions())
-            return;
+    #endregion
 
-        _headObject.transform.position = Camera.Transform.position;
-    }
 
-    private bool CanDoActions()
+    /// <summary>
+    /// Checks if the player is local OR is offline
+    /// </summary>
+    /// <returns></returns>
+    public bool CanDoActions()
         => isLocalPlayer || IsOffline;
+
+    public override void Dispose()
+    {
+        base.Dispose();
+
+        Destroy(_playerHUD);
+    }
 }

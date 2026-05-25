@@ -246,16 +246,10 @@ namespace Mirror
         }
 
         // make sure to call base.Update() when overwriting
-        public virtual void Update()
-        {
-            ApplyConfiguration();
-        }
+        public virtual void Update() => ApplyConfiguration();
 
         // virtual so that inheriting classes' LateUpdate() can call base.LateUpdate() too
-        public virtual void LateUpdate()
-        {
-            UpdateScene();
-        }
+        public virtual void LateUpdate() => UpdateScene();
 
         ////////////////////////////////////////////////////////////////////////
 
@@ -1098,11 +1092,9 @@ namespace Mirror
         /// <summary>Unregister a Transform from start positions.</summary>
         // Static because it's called from NetworkStartPosition::OnDestroy
         // and singleton may not exist yet
-        public static void UnRegisterStartPosition(Transform start)
-        {
+        public static void UnRegisterStartPosition(Transform start) =>
             //Debug.Log($"UnRegisterStartPosition: {start.name} {start.position}");
             startPositions.Remove(start);
-        }
 
         /// <summary>Get the next NetworkStartPosition based on the selected PlayerSpawnMethod.</summary>
         public virtual Transform GetStartPosition()
@@ -1163,11 +1155,9 @@ namespace Mirror
             OnServerConnect(conn);
         }
 
-        void OnServerReadyMessageInternal(NetworkConnectionToClient conn, ReadyMessage msg)
-        {
+        void OnServerReadyMessageInternal(NetworkConnectionToClient conn, ReadyMessage msg) =>
             //Debug.Log("NetworkManager.OnServerReadyMessageInternal");
             OnServerReady(conn);
-        }
 
         void OnServerAddPlayerInternal(NetworkConnectionToClient conn, AddPlayerMessage msg)
         {
@@ -1319,14 +1309,11 @@ namespace Mirror
 
         /// <summary>Called on the server when a client disconnects.</summary>
         // Called by NetworkServer.OnTransportDisconnect!
-        public virtual void OnServerDisconnect(NetworkConnectionToClient conn)
-        {
+        public virtual void OnServerDisconnect(NetworkConnectionToClient conn) =>
             // by default, this function destroys the connection's player.
             // can be overwritten for cases like delayed logouts in MMOs to
             // avoid players escaping from PvP situations by logging out.
-            NetworkServer.DestroyPlayerForConnection(conn);
-            //Debug.Log("OnServerDisconnect: Client disconnected.");
-        }
+            NetworkServer.DestroyPlayerForConnection(conn);//Debug.Log("OnServerDisconnect: Client disconnected.");
 
         /// <summary>Called on the server when a client is ready (= loaded the scene)</summary>
         public virtual void OnServerReady(NetworkConnectionToClient conn)

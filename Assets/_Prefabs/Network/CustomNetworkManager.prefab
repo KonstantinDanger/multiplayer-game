@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3241852751706821009}
   - component: {fileID: 4788222530058080890}
   m_Layer: 0
-  m_Name: MyNetworkManager
+  m_Name: CustomNetworkManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,13 +64,34 @@ MonoBehaviour:
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs:
+  - {fileID: 6125262222170548877, guid: 617760f6ec3f69f41bb1f78db535919e, type: 3}
   - {fileID: 1768439199690489168, guid: e8ed1aedc8cd572479ff2ddc96231fda, type: 3}
+  - {fileID: 6125262222170548877, guid: e5fe1cff9c07dc4408be67b5378d7f84, type: 3}
+  - {fileID: 6125262222170548877, guid: fde5444401e851d4fafb1858fbbec578, type: 3}
+  - {fileID: 1418038051021799968, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+  - {fileID: 532728802165586786, guid: f3ca8b25bbc90dc4bb3668381906e35c, type: 3}
+  - {fileID: 8151745149710125561, guid: e8e6ae855a1152e4bafdd7365f9f468c, type: 3}
+  - {fileID: 5798718343062315758, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}
+  - {fileID: 2270220513023456629, guid: a31dd7c92c7a8af4e9e58bc9cc0104e6, type: 3}
   - {fileID: 1021284249747369740, guid: 50ff5dfcf3451d84d97e231eccef6f79, type: 3}
   - {fileID: 3679950262808284364, guid: 356c4d4e560397d4d8838f52640c3ef7, type: 3}
-  - {fileID: 2165677341536192177, guid: 42c61504473b8484cb5e6b5c6aeefdf7, type: 3}
   - {fileID: 9106277423588656863, guid: fd064af28e613ed46a4f3134ac2d4112, type: 3}
+  - {fileID: 3450816301502267953, guid: c1faf7b5186dc544289b7691b1aae290, type: 3}
+  - {fileID: 1546190322298139147, guid: 38fdbff9cc7367e4cb105312e269d50d, type: 3}
+  - {fileID: 7458523687011287412, guid: 2fc8c8f312227e343beb9dcec4029519, type: 3}
+  - {fileID: 4762771628661814864, guid: beaed3ff85c321e469f42f6c48772282, type: 3}
   - {fileID: 1068351358798396614, guid: 06a442415b844834c8268af61a413e4b, type: 3}
   - {fileID: 9118580001092216917, guid: 2834b6c588c3521449fa80a158db5941, type: 3}
+  - {fileID: 1402403251394149760, guid: d50c0d7d71c33ae4f8a4d246a04bcc38, type: 3}
+  - {fileID: 2214084154317203853, guid: ebbfe0f2fd9bce4499cf0997f41c9df6, type: 3}
+  - {fileID: 1058871766424454229, guid: 4e89d65d3dfe26a4d8788a6b409d8797, type: 3}
+  - {fileID: 2160140906098860925, guid: 69185a3045a4c8e4b854a2ed74c49814, type: 3}
+  - {fileID: 6878142164585377756, guid: ec21b215131502943a6c2dd06047f8e8, type: 3}
+  - {fileID: 2845125904293703307, guid: 219a331a181917b4ba3c2345d4818e86, type: 3}
+  - {fileID: 167910388214004320, guid: 0a3dffdeda6ea384db81ef1061c045de, type: 3}
+  - {fileID: 7508307478715906307, guid: 62a5ae868743eb741abb9ac4cd39fc68, type: 3}
+  - {fileID: 1414337791031256175, guid: 7e3b4ce8f044254479689eb3bc5c63c1, type: 3}
+  - {fileID: 2165677341536192177, guid: 42c61504473b8484cb5e6b5c6aeefdf7, type: 3}
   - {fileID: 4389659091310345341, guid: 86110dba61a133a42a50a37c16b67837, type: 3}
   exceptionsDisconnect: 1
   snapshotSettings:

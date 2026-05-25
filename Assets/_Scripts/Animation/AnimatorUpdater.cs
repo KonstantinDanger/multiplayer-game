@@ -1,19 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using Mirror;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimatorUpdater
+public class AnimatorUpdater : NetworkBehaviour
 {
-    private readonly AnimatorUpdaterConfig _config;
+    [SerializeField] private AnimatorUpdaterConfig _config;
     private readonly List<AnimatorUpdateData> _updateData = new();
 
     private GameObject _target;
-
-    public AnimatorUpdater(AnimatorUpdaterConfig config)
-        => _config = config;
+    private bool _initialized;
 
     public void Initialize(GameObject targetUpdater)
     {
-        Animator[] animators = Object.FindObjectsByType<Animator>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        Animator[] animators = FindObjectsByType<Animator>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         Animator senderAnimator = targetUpdater.GetComponentInChildren<Animator>();
 
         _target = targetUpdater;
@@ -33,10 +32,18 @@ public class AnimatorUpdater
                 LastUpdateTime = Time.time + Random.Range(0, _config.MaxUpdateDelay)
             });
         }
+
+        _initialized = true;
     }
 
-    public void Update(float deltaTime)
+    public void Update()
     {
+        if (!isLocalPlayer)
+            return;
+
+        if (!_initialized)
+            return;
+
         if (_target == null || _updateData.Count == 0)
             return;
 
@@ -56,7 +63,7 @@ public class AnimatorUpdater
 
             if (delay <= 0)
             {
-                animator.Update(deltaTime);
+                animator.Update(Time.deltaTime);
 
             }
             else if (Time.time - animatorData.LastUpdateTime >= delay)

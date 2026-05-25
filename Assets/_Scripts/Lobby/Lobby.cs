@@ -21,8 +21,11 @@ public class Lobby : MonoBehaviour, ILobby
 
     private bool _initialized;
     public bool Initialized => _initialized;
+    public bool IsCreated { get; private set; }
 
+    public CSteamID LobbyOwnerID => SteamMatchmaking.GetLobbyOwner(LobbyId);
     public CSteamID LobbyId { get; private set; }
+    public int MaxPlayers { get; private set; }
 
     public void Initialize()
     {
@@ -48,6 +51,9 @@ public class Lobby : MonoBehaviour, ILobby
         }
 
         SteamMatchmaking.CreateLobby(lobbyType, maxPlayersAmount);
+        MaxPlayers = maxPlayersAmount;
+
+        IsCreated = true;
     }
 
     public void DisbandLobby()
@@ -58,6 +64,7 @@ public class Lobby : MonoBehaviour, ILobby
             Events.InvokeLobbyDisband();
             _networkManager.StopHost();
             _networkManager.offlineScene = "";
+            IsCreated = false;
         }
     }
 

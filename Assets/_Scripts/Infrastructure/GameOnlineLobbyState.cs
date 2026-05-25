@@ -1,33 +1,35 @@
 using Mirror;
 
-public class GameLobbyState : GameState
+public class GameOnlineLobbyState : GameState
 {
     private CustomNetworkManager _networkManager;
     private StaticData _staticData;
+    private ILobby _lobby;
 
-    public GameLobbyState(IStateMachine stateMachine, ServiceLocator container) : base(stateMachine, container) { }
+    public GameOnlineLobbyState(IStateMachine stateMachine, ServiceLocator container) : base(stateMachine, container) { }
 
     public override void OnEnter()
     {
         _staticData = Resolve<StaticData>();
         _networkManager = Resolve<CustomNetworkManager>();
+        _lobby = Resolve<ILobby>();
 
-        InitLobbyPlayers();
+        //InitLobbyPlayers();
 
-        Events.OnLobbyDisband += HandleLobbyDisband;
-        Events.OnStartGameInitiated += HandleStartGameInitiated;
-        Events.OnPlayerAdded += HandlePlayerAdded;
-        Events.OnPlayerDemise += HandlePlayerDemise;
+        Events.ServerOnLobbyDisband += HandleLobbyDisband;
+        Events.ServerOnStartGameInitiated += HandleStartGameInitiated;
+        Events.ServerOnPlayerAdded += HandlePlayerAdded;
+        Events.ServerOnPlayerDemise += HandlePlayerDemise;
 
         _networkManager.OnServerSceneLoaded += HandleGameSceneLoaded;
     }
 
     public override void OnExit()
     {
-        Events.OnLobbyDisband -= HandleLobbyDisband;
-        Events.OnStartGameInitiated -= HandleStartGameInitiated;
-        Events.OnPlayerAdded -= HandlePlayerAdded;
-        Events.OnPlayerDemise -= HandlePlayerDemise;
+        Events.ServerOnLobbyDisband -= HandleLobbyDisband;
+        Events.ServerOnStartGameInitiated -= HandleStartGameInitiated;
+        Events.ServerOnPlayerAdded -= HandlePlayerAdded;
+        Events.ServerOnPlayerDemise -= HandlePlayerDemise;
 
         _networkManager.OnServerSceneLoaded -= HandleGameSceneLoaded;
 
@@ -63,8 +65,8 @@ public class GameLobbyState : GameState
         player.Damageable.Respawn();
     }
 
-    private void HandleStartGameInitiated() =>
-        _networkManager.ServerChangeScene(_staticData.GameSceneName);
+    private void HandleStartGameInitiated()
+        => _networkManager.ServerChangeScene(_staticData.GameSceneName);
 
     private void HandleGameSceneLoaded(string sceneName)
     {

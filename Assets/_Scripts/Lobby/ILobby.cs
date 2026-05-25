@@ -12,5 +12,10 @@ public interface ILobby
     void DisbandLobby();
     void CreateLobby(ELobbyType lobbyType, int maxPlayersAmount = 2);
     void Initialize();
+    void LeaveLobby();
+
     public CSteamID LobbyId { get; }
+    bool IsCreated { get; }
+    int MaxPlayers { get; }
+    CSteamID LobbyOwnerID { get; }
 }

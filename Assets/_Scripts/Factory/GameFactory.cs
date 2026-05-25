@@ -18,12 +18,11 @@ public class GameFactory : NetworkBehaviour
         return text;
     }
 
+    [Server]
     public Projectile SpawnProjectile(Projectile projectile, Vector3 direction, float flightSpeed, NetworkBehaviour sender, Damage damage, Transform transform, Quaternion rotation, float scaleMultiplier = 1, Transform parent = null)
     {
         Projectile proj = Instantiate(projectile, transform.position, rotation, parent);
         proj.transform.localScale *= scaleMultiplier;
-
-        SpawnOnServer(proj.gameObject, sender.gameObject);
 
         ProjectileData data = new(proj.netId)
         {
@@ -43,9 +42,12 @@ public class GameFactory : NetworkBehaviour
 
         proj.Initialize(data);
 
+        SpawnOnServer(proj.gameObject, sender.gameObject);
+
         return proj;
     }
 
+    [Server]
     public Entity SummonEntity(Entity entityPrefab, Vector3 summonPosition, Quaternion rotation, NetworkBehaviour owner)
     {
         var summon = Instantiate(entityPrefab, summonPosition, rotation, null);
@@ -55,10 +57,11 @@ public class GameFactory : NetworkBehaviour
         return summon;
     }
 
+    [Server]
     private void SpawnOnServer(GameObject gameObject, GameObject owner)
     {
         if (owner.TryGetComponent(out Player player))
-            NetworkServer.Spawn(gameObject, player.gameObject);
+            NetworkServer.Spawn(gameObject, player.connectionToClient);
         else
             NetworkServer.Spawn(gameObject);
     }

@@ -2,20 +2,20 @@ using System;
 
 public static class Events
 {
-    public static Action OnLobbyDisband;
-    public static Action OnStartGameInitiated;
-    public static Action<Player> OnPlayerAdded;
-    public static Action<uint> OnPlayerDemise;
+    public static Action ServerOnLobbyDisband;
+    public static Action ServerOnStartGameInitiated;
+    public static Action<Player> ServerOnPlayerAdded;
+    public static Action<uint> ServerOnPlayerDemise;
 
     public static void InvokeLobbyDisband()
-        => OnLobbyDisband?.Invoke();
+        => ServerOnLobbyDisband?.Invoke();
 
     public static void InvokeStartGame()
-        => OnStartGameInitiated?.Invoke();
+        => ServerOnStartGameInitiated?.Invoke();
 
     public static void InvokePlayerConnected(Player player)
-        => OnPlayerAdded?.Invoke(player);
+        => ServerOnPlayerAdded?.Invoke(player);
 
     public static void InvokePlayerDemise(uint playerId)
-        => OnPlayerDemise?.Invoke(playerId);
+        => ServerOnPlayerDemise?.Invoke(playerId);
 }

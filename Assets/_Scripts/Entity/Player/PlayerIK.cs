@@ -2,13 +2,19 @@ using UnityEngine;
 
 public class PlayerIK : MonoBehaviour
 {
-    [SerializeField] private Transform _cameraTransform;
-    [SerializeField] private Transform _spineTransform;
+    [SerializeField] private Player _player;
+    [SerializeField] private Transform _headObject;
+
+    [SerializeField] private bool _enabled = true;
 
     private void LateUpdate()
     {
-        float verticalAngle = _cameraTransform.eulerAngles.x;
+        if (!_player.CanDoActions())
+            return;
 
-        _spineTransform.localEulerAngles = new Vector3(0, 0, verticalAngle);
+        if (!_enabled)
+            return;
+
+        _headObject.transform.position = _player.Camera.Transform.position;
     }
 }

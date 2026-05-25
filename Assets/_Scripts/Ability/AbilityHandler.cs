@@ -67,7 +67,10 @@ public class AbilityHandler : Ability, IGauge
             yield return PrepareUsageRoutine();
 
         if (!Ability.Perform(sender, target))
+        {
+            IsPerforming = false;
             yield break;
+        }
 
         SetNextUseTime();
 

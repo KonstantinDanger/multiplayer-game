@@ -20,11 +20,14 @@ public class Entity : NetworkBehaviour, IDisposable, IStatUser
     public IDamageable Damageable => _damageable.Value;
     protected IAbilityUser AbilityUser => _abilityUser.Value;
 
-    private void Awake()
+    public override void OnStartServer()
     {
+        base.OnStartServer();
+
         Damageable.Initialize(DamageSystemConfig.BaseHealth, DamageSystemConfig.DamageHandlers);
         Stats.Initialize(Utils.DefaultEntityStats());
-        OnAwake();
+
+        OnEntityStartServer();
     }
 
     private void OnEnable()
@@ -44,9 +47,6 @@ public class Entity : NetworkBehaviour, IDisposable, IStatUser
 
         HandleOnDisable();
     }
-
-    private void Start()
-        => OnStart();
 
     protected virtual void Update()
     { }
@@ -72,6 +72,8 @@ public class Entity : NetworkBehaviour, IDisposable, IStatUser
         }
     }
 
+    protected virtual void OnEntityStartServer() { }
+
     protected virtual void OnDamageTaken(Damage damage) { }
 
     protected virtual void OnDemise(Damage damage) { }
@@ -79,10 +81,6 @@ public class Entity : NetworkBehaviour, IDisposable, IStatUser
     protected virtual void HandleOnEnable() { }
 
     protected virtual void HandleOnDisable() { }
-
-    protected virtual void OnAwake() { }
-
-    protected virtual void OnStart() { }
 
     public virtual void Dispose() { }
 }

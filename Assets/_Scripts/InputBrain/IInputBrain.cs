@@ -3,7 +3,7 @@ using UnityEngine;
 
 public interface IInputBrain
 {
-    void Update();
+    void UpdateLogic();
     void Enable();
     void Disable();
 

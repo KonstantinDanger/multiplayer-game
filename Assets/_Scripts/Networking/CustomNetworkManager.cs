@@ -7,6 +7,11 @@ public class CustomNetworkManager : NetworkManager
 {
     public Action<string> OnServerSceneLoaded;
 
+    private GameObject _localPlayerInstance;
+
+    public void SetLocalPlayerInstance(GameObject playerGO)
+        => _localPlayerInstance = playerGO;
+
     public override void OnClientConnect()
     {
         base.OnClientConnect();
@@ -16,11 +21,21 @@ public class CustomNetworkManager : NetworkManager
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
-        base.OnServerAddPlayer(conn);
 
-        Player player = conn.identity.gameObject.GetComponent<Player>();
+        UnityEngine.Debug.Log("OnServerAddPlayer ");
 
-        player.CreateUI();
+        if (conn.connectionId == NetworkConnection.LocalConnectionId && _localPlayerInstance != null)
+        {
+            _localPlayerInstance.SetActive(false);
+
+            NetworkServer.AddPlayerForConnection(conn, _localPlayerInstance);
+        }
+        else
+        {
+            base.OnServerAddPlayer(conn);
+        }
+
+        Player player = conn.identity.GetComponent<Player>();
 
         Events.InvokePlayerConnected(player);
 

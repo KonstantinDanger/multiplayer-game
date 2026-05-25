@@ -18,7 +18,7 @@ public class StaticData : ScriptableObject
 
     //UI
     [field: SerializeField] public GameUI UIPrefab { get; private set; }
-    [field: SerializeField] public LobbyUI LobbyUIPrefab { get; private set; }
+    [field: SerializeField] public LobbyView LobbyUIPrefab { get; private set; }
     [field: SerializeField] public PlayerInfoUI PlayerInfoUI { get; private set; }
     [field: SerializeField] public PlayerHUD PlayerHUDPrefab { get; private set; }
     [field: SerializeField] public AnimatorUpdaterConfig AnimatorUpdaterConfig { get; private set; }

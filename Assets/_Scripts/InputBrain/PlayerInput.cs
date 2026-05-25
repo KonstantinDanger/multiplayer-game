@@ -2,13 +2,17 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[Serializable]
-public class PlayerInput : IPlayerInputBrain
+public class PlayerInput : MonoBehaviour, IPlayerInputBrain
 {
-    private readonly PlayerInputActions _actions;
+    private PlayerInputActions _actions;
 
-    public Vector2 MovementVector { get; private set; }
-    public Vector2 Rotation { get; private set; }
+    private Vector2 _movementInput;
+    private Vector2 _rotationInput;
+    private bool _isSprinting;
+
+    public Vector2 MovementVector => _movementInput;
+    public Vector2 Rotation => _rotationInput;
+    public bool IsSprinting => _isSprinting;
 
     public event Action JumpAction;
     public event Action OnMenuInvoked;
@@ -17,9 +21,7 @@ public class PlayerInput : IPlayerInputBrain
     public event Action OnUpgradeMenuInvoked;
     public event Action OnInteraction;
 
-    public bool IsSprinting { get; private set; }
-
-    public PlayerInput()
+    public void Initialize()
     {
         _actions = new();
 
@@ -30,16 +32,16 @@ public class PlayerInput : IPlayerInputBrain
         _actions.UI.Menu.performed += _ => OnMenuInvoked?.Invoke();
         _actions.UI.Upgrade.performed += _ => OnUpgradeMenuInvoked?.Invoke();
 
-        _actions.Player.Sprint.started += _ => IsSprinting = true;
-        _actions.Player.Sprint.canceled += _ => IsSprinting = false;
+        _actions.Player.Sprint.started += _ => _isSprinting = true;
+        _actions.Player.Sprint.canceled += _ => _isSprinting = false;
 
         _actions.Player.Interact.performed += _ => OnInteraction?.Invoke();
     }
 
-    public void Update()
+    public void UpdateLogic()
     {
-        MovementVector = _actions.Player.Move.ReadValue<Vector2>();
-        Rotation = _actions.Player.Look.ReadValue<Vector2>();
+        _movementInput = _actions.Player.Move.ReadValue<Vector2>();
+        _rotationInput = _actions.Player.Look.ReadValue<Vector2>();
     }
 
     private void HandleAbilityPerformed(InputAction.CallbackContext context)
@@ -48,6 +50,7 @@ public class PlayerInput : IPlayerInputBrain
 
         int.TryParse(keyName, out int abilityIndex);
 
+        //AbilityAction?.Invoke(abilityIndex);
         AbilityAction?.Invoke(abilityIndex);
     }
 
@@ -60,7 +63,6 @@ public class PlayerInput : IPlayerInputBrain
     public void SetUiInput(bool active)
     {
         if (!_actions.Player.enabled)
-
             (active ? (Action)_actions.UI.Enable : _actions.UI.Disable)();
     }
 
