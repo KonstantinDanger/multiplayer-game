@@ -20,7 +20,6 @@ public class GameOnlineLobbyState : GameState
         Events.ServerOnPlayerDemise += HandlePlayerDemise;
 
         _networkManager.OnServerSceneLoaded += HandleGameSceneLoaded;
-        _networkManager.ShufflePlayersPositions();
     }
 
     public override void OnExit()
@@ -31,17 +30,6 @@ public class GameOnlineLobbyState : GameState
         Events.ServerOnPlayerDemise -= HandlePlayerDemise;
 
         _networkManager.OnServerSceneLoaded -= HandleGameSceneLoaded;
-
-        _networkManager.SetSpawnPositions(null);
-    }
-
-    private void InitLobbyPlayers()
-    {
-        foreach (var item in NetworkServer.connections)
-        {
-            var player = item.Value.identity.GetComponent<Player>();
-            HandlePlayerAdded(player);
-        }
     }
 
     private void HandlePlayerDemise(uint netId)
@@ -55,6 +43,8 @@ public class GameOnlineLobbyState : GameState
     {
         if (!NetworkServer.active)
             return;
+
+        _networkManager.ShufflePlayersPositions();
 
         player.Spectate(false);
         player.SetCanAttack(false);
