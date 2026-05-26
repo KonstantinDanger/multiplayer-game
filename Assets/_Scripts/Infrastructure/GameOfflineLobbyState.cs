@@ -5,7 +5,6 @@ using UnityEngine;
 public class GameOfflineLobbyState : GameState
 {
     private CustomNetworkManager _netManager;
-    private Player _player;
     private ILobby _lobby;
 
     public GameOfflineLobbyState(IStateMachine stateMachine, ServiceLocator container) : base(stateMachine, container) { }
@@ -19,7 +18,20 @@ public class GameOfflineLobbyState : GameState
         _lobby = GetOrCreate(_netManager);
 
         Player playerPrefab = Resolve<StaticData>().PlayerPrefab;
-        _player = GetOrCreateOfflinePlayer(playerPrefab, _netManager.GetStartPosition().position);
+
+        Vector3 spawnPosition = Vector3.zero;
+
+        Transform spawnPoint = _netManager.GetStartPosition();
+
+        if (spawnPoint == null)
+        {
+            if (_netManager.LocalPlayerInstance != null)
+            {
+                spawnPosition = _netManager.LocalPlayerInstance.transform.position;
+            }
+        }
+
+        _netManager.LocalPlayerInstance = GetOrCreateOfflinePlayer(playerPrefab, spawnPosition);
 
         _lobby.OnLobbyCreated += HandleLobbyCreated;
     }
@@ -29,7 +41,6 @@ public class GameOfflineLobbyState : GameState
 
     private void HandleLobbyCreated(LobbyCreated_t t)
     {
-        _netManager.SetLocalPlayerInstance(_player.gameObject);
         NetworkClient.Ready();
         NetworkClient.AddPlayer();
         GoTo<GameOnlineLobbyState>();
@@ -37,8 +48,8 @@ public class GameOfflineLobbyState : GameState
 
     private Player GetOrCreateOfflinePlayer(Player playerPrefab, Vector3 position)
     {
-        if (_player != null)
-            return _player;
+        if (_netManager.LocalPlayerInstance != null)
+            return _netManager.LocalPlayerInstance;
 
         var player = Object.Instantiate(playerPrefab, position, Quaternion.identity);
 

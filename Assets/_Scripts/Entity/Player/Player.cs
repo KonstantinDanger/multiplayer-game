@@ -276,7 +276,7 @@ public class Player : Entity
         _playerUI.Add(_upgradeUI);
         _playerUI.Add(charSelectInstance);
 
-        ServiceLocator.Container.RegisterSingle(_playerUI);
+        ServiceLocator.Container.RegisterSingle(_playerUI, cached: true);
     }
 
     public void ToggleHUD(bool active)
@@ -370,5 +370,10 @@ public class Player : Entity
         base.Dispose();
 
         Destroy(_playerHUD);
+
+        ServiceLocator.Container.Dispose();
     }
+
+    private void OnDestroy()
+        => Dispose();
 }

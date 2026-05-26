@@ -14,19 +14,18 @@ public class GameOnlineLobbyState : GameState
         _networkManager = Resolve<CustomNetworkManager>();
         _lobby = Resolve<ILobby>();
 
-        //InitLobbyPlayers();
-
-        Events.ServerOnLobbyDisband += HandleLobbyDisband;
+        _lobby.OnLobbyDisband += HandleLobbyDisband;
         Events.ServerOnStartGameInitiated += HandleStartGameInitiated;
         Events.ServerOnPlayerAdded += HandlePlayerAdded;
         Events.ServerOnPlayerDemise += HandlePlayerDemise;
 
         _networkManager.OnServerSceneLoaded += HandleGameSceneLoaded;
+        _networkManager.ShufflePlayersPositions();
     }
 
     public override void OnExit()
     {
-        Events.ServerOnLobbyDisband -= HandleLobbyDisband;
+        _lobby.OnLobbyDisband -= HandleLobbyDisband;
         Events.ServerOnStartGameInitiated -= HandleStartGameInitiated;
         Events.ServerOnPlayerAdded -= HandlePlayerAdded;
         Events.ServerOnPlayerDemise -= HandlePlayerDemise;

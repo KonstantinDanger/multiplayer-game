@@ -6,8 +6,8 @@ public class Game : NetworkBehaviour
     [SerializeField] private StaticData _staticData;
     [SerializeField] private CoroutineHolder _coroutineHolder;
 
-    private IStateMachine _sfm;
-    private IState CurrentState => _sfm.CurrentState;
+    private IStateMachine _fsm;
+    private IState CurrentState => _fsm.CurrentState;
 
     private bool _isInitialized = false;
 
@@ -17,7 +17,7 @@ public class Game : NetworkBehaviour
         ServiceLocator.Container.RegisterSingle(_coroutineHolder);
         ServiceLocator.Container.RegisterSingle(netManager);
 
-        _sfm = new GameStateMachine(ServiceLocator.Container);
+        _fsm = new GameStateMachine(ServiceLocator.Container);
 
         _isInitialized = true;
     }

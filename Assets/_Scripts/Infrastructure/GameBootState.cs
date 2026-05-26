@@ -22,16 +22,14 @@ public class GameBootState : GameState
 
         _sceneLoader = new(coroutineHolder);
         GameFactory factory = Object.Instantiate(_staticData.GameFactoryPrefab, coroutineHolder.transform.parent);
-        //var netManager = factory.CreateNetworkManager(_staticData.NetworkManagerPrefab, coroutineHolder.transform);
 
         PersistentGameData persistentGameData = new PersistentGameData();
 
         Bind(persistentGameData);
         Bind(_sceneLoader);
         Bind(factory);
-        //Bind(netManager);
     }
 
     private void OnLoadStarted() { }
-    private void OnLoadEnded() => GoTo<GameOfflineLobbyState>();
+    private void OnLoadEnded() => GoTo<GameLobbyRefreshState>();
 }

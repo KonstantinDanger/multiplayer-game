@@ -7,10 +7,7 @@ public class CustomNetworkManager : NetworkManager
 {
     public Action<string> OnServerSceneLoaded;
 
-    private GameObject _localPlayerInstance;
-
-    public void SetLocalPlayerInstance(GameObject playerGO)
-        => _localPlayerInstance = playerGO;
+    public Player LocalPlayerInstance { get; set; }
 
     public override void OnClientConnect()
     {
@@ -19,16 +16,40 @@ public class CustomNetworkManager : NetworkManager
         autoCreatePlayer = false;
     }
 
+    public override void OnClientDisconnect()
+    {
+        base.OnClientDisconnect();
+        { }
+        //var sceneLoader = ServiceLocator.Container.Resolve<SceneLoader>();
+        //var staticData = ServiceLocator.Container.Resolve<StaticData>();
+
+        //sceneLoader.LoadSceneAsync(staticData.LobbySceneName);
+    }
+
+    //public override void OnStopClient()
+    //{
+    //    base.OnStopClient();
+
+    //    UnityEngine.Debug.Log("OnStopClient ");
+    //}
+
+    public override void OnStopServer()
+    {
+        LocalPlayerInstance = null;
+
+        base.OnStopServer();
+
+        //UnityEngine.Debug.Log("OnStopServer");
+        //Events.InvokeHostStop();
+    }
+
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
-
-        UnityEngine.Debug.Log("OnServerAddPlayer ");
-
-        if (conn.connectionId == NetworkConnection.LocalConnectionId && _localPlayerInstance != null)
+        if (conn.connectionId == NetworkConnection.LocalConnectionId && LocalPlayerInstance != null)
         {
-            _localPlayerInstance.SetActive(false);
+            LocalPlayerInstance.gameObject.SetActive(false);
 
-            NetworkServer.AddPlayerForConnection(conn, _localPlayerInstance);
+            NetworkServer.AddPlayerForConnection(conn, LocalPlayerInstance.gameObject);
         }
         else
         {
@@ -58,7 +79,7 @@ public class CustomNetworkManager : NetworkManager
 
     public void ShufflePlayersPositions()
     {
-        foreach (var item in NetworkServer.connections)
+        foreach (KeyValuePair<int, NetworkConnectionToClient> item in NetworkServer.connections)
         {
             var currentPlayer = item.Value.identity.gameObject;
             var positionTransform = GetStartPosition();

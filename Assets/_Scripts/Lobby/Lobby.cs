@@ -1,6 +1,7 @@
 using Mirror;
 using Steamworks;
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Lobby : MonoBehaviour, ILobby
@@ -10,22 +11,21 @@ public class Lobby : MonoBehaviour, ILobby
     [SerializeField] private CustomNetworkManager _networkManager;
 
     public string LobbyName { get; private set; }
+    private bool _initialized;
+    public bool Initialized => _initialized;
+    public bool IsCreated { get; private set; }
+    public CSteamID LobbyOwnerID => SteamMatchmaking.GetLobbyOwner(LobbyId);
+    public CSteamID LobbyId { get; private set; }
+    public int MaxPlayers { get; private set; }
 
     protected Callback<LobbyCreated_t> LobbyCreated;
     protected Callback<GameLobbyJoinRequested_t> JoinRequested;
     protected Callback<LobbyEnter_t> LobbyEntered;
 
     public event Action<LobbyCreated_t> OnLobbyCreated;
+    public event Action OnLobbyDisband;
     public event Action<GameLobbyJoinRequested_t> OnJoinRequested;
     public event Action<LobbyEnter_t> OnLobbyEntered;
-
-    private bool _initialized;
-    public bool Initialized => _initialized;
-    public bool IsCreated { get; private set; }
-
-    public CSteamID LobbyOwnerID => SteamMatchmaking.GetLobbyOwner(LobbyId);
-    public CSteamID LobbyId { get; private set; }
-    public int MaxPlayers { get; private set; }
 
     public void Initialize()
     {
@@ -52,20 +52,30 @@ public class Lobby : MonoBehaviour, ILobby
 
         SteamMatchmaking.CreateLobby(lobbyType, maxPlayersAmount);
         MaxPlayers = maxPlayersAmount;
-
-        IsCreated = true;
     }
 
     public void DisbandLobby()
     {
-        if (NetworkServer.active || NetworkClient.active)
-        {
-            SteamMatchmaking.LeaveLobby(LobbyId);
-            Events.InvokeLobbyDisband();
-            _networkManager.StopHost();
-            _networkManager.offlineScene = "";
-            IsCreated = false;
-        }
+        if (!NetworkServer.active)
+            return;
+
+        //NetworkConnectionToClient localConnection = NetworkServer.localConnection;
+        //GameObject playerObj = localConnection.identity.gameObject;
+        //NetworkIdentity id = playerObj.GetComponent<NetworkIdentity>();
+
+        //id.enabled = false;
+        //Destroy(id);
+
+        ////NetworkServer.RemovePlayerForConnection(localConnection, RemovePlayerOptions.KeepActive);
+        ////NetworkServer.UnSpawn(playerObj);
+        SteamMatchmaking.LeaveLobby(LobbyId);
+        _networkManager.StopHost();
+        _networkManager.offlineScene = null;
+        LobbyName = "";
+        LobbyId = new CSteamID();
+        IsCreated = false;
+        //OnLobbyDisband?.Invoke();
+        StartCoroutine(DisbandAfterServerStopRoutine());
     }
 
     public void LeaveLobby()
@@ -78,8 +88,6 @@ public class Lobby : MonoBehaviour, ILobby
     {
         if (callback.m_eResult != EResult.k_EResultOK)
             return;
-
-        //UnityEngine.Debug.Log("Lobby successfully has been created");
 
         _networkManager.StartHost();
 
@@ -96,6 +104,7 @@ public class Lobby : MonoBehaviour, ILobby
             "name",
             SteamFriends.GetPersonaName().ToString() + "'s Lobby");
 
+        IsCreated = true;
         OnLobbyCreated?.Invoke(callback);
     }
 
@@ -126,5 +135,15 @@ public class Lobby : MonoBehaviour, ILobby
         _networkManager.networkAddress = SteamMatchmaking.GetLobbyData(steamIDLobby, HostAddressKey);
 
         _networkManager.StartClient();
+    }
+
+    private IEnumerator DisbandAfterServerStopRoutine()
+    {
+        while (NetworkServer.active || NetworkClient.active)
+            yield return null;
+
+        yield return null;
+
+        OnLobbyDisband?.Invoke();
     }
 }
