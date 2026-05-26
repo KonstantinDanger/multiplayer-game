@@ -9,49 +9,46 @@ public class CustomNetworkManager : NetworkManager
 
     public Player LocalPlayerInstance { get; set; }
 
-    public override void OnClientConnect()
-    {
-        base.OnClientConnect();
-
-        autoCreatePlayer = false;
-    }
-
-    public override void OnClientDisconnect()
-    {
-        base.OnClientDisconnect();
-        { }
-        //var sceneLoader = ServiceLocator.Container.Resolve<SceneLoader>();
-        //var staticData = ServiceLocator.Container.Resolve<StaticData>();
-
-        //sceneLoader.LoadSceneAsync(staticData.LobbySceneName);
-    }
-
-    //public override void OnStopClient()
-    //{
-    //    base.OnStopClient();
-
-    //    UnityEngine.Debug.Log("OnStopClient ");
-    //}
-
     public override void OnStopServer()
     {
         LocalPlayerInstance = null;
 
         base.OnStopServer();
+    }
 
-        //UnityEngine.Debug.Log("OnStopServer");
-        //Events.InvokeHostStop();
+    public override void OnClientError(TransportError error, string reason)
+    {
+        base.OnClientError(error, reason);
+        UnityEngine.Debug.LogError($"Клієнт відключився! Причина від Mirror: {reason}");
+    }
+
+    public override void OnClientConnect()
+    {
+        if (NetworkServer.active)
+            return;
+
+        //Destroy(LocalPlayerInstance.gameObject);
+        //LocalPlayerInstance = null;
+        LocalPlayerInstance.gameObject.SetActive(false);
+
+        UnityEngine.Debug.Log("OnClientConnect ");
+
+        NetworkClient.Ready();
+
+        NetworkClient.AddPlayer();
     }
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
+        UnityEngine.Debug.Log("OnServerAddPlayer");
+        // if is host
         if (conn.connectionId == NetworkConnection.LocalConnectionId && LocalPlayerInstance != null)
         {
             LocalPlayerInstance.gameObject.SetActive(false);
 
             NetworkServer.AddPlayerForConnection(conn, LocalPlayerInstance.gameObject);
         }
-        else
+        else //if is client
         {
             base.OnServerAddPlayer(conn);
         }

@@ -5,7 +5,7 @@ public interface ILobby
 {
     event Action<LobbyCreated_t> OnLobbyCreated;
     event Action<GameLobbyJoinRequested_t> OnJoinRequested;
-    event Action<LobbyEnter_t> OnLobbyEntered;
+    event Action<LobbyEnter_t> OnLobbyEnter;
     event Action OnLobbyDisband;
 
     string LobbyName { get; }
@@ -18,4 +18,5 @@ public interface ILobby
     void CreateLobby(ELobbyType lobbyType, int maxPlayersAmount = 2);
     void Initialize();
     void LeaveLobby();
+    void Invite();
 }

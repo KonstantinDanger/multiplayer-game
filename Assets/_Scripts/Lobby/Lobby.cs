@@ -25,7 +25,7 @@ public class Lobby : MonoBehaviour, ILobby
     public event Action<LobbyCreated_t> OnLobbyCreated;
     public event Action OnLobbyDisband;
     public event Action<GameLobbyJoinRequested_t> OnJoinRequested;
-    public event Action<LobbyEnter_t> OnLobbyEntered;
+    public event Action<LobbyEnter_t> OnLobbyEnter;
 
     public void Initialize()
     {
@@ -59,30 +59,30 @@ public class Lobby : MonoBehaviour, ILobby
         if (!NetworkServer.active)
             return;
 
-        //NetworkConnectionToClient localConnection = NetworkServer.localConnection;
-        //GameObject playerObj = localConnection.identity.gameObject;
-        //NetworkIdentity id = playerObj.GetComponent<NetworkIdentity>();
-
-        //id.enabled = false;
-        //Destroy(id);
-
-        ////NetworkServer.RemovePlayerForConnection(localConnection, RemovePlayerOptions.KeepActive);
-        ////NetworkServer.UnSpawn(playerObj);
         SteamMatchmaking.LeaveLobby(LobbyId);
         _networkManager.StopHost();
         _networkManager.offlineScene = null;
         LobbyName = "";
         LobbyId = new CSteamID();
         IsCreated = false;
-        //OnLobbyDisband?.Invoke();
+
         StartCoroutine(DisbandAfterServerStopRoutine());
     }
 
     public void LeaveLobby()
     {
+        if (IsHost())
+        {
+            DisbandLobby();
+            return;
+        }
+
         SteamMatchmaking.LeaveLobby(LobbyId);
         _networkManager.StopClient();
     }
+
+    public void Invite()
+        => SteamFriends.ActivateGameOverlayInviteDialogConnectString(LobbyId.ToString());
 
     private void HandleLobbyCreated(LobbyCreated_t callback)
     {
@@ -110,7 +110,8 @@ public class Lobby : MonoBehaviour, ILobby
 
     private void HandleJoinRequest(GameLobbyJoinRequested_t callback)
     {
-        //UnityEngine.Debug.Log("Requested lobby join");
+        if (LobbyId == callback.m_steamIDLobby)
+            return;
 
         SteamMatchmaking.LeaveLobby(LobbyId);
         SteamMatchmaking.JoinLobby(callback.m_steamIDLobby);
@@ -120,21 +121,26 @@ public class Lobby : MonoBehaviour, ILobby
 
     private void HandleLobbyEnter(LobbyEnter_t callback)
     {
-        //UnityEngine.Debug.Log("has joined the lobby ");
-
         ulong lobbyId = callback.m_ulSteamIDLobby;
 
         CSteamID steamIDLobby = new(callback.m_ulSteamIDLobby);
         LobbyName = SteamMatchmaking.GetLobbyData(steamIDLobby, "name");
 
-        OnLobbyEntered.Invoke(callback);
-
+        // From Online
         if (NetworkServer.active)
+        {
+            OnLobbyEnter.Invoke(callback);
+
             return;
+        }
+
+        // From Offline
 
         _networkManager.networkAddress = SteamMatchmaking.GetLobbyData(steamIDLobby, HostAddressKey);
 
         _networkManager.StartClient();
+
+        OnLobbyEnter.Invoke(callback);
     }
 
     private IEnumerator DisbandAfterServerStopRoutine()
@@ -146,4 +152,7 @@ public class Lobby : MonoBehaviour, ILobby
 
         OnLobbyDisband?.Invoke();
     }
+
+    private bool IsHost()
+        => NetworkServer.active && NetworkClient.active;
 }

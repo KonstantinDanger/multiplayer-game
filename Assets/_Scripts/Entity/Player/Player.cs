@@ -37,10 +37,13 @@ public class Player : Entity
 
     private void Awake()
     {
-        Input.Initialize();
-
         if (CanDoActions())
             _stateMachine = new PlayerStateMachine(this);
+
+        if (NetworkClient.active && !isLocalPlayer)
+            return;
+
+        Input.Initialize();
 
         SetCharacterClass(_baseCharacterClass);
     }

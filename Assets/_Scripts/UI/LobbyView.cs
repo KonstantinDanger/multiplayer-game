@@ -25,10 +25,10 @@ public class LobbyView : UIView
 
         _lobby.OnLobbyCreated += HandleLobbyCreated;
         _lobby.OnJoinRequested += HandleJoinRequest;
-        _lobby.OnLobbyEntered += HandleLobbyEntered;
+        _lobby.OnLobbyEnter += HandleLobbyEntered;
 
         _startGameButton.onClick.AddListener(HandleStartGame);
-
+        _inviteButton.onClick.AddListener(HandleInvite);
         _leaveButton.onClick.AddListener(HandleLeaveLobby);
         _disbandButton.onClick.AddListener(HandleDisbandLobby);
 
@@ -41,10 +41,10 @@ public class LobbyView : UIView
     {
         _lobby.OnLobbyCreated -= HandleLobbyCreated;
         _lobby.OnJoinRequested -= HandleJoinRequest;
-        _lobby.OnLobbyEntered -= HandleLobbyEntered;
+        _lobby.OnLobbyEnter -= HandleLobbyEntered;
 
         _startGameButton.onClick.RemoveListener(HandleStartGame);
-
+        _inviteButton.onClick.RemoveListener(HandleInvite);
         _leaveButton.onClick.RemoveListener(HandleLeaveLobby);
         _disbandButton.onClick.RemoveListener(HandleDisbandLobby);
 
@@ -56,6 +56,9 @@ public class LobbyView : UIView
         Events.InvokeStartGame();
         HandleUIChange();
     }
+
+    private void HandleInvite()
+        => _lobby.Invite();
 
     private void HandleDisbandLobby()
     {
