@@ -13,10 +13,10 @@ public class UIView : UI
             gameObject.SetActive(false);
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
         => _closeButton.onClick.AddListener(HandleCloseClick);
 
-    private void OnDisable()
+    protected virtual void OnDisable()
         => _closeButton.onClick.RemoveListener(HandleCloseClick);
 
     public void Initialize(GameUI gameUI)
@@ -29,5 +29,8 @@ public class UIView : UI
         => gameObject.SetActive(false);
 
     private void HandleCloseClick()
-        => _gameUI.CloseView();
+    {
+        _gameUI.CloseView();
+        Close();
+    }
 }

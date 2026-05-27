@@ -66,7 +66,7 @@ public class PlayerCamera : NetworkBehaviour, IRotatablePlayerCamera
 
     public void ShowCursor()
     {
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         _isLocked = true;
     }

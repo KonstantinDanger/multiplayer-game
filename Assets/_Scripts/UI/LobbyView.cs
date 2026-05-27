@@ -18,8 +18,10 @@ public class LobbyView : UIView
 
     private ILobby _lobby;
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
+
         if (_lobby == null)
             return;
 
@@ -97,22 +99,17 @@ public class LobbyView : UIView
     {
         _lobbyNameText.text = _lobby.LobbyName;
 
-        //_startGameButton
         SetActive(_startGameButton, IsLobbyOwner() && _lobby.IsCreated);
 
         if (_startGameButton.gameObject.activeInHierarchy)
             _startGameButton.enabled = NetworkServer.connections.Count == _lobby.MaxPlayers;
 
-        //_createLobbyButton
         SetActive(_createLobbyButton, !_lobby.IsCreated);
 
-        //_inviteButton
         SetActive(_inviteButton, _lobby.IsCreated);
 
-        //_disbandButton
         SetActive(_disbandButton, _lobby.IsCreated && IsLobbyOwner());
 
-        //_leaveButton
         SetActive(_leaveButton, _lobby.IsCreated && !IsLobbyOwner());
     }
 

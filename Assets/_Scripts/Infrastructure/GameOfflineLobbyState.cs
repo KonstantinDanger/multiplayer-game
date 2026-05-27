@@ -14,8 +14,6 @@ public class GameOfflineLobbyState : GameState
         if (NetworkServer.active)
             throw new System.Exception("Offline lobby state called while the server is active!");
 
-        UnityEngine.Debug.Log("offlinelobbystate ");
-
         _netManager = Resolve<CustomNetworkManager>();
         _lobby = GetOrCreate(_netManager);
 

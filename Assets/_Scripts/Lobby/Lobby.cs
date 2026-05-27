@@ -114,10 +114,6 @@ public class Lobby : MonoBehaviour, ILobby
 
     private void HandleJoinRequest(GameLobbyJoinRequested_t callback)
     {
-        //if (LobbyId == callback.m_steamIDLobby)
-        //    return;
-
-        //SteamMatchmaking.LeaveLobby(LobbyId);
         SteamMatchmaking.JoinLobby(callback.m_steamIDLobby);
 
         OnJoinRequested.Invoke(callback);
