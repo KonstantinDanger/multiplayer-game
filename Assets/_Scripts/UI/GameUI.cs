@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class GameUI : MonoBehaviour
+public class GameUI : UI
 {
     private readonly List<UI> _ui = new();
     private readonly Stack<UIView> _viewStack = new();
@@ -12,21 +11,26 @@ public class GameUI : MonoBehaviour
 
     public bool HasStackedUIViews => _viewStack.Count > 0;
 
-    public void Initialize(Action onViewOpen, Action onAllViewsClose)
+    public GameUI Initialize(Action onViewOpen, Action onAllViewsClose)
     {
+        PersistentThroughScenes = true;
         OnViewOpen = onViewOpen;
         OnAllViewsClose = onAllViewsClose;
+
+        return this;
     }
 
-    public void Add(UI ui)
+    public GameUI Add(UI ui)
     {
         if (_ui.Contains(ui))
-            return;
+            return this;
 
         _ui.Add(ui);
 
         if (ui is UIView view)
             view.Initialize(this);
+
+        return this;
     }
 
     public void OpenViewOfType(Type viewType)

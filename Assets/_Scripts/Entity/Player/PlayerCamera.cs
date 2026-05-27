@@ -19,16 +19,24 @@ public class PlayerCamera : NetworkBehaviour, IRotatablePlayerCamera
     public event Action<float> OnRotate;
 
     private bool _isLocked;
+    private bool _initialized;
 
     public void Initialize(bool isLocalPlayer)
     {
+        if (_initialized)
+            return;
+
         if (!isLocalPlayer)
         {
             _cameraHolder.gameObject.SetActive(false);
             _cameraHolder.GetComponentInChildren<Camera>().tag = StaticData.Constants.EmptyTag;
+
+            return;
         }
 
         HideCursor();
+
+        _initialized = true;
     }
 
     public void Rotate(Vector3 direction, float speed)

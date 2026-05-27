@@ -18,6 +18,9 @@ public class GameFactory : NetworkBehaviour
         return text;
     }
 
+    public T Create<T>(T uiPrefab, Transform transform) where T : UI
+        => Instantiate(uiPrefab, transform);
+
     [Server]
     public Projectile SpawnProjectile(Projectile projectile, Vector3 direction, float flightSpeed, NetworkBehaviour sender, Damage damage, Transform transform, Quaternion rotation, float scaleMultiplier = 1, Transform parent = null)
     {

@@ -10,26 +10,30 @@ public class GameOnlineLobbyState : GameState
 
     public override void OnEnter()
     {
-        UnityEngine.Debug.Log("OnlineLobbyEnter ");
-
         _staticData = Resolve<StaticData>();
         _networkManager = Resolve<CustomNetworkManager>();
         _lobby = Resolve<ILobby>();
 
+        _lobby.OnLobbyLeave += HandleLobbyLeave;
         _lobby.OnLobbyDisband += HandleLobbyDisband;
+
         Events.ServerOnStartGameInitiated += HandleStartGameInitiated;
         Events.ServerOnPlayerAdded += HandlePlayerAdded;
         Events.ServerOnPlayerDemise += HandlePlayerDemise;
+        Events.ServerOnClientDisconnect += HandleClientDisconnect;
 
         _networkManager.OnServerSceneLoaded += HandleGameSceneLoaded;
     }
 
     public override void OnExit()
     {
+        _lobby.OnLobbyLeave -= HandleLobbyLeave;
         _lobby.OnLobbyDisband -= HandleLobbyDisband;
+
         Events.ServerOnStartGameInitiated -= HandleStartGameInitiated;
         Events.ServerOnPlayerAdded -= HandlePlayerAdded;
         Events.ServerOnPlayerDemise -= HandlePlayerDemise;
+        Events.ServerOnClientDisconnect -= HandleClientDisconnect;
 
         _networkManager.OnServerSceneLoaded -= HandleGameSceneLoaded;
     }
@@ -68,5 +72,11 @@ public class GameOnlineLobbyState : GameState
     }
 
     private void HandleLobbyDisband()
+        => GoTo<GameLobbyRefreshState>();
+
+    private void HandleLobbyLeave()
+        => GoTo<GameLobbyRefreshState>();
+
+    private void HandleClientDisconnect()
         => GoTo<GameLobbyRefreshState>();
 }

@@ -26,6 +26,7 @@ public class Lobby : MonoBehaviour, ILobby
     public event Action OnLobbyDisband;
     public event Action<GameLobbyJoinRequested_t> OnJoinRequested;
     public event Action<LobbyEnter_t> OnLobbyEnter;
+    public event Action OnLobbyLeave;
 
     public void Initialize()
     {
@@ -54,7 +55,7 @@ public class Lobby : MonoBehaviour, ILobby
         MaxPlayers = maxPlayersAmount;
     }
 
-    public void DisbandLobby()
+    public void Disband()
     {
         if (!NetworkServer.active)
             return;
@@ -69,16 +70,18 @@ public class Lobby : MonoBehaviour, ILobby
         StartCoroutine(DisbandAfterServerStopRoutine());
     }
 
-    public void LeaveLobby()
+    public void Leave()
     {
         if (IsHost())
         {
-            DisbandLobby();
+            Disband();
             return;
         }
 
         SteamMatchmaking.LeaveLobby(LobbyId);
         _networkManager.StopClient();
+
+        StartCoroutine(InvokeLeaveWhenClientDisconnect());
     }
 
     public void Invite()
@@ -122,10 +125,9 @@ public class Lobby : MonoBehaviour, ILobby
 
     private void HandleLobbyEnter(LobbyEnter_t callback)
     {
-        ulong lobbyId = callback.m_ulSteamIDLobby;
-
-        CSteamID steamIDLobby = new(callback.m_ulSteamIDLobby);
-        LobbyName = SteamMatchmaking.GetLobbyData(steamIDLobby, "name");
+        LobbyId = new(callback.m_ulSteamIDLobby);
+        LobbyName = SteamMatchmaking.GetLobbyData(LobbyId, "name");
+        IsCreated = true;
 
         if (IsHost())
         {
@@ -134,9 +136,19 @@ public class Lobby : MonoBehaviour, ILobby
             return;
         }
 
-        _networkManager.networkAddress = SteamMatchmaking.GetLobbyData(steamIDLobby, HostAddressKey);
+        _networkManager.networkAddress = SteamMatchmaking.GetLobbyData(LobbyId, HostAddressKey);
 
         _networkManager.StartClient();
+
+        StartCoroutine(InvokeLobbyEnterWhenClientConnect(callback));
+    }
+
+    private IEnumerator InvokeLobbyEnterWhenClientConnect(LobbyEnter_t callback)
+    {
+        while (!NetworkClient.active)
+            yield return null;
+
+        yield return null;
 
         OnLobbyEnter.Invoke(callback);
     }
@@ -149,6 +161,16 @@ public class Lobby : MonoBehaviour, ILobby
         yield return null;
 
         OnLobbyDisband?.Invoke();
+    }
+
+    private IEnumerator InvokeLeaveWhenClientDisconnect()
+    {
+        while (NetworkClient.active)
+            yield return null;
+
+        yield return null;
+
+        OnLobbyLeave?.Invoke();
     }
 
     private bool IsHost()

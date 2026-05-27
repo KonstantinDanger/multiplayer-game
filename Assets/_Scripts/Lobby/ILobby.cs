@@ -7,6 +7,7 @@ public interface ILobby
     event Action<GameLobbyJoinRequested_t> OnJoinRequested;
     event Action<LobbyEnter_t> OnLobbyEnter;
     event Action OnLobbyDisband;
+    event Action OnLobbyLeave;
 
     string LobbyName { get; }
     CSteamID LobbyId { get; }
@@ -14,9 +15,9 @@ public interface ILobby
     int MaxPlayers { get; }
     bool IsCreated { get; }
 
-    void DisbandLobby();
+    void Disband();
     void CreateLobby(ELobbyType lobbyType, int maxPlayersAmount = 2);
     void Initialize();
-    void LeaveLobby();
+    void Leave();
     void Invite();
 }

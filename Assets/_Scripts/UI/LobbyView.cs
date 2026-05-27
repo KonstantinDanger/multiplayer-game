@@ -19,8 +19,19 @@ public class LobbyView : UIView
 
     private ILobby _lobby;
 
+    private void OnEnable()
+    {
+        if (_lobby == null)
+            return;
+
+        HandleUIChange();
+    }
+
     public void Initialize(ILobby lobby)
     {
+        if (!NetworkServer.active)
+            UnityEngine.Debug.Log("");
+
         _lobby = lobby;
 
         _lobby.OnLobbyCreated += HandleLobbyCreated;
@@ -62,13 +73,13 @@ public class LobbyView : UIView
 
     private void HandleDisbandLobby()
     {
-        _lobby.DisbandLobby();
+        _lobby.Disband();
         HandleUIChange();
     }
 
     private void HandleLeaveLobby()
     {
-        _lobby.LeaveLobby();
+        _lobby.Leave();
         HandleUIChange();
     }
 
@@ -79,24 +90,17 @@ public class LobbyView : UIView
     }
 
     private void HandleLobbyCreated(LobbyCreated_t callback)
-    {
-        _startGameButton.enabled = false;
-        HandleUIChange();
-    }
+        => HandleUIChange();
 
-    private void HandleJoinRequest(GameLobbyJoinRequested_t callback)
-    {
-    }
+    private void HandleJoinRequest(GameLobbyJoinRequested_t callback) { }
 
     private void HandleLobbyEntered(LobbyEnter_t callback)
-    {
-        _lobbyNameText.text = _lobby.LobbyName;
-
-        HandleUIChange();
-    }
+        => HandleUIChange();
 
     private void HandleUIChange()
     {
+        _lobbyNameText.text = _lobby.LobbyName;
+
         //_startGameButton
         SetActive(_startGameButton, IsLobbyOwner() && _lobby.IsCreated);
 

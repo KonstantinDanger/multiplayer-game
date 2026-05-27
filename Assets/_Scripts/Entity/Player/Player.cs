@@ -16,7 +16,6 @@ public class Player : Entity
     [SerializeField] private Upgrader _upgrader;
     [SerializeField] private Wallet _wallet;
     [SerializeField] private Interactor _interactor;
-
     [SerializeField] private InterfaceReference<IPlayerInputBrain> _inputRef;
 
     public ScriptableCharacterClass CharacterClass { get; private set; }
@@ -39,22 +38,17 @@ public class Player : Entity
 
     private void Awake()
     {
-        if (HasAuthority())
-            _stateMachine = new PlayerStateMachine(this);
-
         Input.Initialize();
 
         SetCharacterClass(_baseCharacterClass);
 
-        if (HasAuthority())
-            CreateUI();
+        _stateMachine = new PlayerStateMachine(this);
+
+        CreateUI();
     }
 
     protected override void HandleOnEnable()
     {
-        if (!HasAuthority())
-            return;
-
         Input.Enable();
         Input.JumpAction += HandleJump;
         Input.OnMenuInvoked += HandleUICancel;
@@ -66,9 +60,6 @@ public class Player : Entity
 
     protected override void HandleOnDisable()
     {
-        if (!HasAuthority())
-            return;
-
         Input.Disable();
         Input.JumpAction -= HandleJump;
         Input.OnMenuInvoked -= HandleUICancel;
@@ -81,6 +72,9 @@ public class Player : Entity
     private void Start()
         => Camera.Initialize(HasAuthority());
 
+    public override void OnStartLocalPlayer()
+        => CreateUI();
+
     public override void OnStartClient()
     {
         if (isClient)
@@ -90,15 +84,17 @@ public class Player : Entity
 
         if (!isLocalPlayer)
             gameObject.layer = StaticData.Constants.EnemyLayer;
+
+        if (HasAuthority() && _stateMachine == null)
+            _stateMachine = new PlayerStateMachine(this);
+
+        Camera.Initialize(HasAuthority());
     }
 
     protected override void OnEntityStartServer()
     {
         if (isLocalPlayer && isServer)
             gameObject.name += " (Server)";
-
-        if (_stateMachine == null)
-            _stateMachine = new PlayerStateMachine(this);
 
         _upgrader.Initialize();
     }
@@ -254,8 +250,10 @@ public class Player : Entity
     #region UI
     private void CreateUI()
     {
-        if (_isUICreated)
+        if (_isUICreated || !HasAuthority())
             return;
+
+        GameFactory factory = ServiceLocator.Container.Resolve<GameFactory>();
 
         var data = ServiceLocator.Container.Resolve<StaticData>();
         var hudPrefab = data.PlayerHUDPrefab;
@@ -264,8 +262,9 @@ public class Player : Entity
         var charSelectUIPrefab = data.CharacterSelectUI;
 
         //Game ui spawn
-        _playerUI = Instantiate(data.UIPrefab, transform);
-        _playerUI.Initialize(HandleViewOpen, HandleAllViewsClose);
+        _playerUI = factory
+            .Create(data.UIPrefab, transform)
+            .Initialize(HandleViewOpen, HandleAllViewsClose);
 
         _playerHUD = Instantiate(hudPrefab, _playerUI.transform);
         _levelUpUI = Instantiate(levelUpUIPrefab, _playerUI.transform);
@@ -280,10 +279,12 @@ public class Player : Entity
         _menu.Initialize(ServiceLocator.Container.Resolve<ILobby>());
 
         //UI addition to the Game ui
-        _playerUI.Add(_playerHUD);
-        _playerUI.Add(_levelUpUI);
-        _playerUI.Add(_upgradeUI);
-        _playerUI.Add(charSelectInstance);
+        _playerUI
+            .Add(_menu)
+            .Add(_playerHUD)
+            .Add(_levelUpUI)
+            .Add(_upgradeUI)
+            .Add(charSelectInstance);
 
         ServiceLocator.Container.RegisterSingle(_playerUI, cached: true);
 

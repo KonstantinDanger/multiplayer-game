@@ -10,18 +10,12 @@ public class CustomNetworkManager : NetworkManager
     public Player LocalPlayerInstance { get; set; }
 
     public override void OnStopServer()
-    {
-        LocalPlayerInstance = null;
-
-        base.OnStopServer();
-    }
+        => LocalPlayerInstance = null;
 
     public override void OnClientConnect()
     {
         if (NetworkServer.active)
             return;
-
-        Debug.Log("Connected to host");
 
         if (LocalPlayerInstance != null)
         {
@@ -33,9 +27,16 @@ public class CustomNetworkManager : NetworkManager
         NetworkClient.AddPlayer();
     }
 
+    public override void OnClientDisconnect()
+    {
+        if (NetworkServer.active)
+            return;
+
+        Events.InvokeClientDisconnect();
+    }
+
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
-        UnityEngine.Debug.Log("OnServerAddPlayer");
         // if is host
         if (conn.connectionId == NetworkConnection.LocalConnectionId && LocalPlayerInstance != null)
         {

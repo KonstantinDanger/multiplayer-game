@@ -29,8 +29,5 @@ public class UIView : UI
         => gameObject.SetActive(false);
 
     private void HandleCloseClick()
-    {
-        _gameUI.CloseView();
-        gameObject.SetActive(false);
-    }
+        => _gameUI.CloseView();
 }

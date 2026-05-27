@@ -7,6 +7,7 @@ public static class Events
     public static Action<Player> ServerOnPlayerAdded;
     public static Action<uint> ServerOnPlayerDemise;
     public static Action ServerOnHostStop;
+    public static Action ServerOnClientDisconnect;
 
     public static void InvokeLobbyDisband()
         => ServerOnLobbyDisband?.Invoke();
@@ -23,4 +24,6 @@ public static class Events
     public static void InvokeHostStop()
         => ServerOnHostStop?.Invoke();
 
+    public static void InvokeClientDisconnect()
+        => ServerOnClientDisconnect?.Invoke();
 }
