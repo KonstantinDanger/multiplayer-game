@@ -14,9 +14,6 @@ public class GameOfflineLobbyState : GameState
         if (NetworkServer.active)
             throw new System.Exception("Offline lobby state called while the server is active!");
 
-
-        UnityEngine.Debug.Log("OfflineStateEnter");
-
         _netManager = Resolve<CustomNetworkManager>();
         _lobby = GetOrCreate(_netManager);
 
@@ -34,7 +31,9 @@ public class GameOfflineLobbyState : GameState
             }
         }
 
-        _netManager.LocalPlayerInstance = GetOrCreateOfflinePlayer(playerPrefab, spawnPosition);
+        Player player = GetOrCreateOfflinePlayer(playerPrefab, spawnPosition);
+        player.ToggleHUD(false);
+        _netManager.LocalPlayerInstance = player;
 
         _lobby.OnLobbyCreated += HandleLobbyCreated;
     }
@@ -54,10 +53,7 @@ public class GameOfflineLobbyState : GameState
         if (_netManager.LocalPlayerInstance != null)
             return _netManager.LocalPlayerInstance;
 
-        var player = Object.Instantiate(playerPrefab, position, Quaternion.identity);
-
-        player.CreateUI();
-        player.ToggleHUD(false);
+        Player player = Object.Instantiate(playerPrefab, position, Quaternion.identity);
 
         return player;
     }

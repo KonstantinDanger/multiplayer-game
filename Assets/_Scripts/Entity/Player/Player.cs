@@ -30,6 +30,8 @@ public class Player : Entity
     private UpgradeView _upgradeUI;
     private LevelUpView _levelUpUI;
     private PlayerHUD _playerHUD;
+    private bool _isUICreated;
+    private (bool toggle, bool active) _toggleHUDDirty;
 
     private bool IsOffline =>
         !NetworkClient.active &&
@@ -37,20 +39,20 @@ public class Player : Entity
 
     private void Awake()
     {
-        if (CanDoActions())
+        if (HasAuthority())
             _stateMachine = new PlayerStateMachine(this);
-
-        if (NetworkClient.active && !isLocalPlayer)
-            return;
 
         Input.Initialize();
 
         SetCharacterClass(_baseCharacterClass);
+
+        if (HasAuthority())
+            CreateUI();
     }
 
     protected override void HandleOnEnable()
     {
-        if (!CanDoActions())
+        if (!HasAuthority())
             return;
 
         Input.Enable();
@@ -64,7 +66,7 @@ public class Player : Entity
 
     protected override void HandleOnDisable()
     {
-        if (!CanDoActions())
+        if (!HasAuthority())
             return;
 
         Input.Disable();
@@ -77,7 +79,7 @@ public class Player : Entity
     }
 
     private void Start()
-        => Camera.Initialize(CanDoActions());
+        => Camera.Initialize(HasAuthority());
 
     public override void OnStartClient()
     {
@@ -106,7 +108,7 @@ public class Player : Entity
         if (isServer || IsOffline)
             _stateMachine.CurrentState.Update(Time.deltaTime);
 
-        if (!CanDoActions())
+        if (!HasAuthority())
             return;
 
         #region For testing
@@ -155,7 +157,7 @@ public class Player : Entity
 
     private void HandleJump()
     {
-        if (!CanDoActions())
+        if (!HasAuthority())
             return;
 
         Movable.Jump(MovementConfig.JumpHeight, MovementConfig.Gravity);
@@ -178,7 +180,7 @@ public class Player : Entity
 
     public void RefillHealth()
     {
-        if (!CanDoActions())
+        if (!HasAuthority())
             return;
 
         Damageable.Respawn();
@@ -210,7 +212,7 @@ public class Player : Entity
 
     private void HandleInteraction()
     {
-        if (!CanDoActions())
+        if (!HasAuthority())
             return;
 
         if (IsOffline)
@@ -229,7 +231,7 @@ public class Player : Entity
     #region Ability
     private void HandleAbility(int index)
     {
-        if (!CanDoActions() || index == 0)
+        if (!HasAuthority() || index == 0)
             return;
 
         CmdHandleAbility(index);
@@ -241,7 +243,7 @@ public class Player : Entity
 
     private void HandleAttack()
     {
-        if (!CanDoActions())
+        if (!HasAuthority())
             return;
 
         CmdHandleAbility(0);
@@ -250,8 +252,11 @@ public class Player : Entity
     #endregion
 
     #region UI
-    public void CreateUI()
+    private void CreateUI()
     {
+        if (_isUICreated)
+            return;
+
         var data = ServiceLocator.Container.Resolve<StaticData>();
         var hudPrefab = data.PlayerHUDPrefab;
         var upgradeUIPrefab = data.UpgradeUIPrefab;
@@ -268,6 +273,7 @@ public class Player : Entity
         CharacterSelectView charSelectInstance = Instantiate(charSelectUIPrefab, _playerUI.transform);
         _menu = Instantiate(data.LobbyUIPrefab, _playerUI.transform);
 
+        _playerHUD.Initialize(_abilities, Damageable, _level, _upgrader, _wallet);
         _upgradeUI.Initialize(gameObject, _upgrader);
         _levelUpUI.Initialize(_level, _wallet);
         charSelectInstance.Initialize(data.ClassList, this);
@@ -280,17 +286,33 @@ public class Player : Entity
         _playerUI.Add(charSelectInstance);
 
         ServiceLocator.Container.RegisterSingle(_playerUI, cached: true);
+
+        if (_toggleHUDDirty.toggle)
+            ToggleHUD(_toggleHUDDirty.active);
+
+        _isUICreated = true;
     }
 
     public void ToggleHUD(bool active)
     {
+        if (_playerHUD == null)
+        {
+            _toggleHUDDirty = (true, active);
+            return;
+        }
+
         _playerHUD.gameObject.SetActive(active);
-        _playerHUD.Initialize(_abilities, Damageable, _level, _upgrader, _wallet);
+
+        _toggleHUDDirty = (false, active);
     }
+
+    [TargetRpc]
+    public void TargetRpcToggleHUD(bool active)
+        => ToggleHUD(active);
 
     private void HandleViewOpen()
     {
-        if (!CanDoActions())
+        if (!HasAuthority())
             return;
 
         Camera.ShowCursor();
@@ -299,7 +321,7 @@ public class Player : Entity
 
     private void HandleAllViewsClose()
     {
-        if (!CanDoActions())
+        if (!HasAuthority())
             return;
 
         Camera.HideCursor();
@@ -308,7 +330,7 @@ public class Player : Entity
 
     private void HandleUpgradeMenuInvoked()
     {
-        if (!CanDoActions())
+        if (!HasAuthority())
             return;
 
         _isUpgrading = !_isUpgrading;
@@ -330,7 +352,7 @@ public class Player : Entity
 
     private void HandleUICancel()
     {
-        if (!CanDoActions())
+        if (!HasAuthority())
             return;
 
         if (Damageable.IsDead)
@@ -365,7 +387,7 @@ public class Player : Entity
     /// Checks if the player is local OR is offline
     /// </summary>
     /// <returns></returns>
-    public bool CanDoActions()
+    public bool HasAuthority()
         => isLocalPlayer || IsOffline;
 
     public override void Dispose()

@@ -16,25 +16,20 @@ public class CustomNetworkManager : NetworkManager
         base.OnStopServer();
     }
 
-    public override void OnClientError(TransportError error, string reason)
-    {
-        base.OnClientError(error, reason);
-        UnityEngine.Debug.LogError($"Клієнт відключився! Причина від Mirror: {reason}");
-    }
-
     public override void OnClientConnect()
     {
         if (NetworkServer.active)
             return;
 
-        //Destroy(LocalPlayerInstance.gameObject);
-        //LocalPlayerInstance = null;
-        LocalPlayerInstance.gameObject.SetActive(false);
+        Debug.Log("Connected to host");
 
-        UnityEngine.Debug.Log("OnClientConnect ");
+        if (LocalPlayerInstance != null)
+        {
+            Destroy(LocalPlayerInstance.gameObject);
+            LocalPlayerInstance = null;
+        }
 
         NetworkClient.Ready();
-
         NetworkClient.AddPlayer();
     }
 

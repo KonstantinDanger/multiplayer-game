@@ -105,15 +105,16 @@ public class Lobby : MonoBehaviour, ILobby
             SteamFriends.GetPersonaName().ToString() + "'s Lobby");
 
         IsCreated = true;
+
         OnLobbyCreated?.Invoke(callback);
     }
 
     private void HandleJoinRequest(GameLobbyJoinRequested_t callback)
     {
-        if (LobbyId == callback.m_steamIDLobby)
-            return;
+        //if (LobbyId == callback.m_steamIDLobby)
+        //    return;
 
-        SteamMatchmaking.LeaveLobby(LobbyId);
+        //SteamMatchmaking.LeaveLobby(LobbyId);
         SteamMatchmaking.JoinLobby(callback.m_steamIDLobby);
 
         OnJoinRequested.Invoke(callback);
@@ -126,15 +127,12 @@ public class Lobby : MonoBehaviour, ILobby
         CSteamID steamIDLobby = new(callback.m_ulSteamIDLobby);
         LobbyName = SteamMatchmaking.GetLobbyData(steamIDLobby, "name");
 
-        // From Online
-        if (NetworkServer.active)
+        if (IsHost())
         {
             OnLobbyEnter.Invoke(callback);
 
             return;
         }
-
-        // From Offline
 
         _networkManager.networkAddress = SteamMatchmaking.GetLobbyData(steamIDLobby, HostAddressKey);
 

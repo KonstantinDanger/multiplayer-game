@@ -64,7 +64,7 @@ public class GameMatchState : GameState
 
         _players.ForEach(player =>
         {
-            player.ToggleHUD(false);
+            player.TargetRpcToggleHUD(false);
             player.SetCanAttack(false);
             player.Dispose();
         });

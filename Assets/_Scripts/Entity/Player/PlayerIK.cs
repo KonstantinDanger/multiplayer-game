@@ -9,7 +9,7 @@ public class PlayerIK : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (!_player.CanDoActions())
+        if (!_player.HasAuthority())
             return;
 
         if (!_enabled)
