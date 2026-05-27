@@ -9,13 +9,12 @@ public class LobbyView : UIView
     [SerializeField] private TextMeshProUGUI _lobbyNameText;
     [SerializeField] private ELobbyType _lobbyType = ELobbyType.k_ELobbyTypePublic;
 
-    //TODO: Remove buttons, add unity events to manually choose buttons on actions
     [Header("Buttons")]
-    [SerializeField] private Button _startGameButton; // active if -> isHost & allPlayersConnected (2) & !inMatch & lobbyIsCreated else -> not active
-    [SerializeField] private Button _createLobbyButton; // active if -> !lobbyIsCreated & !connectedClient & !inMatch else -> not active
-    [SerializeField] private Button _inviteButton; // active if -> !inMatch & lobbyIsCreated else -> not active 
-    [SerializeField] private Button _disbandButton; // active if -> lobbyIsCreated & !inMatch else -> not active
-    [SerializeField] private Button _leaveButton; // active if -> (isClient(=> disconnect) || isHost (=> disband)) & 
+    [SerializeField] private Button _startGameButton;
+    [SerializeField] private Button _createLobbyButton;
+    [SerializeField] private Button _inviteButton;
+    [SerializeField] private Button _disbandButton;
+    [SerializeField] private Button _leaveButton;
 
     private ILobby _lobby;
 
@@ -29,9 +28,6 @@ public class LobbyView : UIView
 
     public void Initialize(ILobby lobby)
     {
-        if (!NetworkServer.active)
-            UnityEngine.Debug.Log("");
-
         _lobby = lobby;
 
         _lobby.OnLobbyCreated += HandleLobbyCreated;

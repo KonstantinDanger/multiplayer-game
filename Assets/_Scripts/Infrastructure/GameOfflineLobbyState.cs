@@ -14,6 +14,8 @@ public class GameOfflineLobbyState : GameState
         if (NetworkServer.active)
             throw new System.Exception("Offline lobby state called while the server is active!");
 
+        UnityEngine.Debug.Log("offlinelobbystate ");
+
         _netManager = Resolve<CustomNetworkManager>();
         _lobby = GetOrCreate(_netManager);
 
@@ -36,10 +38,17 @@ public class GameOfflineLobbyState : GameState
         _netManager.LocalPlayerInstance = player;
 
         _lobby.OnLobbyCreated += HandleLobbyCreated;
+        _lobby.OnLobbyEnter += HandleLobbyEnter;
     }
 
     public override void OnExit()
-        => _lobby.OnLobbyCreated -= HandleLobbyCreated;
+    {
+        _lobby.OnLobbyCreated -= HandleLobbyCreated;
+        _lobby.OnLobbyEnter -= HandleLobbyEnter;
+    }
+
+    private void HandleLobbyEnter(LobbyEnter_t t)
+        => GoTo<GameOnlineLobbyState>();
 
     private void HandleLobbyCreated(LobbyCreated_t t)
     {

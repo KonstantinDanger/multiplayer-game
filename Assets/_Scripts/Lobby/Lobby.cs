@@ -170,6 +170,8 @@ public class Lobby : MonoBehaviour, ILobby
 
         yield return null;
 
+
+        UnityEngine.Debug.Log("OnLobbyLeave from lobby");
         OnLobbyLeave?.Invoke();
     }
 

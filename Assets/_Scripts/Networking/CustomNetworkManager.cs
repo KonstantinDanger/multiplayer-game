@@ -1,5 +1,6 @@
 using Mirror;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,6 +32,17 @@ public class CustomNetworkManager : NetworkManager
     {
         if (NetworkServer.active)
             return;
+
+        UnityEngine.Debug.Log("InvokeClientDisconnect from NetworkManager");
+        StartCoroutine(WaitForClientToDisconnect());
+    }
+
+    private IEnumerator WaitForClientToDisconnect()
+    {
+        while (NetworkServer.active)
+            yield return null;
+
+        yield return null;
 
         Events.InvokeClientDisconnect();
     }

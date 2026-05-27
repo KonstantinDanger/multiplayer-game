@@ -10,6 +10,8 @@ public class GameOnlineLobbyState : GameState
 
     public override void OnEnter()
     {
+        UnityEngine.Debug.Log("onlinelobbystate ");
+
         _staticData = Resolve<StaticData>();
         _networkManager = Resolve<CustomNetworkManager>();
         _lobby = Resolve<ILobby>();
