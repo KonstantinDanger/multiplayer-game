@@ -5,13 +5,12 @@ public class Match : IMatch
 {
     public event Action OnStarted;
     public event Action OnEnded;
+    public event Action OnDeathmatchStarted;
 
     private readonly GameMatchConfig _data;
 
     private readonly Timer _matchTimer;
     private readonly Timer _deathMatchTimer;
-
-    private readonly List<Player> _players;
 
     private readonly float _matchTime;
     private readonly float _deathMatchTime;
@@ -27,10 +26,12 @@ public class Match : IMatch
 
         _matchTimer = new(_matchTime);
         _deathMatchTimer = new(_deathMatchTime);
-
-        //_players = players.ToList();
     }
 
+    /// <summary>
+    /// Returns normalized match progress [0.0, 1.0]
+    /// </summary>
+    /// <returns></returns>
     public float GetMatchProgress()
         => _matchTimer.ElapsedTime / _matchTime;
 
@@ -64,6 +65,7 @@ public class Match : IMatch
     {
         _deathMatchTimer.Start();
         IsDeathmatchActive = true;
+        OnDeathmatchStarted?.Invoke();
     }
 }
 

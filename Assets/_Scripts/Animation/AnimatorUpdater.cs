@@ -4,24 +4,23 @@ using UnityEngine;
 
 public class AnimatorUpdater : NetworkBehaviour
 {
+    [SerializeField] private Animator _animator;
+    [SerializeField] private GameObject _owner;
     [SerializeField] private AnimatorUpdaterConfig _config;
     private readonly List<AnimatorUpdateData> _updateData = new();
 
-    private GameObject _target;
     private bool _initialized;
 
-    public void Initialize(GameObject targetUpdater)
+    [TargetRpc]
+    public void Initialize()
     {
         Animator[] animators = FindObjectsByType<Animator>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-        Animator senderAnimator = targetUpdater.GetComponentInChildren<Animator>();
-
-        _target = targetUpdater;
 
         foreach (Animator entity in animators)
         {
             Animator anim = entity;
 
-            if (anim == senderAnimator)
+            if (anim == _animator)
                 continue;
 
             anim.enabled = false;
@@ -36,7 +35,7 @@ public class AnimatorUpdater : NetworkBehaviour
         _initialized = true;
     }
 
-    public void Update()
+    private void Update()
     {
         if (!isLocalPlayer)
             return;
@@ -44,7 +43,7 @@ public class AnimatorUpdater : NetworkBehaviour
         if (!_initialized)
             return;
 
-        if (_target == null || _updateData.Count == 0)
+        if (_owner == null || _updateData.Count == 0)
             return;
 
         foreach (AnimatorUpdateData animatorData in _updateData)
@@ -57,7 +56,7 @@ public class AnimatorUpdater : NetworkBehaviour
             if (!animator.gameObject.activeInHierarchy)
                 continue;
 
-            float distanceToTarget = Vector3.Distance(animator.transform.position, _target.transform.position);
+            float distanceToTarget = Vector3.Distance(animator.transform.position, _owner.transform.position);
 
             float delay = CalculateUpdateDelay(distanceToTarget);
 

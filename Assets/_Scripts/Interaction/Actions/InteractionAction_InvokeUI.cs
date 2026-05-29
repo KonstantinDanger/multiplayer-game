@@ -9,12 +9,7 @@ public class InteractionAction_InvokeUI : InteractionAction
 
     public override void Act()
     {
-        GameUI ui = ServiceLocator.Container.Resolve<GameUI>();
-
-        // 1. view adds itself to the game ui stack
-        // 2. we get game ui ref
-        // 3. get view subclass type
-        // 4. call method "OpenViewByType"
+        GameUI ui = ServiceLocator.Container.Resolve<GameUI>(resolveCached: true);
 
         Type type = _uiTypeReference.Type;
 

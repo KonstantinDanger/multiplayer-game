@@ -39,22 +39,39 @@ public class PlayerCamera : NetworkBehaviour, IRotatablePlayerCamera
         _initialized = true;
     }
 
+    /// <summary>
+    /// Rotates body horizontally
+    /// </summary>
+    /// <param name="direction"></param>
+    /// <param name="speed"></param>
     public void Rotate(Vector3 direction, float speed)
     {
         if (_isLocked)
             return;
 
-        float verticalDelta = direction.y * speed * Time.deltaTime;
         _horizontalRotation = direction.x * speed * Time.deltaTime;
-
-        _verticalRotation -= verticalDelta;
-        _verticalRotation = Mathf.Clamp(_verticalRotation, _config.MinRotationAngle, _config.MaxRotationAngle);
-
-        _cameraHolder.localEulerAngles = new(_verticalRotation, _cameraHolder.localEulerAngles.y, _cameraHolder.localEulerAngles.z);
 
         _bodyTransform.Rotate(Vector3.up, _horizontalRotation);
 
         OnRotate?.Invoke(_horizontalRotation);
+    }
+
+    /// <summary>
+    /// Vertical rotation (should be client-side)
+    /// </summary>
+    /// <param name="direction"></param>
+    /// <param name="speed"></param>
+    public void RotateVertically(Vector3 direction, float speed)
+    {
+        if (_isLocked)
+            return;
+
+        float verticalDelta = direction.y * speed * Time.deltaTime;
+
+        _verticalRotation -= verticalDelta;
+        _verticalRotation = Mathf.Clamp(_verticalRotation, _config.MinRotationAngle, _config.MaxRotationAngle);
+
+        _cameraHolder.localRotation = Quaternion.Euler(_verticalRotation, 0f, 0f);
     }
 
     public void HideCursor()

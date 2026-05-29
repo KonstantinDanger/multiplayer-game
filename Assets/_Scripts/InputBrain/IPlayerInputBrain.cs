@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public interface IPlayerInputBrain : IInputBrain
 {
     event System.Action OnMenuInvoked;
@@ -8,4 +10,5 @@ public interface IPlayerInputBrain : IInputBrain
     void SetUiInput(bool active);
     void SetPlayerInput(bool active);
     void SetPlayerAttackInput(bool active);
+    void SetInputState(Vector2 movement, Vector2 rotation, bool sprinting);
 }

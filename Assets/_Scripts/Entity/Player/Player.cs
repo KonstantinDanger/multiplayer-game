@@ -100,9 +100,6 @@ public class Player : Entity
 
     protected override void Update()
     {
-        if (isServer || IsOffline)
-            _stateMachine.CurrentState.Update(Time.deltaTime);
-
         if (!HasAuthority())
             return;
 
@@ -132,11 +129,17 @@ public class Player : Entity
         #endregion
 
         Input.UpdateLogic();
+        Camera.RotateVertically(Input.Rotation, RotationConfig.RotationSpeed);
 
         if (IsOffline)
-            HandleLocomotion(Input.MovementVector, Input.Rotation, Input.IsSprinting);
+        {
+            UpdateStateMachine();
+            HandleRotation(Input.Rotation);
+        }
         else
-            CmdHandleLocomotion(Input.MovementVector, Input.Rotation, Input.IsSprinting);
+        {
+            CmdServerTick(Input.MovementVector, Input.Rotation, Input.IsSprinting);
+        }
 
         _abilities.OnUpdate();
 
@@ -144,19 +147,38 @@ public class Player : Entity
     }
 
     [Command(requiresAuthority = false)]
-    private void CmdHandleLocomotion(Vector2 movement, Vector2 rotation, bool isSprinting)
-        => HandleLocomotion(movement, rotation, isSprinting);
+    private void CmdServerTick(Vector2 movementVector, Vector3 rotation, bool isSprinting)
+    {
+        Input.SetInputState(movementVector, rotation, isSprinting);
+        HandleRotation(rotation);
+        UpdateStateMachine();
+    }
 
-    private void HandleLocomotion(Vector2 movement, Vector2 rotation, bool isSprinting)
-        => Rotatable.Rotate(rotation, RotationConfig.RotationSpeed);
+    private void UpdateStateMachine()
+        => _stateMachine.CurrentState.Update(Time.deltaTime);
+
+    private void HandleRotation(Vector3 rotation)
+        => Camera.Rotate(rotation, RotationConfig.RotationSpeed);
 
     private void HandleJump()
     {
         if (!HasAuthority())
             return;
 
-        Movable.Jump(MovementConfig.JumpHeight, MovementConfig.Gravity);
+        if (IsOffline)
+        {
+            Jump();
+            return;
+        }
+
+        CmdHandleJump();
     }
+
+    private void Jump()
+        => Movable.Jump(MovementConfig.JumpHeight, MovementConfig.Gravity);
+
+    [Command(requiresAuthority = false)]
+    private void CmdHandleJump() => Jump();
 
     protected override void OnDemise(Damage damage)
     {

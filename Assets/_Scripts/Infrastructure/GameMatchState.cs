@@ -34,8 +34,9 @@ public class GameMatchState : GameState
         InitZone();
         InitMatch();
         InitializeMatchData(_gameData);
-        InitPlayers();
+        InitPlayersForConnections();
 
+        _match.OnDeathmatchStarted += HandleDeathmatchStarted;
         Events.ServerOnPlayerDemise += HandlePlayerDemise;
     }
 
@@ -107,8 +108,8 @@ public class GameMatchState : GameState
 
     private void InitSpawnPositions()
     {
-        List<Transform> spawnPoints = GameObject
-            .FindObjectsOfType<NetworkStartPosition>()
+        List<Transform> spawnPoints = UnityEngine.Object
+            .FindObjectsByType<NetworkStartPosition>(FindObjectsInactive.Include, FindObjectsSortMode.None)
             .ToList()
             .Select(p => p.transform)
             .ToList();
@@ -138,16 +139,17 @@ public class GameMatchState : GameState
         }
     }
 
-    private void InitPlayers()
+    private void InitPlayersForConnections()
     {
         foreach (var conn in NetworkServer.connections.Values)
         {
             Player player = conn.identity.GetComponent<Player>();
             player.ResetLevel();
             player.Damageable.Respawn();
-            player.ToggleHUD(true);
+            player.TargetRpcToggleHUD(true);
             player.SetCanAttack(true);
-            player.GetComponent<AnimatorUpdater>().Initialize(player.gameObject);
+            player.GetComponent<AnimatorUpdater>()
+                 .Initialize();
             _players.Add(player);
         }
 
@@ -166,6 +168,11 @@ public class GameMatchState : GameState
         Map map = Resolve<Map>(resolveCached: true);
 
         _zone = _factory.SpawnZone(_data.ZonePrefab, map.MapCenter.position);
+    }
+
+    private void HandleDeathmatchStarted()
+    {
+        //Notify players to show corresponding ui or logic
     }
 
     private void TryDamagePlayersOutOfZone(IEnumerable<Player> playersOutOfZone, float damage)

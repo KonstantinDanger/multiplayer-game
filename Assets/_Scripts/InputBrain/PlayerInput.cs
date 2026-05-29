@@ -44,13 +44,19 @@ public class PlayerInput : MonoBehaviour, IPlayerInputBrain
         _rotationInput = _actions.Player.Look.ReadValue<Vector2>();
     }
 
+    public void SetInputState(Vector2 movement, Vector2 rotation, bool sprinting)
+    {
+        _movementInput = movement;
+        _rotationInput = rotation;
+        _isSprinting = sprinting;
+    }
+
     private void HandleAbilityPerformed(InputAction.CallbackContext context)
     {
         string keyName = context.control.name;
 
         int.TryParse(keyName, out int abilityIndex);
 
-        //AbilityAction?.Invoke(abilityIndex);
         AbilityAction?.Invoke(abilityIndex);
     }
 
@@ -74,4 +80,7 @@ public class PlayerInput : MonoBehaviour, IPlayerInputBrain
 
     public void SetPlayerInput(bool active)
         => (active ? (Action)_actions.Player.Enable : _actions.Player.Disable)();
+
+    public override string ToString()
+        => $"Movement input {_movementInput} | Rotation input {_rotationInput}";
 }

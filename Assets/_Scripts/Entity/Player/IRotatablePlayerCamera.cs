@@ -6,4 +6,5 @@ public interface IRotatablePlayerCamera : IRotatable
     void HideCursor();
     void ShowCursor();
     void Initialize(bool isLocalPlayer);
+    void RotateVertically(Vector3 direction, float speed);
 }

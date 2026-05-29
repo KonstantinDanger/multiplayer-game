@@ -20,11 +20,9 @@ public class PlayerMovementState : PlayerGroundedState
 
     protected override void OnUpdate(float deltaTime)
     {
-
         //UnityEngine.Debug.Log("is server active in state machine " + NetworkServer.active + $" player id: {player.netId}");
 
-
-        //UnityEngine.Debug.Log(ToString());
+        //UnityEngine.Debug.Log($"Is movable null? {Movable == null} | Is Input null? {InputBrain == null} | {InputBrain} | Of player {player.name}");
 
         _currentSpeed =
             (InputBrain.IsSprinting && MovementInput != Vector2.zero) ?

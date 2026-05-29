@@ -256,6 +256,7 @@ GameObject:
   - component: {fileID: 8345591040510454790}
   - component: {fileID: 253645263356952969}
   - component: {fileID: 1550906375918198091}
+  - component: {fileID: 8093997423605261582}
   m_Layer: 5
   m_Name: CurrencyImage
   m_TagString: Untagged
@@ -280,7 +281,7 @@ RectTransform:
   m_AnchorMin: {x: 0.7247506, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 3, y: 0}
-  m_SizeDelta: {x: -36, y: -46}
+  m_SizeDelta: {x: -36, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &253645263356952969
 CanvasRenderer:
@@ -320,6 +321,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8093997423605261582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3328718099900426621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AspectMode: 1
+  m_AspectRatio: 1
 --- !u!1 &3450816301502267953
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,7 +433,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <PersistentThroughScenes>k__BackingField: 1
   _abilitiesHUD: {fileID: 3442773755962489464}
-  _upgradeHUD: {fileID: 0}
   _healthGauge: {fileID: 7931644040736087577}
   _levelText: {fileID: 3404187098320223340}
   _currencyText: {fileID: 1044214410060797646}
