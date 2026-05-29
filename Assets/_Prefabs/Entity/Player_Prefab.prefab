@@ -386,7 +386,6 @@ GameObject:
   - component: {fileID: 6977470396741698936}
   - component: {fileID: 1705426453025376207}
   - component: {fileID: 6200438880601125725}
-  - component: {fileID: 6335237973204876179}
   - component: {fileID: 3776799554345185147}
   - component: {fileID: 3897486771464272008}
   - component: {fileID: 2237913142302332592}
@@ -400,6 +399,7 @@ GameObject:
   - component: {fileID: 5886189041842934009}
   - component: {fileID: 1129190162115379326}
   - component: {fileID: 6871403273120145228}
+  - component: {fileID: 6335237973204876179}
   m_Layer: 7
   m_Name: Player_Prefab
   m_TagString: Untagged
@@ -607,33 +607,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
---- !u!114 &6335237973204876179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4047092069969861197}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8a809edd3566c64db056f9ef49d791a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  _anim: {fileID: 3459466666786068578}
-  _movable:
-    _underlyingValue: {fileID: 3077047436821481876}
-  _rotatable:
-    _underlyingValue: {fileID: 2854472321422995004}
-  _config: {fileID: 11400000, guid: a7e9482648561ea44b509607f893e2bf, type: 2}
-  _rotationSmoothness: 0.32
-  _speedDeadZoneThreshold: 0.1
-  _verticalInputParamName: VerticalVelocity
-  _horizontalInputParamName: HorizontalVelocity
-  _movementAngle: MovementAngle
-  _airborneVelocityParamName: AirborneVelocity
 --- !u!114 &3776799554345185147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -956,6 +929,34 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   _config: {fileID: 11400000, guid: 10fafdb851d0ccc44aeda5c2746fb4e2, type: 2}
+--- !u!114 &6335237973204876179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4047092069969861197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8a809edd3566c64db056f9ef49d791a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  _anim: {fileID: 3459466666786068578}
+  _movable:
+    _underlyingValue: {fileID: 3077047436821481876}
+  _rotatable:
+    _underlyingValue: {fileID: 2854472321422995004}
+  _config: {fileID: 11400000, guid: a7e9482648561ea44b509607f893e2bf, type: 2}
+  _rotationSmoothness: 0.32
+  _speedDeadZoneThreshold: 0.1
+  _verticalInputParamName: VerticalVelocity
+  _horizontalInputParamName: HorizontalVelocity
+  _movementAngle: MovementAngle
+  _airborneVelocityParamName: AirborneVelocity
+  _isGroundedParamName: IsGrounded
 --- !u!1 &4641920328616467223
 GameObject:
   m_ObjectHideFlags: 0
