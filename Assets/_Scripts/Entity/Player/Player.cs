@@ -87,6 +87,8 @@ public class Player : Entity
         if (HasAuthority() && _stateMachine == null)
             _stateMachine = new PlayerStateMachine(this);
 
+        _upgrader.Initialize();
+
         Camera.Initialize(HasAuthority());
     }
 
@@ -94,8 +96,6 @@ public class Player : Entity
     {
         if (isLocalPlayer && isServer)
             gameObject.name += " (Server)";
-
-        _upgrader.Initialize();
     }
 
     protected override void Update()
