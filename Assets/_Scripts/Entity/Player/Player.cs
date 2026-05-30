@@ -26,7 +26,7 @@ public class Player : Entity
     private GameUI _gameUI;
     private LobbyView _menu;
     private UpgradeView _upgradeView;
-    private LevelUpView _levelUpUI;
+    private LevelUpView _levelUpView;
     private PlayerHUD _playerHUD;
     private bool _isUICreated;
     private (bool toggle, bool active) _toggleHUDDirty;
@@ -288,14 +288,14 @@ public class Player : Entity
             .Initialize(HandleViewOpen, HandleAllViewsClose);
 
         _playerHUD = Instantiate(hudPrefab, _gameUI.transform);
-        _levelUpUI = Instantiate(levelUpUIPrefab, _gameUI.transform);
-        _upgradeView = Instantiate(upgradeUIPrefab, _levelUpUI.transform);
+        _levelUpView = Instantiate(levelUpUIPrefab, _gameUI.transform);
+        _upgradeView = Instantiate(upgradeUIPrefab, _levelUpView.transform);
         CharacterSelectView charSelectInstance = Instantiate(charSelectUIPrefab, _gameUI.transform);
         _menu = Instantiate(data.LobbyUIPrefab, _gameUI.transform);
 
-        _playerHUD.Initialize(_abilities, Damageable, _level, _upgrader, _wallet);
+        _playerHUD.Initialize(_abilities, Damageable, _level, _respawn, _wallet);
         _upgradeView.Initialize(gameObject, _upgrader);
-        _levelUpUI.Initialize(_level, _wallet);
+        _levelUpView.Initialize(_level, _wallet);
         charSelectInstance.Initialize(data.ClassList, this);
         _menu.Initialize(ServiceLocator.Container.Resolve<ILobby>());
 
@@ -303,7 +303,7 @@ public class Player : Entity
         _gameUI
             .Add(_menu)
             .Add(_playerHUD)
-            .Add(_levelUpUI)
+            .Add(_levelUpView)
             .Add(_upgradeView)
             .Add(charSelectInstance);
 
@@ -362,7 +362,7 @@ public class Player : Entity
             return;
         }
 
-        _gameUI.OpenViewOfType(_upgradeView.GetType());
+        _gameUI.OpenViewOfType(_levelUpView.GetType());
         _isUpgrading = true;
     }
 

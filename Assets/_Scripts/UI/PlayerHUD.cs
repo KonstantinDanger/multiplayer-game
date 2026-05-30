@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerHUD : HUD
 {
     [SerializeField] private AbilitiesHUD _abilitiesHUD;
+    [SerializeField] private DeathHUD _deathHUD;
     [SerializeField] private GaugeBar _healthGauge;
     [SerializeField] private TextMeshProUGUI _levelText;
     [SerializeField] private TextMeshProUGUI _currencyText;
@@ -11,13 +12,14 @@ public class PlayerHUD : HUD
     private Level _level;
     private Wallet _wallet;
 
-    public void Initialize(AbilityUser abilities, IDamageable damageable, Level level, Upgrader upgrader, Wallet wallet)
+    public void Initialize(AbilityUser abilities, IDamageable damageable, Level level, Respawn respawn, Wallet wallet)
     {
         _level = level;
         _wallet = wallet;
 
         _abilitiesHUD.Initialize(abilities);
         _healthGauge.Initialize(gauge: damageable);
+        _deathHUD.Initialize(damageable, respawn);
 
         _level.ClientOnLevelChange += HandleLevelChange;
         _wallet.ClientOnCurrencyChange += HandleCurrencyChange;

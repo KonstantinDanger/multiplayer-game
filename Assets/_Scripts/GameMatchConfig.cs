@@ -12,4 +12,6 @@ public class GameMatchConfig : ScriptableObject
     /// Deathmatch time in minutes
     /// </summary>
     [field: SerializeField, Range(0f, 60f)] public float DeathmatchTime { get; private set; } = 3f;
+
+    [field: SerializeField, Range(0f, 60f)] public float PostMatchTimeToProceed { get; private set; } = 10f;
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Respawn : NetworkBehaviour
 {
+    public float Progress { get; private set; } = 0f;
+
     [Command(requiresAuthority = false)]
     public void Execute(uint playerId, float respawnTime)
         => ServerExecute(playerId, respawnTime);
@@ -14,7 +16,17 @@ public class Respawn : NetworkBehaviour
 
     private IEnumerator RespawnRoutine(uint playerId, float respawnTime)
     {
-        yield return new WaitForSeconds(respawnTime);
+        float elapsedTime = 0f;
+
+        while (elapsedTime < respawnTime)
+        {
+            elapsedTime += Time.deltaTime;
+
+            Progress = Mathf.Clamp01(elapsedTime / respawnTime);
+
+            yield return null;
+        }
+
         EnablePlayer(playerId);
     }
 

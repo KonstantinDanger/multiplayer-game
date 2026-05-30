@@ -2071,13 +2071,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayersInfoUI
       objectReference: {fileID: 0}
+    - target: {fileID: 9118580001092216917, guid: 2834b6c588c3521449fa80a158db5941, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 9118580001092216917, guid: 2834b6c588c3521449fa80a158db5941, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3066435682460980111}
     - targetCorrespondingSourceObject: {fileID: 9118580001092216917, guid: 2834b6c588c3521449fa80a158db5941, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3066435682460980110}
@@ -2109,20 +2110,6 @@ MonoBehaviour:
   serverOnly: 0
   visibility: 0
   hasSpawned: 0
---- !u!114 &3066435682460980111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3066435682460980109}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dded82d046d03704da4ba13d3c9a450a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <PersistentThroughScenes>k__BackingField: 1
-  _container: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
