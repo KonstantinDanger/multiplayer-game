@@ -15,18 +15,17 @@ public class DamageSystem : NetworkBehaviour, IDamageable, IStatConsumer
 
     private List<DamageHandler> _damageHandlers = new();
 
-    private float _baseHealth;
-
-    private float ScaledBaseHealth => _baseHealth * StatModifier.Multiplier;
-
-    [SyncVar] private float _currentHealth;
+    [SyncVar] private float _baseHealth;
+    [SyncVar(hook = nameof(HandleCurrentHealthChange))] private float _currentHealth;
     [SyncVar] private bool _isDead;
+    [SyncVar(hook = nameof(HandleCurrentHealthChange))] private StatModifier _statModifier;
 
     public bool IsDead => _isDead;
     public float CurrentGaugeValue => _currentHealth;
     public float MaxGaugeValue => ScaledBaseHealth;
 
-    [SyncVar] private StatModifier _statModifier;
+    private float ScaledBaseHealth => _baseHealth * StatModifier.Multiplier;
+
     public StatModifier StatModifier
     {
         get => _statModifier;
@@ -109,8 +108,6 @@ public class DamageSystem : NetworkBehaviour, IDamageable, IStatConsumer
             ServerOnDamageTaken?.Invoke(damage);
             RpcOnDamageTaken(damage);
         }
-
-        RpcOnValueChanged();
     }
 
     [Server]
@@ -118,10 +115,15 @@ public class DamageSystem : NetworkBehaviour, IDamageable, IStatConsumer
     {
         _currentHealth = ScaledBaseHealth;
         _isDead = false;
-        RpcOnValueChanged();
     }
 
     [ClientRpc] private void RpcOnDamageTaken(Damage damage) => ClientOnDamageTaken?.Invoke(damage);
     [ClientRpc] private void RpcOnDemise(Damage damage) => ClientOnDemise?.Invoke(damage);
     [ClientRpc] private void RpcOnValueChanged() => OnValueChanged?.Invoke();
+
+    private void HandleCurrentHealthChange(StatModifier oldValue, StatModifier newValue)
+    => OnValueChanged?.Invoke();
+
+    private void HandleCurrentHealthChange(float oldValue, float newValue)
+        => OnValueChanged?.Invoke();
 }
