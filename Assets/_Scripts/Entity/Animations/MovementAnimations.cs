@@ -48,10 +48,12 @@ public class MovementAnimations : NetworkBehaviour
 
     private void HandleMove()
     {
-        if (Movable.IsGrounded)
+        bool isGrounded = Movable.Velocity.y < 0.1f;
+
+        if (isGrounded)
             HandleGroundedMovement();
 
-        _anim.SetBool(_isGroundedParamName, Movable.IsGrounded);
+        _anim.SetBool(_isGroundedParamName, isGrounded);
     }
 
     private void HandleAirborneMovement()

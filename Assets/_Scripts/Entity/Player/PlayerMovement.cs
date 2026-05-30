@@ -15,13 +15,13 @@ public class PlayerMovement : NetworkBehaviour, IMovable
     public Vector3 MoveDirection { get; private set; }
 
     public bool IsGravityActive { get; set; } = true;
-
     public bool IsGrounded => _controller.isGrounded;
 
     private Vector3 _externalForce;
     private Vector3 _movementDelta;
-    private Vector3 _horizontalVelocity;
-    private float _verticalVelocity;
+
+    [SyncVar] private Vector3 _horizontalVelocity;
+    [SyncVar] private float _verticalVelocity;
 
     public void ApplyGravity(float gravity, float maxFallSpeed)
     {
@@ -70,7 +70,10 @@ public class PlayerMovement : NetworkBehaviour, IMovable
         //_horizontalVelocity.y = 0f;
         _controller.Move(_horizontalVelocity * Time.deltaTime);
 
-        OnMove?.Invoke();
+        if (NetworkClient.active)
+            RpcOnMove();
+        else
+            OnMove?.Invoke();
     }
 
     public void AddExternalForce(Vector3 force)
@@ -95,4 +98,6 @@ public class PlayerMovement : NetworkBehaviour, IMovable
 
         _controller.enabled = true;
     }
+
+    [ClientRpc] private void RpcOnMove() => OnMove?.Invoke();
 }
