@@ -33,12 +33,12 @@ public class DeathHUD : HUD
         if (_isRunning)
             StopCoroutine(RespawnRoutine());
 
+        gameObject.SetActive(true);
         StartCoroutine(RespawnRoutine());
     }
 
     private IEnumerator RespawnRoutine()
     {
-        gameObject.SetActive(true);
         _isRunning = true;
 
         while (_respawn.Progress < 1.0f)

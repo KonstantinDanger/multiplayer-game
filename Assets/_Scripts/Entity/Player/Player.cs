@@ -81,8 +81,8 @@ public class Player : Entity
 
         base.OnStartClient();
 
-        if (!isLocalPlayer)
-            gameObject.layer = StaticData.Constants.EnemyLayer;
+        //if (!isLocalPlayer)
+        //    gameObject.layer = StaticData.Constants.EnemyLayer;
 
         if (HasAuthority() && _stateMachine == null)
             _stateMachine = new PlayerStateMachine(this);
@@ -254,10 +254,6 @@ public class Player : Entity
         CmdHandleAbility(index);
     }
 
-    [Command]
-    private void CmdHandleAbility(int index)
-        => _abilities.Use(index);
-
     private void HandleAttack()
     {
         if (!HasAuthority())
@@ -266,6 +262,11 @@ public class Player : Entity
         CmdHandleAbility(0);
         //_damager.InflictDamage(Camera.Transform.position, Camera.Transform.forward);
     }
+
+    [Command]
+    private void CmdHandleAbility(int index)
+        => _abilities.Use(index);
+
     #endregion
 
     #region UI

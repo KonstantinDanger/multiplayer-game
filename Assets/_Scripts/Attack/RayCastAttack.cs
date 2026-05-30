@@ -9,11 +9,11 @@ public class RayCastAttack : Attack
     [SerializeField, Range(0, 360)] private float _verticalSpreadAngle;
     [SerializeField, Range(0, 360)] private float _horizontalSpreadAngle;
 
-    private NetworkBehaviour _sender;
+    private GameObject _sender;
 
     protected override void OnApply(NetworkBehaviour sender, NetworkBehaviour target)
     {
-        _sender = sender;
+        _sender = sender != null ? sender.gameObject : null;
 
         var attacker = sender.GetComponentInChildren<IAttacker>();
         var rayCastView = sender.GetComponentInChildren<RayCastView>();
@@ -22,6 +22,8 @@ public class RayCastAttack : Attack
 
         Vector3 attackDirection = CalculateSpreadDirection(rotatable, rotatable.Forward);
         Damage.SenderNetId = sender.netId;
+
+        UnityEngine.Debug.Log($"{sender.gameObject.name}'s layer is: " + LayerMask.LayerToName(sender.gameObject.layer));
 
         DoRayCast(attacker.AttackPoint.position, attackDirection, rayCastView, movable);
         attacker.PerformAttack();
@@ -43,12 +45,20 @@ public class RayCastAttack : Attack
 
         Vector3 endPos;
 
-        if (Physics.Raycast(startPosition, direction, out RaycastHit hit, Damage.Range, Damage.AttackLayers, QueryTriggerInteraction.Ignore))
-            if (hit.collider.TryGetComponent(out IDamageable damageable))
-                damageable.TakeDamage(SetupDamage(Damage, Damage.Sender));
+        if (Physics.Raycast(startPosition, direction, out RaycastHit hit, Damage.Range, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
+        {
+            if (_sender != hit.collider.gameObject)
+            {
+                if (hit.collider.TryGetComponent(out IDamageable damageable))
+                {
+                    var damage = SetupDamage(Damage, Damage.Sender);
+                    damageable.TakeDamage(damage);
+                }
+            }
+        }
 
         endPos = startPosition + direction * Damage.Range;
-        Vector3 attackPosition = startPosition + currentVelocity * Time.deltaTime;
+        Vector3 attackPosition = startPosition /*+ currentVelocity * Time.deltaTime*/;
 
         rayCastView.StartBulletView(attackPosition, endPos);
     }
@@ -60,6 +70,7 @@ public class RayCastAttack : Attack
 
         Damage damage = baseDamage;
         damage.Amount *= stats.GetStatMultiplier(StatType.Damage);
+
         return damage;
     }
 }

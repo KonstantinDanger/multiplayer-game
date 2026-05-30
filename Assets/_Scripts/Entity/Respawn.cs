@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Respawn : NetworkBehaviour
 {
-    public float Progress { get; private set; } = 0f;
+    [SyncVar] private float _progress = 0;
+    public float Progress => _progress;
 
     [Command(requiresAuthority = false)]
     public void Execute(uint playerId, float respawnTime)
@@ -22,7 +23,7 @@ public class Respawn : NetworkBehaviour
         {
             elapsedTime += Time.deltaTime;
 
-            Progress = Mathf.Clamp01(elapsedTime / respawnTime);
+            _progress = Mathf.Clamp01(elapsedTime / respawnTime);
 
             yield return null;
         }

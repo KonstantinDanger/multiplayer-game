@@ -17,4 +17,7 @@ public struct Damage
         => Utils.NetIdToGameObject(SenderNetId);
     public readonly GameObject Receiver
         => Utils.NetIdToGameObject(ReceiverNetId);
+
+    public override readonly string ToString()
+        => $"Damage amount: {Amount} | Type: {Type} | Range: {Range} | Attack layers: {{{Utils.GetLayerNamesFromMask(AttackLayers)}}}";
 }

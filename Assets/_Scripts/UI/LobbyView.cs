@@ -1,4 +1,3 @@
-using Mirror;
 using Steamworks;
 using TMPro;
 using UnityEngine;
@@ -101,12 +100,12 @@ public class LobbyView : UIView
 
         SetActive(_startGameButton, IsLobbyOwner() && _lobby.IsCreated);
 
-        if (_startGameButton.gameObject.activeInHierarchy)
-            _startGameButton.enabled = NetworkServer.connections.Count == _lobby.MaxPlayers;
+        //if (_startGameButton.gameObject.activeInHierarchy)
+        //    _startGameButton.enabled = NetworkServer.connections.Count == _lobby.MaxPlayers;
 
         SetActive(_createLobbyButton, !_lobby.IsCreated);
 
-        SetActive(_inviteButton, _lobby.IsCreated);
+        SetActive(_inviteButton, _lobby.IsCreated && IsLobbyOwner());
 
         SetActive(_disbandButton, _lobby.IsCreated && IsLobbyOwner());
 

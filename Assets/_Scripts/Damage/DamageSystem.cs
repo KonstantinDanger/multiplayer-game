@@ -51,10 +51,8 @@ public class DamageSystem : NetworkBehaviour, IDamageable, IStatConsumer
         Respawn();
     }
 
-    [Command(requiresAuthority = false)]
     public virtual void TakeDamage(Damage damage)
         => ServerTakeDamage(damage);
-
 
     [Command(requiresAuthority = false)]
     public void Respawn()

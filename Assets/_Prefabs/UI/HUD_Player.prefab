@@ -435,7 +435,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <PersistentThroughScenes>k__BackingField: 1
   _abilitiesHUD: {fileID: 3442773755962489464}
-  _deathHUD: {fileID: 0}
+  _deathHUD: {fileID: 4369580113426972486}
   _healthGauge: {fileID: 7931644040736087577}
   _levelText: {fileID: 3404187098320223340}
   _currencyText: {fileID: 1044214410060797646}
@@ -777,6 +777,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4523309854885265052, guid: f09fa16b666c06c49852babac07323d8, type: 3}
   m_PrefabInstance: {fileID: 590990099062084013}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4369580113426972486 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3787601690051653355, guid: f09fa16b666c06c49852babac07323d8, type: 3}
+  m_PrefabInstance: {fileID: 590990099062084013}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8ac992c2c266394596a426f4082b36d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &635614990615011621
 PrefabInstance:
   m_ObjectHideFlags: 0

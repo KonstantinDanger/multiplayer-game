@@ -25,10 +25,6 @@ public class RayCastView : NetworkBehaviour
     }
 
     public void StartBulletView(Vector3 start, Vector3 end)
-        => CmdStartBulletView(start, end);
-
-    [Command]
-    private void CmdStartBulletView(Vector3 start, Vector3 end)
         => RpcStartBulletView(start, end);
 
     [ClientRpc]
