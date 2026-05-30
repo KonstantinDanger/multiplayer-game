@@ -10,6 +10,12 @@ public class GaugeBar : MonoBehaviour
 
     private bool _initialized;
 
+    private void OnEnable()
+    {
+        if (Gauge != null)
+            HandleValueChanged();
+    }
+
     public void Initialize(IGauge gauge)
     {
         if (_initialized)
@@ -35,7 +41,6 @@ public class GaugeBar : MonoBehaviour
 
         SetSliderValue(value);
     }
-
 
     private void SetSliderValue(float value)
         => _slider.value = value;

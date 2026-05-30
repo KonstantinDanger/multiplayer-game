@@ -12,6 +12,12 @@ public class PlayerHUD : HUD
     private Level _level;
     private Wallet _wallet;
 
+    private void OnEnable()
+    {
+        if (_level != null)
+            HandleLevelChange(_level.Lvl);
+    }
+
     public void Initialize(AbilityUser abilities, IDamageable damageable, Level level, Respawn respawn, Wallet wallet)
     {
         _level = level;
@@ -34,7 +40,7 @@ public class PlayerHUD : HUD
     }
 
     private void HandleLevelChange(int level)
-    => _levelText.text = $"Lvl: {level} / {_level.MaxLvl}";
+        => _levelText.text = $"Lvl: {level} / {_level.MaxLvl}";
 
     private void HandleCurrencyChange(CurrencyType type, int delta, int total)
         => _currencyText.text = total.ToString();
