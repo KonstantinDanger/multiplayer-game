@@ -1,3 +1,4 @@
+using Mirror;
 using Steamworks;
 using TMPro;
 using UnityEngine;
@@ -89,7 +90,8 @@ public class LobbyView : UIView
     private void HandleLobbyCreated(LobbyCreated_t callback)
         => HandleUIChange();
 
-    private void HandleJoinRequest(GameLobbyJoinRequested_t callback) { }
+    private void HandleJoinRequest(GameLobbyJoinRequested_t callback)
+        => HandleUIChange();
 
     private void HandleLobbyEntered(LobbyEnter_t callback)
         => HandleUIChange();
@@ -98,14 +100,16 @@ public class LobbyView : UIView
     {
         _lobbyNameText.text = _lobby.LobbyName;
 
+        bool playersConnected = NetworkServer.connections.Count == _lobby.MaxPlayers;
+
         SetActive(_startGameButton, IsLobbyOwner() && _lobby.IsCreated);
 
-        //if (_startGameButton.gameObject.activeInHierarchy)
-        //    _startGameButton.enabled = NetworkServer.connections.Count == _lobby.MaxPlayers;
+        if (_startGameButton.gameObject.activeInHierarchy)
+            _startGameButton.enabled = playersConnected;
 
         SetActive(_createLobbyButton, !_lobby.IsCreated);
 
-        SetActive(_inviteButton, _lobby.IsCreated && IsLobbyOwner());
+        SetActive(_inviteButton, _lobby.IsCreated && IsLobbyOwner() && !playersConnected);
 
         SetActive(_disbandButton, _lobby.IsCreated && IsLobbyOwner());
 

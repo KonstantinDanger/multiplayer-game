@@ -20,7 +20,7 @@ public class GameOnlineLobbyState : GameState
         Events.ServerOnStartGameInitiated += HandleStartGameInitiated;
         Events.ServerOnPlayerAdded += HandlePlayerAdded;
         Events.ServerOnPlayerDemise += HandlePlayerDemise;
-        Events.ServerOnClientDisconnect += HandleClientDisconnect;
+        Events.ServerOnClientDisconnectComplete += HandleClientDisconnect;
 
         _networkManager.OnServerSceneLoaded += HandleGameSceneLoaded;
     }
@@ -33,7 +33,7 @@ public class GameOnlineLobbyState : GameState
         Events.ServerOnStartGameInitiated -= HandleStartGameInitiated;
         Events.ServerOnPlayerAdded -= HandlePlayerAdded;
         Events.ServerOnPlayerDemise -= HandlePlayerDemise;
-        Events.ServerOnClientDisconnect -= HandleClientDisconnect;
+        Events.ServerOnClientDisconnectComplete -= HandleClientDisconnect;
 
         _networkManager.OnServerSceneLoaded -= HandleGameSceneLoaded;
     }

@@ -316,6 +316,20 @@ public class Player : Entity
         _isUICreated = true;
     }
 
+    [TargetRpc]
+    public void ShowMatchOutcome(MatchResult result)
+    {
+        { }
+        UnityEngine.Debug.Log("match result: " + result);
+        //Invoke match result screen somehow
+    }
+
+    [TargetRpc]
+    public void HideMatchOutcome()
+    {
+        //Somehow get match result screen and turn it off
+    }
+
     public void ToggleHUD(bool active)
     {
         if (_playerHUD == null)

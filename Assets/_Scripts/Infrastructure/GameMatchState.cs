@@ -17,6 +17,7 @@ public class GameMatchState : GameState
     private Match _match;
     private GameData _gameData;
 
+    private Timer _drawCountdown;
     private float _matchTime;
     private CustomNetworkManager _netManager;
 
@@ -30,6 +31,8 @@ public class GameMatchState : GameState
         _gameData = Resolve<PersistentGameData>().GameData;
         _netManager = Resolve<CustomNetworkManager>();
 
+        _drawCountdown = new(_data.GameMatchData.DrawCountdown);
+
         InitSpawnPositions();
         InitZone();
         InitMatch();
@@ -38,6 +41,7 @@ public class GameMatchState : GameState
 
         _match.OnDeathmatchStarted += HandleDeathmatchStarted;
         Events.ServerOnPlayerDemise += HandlePlayerDemise;
+        Events.ServerOnClientDisconnectImmediate += HandleClientDisconnect;
     }
 
     public override void Update(float deltaTime)
@@ -52,12 +56,15 @@ public class GameMatchState : GameState
 
         TryDamagePlayersOutOfZone(playersOutOfZone, _data.ZoneDPS * deltaTime);
 
+        _drawCountdown.Update(deltaTime);
+
         _matchTime += deltaTime;
     }
 
     public override void OnExit()
     {
         Events.ServerOnPlayerDemise -= HandlePlayerDemise;
+        Events.ServerOnClientDisconnectImmediate -= HandleClientDisconnect;
 
         _dataBinders
             .ForEach(dataB => dataB
@@ -71,20 +78,69 @@ public class GameMatchState : GameState
         });
     }
 
+    #region Match Outcome
+
+    private void HandleClientDisconnect(uint playerId)
+    {
+        Player disconnected = Utils.ServerFindNetPlayerById(playerId);
+
+        if (_match.GetMatchProgress() < 0.5f)
+            HandleMatchCancel();
+        else
+            HandleSurrenderFor(disconnected);
+    }
+
     private void HandlePlayerDemise(uint playerId)
     {
         Player player = Utils.ServerFindNetPlayerById(playerId);
 
         if (_match.IsDeathmatchActive)
         {
-            //HandlePlayerMatchLost(player);
+            if (!_drawCountdown.HasStarted)
+                _drawCountdown.Start(onEnded: () => HandlePlayerMatchLostFor(player));
+            else
+                HandleDraw();
+
             return;
         }
 
         player.Respawn();
     }
 
-    private void HandlePlayerMatchLost(Player player)
+    private void HandleMatchCancel()
+    {
+        HandleDraw();
+        ShowOutcome(MatchResult.CanceledEarly);
+    }
+
+    private void HandleSurrenderFor(Player player)
+    {
+        HandlePlayerMatchLostFor(player);
+        ShowOutcome(MatchResult.Surrender);
+    }
+
+    private void HandleDraw()
+    {
+        PlayerMatchSummaryData[] _summaries = _players
+            .Select(player => _gameData.GameMatchData
+            .GetSummaryFor(player))
+            .ToArray();
+
+        _gameData.GameMatchData.MatchData = new()
+        {
+            winner = null,
+            loser = null,
+            matchTime = _matchTime
+        };
+
+        _gameData.GameMatchData.MatchData.SetDate(DateTime.Now);
+
+        ShowOutcome(MatchResult.Draw);
+
+        GoTo<GameMatchSummaryState>();
+    }
+
+    private void HandlePlayerMatchLostFor(Player player)
     {
         var loser = player;
         var winner = _players.Find(p => p != player);
@@ -103,8 +159,15 @@ public class GameMatchState : GameState
 
         _gameData.GameMatchData.MatchData.SetDate(DateTime.Now);
 
+        ShowOutcome(MatchResult.OneSided);
+
         GoTo<GameMatchSummaryState>();
     }
+
+    private void ShowOutcome(MatchResult outcome)
+        => _players.ForEach(player => player.ShowMatchOutcome(outcome));
+
+    #endregion
 
     private void InitSpawnPositions()
     {

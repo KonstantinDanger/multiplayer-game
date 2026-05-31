@@ -33,7 +33,7 @@ public class CustomNetworkManager : NetworkManager
         if (NetworkServer.active)
             return;
 
-        UnityEngine.Debug.Log("InvokeClientDisconnect from NetworkManager");
+        Events.InvokeClientDisconnectImmediate(NetworkClient.connection.identity.netId);
         StartCoroutine(WaitForClientToDisconnect());
     }
 
@@ -44,7 +44,7 @@ public class CustomNetworkManager : NetworkManager
 
         yield return null;
 
-        Events.InvokeClientDisconnect();
+        Events.InvokeClientDisconnectComplete();
     }
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
