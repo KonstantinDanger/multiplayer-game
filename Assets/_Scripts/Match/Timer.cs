@@ -45,7 +45,6 @@ public class Timer
     {
         _isGoing = false;
         _elapsedTime = 0f;
-
     }
 }
 

@@ -1,8 +1,9 @@
 ﻿public enum MatchResult
 {
-    OneSided = 0,
-    Draw = 1,
-    CanceledEarly = 2,
-    Surrender = 3
+    None = 0,
+    OneSided = 1,
+    Draw = 2,
+    CanceledEarly = 3,
+    Surrender = 4,
 }
 

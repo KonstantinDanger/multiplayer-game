@@ -6,29 +6,27 @@ public class DeathHUD : HUD
 {
     [SerializeField] private Image _respawnProgressThrobber;
 
-    private IDamageable _damageable;
     private Respawn _respawn;
 
     private bool _initialized;
     private bool _isRunning;
 
-    public void Initialize(IDamageable damageable, Respawn respawn)
+    public void Initialize(Respawn respawn)
     {
         if (_initialized)
             return;
 
-        _damageable = damageable;
         _respawn = respawn;
 
-        _damageable.ClientOnDemise += HandleDemise;
+        _respawn.ClientOnStarted += HandleRespawnStarted;
 
         _initialized = true;
     }
 
     private void OnDestroy()
-        => _damageable.ClientOnDemise -= HandleDemise;
+        => _respawn.ClientOnStarted -= HandleRespawnStarted;
 
-    private void HandleDemise(Damage damage)
+    private void HandleRespawnStarted()
     {
         if (_isRunning)
             StopCoroutine(RespawnRoutine());

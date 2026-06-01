@@ -88,8 +88,6 @@ public class PlayerMovement : NetworkBehaviour, IMovable
 
     public void Warp(Vector3 position)
     {
-        UnityEngine.Debug.Log($"Warp invoked to {position} position");
-
         _controller.enabled = false;
 
         transform.position = position;

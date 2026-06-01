@@ -14,7 +14,7 @@ public class DamagePopUp : NetworkBehaviour
 
 
     private void OnEnable()
-        => Damageable.ServerOnDamageTaken += HandleDamageTaken;
+        => Damageable.ClientOnDamageTaken += HandleDamageTaken;
 
     private void Start()
     {

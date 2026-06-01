@@ -104,6 +104,8 @@ public class Player : Entity
             return;
 
         #region For testing
+
+#if UNITY_EDITOR
         if (Keyboard.current.hKey.wasPressedThisFrame)
         {
             Damageable.TakeDamage(new() { Amount = 50 });
@@ -126,6 +128,7 @@ public class Player : Entity
 
         //UnityEngine.Debug.Log(_level);
         //UnityEngine.Debug.Log("Current state: " + _stateMachine.CurrentState);
+#endif
         #endregion
 
         Input.UpdateLogic();
@@ -308,7 +311,7 @@ public class Player : Entity
             .Add(_upgradeView)
             .Add(charSelectInstance);
 
-        ServiceLocator.Container.RegisterSingle(_gameUI, cached: true);
+        ServiceLocator.Container.RegisterSingle(_gameUI);
 
         if (_toggleHUDDirty.toggle)
             ToggleHUD(_toggleHUDDirty.active);
@@ -317,17 +320,18 @@ public class Player : Entity
     }
 
     [TargetRpc]
-    public void ShowMatchOutcome(MatchResult result)
+    public void ShowMatchOutcome(MatchResult result, float summaryDuration)
     {
-        { }
-        UnityEngine.Debug.Log("match result: " + result);
-        //Invoke match result screen somehow
+        var hud = _playerHUD.Show<MatchResultScreenHUD>();
+        hud.Initialize(result, summaryDuration);
+        HandleViewOpen();
     }
 
     [TargetRpc]
     public void HideMatchOutcome()
     {
-        //Somehow get match result screen and turn it off
+        _playerHUD.Hide<MatchResultScreenHUD>();
+        HandleAllViewsClose();
     }
 
     public void ToggleHUD(bool active)
@@ -337,10 +341,12 @@ public class Player : Entity
             _toggleHUDDirty = (true, active);
             return;
         }
+        Debug.Log($"TargetRpc received. IsServer: {isServer}, IsClient: {isClient}");
 
         _playerHUD.gameObject.SetActive(active);
 
         _toggleHUDDirty = (false, active);
+        UnityEngine.Debug.Log("toggle hud " + active);
     }
 
     [TargetRpc]
@@ -349,9 +355,6 @@ public class Player : Entity
 
     private void HandleViewOpen()
     {
-        if (!HasAuthority())
-            return;
-
         Camera.ShowCursor();
         Input.SetPlayerInput(false);
     }
@@ -397,7 +400,6 @@ public class Player : Entity
 
     #endregion
 
-
     /// <summary>
     /// Checks if the player is local OR is offline
     /// </summary>
@@ -408,8 +410,6 @@ public class Player : Entity
     public override void Dispose()
     {
         base.Dispose();
-
-        Destroy(_playerHUD);
 
         ServiceLocator.Container.Dispose();
     }

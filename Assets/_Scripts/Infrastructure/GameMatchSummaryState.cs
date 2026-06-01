@@ -1,11 +1,12 @@
 using Mirror;
+using System.Collections.Generic;
 
 public class GameMatchSummaryState : GameState
 {
-    private const float SummaryTime = 5;
     private float _timer;
     private StaticData _staticData;
     private CustomNetworkManager _netManager;
+    private List<Player> _players = new();
 
     public GameMatchSummaryState(IStateMachine stateMachine, ServiceLocator container) : base(stateMachine, container) { }
 
@@ -13,16 +14,16 @@ public class GameMatchSummaryState : GameState
 
     public override void OnEnter()
     {
-        DisablePlayers();
-
         GameMatchData matchData = Resolve<PersistentGameData>().GameData.GameMatchData;
 
         _staticData = Resolve<StaticData>();
         _netManager = Resolve<CustomNetworkManager>();
 
-        UnityEngine.Debug.Log("GameMatchData " + matchData);
+        _players = GetPlayers();
+        DisablePlayers();
+        ShowOutcome(GameMatchState.Outcome);
 
-        BackendApi.CreateMatch(matchData);
+        //BackendApi.CreateMatch(matchData);
 
         _netManager.OnServerSceneLoaded += HandleLobbySceneLoaded;
 
@@ -32,14 +33,6 @@ public class GameMatchSummaryState : GameState
     public override void OnExit()
         => _netManager.OnServerSceneLoaded -= HandleLobbySceneLoaded;
 
-    private void HandleLobbySceneLoaded(string sceneName)
-    {
-        if (sceneName != _staticData.LobbySceneName)
-            throw new System.Exception("There was an error during lobby scene load. Possibly, the wrong scene has loaded ");
-
-        GoTo<GameLobbyRefreshState>();
-    }
-
     public override void Update(float deltaTime)
     {
         if (_ended)
@@ -47,20 +40,58 @@ public class GameMatchSummaryState : GameState
 
         _timer += deltaTime;
 
-        if (_timer >= SummaryTime)
+        if (_timer >= _staticData.GameMatchData.MatchSummaryDuration)
         {
             _netManager.ServerChangeScene(_staticData.LobbySceneName);
             _ended = true;
         }
     }
 
-    private void DisablePlayers()
+    private List<Player> GetPlayers()
     {
+        List<Player> players = new();
+
         foreach (var item in NetworkServer.connections)
         {
-            Player player = item.Value.identity.GetComponent<Player>();
+            if (item.Value.identity.TryGetComponent(out Player player))
+                players.Add(player);
+        }
+
+        return players;
+    }
+
+    private void ShowOutcome(MatchResult outcome)
+    {
+        float summaryDuration = _staticData.GameMatchData.MatchSummaryDuration;
+        _players.ForEach(player =>
+        {
+            player.ShowMatchOutcome(outcome, summaryDuration);
+        });
+    }
+
+    private void HandleLobbySceneLoaded(string sceneName)
+    {
+        if (sceneName != _staticData.LobbySceneName)
+            throw new System.Exception("There was an error during lobby scene load. Possibly, the wrong scene has loaded ");
+
+        HideSummaryAndHUD();
+        _netManager.ShufflePlayersPositions();
+        GoTo<GameLobbyRefreshState>();
+    }
+
+    private void HideSummaryAndHUD()
+        => _players.ForEach(player =>
+        {
+            player?.TargetRpcToggleHUD(false);
+            player?.HideMatchOutcome();
+        });
+
+    private void DisablePlayers()
+    {
+        _players.ForEach(player =>
+        {
             player.SetCanAttack(false);
             player.Spectate(true);
-        }
+        });
     }
 }

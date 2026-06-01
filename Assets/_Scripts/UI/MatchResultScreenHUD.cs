@@ -53,10 +53,12 @@ public class MatchResultScreenHUD : HUD
         while (elapsedTime < time)
         {
             elapsedTime += Time.deltaTime;
-            _countdownText.text = $"{time - Mathf.RoundToInt(elapsedTime)}...";
+            int timeLeft = Mathf.RoundToInt(time - elapsedTime);
+            _countdownText.text = $"{timeLeft}...";
             yield return null;
         }
 
+        _countdownText.text = "";
         _proceedButton.enabled = true;
     }
 }

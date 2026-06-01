@@ -1,9 +1,12 @@
 ﻿using Mirror;
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class Respawn : NetworkBehaviour
 {
+    public Action ClientOnStarted;
+
     [SyncVar] private float _progress = 0;
     public float Progress => _progress;
 
@@ -17,6 +20,8 @@ public class Respawn : NetworkBehaviour
 
     private IEnumerator RespawnRoutine(uint playerId, float respawnTime)
     {
+        RpcOnStarted();
+
         float elapsedTime = 0f;
 
         while (elapsedTime < respawnTime)
@@ -30,6 +35,8 @@ public class Respawn : NetworkBehaviour
 
         EnablePlayer(playerId);
     }
+
+    [ClientRpc] private void RpcOnStarted() => ClientOnStarted?.Invoke();
 
     [ClientRpc]
     private void EnablePlayer(uint playerId)

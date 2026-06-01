@@ -13,7 +13,7 @@ public class GameMatchConfig : ScriptableObject
     /// </summary>
     [field: SerializeField, Range(0f, 60f)] public float DeathmatchTime { get; private set; } = 3f;
 
-    [field: SerializeField, Range(0f, 60f)] public float PostMatchTimeToProceed { get; private set; } = 10f;
+    [field: SerializeField, Range(0f, 60f)] public float MatchSummaryDuration { get; private set; } = 10f;
 
     /// <summary>
     /// Represents a time in seconds given after one of the player's 

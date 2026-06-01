@@ -98,7 +98,7 @@ public class LobbyView : UIView
 
     private void HandleUIChange()
     {
-        _lobbyNameText.text = _lobby.LobbyName;
+        _lobbyNameText.text = string.IsNullOrEmpty(_lobby.LobbyName) ? "Offline" : _lobby.LobbyName;
 
         bool playersConnected = NetworkServer.connections.Count == _lobby.MaxPlayers;
 

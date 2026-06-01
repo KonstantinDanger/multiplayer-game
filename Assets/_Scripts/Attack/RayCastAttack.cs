@@ -23,8 +23,6 @@ public class RayCastAttack : Attack
         Vector3 attackDirection = CalculateSpreadDirection(rotatable, rotatable.Forward);
         Damage.SenderNetId = sender.netId;
 
-        UnityEngine.Debug.Log($"{sender.gameObject.name}'s layer is: " + LayerMask.LayerToName(sender.gameObject.layer));
-
         DoRayCast(attacker.AttackPoint.position, attackDirection, rayCastView, movable);
         attacker.PerformAttack();
     }

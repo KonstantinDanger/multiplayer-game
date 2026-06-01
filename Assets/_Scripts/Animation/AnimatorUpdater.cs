@@ -16,10 +16,8 @@ public class AnimatorUpdater : NetworkBehaviour
     {
         Animator[] animators = FindObjectsByType<Animator>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 
-        foreach (Animator entity in animators)
+        foreach (Animator anim in animators)
         {
-            Animator anim = entity;
-
             if (anim == _animator)
                 continue;
 
@@ -30,6 +28,8 @@ public class AnimatorUpdater : NetworkBehaviour
                 Animator = anim,
                 LastUpdateTime = Time.time + Random.Range(0, _config.MaxUpdateDelay)
             });
+
+            anim.Update(Time.deltaTime);
         }
 
         _initialized = true;
@@ -46,6 +46,11 @@ public class AnimatorUpdater : NetworkBehaviour
         if (_owner == null || _updateData.Count == 0)
             return;
 
+        UpdateAnimators();
+    }
+
+    private void UpdateAnimators()
+    {
         foreach (AnimatorUpdateData animatorData in _updateData)
         {
             Animator animator = animatorData.Animator;

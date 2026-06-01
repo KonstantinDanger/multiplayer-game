@@ -9,7 +9,7 @@ public class InteractionAction_InvokeUI : InteractionAction
 
     public override void Act()
     {
-        GameUI ui = ServiceLocator.Container.Resolve<GameUI>(resolveCached: true);
+        GameUI ui = ServiceLocator.Container.Resolve<GameUI>();
 
         Type type = _uiTypeReference.Type;
 

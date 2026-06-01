@@ -31,6 +31,8 @@ public class GameOfflineLobbyState : GameState
             }
         }
 
+
+        UnityEngine.Debug.Log("offline lobby state ");
         Player player = GetOrCreateOfflinePlayer(playerPrefab, spawnPosition);
         player.ToggleHUD(false);
         _netManager.LocalPlayerInstance = player;

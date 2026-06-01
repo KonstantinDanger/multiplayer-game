@@ -6,12 +6,14 @@ using UnityEngine;
 
 public class GameMatchState : GameState
 {
+    public static MatchResult Outcome = MatchResult.None;
+
     private readonly List<Player> _players = new();
     private readonly List<PlayerSummaryDataBinder> _dataBinders = new();
 
     private GameMatchConfig _gameMatchData;
     private GameFactory _factory;
-    private StaticData _data;
+    private StaticData _staticData;
 
     private Zone _zone;
     private Match _match;
@@ -25,13 +27,15 @@ public class GameMatchState : GameState
 
     public override void OnEnter()
     {
-        _data = Resolve<StaticData>();
+        Outcome = MatchResult.None;
+
+        _staticData = Resolve<StaticData>();
         _factory = Resolve<GameFactory>();
-        _gameMatchData = _data.GameMatchData;
+        _gameMatchData = _staticData.GameMatchData;
         _gameData = Resolve<PersistentGameData>().GameData;
         _netManager = Resolve<CustomNetworkManager>();
 
-        _drawCountdown = new(_data.GameMatchData.DrawCountdown);
+        _drawCountdown = new(_staticData.GameMatchData.DrawCountdown);
 
         InitSpawnPositions();
         InitZone();
@@ -54,7 +58,7 @@ public class GameMatchState : GameState
 
         var playersOutOfZone = GetPlayersOutOfZone(_players);
 
-        TryDamagePlayersOutOfZone(playersOutOfZone, _data.ZoneDPS * deltaTime);
+        TryDamagePlayersOutOfZone(playersOutOfZone, _staticData.ZoneDPS * deltaTime);
 
         _drawCountdown.Update(deltaTime);
 
@@ -66,13 +70,16 @@ public class GameMatchState : GameState
         Events.ServerOnPlayerDemise -= HandlePlayerDemise;
         Events.ServerOnClientDisconnectImmediate -= HandleClientDisconnect;
 
+        _drawCountdown.Stop();
+
         _dataBinders
             .ForEach(dataB => dataB
             .Unbind());
 
+        UnityEngine.Debug.Log("_players count " + _players.Count());
+
         _players.ForEach(player =>
         {
-            player.TargetRpcToggleHUD(false);
             player.SetCanAttack(false);
             player.Dispose();
         });
@@ -110,13 +117,13 @@ public class GameMatchState : GameState
     private void HandleMatchCancel()
     {
         HandleDraw();
-        ShowOutcome(MatchResult.CanceledEarly);
+        SetOutcome(MatchResult.CanceledEarly);
     }
 
     private void HandleSurrenderFor(Player player)
     {
         HandlePlayerMatchLostFor(player);
-        ShowOutcome(MatchResult.Surrender);
+        SetOutcome(MatchResult.Surrender);
     }
 
     private void HandleDraw()
@@ -135,10 +142,13 @@ public class GameMatchState : GameState
 
         _gameData.GameMatchData.MatchData.SetDate(DateTime.Now);
 
-        ShowOutcome(MatchResult.Draw);
+        SetOutcome(MatchResult.Draw);
 
         GoTo<GameMatchSummaryState>();
     }
+
+    private void SetOutcome(MatchResult result)
+        => Outcome = result;
 
     private void HandlePlayerMatchLostFor(Player player)
     {
@@ -159,13 +169,10 @@ public class GameMatchState : GameState
 
         _gameData.GameMatchData.MatchData.SetDate(DateTime.Now);
 
-        ShowOutcome(MatchResult.OneSided);
+        SetOutcome(MatchResult.OneSided);
 
         GoTo<GameMatchSummaryState>();
     }
-
-    private void ShowOutcome(MatchResult outcome)
-        => _players.ForEach(player => player.ShowMatchOutcome(outcome));
 
     #endregion
 
@@ -230,7 +237,7 @@ public class GameMatchState : GameState
     {
         Map map = Resolve<Map>(resolveCached: true);
 
-        _zone = _factory.SpawnZone(_data.ZonePrefab, map.MapCenter.position);
+        _zone = _factory.SpawnZone(_staticData.ZonePrefab, map.MapCenter.position);
     }
 
     private void HandleDeathmatchStarted()
@@ -244,7 +251,7 @@ public class GameMatchState : GameState
             return;
 
         foreach (Player player in playersOutOfZone)
-            player.Damageable.TakeDamage(new Damage() { Amount = damage, Type = DamageType.Absolute });
+            player?.Damageable.TakeDamage(new Damage() { Amount = damage, Type = DamageType.Absolute });
     }
 
     private IEnumerable<Player> GetPlayersOutOfZone(IEnumerable<Player> players)
