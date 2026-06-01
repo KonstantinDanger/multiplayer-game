@@ -18,8 +18,9 @@ public class MeleeAttack : Attack
 
         int targetCount = Physics.OverlapSphereNonAlloc(attackPosition, _attackSplashRadius, _targets, Damage.AttackLayers);
 
+#if UNITY_EDITOR
         Utils.SpawnTemporarySphere(attackPosition, _attackSplashRadius);
-
+#endif
         for (int i = 0; i < targetCount; i++)
             if (_targets[i].TryGetComponent(out IDamageable damageable))
                 damageable.TakeDamage(Damage);

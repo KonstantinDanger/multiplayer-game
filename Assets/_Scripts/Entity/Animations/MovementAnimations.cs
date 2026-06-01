@@ -11,12 +11,15 @@ public class MovementAnimations : NetworkBehaviour
     [SerializeField] private float _rotationSmoothness = 0.03f;
     [SerializeField] private float _speedDeadZoneThreshold = 0.1f;
 
+    [SerializeField] private bool _serverSide = true;
+
     [Header("Params")]
     [SerializeField] private string _verticalInputParamName = "VerticalVelocity";
     [SerializeField] private string _horizontalInputParamName = "HorizontalVelocity";
     [SerializeField] private string _movementAngle = "MovementAngle";
     [SerializeField] private string _airborneVelocityParamName = "AirborneVelocity";
     [SerializeField] private string _isGroundedParamName = "IsGrounded";
+
 
     private IMovable Movable => _movable.Value;
     private IRotatable Rotatable => _rotatable.Value;
@@ -48,6 +51,12 @@ public class MovementAnimations : NetworkBehaviour
 
     private void HandleMove()
     {
+        bool isOffline = !NetworkClient.active && !NetworkServer.active;
+        bool hasAuthority = isServer || isLocalPlayer || isOffline;
+
+        if (!hasAuthority)
+            return;
+
         bool isGrounded = Movable.Velocity.y < 0.1f;
 
         if (isGrounded)

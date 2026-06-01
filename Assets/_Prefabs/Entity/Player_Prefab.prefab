@@ -920,6 +920,7 @@ MonoBehaviour:
   _config: {fileID: 11400000, guid: a7e9482648561ea44b509607f893e2bf, type: 2}
   _rotationSmoothness: 0.32
   _speedDeadZoneThreshold: 0.1
+  _serverSide: 0
   _verticalInputParamName: VerticalVelocity
   _horizontalInputParamName: HorizontalVelocity
   _movementAngle: MovementAngle

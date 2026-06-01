@@ -456,6 +456,7 @@ MonoBehaviour:
   _horizontalInputParamName: HorizontalVelocity
   _movementAngle: MovementAngle
   _airborneVelocityParamName: AirborneVelocity
+  _isGroundedParamName: IsGrounded
 --- !u!114 &6475008800849618527 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2267410281914650354, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}

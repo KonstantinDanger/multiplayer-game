@@ -19,7 +19,7 @@ public class AbilityAnimation : NetworkBehaviour
         => AbilityUser.OnAbilityStartUsing -= HandleAttack;
 
     private void HandleAttack(UseAbilityData data)
-        => CmdPlayAttackAnimation(data);
+        => RpcPlayAttackAnimation(data);
 
     [Command(requiresAuthority = false)]
     private void CmdPlayAttackAnimation(UseAbilityData data)
