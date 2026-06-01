@@ -27,6 +27,7 @@ public class GameMatchState : GameState
 
     public override void OnEnter()
     {
+        Resolve<Game>().RequestSetMatchActive(true);
         Outcome = MatchResult.None;
 
         _staticData = Resolve<StaticData>();
@@ -83,6 +84,8 @@ public class GameMatchState : GameState
             player.SetCanAttack(false);
             player.Dispose();
         });
+
+        Resolve<Game>().RequestSetMatchActive(false);
     }
 
     #region Match Outcome

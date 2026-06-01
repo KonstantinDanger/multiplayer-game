@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "GameMatchConfig")]
+[CreateAssetMenu(menuName = "GameMatchData")]
 public class GameMatchConfig : ScriptableObject
 {
     /// <summary>

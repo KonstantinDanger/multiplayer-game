@@ -23,8 +23,6 @@ public class PlayerHUD : HUD
             HandleLevelChange(_level.Lvl);
     }
 
-    private void OnDisable() => UnityEngine.Debug.Log("disabled hud ");
-
     public void Initialize(AbilityUser abilities, IDamageable damageable, Level level, Respawn respawn, Wallet wallet)
     {
         _level = level;

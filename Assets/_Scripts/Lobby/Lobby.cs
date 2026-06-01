@@ -28,6 +28,8 @@ public class Lobby : MonoBehaviour, ILobby
     public event Action<LobbyEnter_t> OnLobbyEnter;
     public event Action OnLobbyLeave;
 
+    private Game _game;
+
     public void Initialize()
     {
         if (!SteamManager.Initialized)
@@ -36,6 +38,8 @@ public class Lobby : MonoBehaviour, ILobby
         if (!_networkManager)
             _networkManager = GetComponent<CustomNetworkManager>();
 
+        _game = ServiceLocator.Container.Resolve<Game>();
+
         LobbyCreated = Callback<LobbyCreated_t>.Create(HandleLobbyCreated);
         JoinRequested = Callback<GameLobbyJoinRequested_t>.Create(HandleJoinRequest);
         LobbyEntered = Callback<LobbyEnter_t>.Create(HandleLobbyEnter);
@@ -43,8 +47,22 @@ public class Lobby : MonoBehaviour, ILobby
         _initialized = true;
     }
 
+    public void QuitGame()
+    {
+        if (_game.IsMatchActive)
+            return;
+
+        if (IsCreated)
+            Leave();
+
+        Application.Quit();
+    }
+
     public void CreateLobby(ELobbyType lobbyType, int maxPlayersAmount = 2)
     {
+        if (_game.IsMatchActive)
+            return;
+
         if (!_initialized)
         {
             UnityEngine.Debug.LogError("Lobby is not initialized");
@@ -57,15 +75,15 @@ public class Lobby : MonoBehaviour, ILobby
 
     public void Disband()
     {
+        if (_game.IsMatchActive)
+            return;
+
         if (!NetworkServer.active)
             return;
 
         SteamMatchmaking.LeaveLobby(LobbyId);
         _networkManager.StopHost();
-        _networkManager.offlineScene = null;
-        LobbyName = "";
-        LobbyId = new CSteamID();
-        IsCreated = false;
+        ResetLobbyData();
 
         StartCoroutine(DisbandAfterServerStopRoutine());
     }
@@ -79,13 +97,19 @@ public class Lobby : MonoBehaviour, ILobby
         }
 
         SteamMatchmaking.LeaveLobby(LobbyId);
+        ResetLobbyData();
         _networkManager.StopClient();
 
         StartCoroutine(InvokeLeaveWhenClientDisconnect());
     }
 
     public void Invite()
-        => SteamFriends.ActivateGameOverlayInviteDialogConnectString(LobbyId.ToString());
+    {
+        if (_game.IsMatchActive)
+            return;
+
+        SteamFriends.ActivateGameOverlayInviteDialogConnectString(LobbyId.ToString());
+    }
 
     private void HandleLobbyCreated(LobbyCreated_t callback)
     {
@@ -166,11 +190,16 @@ public class Lobby : MonoBehaviour, ILobby
 
         yield return null;
 
-
-        UnityEngine.Debug.Log("OnLobbyLeave from lobby");
         OnLobbyLeave?.Invoke();
     }
 
     private bool IsHost()
         => NetworkServer.active && NetworkClient.active;
+
+    private void ResetLobbyData()
+    {
+        LobbyName = "";
+        LobbyId = new CSteamID();
+        IsCreated = false;
+    }
 }

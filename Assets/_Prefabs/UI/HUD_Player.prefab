@@ -347,6 +347,7 @@ GameObject:
   - component: {fileID: 1585967484970229757}
   - component: {fileID: 3318584822567900825}
   - component: {fileID: 7228371307025083929}
+  - component: {fileID: 7868903624956524029}
   m_Layer: 5
   m_Name: HUD_Player
   m_TagString: Untagged
@@ -439,6 +440,23 @@ MonoBehaviour:
   _healthGauge: {fileID: 7931644040736087577}
   _levelText: {fileID: 3404187098320223340}
   _currencyText: {fileID: 1044214410060797646}
+--- !u!114 &7868903624956524029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3450816301502267953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  _assetId: 86695489
+  serverOnly: 0
+  visibility: 0
+  hasSpawned: 0
 --- !u!1 &4973395903599469418
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,4 +20,5 @@ public interface ILobby
     void Initialize();
     void Leave();
     void Invite();
+    void QuitGame();
 }

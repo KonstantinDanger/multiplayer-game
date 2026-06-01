@@ -57,4 +57,26 @@ public class ServiceLocator
     /// Clears cached services
     /// </summary>
     public void Dispose() => _cachedServices.Clear();
+
+    public bool Unregister<T>(bool unregisterCached = false)
+    {
+        Type type = typeof(T);
+
+        if (unregisterCached)
+        {
+            if (!_cachedServices.ContainsKey(type))
+                return false;
+
+            _cachedServices.Remove(type);
+            return true;
+        }
+        else
+        {
+            if (!_services.ContainsKey(type))
+                return false;
+
+            _services.Remove(type);
+            return true;
+        }
+    }
 }

@@ -301,7 +301,9 @@ public class Player : Entity
         _upgradeView.Initialize(gameObject, _upgrader);
         _levelUpView.Initialize(_level, _wallet);
         charSelectInstance.Initialize(data.ClassList, this);
-        _menu.Initialize(ServiceLocator.Container.Resolve<ILobby>());
+        _menu.Initialize(
+            ServiceLocator.Container.Resolve<ILobby>(),
+            ServiceLocator.Container.Resolve<Game>());
 
         //UI addition to the Game ui
         _gameUI
@@ -341,12 +343,10 @@ public class Player : Entity
             _toggleHUDDirty = (true, active);
             return;
         }
-        Debug.Log($"TargetRpc received. IsServer: {isServer}, IsClient: {isClient}");
 
         _playerHUD.gameObject.SetActive(active);
 
         _toggleHUDDirty = (false, active);
-        UnityEngine.Debug.Log("toggle hud " + active);
     }
 
     [TargetRpc]
@@ -415,5 +415,9 @@ public class Player : Entity
     }
 
     private void OnDestroy()
-        => Dispose();
+    {
+        ServiceLocator.Container.Unregister<GameUI>();
+
+        Dispose();
+    }
 }

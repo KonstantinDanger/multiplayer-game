@@ -10,6 +10,8 @@ public class LobbyView : UIView
     [SerializeField] private ELobbyType _lobbyType = ELobbyType.k_ELobbyTypePublic;
 
     [Header("Buttons")]
+    [SerializeField] private Button _returnToGameButton;
+    [SerializeField] private Button _quitGameButton;
     [SerializeField] private Button _startGameButton;
     [SerializeField] private Button _createLobbyButton;
     [SerializeField] private Button _inviteButton;
@@ -17,6 +19,7 @@ public class LobbyView : UIView
     [SerializeField] private Button _leaveButton;
 
     private ILobby _lobby;
+    private Game _game;
 
     protected override void OnEnable()
     {
@@ -28,13 +31,18 @@ public class LobbyView : UIView
         HandleUIChange();
     }
 
-    public void Initialize(ILobby lobby)
+    public void Initialize(ILobby lobby, Game game)
     {
         _lobby = lobby;
+        _game = game;
+
+        _game.ClientOnMatchStatusChange += HandleUIChange;
 
         _lobby.OnLobbyCreated += HandleLobbyCreated;
         _lobby.OnJoinRequested += HandleJoinRequest;
         _lobby.OnLobbyEnter += HandleLobbyEntered;
+
+        _quitGameButton.onClick.AddListener(HandleQuitGame);
 
         _startGameButton.onClick.AddListener(HandleStartGame);
         _inviteButton.onClick.AddListener(HandleInvite);
@@ -48,9 +56,13 @@ public class LobbyView : UIView
 
     public void OnDestroy()
     {
+        _game.ClientOnMatchStatusChange -= HandleUIChange;
+
         _lobby.OnLobbyCreated -= HandleLobbyCreated;
         _lobby.OnJoinRequested -= HandleJoinRequest;
         _lobby.OnLobbyEnter -= HandleLobbyEntered;
+
+        _quitGameButton.onClick.RemoveListener(HandleQuitGame);
 
         _startGameButton.onClick.RemoveListener(HandleStartGame);
         _inviteButton.onClick.RemoveListener(HandleInvite);
@@ -59,6 +71,9 @@ public class LobbyView : UIView
 
         _createLobbyButton.onClick.RemoveListener(HandleCreateLobby);
     }
+
+    private void HandleQuitGame()
+        => _lobby.QuitGame();
 
     private void HandleStartGame()
     {
@@ -102,18 +117,22 @@ public class LobbyView : UIView
 
         bool playersConnected = NetworkServer.connections.Count == _lobby.MaxPlayers;
 
-        SetActive(_startGameButton, IsLobbyOwner() && _lobby.IsCreated);
+        SetActive(_returnToGameButton, true);
+
+        SetActive(_quitGameButton, !IsMatchGoing());
+
+        SetActive(_startGameButton, IsLobbyOwner() && _lobby.IsCreated && !IsMatchGoing());
 
         if (_startGameButton.gameObject.activeInHierarchy)
             _startGameButton.enabled = playersConnected;
 
         SetActive(_createLobbyButton, !_lobby.IsCreated);
 
-        SetActive(_inviteButton, _lobby.IsCreated && IsLobbyOwner() && !playersConnected);
+        SetActive(_inviteButton, _lobby.IsCreated && IsLobbyOwner() && !playersConnected && !IsMatchGoing());
 
-        SetActive(_disbandButton, _lobby.IsCreated && IsLobbyOwner());
+        SetActive(_disbandButton, _lobby.IsCreated && IsLobbyOwner() && !IsMatchGoing());
 
-        SetActive(_leaveButton, _lobby.IsCreated && !IsLobbyOwner());
+        SetActive(_leaveButton, _lobby.IsCreated && (!IsLobbyOwner() && !IsMatchGoing()));
     }
 
     private void SetActive(Button btn, bool active)
@@ -125,4 +144,6 @@ public class LobbyView : UIView
         CSteamID localPlayerID = SteamUser.GetSteamID();
         return ownerID == localPlayerID;
     }
+
+    private bool IsMatchGoing() => _game.IsMatchActive;
 }
