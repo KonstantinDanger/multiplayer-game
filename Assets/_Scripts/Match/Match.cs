@@ -16,6 +16,7 @@ public class Match : IMatch
     private readonly float _deathMatchTime;
 
     public bool IsDeathmatchActive { get; private set; }
+    public float ElapsedTimeSinceStart => _matchTimer.ElapsedTime;
 
     public Match(GameMatchConfig data, IEnumerable<Player> players)
     {

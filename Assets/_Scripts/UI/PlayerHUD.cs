@@ -7,7 +7,8 @@ public class PlayerHUD : HUD
 {
     [SerializeField] private AbilitiesHUD _abilitiesHUD;
     [SerializeField] private DeathHUD _deathHUD;
-    [SerializeField] private MatchResultScreenHUD _matchResultHud;
+    [SerializeField] private MatchResultScreenHUD _matchResultHUD;
+    [SerializeField] private MatchProgressHUD _matchProgressHUD;
     [SerializeField] private GaugeBar _healthGauge;
     [SerializeField] private TextMeshProUGUI _levelText;
     [SerializeField] private TextMeshProUGUI _currencyText;
@@ -39,7 +40,8 @@ public class PlayerHUD : HUD
         {
             [_abilitiesHUD.GetType()] = _abilitiesHUD,
             [_deathHUD.GetType()] = _deathHUD,
-            [_matchResultHud.GetType()] = _matchResultHud,
+            [_matchResultHUD.GetType()] = _matchResultHUD,
+            [_matchProgressHUD.GetType()] = _matchProgressHUD,
         };
 
         if (_huds.ContainsValue(this))
@@ -54,7 +56,8 @@ public class PlayerHUD : HUD
 
         T hud = (T)_huds[hudType];
 
-        hud.gameObject.SetActive(true);
+        if (!hud.gameObject.activeInHierarchy)
+            hud.gameObject.SetActive(true);
 
         return hud;
     }
@@ -65,6 +68,9 @@ public class PlayerHUD : HUD
 
         _huds[hudType].gameObject.SetActive(false);
     }
+
+    public T Get<T>() where T : HUD
+        => (T)_huds[typeof(T)];
 
     private void OnDestroy()
     {

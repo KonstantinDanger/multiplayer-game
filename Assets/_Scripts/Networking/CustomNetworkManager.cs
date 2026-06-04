@@ -64,14 +64,6 @@ public class CustomNetworkManager : NetworkManager
         Player player = conn.identity.GetComponent<Player>();
 
         Events.InvokePlayerConnected(player);
-
-
-
-        //CSteamID steamID = SteamMatchmaking.GetLobbyMemberByIndex(Lobby.LobbyId, numPlayers - 1);
-
-        //PlayerInfoUI ui = ServiceLocator.Container.Resolve<PlayerInfoUI>();
-
-        //_playersInfo.RpcAddInfo(ui, steamID.m_SteamID, conn);
     }
 
     public override void OnServerSceneChanged(string sceneName)
@@ -96,5 +88,3 @@ public class CustomNetworkManager : NetworkManager
         }
     }
 }
-
-

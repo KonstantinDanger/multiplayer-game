@@ -5,6 +5,14 @@ using UnityEngine;
 
 public static class Utils
 {
+    public static string ConvertSecondsToTimerFormat(float secondsElapsed)
+    {
+        int seconds = Mathf.FloorToInt(secondsElapsed % 60);
+        int minutes = Mathf.FloorToInt(seconds / 60);
+
+        return string.Format("{0:00}:{1:00}", seconds, minutes);
+    }
+
     public static string GetLayerNamesFromMask(LayerMask mask)
     {
         string str = "";

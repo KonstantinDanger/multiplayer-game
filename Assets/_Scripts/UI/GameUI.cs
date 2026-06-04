@@ -13,7 +13,6 @@ public class GameUI : UI
 
     public GameUI Initialize(Action onViewOpen, Action onAllViewsClose)
     {
-        PersistentThroughScenes = true;
         OnViewOpen = onViewOpen;
         OnAllViewsClose = onAllViewsClose;
 
@@ -70,12 +69,5 @@ public class GameUI : UI
 
         if (_viewStack.Count == 0)
             OnAllViewsClose?.Invoke();
-    }
-
-    public void OnSceneChange()
-    {
-        foreach (UI ui in _ui)
-            if (!ui.PersistentThroughScenes)
-                Destroy(ui);
     }
 }

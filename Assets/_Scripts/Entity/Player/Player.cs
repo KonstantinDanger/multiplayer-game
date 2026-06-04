@@ -1,11 +1,15 @@
 using AYellowpaper;
 using Mirror;
+using Steamworks;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Player : Entity
 {
+    [SyncVar] public ulong SteamID;
+    [SyncVar] public string SteamName;
+
     private IStateMachine _stateMachine;
 
     [SerializeField] private RayCastDamager _damager; //For testing
@@ -76,7 +80,13 @@ public class Player : Entity
         => Camera.Initialize(HasAuthority());
 
     public override void OnStartLocalPlayer()
-        => CreateUI();
+    {
+        CreateUI();
+
+        CmdSetSteamData(
+            SteamUser.GetSteamID().m_SteamID,
+            SteamFriends.GetPersonaName());
+    }
 
     public override void OnStartClient()
     {
@@ -179,6 +189,13 @@ public class Player : Entity
         }
 
         CmdHandleJump();
+    }
+
+    [Command(requiresAuthority = false)]
+    private void CmdSetSteamData(ulong steamId, string steamName)
+    {
+        SteamID = steamId;
+        SteamName = steamName;
     }
 
     private void Jump()
@@ -326,10 +343,17 @@ public class Player : Entity
     }
 
     [TargetRpc]
-    public void ShowMatchOutcome(MatchResult result, float summaryDuration)
+    public void UpdateMatchHUD(float matchTime, float normalizedProgress, bool isDeathmatchStarted)
     {
-        var hud = _playerHUD.Show<MatchResultScreenHUD>();
-        hud.Initialize(result, summaryDuration);
+        MatchProgressHUD matchHUD = _playerHUD.Show<MatchProgressHUD>();
+        matchHUD.UpdateProgress(matchTime, normalizedProgress, isDeathmatchStarted);
+    }
+
+    [TargetRpc]
+    public void ShowMatchOutcome(MatchResult result, GameMatchData.Data matchSummaryData, float summaryDuration)
+    {
+        MatchResultScreenHUD hud = _playerHUD.Show<MatchResultScreenHUD>();
+        hud.Initialize(result, matchSummaryData, summaryDuration);
         HandleViewOpen();
     }
 

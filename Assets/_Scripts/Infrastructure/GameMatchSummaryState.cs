@@ -7,6 +7,7 @@ public class GameMatchSummaryState : GameState
     private StaticData _staticData;
     private CustomNetworkManager _netManager;
     private List<Player> _players = new();
+    private GameMatchData _matchData;
 
     public GameMatchSummaryState(IStateMachine stateMachine, ServiceLocator container) : base(stateMachine, container) { }
 
@@ -14,7 +15,7 @@ public class GameMatchSummaryState : GameState
 
     public override void OnEnter()
     {
-        GameMatchData matchData = Resolve<PersistentGameData>().GameData.GameMatchData;
+        _matchData = Resolve<PersistentGameData>().GameData.GameMatchData;
 
         _staticData = Resolve<StaticData>();
         _netManager = Resolve<CustomNetworkManager>();
@@ -65,7 +66,7 @@ public class GameMatchSummaryState : GameState
         float summaryDuration = _staticData.GameMatchData.MatchSummaryDuration;
         _players.ForEach(player =>
         {
-            player.ShowMatchOutcome(outcome, summaryDuration);
+            player.ShowMatchOutcome(outcome, _matchData.MatchData, summaryDuration);
         });
     }
 

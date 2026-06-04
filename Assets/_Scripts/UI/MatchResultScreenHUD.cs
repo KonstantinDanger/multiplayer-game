@@ -21,14 +21,14 @@ public class MatchResultScreenHUD : HUD
     private void HandleProceed()
         => gameObject.SetActive(false);
 
-    public void Initialize(MatchResult result, float timeBeforeProceed)
+    public void Initialize(MatchResult result, GameMatchData.Data matchSummaryData, float timeBeforeProceed)
     {
         gameObject.SetActive(true);
 
         switch (result)
         {
             case MatchResult.OneSided:
-                _resultText.text = $"Player {"player"} has won";
+                _resultText.text = $"Player {matchSummaryData.winner} has won";
                 break;
 
             case MatchResult.Draw:
@@ -40,7 +40,8 @@ public class MatchResultScreenHUD : HUD
                 break;
 
             case MatchResult.Surrender:
-                _resultText.text = $"Player {"player"} has surrendered";
+                _resultText.text = $"Player {matchSummaryData.loser} has surrendered" +
+                    $"\nPlayer {matchSummaryData.winner} has won";
                 break;
         }
 
@@ -53,7 +54,7 @@ public class MatchResultScreenHUD : HUD
         while (elapsedTime < time)
         {
             elapsedTime += Time.deltaTime;
-            int timeLeft = Mathf.RoundToInt(time - elapsedTime);
+            int timeLeft = Mathf.CeilToInt(time - elapsedTime);
             _countdownText.text = $"{timeLeft}...";
             yield return null;
         }

@@ -68,7 +68,14 @@ public class GameMatchState : GameState
         _drawCountdown.Update(deltaTime);
 
         _matchTime += deltaTime;
+
+        UpdatePlayersMatchHUDs(matchProgress);
     }
+
+    private void UpdatePlayersMatchHUDs(float progress)
+        => _players
+        .ForEach(p => p
+        .UpdateMatchHUD(_matchTime, progress, _match.IsDeathmatchActive));
 
     public override void OnExit()
     {
@@ -170,8 +177,8 @@ public class GameMatchState : GameState
 
         _gameData.GameMatchData.MatchData = new()
         {
-            winner = winner.name,
-            loser = loser.name,
+            winner = winner.SteamName,
+            loser = loser.SteamName,
             matchTime = _matchTime
         };
 

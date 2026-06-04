@@ -43,10 +43,10 @@ public class GameMatchData
     }
 
     [Serializable]
-    public class Data
+    public struct Data
     {
-        public string winner; //Player id
-        public string loser; //Player id
+        public string winner;
+        public string loser;
         public float matchTime;
         public string matchDate;
 
