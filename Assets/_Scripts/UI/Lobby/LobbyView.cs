@@ -19,7 +19,7 @@ public class LobbyView : UIView
     [SerializeField] private Button _leaveButton;
 
     private ILobby _lobby;
-    private Game _game;
+    private MatchStatusReceiver _matchStatus;
 
     protected override void OnEnable()
     {
@@ -31,12 +31,12 @@ public class LobbyView : UIView
         HandleUIChange();
     }
 
-    public void Initialize(ILobby lobby, Game game)
+    public void Initialize(ILobby lobby, MatchStatusReceiver matchStatus)
     {
         _lobby = lobby;
-        _game = game;
+        _matchStatus = matchStatus;
 
-        _game.ClientOnMatchStatusChange += HandleUIChange;
+        _matchStatus.OnMatchStatusChange += _ => HandleUIChange();
 
         _lobby.OnLobbyCreated += HandleLobbyCreated;
         _lobby.OnJoinRequested += HandleJoinRequest;
@@ -56,7 +56,7 @@ public class LobbyView : UIView
 
     public void OnDestroy()
     {
-        _game.ClientOnMatchStatusChange -= HandleUIChange;
+        _matchStatus.OnMatchStatusChange -= _ => HandleUIChange();
 
         _lobby.OnLobbyCreated -= HandleLobbyCreated;
         _lobby.OnJoinRequested -= HandleJoinRequest;
@@ -113,6 +113,9 @@ public class LobbyView : UIView
 
     private void HandleUIChange()
     {
+
+        UnityEngine.Debug.Log("is match active " + IsMatchGoing());
+
         _lobbyNameText.text = string.IsNullOrEmpty(_lobby.LobbyName) ? "Offline" : _lobby.LobbyName;
 
         bool playersConnected = NetworkServer.connections.Count == _lobby.MaxPlayers;
@@ -132,7 +135,7 @@ public class LobbyView : UIView
 
         SetActive(_disbandButton, _lobby.IsCreated && IsLobbyOwner() && !IsMatchGoing());
 
-        SetActive(_leaveButton, _lobby.IsCreated && (!IsLobbyOwner() && !IsMatchGoing()));
+        SetActive(_leaveButton, _lobby.IsCreated && (IsLobbyOwner() && IsMatchGoing() || !IsLobbyOwner()));
     }
 
     private void SetActive(Button btn, bool active)
@@ -145,5 +148,6 @@ public class LobbyView : UIView
         return ownerID == localPlayerID;
     }
 
-    private bool IsMatchGoing() => _game.IsMatchActive;
+    private bool IsMatchGoing()
+        => _matchStatus.IsMatchActive;
 }

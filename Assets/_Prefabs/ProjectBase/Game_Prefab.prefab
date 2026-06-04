@@ -46,11 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b86a104d4a6ec894db30d56ed977f75d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
   _staticData: {fileID: 11400000, guid: 00c789dbd99c229428ddfc93cdb52906, type: 2}
   _coroutineHolder: {fileID: 7150539293836692048}
+  _matchStatusReceiver: {fileID: 0}
 --- !u!114 &6897551906416576055
 MonoBehaviour:
   m_ObjectHideFlags: 0

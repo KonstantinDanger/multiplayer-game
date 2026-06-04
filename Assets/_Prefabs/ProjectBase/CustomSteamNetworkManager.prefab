@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6499255630739209993}
   - component: {fileID: 7349853785399188205}
   - component: {fileID: 1825460065090608520}
+  - component: {fileID: 2880726102203837750}
   m_Layer: 0
   m_Name: CustomSteamNetworkManager
   m_TagString: Untagged
@@ -68,6 +69,7 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 6125262222170548877, guid: 617760f6ec3f69f41bb1f78db535919e, type: 3}
   - {fileID: 1768439199690489168, guid: e8ed1aedc8cd572479ff2ddc96231fda, type: 3}
+  - {fileID: 8249263870334940582}
   - {fileID: 6125262222170548877, guid: e5fe1cff9c07dc4408be67b5378d7f84, type: 3}
   - {fileID: 6125262222170548877, guid: fde5444401e851d4fafb1858fbbec578, type: 3}
   - {fileID: 1418038051021799968, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
@@ -77,6 +79,7 @@ MonoBehaviour:
   - {fileID: 2270220513023456629, guid: a31dd7c92c7a8af4e9e58bc9cc0104e6, type: 3}
   - {fileID: 1021284249747369740, guid: 50ff5dfcf3451d84d97e231eccef6f79, type: 3}
   - {fileID: 3679950262808284364, guid: 356c4d4e560397d4d8838f52640c3ef7, type: 3}
+  - {fileID: 239432087679073955, guid: e9b9bcc54e54be744ba575edd579c8ed, type: 3}
   - {fileID: 9106277423588656863, guid: fd064af28e613ed46a4f3134ac2d4112, type: 3}
   - {fileID: 3450816301502267953, guid: c1faf7b5186dc544289b7691b1aae290, type: 3}
   - {fileID: 1546190322298139147, guid: 38fdbff9cc7367e4cb105312e269d50d, type: 3}
@@ -110,6 +113,7 @@ MonoBehaviour:
   evaluationMethod: 0
   evaluationInterval: 3
   timeInterpolationGui: 0
+  _gameNetBridgePrefab: {fileID: 2335783222794627391, guid: e9b9bcc54e54be744ba575edd579c8ed, type: 3}
 --- !u!114 &1790009548008434490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,6 +154,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0c1fe5e4b4f0c4c82f7ac843f5fced, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   _networkManager: {fileID: 8638753538948294093}
 --- !u!114 &1825460065090608520
 MonoBehaviour:
@@ -166,3 +173,20 @@ MonoBehaviour:
   offsetX: 0
   offsetY: 0
   _netManager: {fileID: 8638753538948294093}
+--- !u!114 &2880726102203837750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8249263870334940582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  _assetId: 2055719392
+  serverOnly: 0
+  visibility: 0
+  hasSpawned: 0

@@ -15,7 +15,7 @@ MonoBehaviour:
   _upgradeInfo:
     <Name>k__BackingField: Default upgrade
     <Sprite>k__BackingField: {fileID: 21300000, guid: 3990f3670c6c3a243bc9ab5e07477640, type: 3}
-    <StatsDescription>k__BackingField: current {Value} stat + 0.1
+    <StatsDescription>k__BackingField: 
     <RawDescription>k__BackingField: Enhances {Stat} stat by +{Value}*(100)% from
       base
   _upgrade:

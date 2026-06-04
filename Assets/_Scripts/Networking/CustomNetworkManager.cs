@@ -65,6 +65,8 @@ public class CustomNetworkManager : NetworkManager
 
         Events.InvokePlayerConnected(player);
 
+
+
         //CSteamID steamID = SteamMatchmaking.GetLobbyMemberByIndex(Lobby.LobbyId, numPlayers - 1);
 
         //PlayerInfoUI ui = ServiceLocator.Container.Resolve<PlayerInfoUI>();

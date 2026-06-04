@@ -365,6 +365,7 @@ GameObject:
   - component: {fileID: 6871403273120145228}
   - component: {fileID: 5661195370401756730}
   - component: {fileID: 6335237973204876179}
+  - component: {fileID: 514405708428278024}
   m_Layer: 7
   m_Name: Player_Prefab
   m_TagString: Untagged
@@ -431,6 +432,7 @@ MonoBehaviour:
   _interactor: {fileID: 4253901531179820546}
   _inputRef:
     _underlyingValue: {fileID: 5886189041842934009}
+  _matchStatusReceiver: {fileID: 514405708428278024}
 --- !u!143 &856957943013325311
 CharacterController:
   m_ObjectHideFlags: 0
@@ -926,6 +928,21 @@ MonoBehaviour:
   _movementAngle: MovementAngle
   _airborneVelocityParamName: AirborneVelocity
   _isGroundedParamName: IsGrounded
+--- !u!114 &514405708428278024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4047092069969861197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4181dc064255e34fbd733cbff63c8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
 --- !u!1 &4641920328616467223
 GameObject:
   m_ObjectHideFlags: 0

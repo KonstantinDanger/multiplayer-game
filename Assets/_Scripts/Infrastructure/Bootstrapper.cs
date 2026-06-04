@@ -15,5 +15,7 @@ public class Bootstrapper : MonoBehaviour
         var game = Instantiate(_gamePrefab, persistentObject.transform);
 
         game.Initialize(netManager);
+
+        ServiceLocator.Container.RegisterSingle(game);
     }
 }

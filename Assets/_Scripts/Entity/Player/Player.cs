@@ -17,6 +17,7 @@ public class Player : Entity
     [SerializeField] private Wallet _wallet;
     [SerializeField] private Interactor _interactor;
     [SerializeField] private InterfaceReference<IPlayerInputBrain> _inputRef;
+    [SerializeField] private MatchStatusReceiver _matchStatusReceiver;
 
     public ScriptableCharacterClass CharacterClass { get; private set; }
     public IPlayerInputBrain Input => _inputRef.Value;
@@ -44,6 +45,9 @@ public class Player : Entity
         _stateMachine = new PlayerStateMachine(this);
 
         CreateUI();
+
+        if (HasAuthority())
+            ServiceLocator.Container.RegisterSingle(_matchStatusReceiver);
     }
 
     protected override void HandleOnEnable()
@@ -303,7 +307,7 @@ public class Player : Entity
         charSelectInstance.Initialize(data.ClassList, this);
         _menu.Initialize(
             ServiceLocator.Container.Resolve<ILobby>(),
-            ServiceLocator.Container.Resolve<Game>());
+            _matchStatusReceiver);
 
         //UI addition to the Game ui
         _gameUI
@@ -417,6 +421,9 @@ public class Player : Entity
     private void OnDestroy()
     {
         ServiceLocator.Container.Unregister<GameUI>();
+
+        if (HasAuthority())
+            ServiceLocator.Container.Unregister<MatchStatusReceiver>();
 
         Dispose();
     }

@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Supposed to be a server state
+/// </summary>
 public class GameMatchState : GameState
 {
     public static MatchResult Outcome = MatchResult.None;
@@ -27,7 +30,6 @@ public class GameMatchState : GameState
 
     public override void OnEnter()
     {
-        Resolve<Game>().RequestSetMatchActive(true);
         Outcome = MatchResult.None;
 
         _staticData = Resolve<StaticData>();
@@ -46,7 +48,9 @@ public class GameMatchState : GameState
 
         _match.OnDeathmatchStarted += HandleDeathmatchStarted;
         Events.ServerOnPlayerDemise += HandlePlayerDemise;
-        Events.ServerOnClientDisconnectImmediate += HandleClientDisconnect;
+        Events.ServerOnMatchLeaveRequest += HandlePlayerLeaveRequest;
+
+        NotifyPlayersMatchStatusChanged(true);
     }
 
     public override void Update(float deltaTime)
@@ -69,7 +73,7 @@ public class GameMatchState : GameState
     public override void OnExit()
     {
         Events.ServerOnPlayerDemise -= HandlePlayerDemise;
-        Events.ServerOnClientDisconnectImmediate -= HandleClientDisconnect;
+        Events.ServerOnMatchLeaveRequest -= HandlePlayerLeaveRequest;
 
         _drawCountdown.Stop();
 
@@ -85,19 +89,20 @@ public class GameMatchState : GameState
             player.Dispose();
         });
 
-        Resolve<Game>().RequestSetMatchActive(false);
+        NotifyPlayersMatchStatusChanged(false);
     }
 
     #region Match Outcome
 
-    private void HandleClientDisconnect(uint playerId)
+    private void HandlePlayerLeaveRequest(uint playerId)
     {
-        Player disconnected = Utils.ServerFindNetPlayerById(playerId);
+        UnityEngine.Debug.Log("player leave requested ");
+        Player leavedOne = Utils.ServerFindNetPlayerById(playerId);
 
-        if (_match.GetMatchProgress() < 0.5f)
+        if (_match.GetMatchProgress() < _gameMatchData.CancellationThreshold)
             HandleMatchCancel();
         else
-            HandleSurrenderFor(disconnected);
+            HandleSurrenderFor(leavedOne);
     }
 
     private void HandlePlayerDemise(uint playerId)
@@ -178,6 +183,15 @@ public class GameMatchState : GameState
     }
 
     #endregion
+
+    private void NotifyPlayersMatchStatusChanged(bool active)
+    {
+        _players.ForEach(p =>
+        {
+            if (p.TryGetComponent(out MatchStatusReceiver statusReceiver))
+                statusReceiver.RequestMatchStatusChange(active);
+        });
+    }
 
     private void InitSpawnPositions()
     {

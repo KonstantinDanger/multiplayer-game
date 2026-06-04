@@ -6,6 +6,7 @@ public class GameOfflineLobbyState : GameState
 {
     private CustomNetworkManager _netManager;
     private ILobby _lobby;
+    private Player _player;
 
     public GameOfflineLobbyState(IStateMachine stateMachine, ServiceLocator container) : base(stateMachine, container) { }
 
@@ -31,9 +32,9 @@ public class GameOfflineLobbyState : GameState
             }
         }
 
-        Player player = GetOrCreateOfflinePlayer(playerPrefab, spawnPosition);
-        player.ToggleHUD(false);
-        _netManager.LocalPlayerInstance = player;
+        _player = GetOrCreateOfflinePlayer(playerPrefab, spawnPosition);
+        _player.ToggleHUD(false);
+        _netManager.LocalPlayerInstance = _player;
 
         _lobby.OnLobbyCreated += HandleLobbyCreated;
         _lobby.OnLobbyEnter += HandleLobbyEnter;

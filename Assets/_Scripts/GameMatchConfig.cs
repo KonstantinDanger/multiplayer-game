@@ -16,6 +16,12 @@ public class GameMatchConfig : ScriptableObject
     [field: SerializeField, Range(0f, 60f)] public float MatchSummaryDuration { get; private set; } = 10f;
 
     /// <summary>
+    /// Represents a point of the normalized match progress when value less 
+    /// than current is equal to match cancellation and the higher - loss
+    /// </summary>
+    [field: SerializeField, Range(0f, 1f)] public float CancellationThreshold { get; private set; } = 0.5f;
+
+    /// <summary>
     /// Represents a time in seconds given after one of the player's 
     /// demise to check if another player dies to count match result as a draw
     /// </summary>

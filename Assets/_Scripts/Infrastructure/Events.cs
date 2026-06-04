@@ -8,6 +8,7 @@ public static class Events
     public static Action<uint> ServerOnPlayerDemise;
     public static Action ServerOnHostStop;
     public static Action ServerOnClientDisconnectComplete;
+    public static Action<uint> ServerOnMatchLeaveRequest;
     public static Action<uint> ServerOnClientDisconnectImmediate;
 
     public static void InvokeLobbyDisband()
@@ -31,4 +32,6 @@ public static class Events
     public static void InvokeClientDisconnectImmediate(uint netId)
         => ServerOnClientDisconnectImmediate?.Invoke(netId);
 
+    public static void InvokeMatchLeaveRequest(uint netId)
+        => ServerOnMatchLeaveRequest?.Invoke(netId);
 }

@@ -17,8 +17,8 @@ public interface ILobby
 
     void Disband();
     void CreateLobby(ELobbyType lobbyType, int maxPlayersAmount = 2);
-    void Initialize();
     void Leave();
     void Invite();
     void QuitGame();
+    void Initialize();
 }

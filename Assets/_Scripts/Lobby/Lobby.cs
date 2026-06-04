@@ -4,7 +4,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class Lobby : MonoBehaviour, ILobby
+public class Lobby : NetworkBehaviour, ILobby
 {
     private const string HostAddressKey = "HostAddress";
 
@@ -28,8 +28,6 @@ public class Lobby : MonoBehaviour, ILobby
     public event Action<LobbyEnter_t> OnLobbyEnter;
     public event Action OnLobbyLeave;
 
-    private Game _game;
-
     public void Initialize()
     {
         if (!SteamManager.Initialized)
@@ -37,8 +35,6 @@ public class Lobby : MonoBehaviour, ILobby
 
         if (!_networkManager)
             _networkManager = GetComponent<CustomNetworkManager>();
-
-        _game = ServiceLocator.Container.Resolve<Game>();
 
         LobbyCreated = Callback<LobbyCreated_t>.Create(HandleLobbyCreated);
         JoinRequested = Callback<GameLobbyJoinRequested_t>.Create(HandleJoinRequest);
@@ -49,7 +45,7 @@ public class Lobby : MonoBehaviour, ILobby
 
     public void QuitGame()
     {
-        if (_game.IsMatchActive)
+        if (IsMatchActive())
             return;
 
         if (IsCreated)
@@ -60,7 +56,7 @@ public class Lobby : MonoBehaviour, ILobby
 
     public void CreateLobby(ELobbyType lobbyType, int maxPlayersAmount = 2)
     {
-        if (_game.IsMatchActive)
+        if (IsMatchActive())
             return;
 
         if (!_initialized)
@@ -75,7 +71,7 @@ public class Lobby : MonoBehaviour, ILobby
 
     public void Disband()
     {
-        if (_game.IsMatchActive)
+        if (IsMatchActive())
             return;
 
         if (!NetworkServer.active)
@@ -90,6 +86,12 @@ public class Lobby : MonoBehaviour, ILobby
 
     public void Leave()
     {
+        if (IsMatchActive())
+        {
+            SendRequestLeaveDuringMatch();
+            return;
+        }
+
         if (IsHost())
         {
             Disband();
@@ -103,9 +105,24 @@ public class Lobby : MonoBehaviour, ILobby
         StartCoroutine(InvokeLeaveWhenClientDisconnect());
     }
 
+    private void SendRequestLeaveDuringMatch()
+    {
+        if (IsHost())
+            RequestLeaveDuringMatch();
+        else
+            CmdRequestLeaveDuringMatch();
+    }
+
+    private void RequestLeaveDuringMatch()
+        => Events.InvokeMatchLeaveRequest(NetworkClient.connection.identity.netId);
+
+    [Command(requiresAuthority = false)]
+    private void CmdRequestLeaveDuringMatch()
+        => RequestLeaveDuringMatch();
+
     public void Invite()
     {
-        if (_game.IsMatchActive)
+        if (IsMatchActive())
             return;
 
         SteamFriends.ActivateGameOverlayInviteDialogConnectString(LobbyId.ToString());
@@ -201,5 +218,21 @@ public class Lobby : MonoBehaviour, ILobby
         LobbyName = "";
         LobbyId = new CSteamID();
         IsCreated = false;
+    }
+
+    private bool IsMatchActive()
+    {
+        MatchStatusReceiver matchStatus = null;
+
+        try
+        {
+            matchStatus = ServiceLocator.Container.Resolve<MatchStatusReceiver>();
+        }
+        catch
+        {
+            return false;
+        }
+
+        return matchStatus.IsMatchActive;
     }
 }
