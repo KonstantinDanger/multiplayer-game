@@ -10,6 +10,14 @@ public class MatchProgressHUD : HUD
 
     private bool _deathmatchStarted;
 
+    private void OnDisable()
+    {
+        _deathmatchStarted = false;
+        _timerText.gameObject.SetActive(true);
+        _timerText.text = string.Empty;
+        _deathmatchText.gameObject.SetActive(false);
+    }
+
     public void UpdateProgress(float matchTime, float normalizedMatchProgress, bool isDeathmatchStarted)
     {
         if (isDeathmatchStarted)

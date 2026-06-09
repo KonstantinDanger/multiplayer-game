@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "GameMatchData")]
+[CreateAssetMenu(menuName = "GameMatchConfig")]
 public class GameMatchConfig : ScriptableObject
 {
     /// <summary>
@@ -26,4 +26,9 @@ public class GameMatchConfig : ScriptableObject
     /// demise to check if another player dies to count match result as a draw
     /// </summary>
     [field: SerializeField, Range(0f, 30f)] public float DrawCountdown { get; private set; } = 10f;
+
+    [field: Header("Rewards")]
+    [field: SerializeField, Range(0, 10000)] public int WinReward { get; private set; } = 900;
+    [field: SerializeField, Range(0, 10000)] public int LoseReward { get; private set; } = 600;
+    [field: SerializeField, Range(0, 10000)] public int DrawReward { get; private set; } = 750;
 }

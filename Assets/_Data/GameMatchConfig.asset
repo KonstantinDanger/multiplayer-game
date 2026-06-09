@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1803ad23e471e8041881a042735ffee4, type: 3}
   m_Name: GameMatchConfig
   m_EditorClassIdentifier: 
-  <MatchTime>k__BackingField: 0.1
+  <MatchTime>k__BackingField: 0.2
   <DeathmatchTime>k__BackingField: 25.5
   <MatchSummaryDuration>k__BackingField: 10
-  <DrawCountdown>k__BackingField: 2
+  <CancellationThreshold>k__BackingField: 0.5
+  <DrawCountdown>k__BackingField: 5
+  <WinReward>k__BackingField: 900
+  <LoseReward>k__BackingField: 600
+  <DrawReward>k__BackingField: 750

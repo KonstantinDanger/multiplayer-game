@@ -55,7 +55,8 @@ public class GameOnlineLobbyState : GameState
         player.Spectate(false);
         player.SetCanAttack(false);
         player.ResetLevel();
-        player.TargetRpcToggleHUD(false);
+        player.TargetRpcToggleMatchHUD(false);
+        player.TargetSetLobbyHUDActive(true);
         player.Movable.Warp(_networkManager.GetStartPosition().position);
         player.Damageable.Respawn();
     }

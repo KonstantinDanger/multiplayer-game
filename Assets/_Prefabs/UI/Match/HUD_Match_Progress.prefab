@@ -310,7 +310,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5392559677118923970}
   - component: {fileID: 727138719266827612}
-  - component: {fileID: 8489004262219459982}
   - component: {fileID: 2058722147768469672}
   m_Layer: 5
   m_Name: Progressbar
@@ -340,7 +339,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.000054240227}
+  m_AnchoredPosition: {x: 0, y: 0.00005340576}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &727138719266827612
@@ -394,20 +393,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8489004262219459982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2699881336023835955}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c06230567cc269e44afe2dfbd826adde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _slider: {fileID: 727138719266827612}
-  _reverseGauge: 0
 --- !u!114 &2058722147768469672
 MonoBehaviour:
   m_ObjectHideFlags: 0

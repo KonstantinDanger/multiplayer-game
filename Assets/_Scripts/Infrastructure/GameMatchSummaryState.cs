@@ -3,15 +3,16 @@ using System.Collections.Generic;
 
 public class GameMatchSummaryState : GameState
 {
-    private float _timer;
     private StaticData _staticData;
     private CustomNetworkManager _netManager;
     private List<Player> _players = new();
     private GameMatchData _matchData;
+    private GameMatchConfig _gameMatchConfig;
+
+    private float _timer;
+    private bool _ended;
 
     public GameMatchSummaryState(IStateMachine stateMachine, ServiceLocator container) : base(stateMachine, container) { }
-
-    private bool _ended;
 
     public override void OnEnter()
     {
@@ -19,10 +20,13 @@ public class GameMatchSummaryState : GameState
 
         _staticData = Resolve<StaticData>();
         _netManager = Resolve<CustomNetworkManager>();
+        _gameMatchConfig = _staticData.GameMatchConfig;
 
         _players = GetPlayers();
         DisablePlayers();
         ShowOutcome(GameMatchState.Outcome);
+        RewardPlayers();
+        BackupPlayerData();
 
         //BackendApi.CreateMatch(matchData);
 
@@ -32,7 +36,10 @@ public class GameMatchSummaryState : GameState
     }
 
     public override void OnExit()
-        => _netManager.OnServerSceneLoaded -= HandleLobbySceneLoaded;
+    {
+        _netManager.OnServerSceneLoaded -= HandleLobbySceneLoaded;
+        _timer = 0f;
+    }
 
     public override void Update(float deltaTime)
     {
@@ -41,10 +48,60 @@ public class GameMatchSummaryState : GameState
 
         _timer += deltaTime;
 
-        if (_timer >= _staticData.GameMatchData.MatchSummaryDuration)
+        if (_timer >= _staticData.GameMatchConfig.MatchSummaryDuration)
         {
             _netManager.ServerChangeScene(_staticData.LobbySceneName);
             _ended = true;
+        }
+    }
+
+    private void RewardPlayers()
+    {
+        var outcome = GameMatchState.Outcome;
+
+        switch (outcome)
+        {
+            case MatchResult.None:
+            case MatchResult.CanceledEarly:
+                return;
+        }
+
+        var loser = GetPlayerForSteamName(_matchData.MatchData.loserSteamName);
+        var winner = GetPlayerForSteamName(_matchData.MatchData.winnerSteamName);
+
+        UnityEngine.Debug.Log("outcome " + outcome);
+        switch (outcome)
+        {
+
+            case MatchResult.OneSided:
+            case MatchResult.Surrender:
+                RewardPlayer(winner, _gameMatchConfig.WinReward);
+                RewardPlayer(loser, _gameMatchConfig.LoseReward);
+                break;
+
+            case MatchResult.Draw:
+                _players.ForEach(p => RewardPlayer(p, _gameMatchConfig.DrawReward));
+                break;
+        }
+    }
+
+    private void BackupPlayerData()
+        => _players.ForEach(p => p.SaveData());
+
+    private Player GetPlayerForSteamName(string steamName)
+    {
+        foreach (Player player in _players)
+            if (player.SteamName == steamName)
+                return player;
+
+        return null;
+    }
+
+    private void RewardPlayer(Player player, int reward)
+    {
+        if (player.TryGetComponent(out Wallet wallet))
+        {
+            wallet.Add(CurrencyType.Meta, reward);
         }
     }
 
@@ -63,7 +120,7 @@ public class GameMatchSummaryState : GameState
 
     private void ShowOutcome(MatchResult outcome)
     {
-        float summaryDuration = _staticData.GameMatchData.MatchSummaryDuration;
+        float summaryDuration = _staticData.GameMatchConfig.MatchSummaryDuration;
         _players.ForEach(player =>
         {
             player.ShowMatchOutcome(outcome, _matchData.MatchData, summaryDuration);
@@ -81,11 +138,13 @@ public class GameMatchSummaryState : GameState
     }
 
     private void HideSummaryAndHUD()
-        => _players.ForEach(player =>
+    {
+        _players.ForEach(player =>
         {
-            player?.TargetRpcToggleHUD(false);
+            player?.TargetRpcToggleMatchHUD(false);
             player?.HideMatchOutcome();
         });
+    }
 
     private void DisablePlayers()
     {

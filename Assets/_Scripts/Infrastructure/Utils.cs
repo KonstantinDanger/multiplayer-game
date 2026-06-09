@@ -10,7 +10,7 @@ public static class Utils
         int seconds = Mathf.FloorToInt(secondsElapsed % 60);
         int minutes = Mathf.FloorToInt(seconds / 60);
 
-        return string.Format("{0:00}:{1:00}", seconds, minutes);
+        return string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     public static string GetLayerNamesFromMask(LayerMask mask)

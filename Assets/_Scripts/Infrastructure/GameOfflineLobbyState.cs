@@ -33,7 +33,8 @@ public class GameOfflineLobbyState : GameState
         }
 
         _player = GetOrCreateOfflinePlayer(playerPrefab, spawnPosition);
-        _player.ToggleHUD(false);
+        _player.ToggleMatchHUD(false);
+        _player.ToggleLobbyHUD(false);
         _netManager.LocalPlayerInstance = _player;
 
         _lobby.OnLobbyCreated += HandleLobbyCreated;

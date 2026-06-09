@@ -18,7 +18,7 @@ public static class EnemyExtensions
         if (!summonWallet)
             summonWallet = enemy.gameObject.AddComponent<Wallet>();
 
-        summonWallet.Initialize(new() { [CurrencyType.Match] = ownerWallet.GetAmount(CurrencyType.Match) });
+        summonWallet.Initialize(new() { [CurrencyType.Match] = ownerWallet.GetAmountOf(CurrencyType.Match) });
 
         if (enemy.TryGetComponent(out CurrencyDrop currencyDrop))
             Object.Destroy(currencyDrop);

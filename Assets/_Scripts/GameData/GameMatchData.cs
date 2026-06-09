@@ -35,8 +35,8 @@ public class GameMatchData
         }
 
         return $"Game match summary:\n" +
-        $"winner: {MatchData.winner}\n" +
-        $"loser: {MatchData.loser}\n" +
+        $"winnerSteamName: {MatchData.winnerSteamName}\n" +
+        $"loserSteamName: {MatchData.loserSteamName}\n" +
         $"Match time: {MatchData.matchTime}\n" +
         $"Match date: {MatchData.matchDate}\n\n" +
         $"{playersSummary}";
@@ -45,8 +45,8 @@ public class GameMatchData
     [Serializable]
     public struct Data
     {
-        public string winner;
-        public string loser;
+        public string winnerSteamName;
+        public string loserSteamName;
         public float matchTime;
         public string matchDate;
 

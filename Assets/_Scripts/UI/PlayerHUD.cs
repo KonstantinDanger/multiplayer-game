@@ -9,9 +9,13 @@ public class PlayerHUD : HUD
     [SerializeField] private DeathHUD _deathHUD;
     [SerializeField] private MatchResultScreenHUD _matchResultHUD;
     [SerializeField] private MatchProgressHUD _matchProgressHUD;
+    [SerializeField] private LobbyHUD _lobbyHUD;
     [SerializeField] private GaugeBar _healthGauge;
     [SerializeField] private TextMeshProUGUI _levelText;
     [SerializeField] private TextMeshProUGUI _currencyText;
+
+    [Header("Parent objects")]
+    [SerializeField] private GameObject _matchHudParent;
 
     private Dictionary<Type, HUD> _huds = new();
 
@@ -32,6 +36,7 @@ public class PlayerHUD : HUD
         _abilitiesHUD.Initialize(abilities);
         _healthGauge.Initialize(gauge: damageable);
         _deathHUD.Initialize(respawn);
+        _lobbyHUD.Initialize(wallet);
 
         _level.ClientOnLevelChange += HandleLevelChange;
         _wallet.ClientOnCurrencyChange += HandleCurrencyChange;
@@ -42,6 +47,7 @@ public class PlayerHUD : HUD
             [_deathHUD.GetType()] = _deathHUD,
             [_matchResultHUD.GetType()] = _matchResultHUD,
             [_matchProgressHUD.GetType()] = _matchProgressHUD,
+            [_lobbyHUD.GetType()] = _lobbyHUD,
         };
 
         if (_huds.ContainsValue(this))
@@ -72,6 +78,9 @@ public class PlayerHUD : HUD
     public T Get<T>() where T : HUD
         => (T)_huds[typeof(T)];
 
+    public void SetActive(bool active)
+        => _matchHudParent.SetActive(active);
+
     private void OnDestroy()
     {
         _level.ClientOnLevelChange -= HandleLevelChange;
@@ -79,8 +88,17 @@ public class PlayerHUD : HUD
     }
 
     private void HandleLevelChange(int level)
-        => _levelText.text = $"Lvl: {level} / {_level.MaxLvl}";
+    {
+        int maxLvl = _level.MaxLvl == 0 ? 10 : _level.MaxLvl;
+
+        _levelText.text = $"Lvl: {level} / {maxLvl}";
+    }
 
     private void HandleCurrencyChange(CurrencyType type, int delta, int total)
-        => _currencyText.text = total.ToString();
+    {
+        if (type != CurrencyType.Match)
+            return;
+
+        _currencyText.text = total.ToString();
+    }
 }

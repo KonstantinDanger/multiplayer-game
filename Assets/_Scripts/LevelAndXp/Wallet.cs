@@ -26,6 +26,11 @@ public class Wallet : NetworkBehaviour
         {
             _currencies[pair.Key] = pair.Value;
         }
+
+        if (NetworkServer.active)
+            RpcOnCurrencyChange(CurrencyType.Meta, 0, 0);
+        else
+            ClientOnCurrencyChange?.Invoke(CurrencyType.Meta, 0, 0);
     }
 
     [Server]
@@ -47,7 +52,7 @@ public class Wallet : NetworkBehaviour
         RpcOnCurrencyChange(type, delta, _currencies[type]);
     }
 
-    public int GetAmount(CurrencyType type)
+    public int GetAmountOf(CurrencyType type)
         => _currencies[type];
 
     public bool CanWithdraw(CurrencyType type, int remainingAmount)

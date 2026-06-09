@@ -18,13 +18,18 @@ public class GameBootState : GameState
 
     private void InitializeServices()
     {
-        var coroutineHolder = Resolve<CoroutineHolder>();
+        CoroutineHolder coroutineHolder = Resolve<CoroutineHolder>();
+        IDataProvider dataProvider = new JsonDataProvider(StaticData.Constants.DataAccessKey);
+        PlayerData playerData = dataProvider.Load<PlayerData>();
+        playerData ??= new PlayerData();
 
         _sceneLoader = new(coroutineHolder);
         GameFactory factory = Object.Instantiate(_staticData.GameFactoryPrefab, coroutineHolder.transform.parent);
 
         PersistentGameData persistentGameData = new PersistentGameData();
 
+        Bind(playerData);
+        Bind(dataProvider);
         Bind(persistentGameData);
         Bind(_sceneLoader);
         Bind(factory);

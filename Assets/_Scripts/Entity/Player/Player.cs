@@ -95,16 +95,28 @@ public class Player : Entity
 
         base.OnStartClient();
 
-        //if (!isLocalPlayer)
-        //    gameObject.layer = StaticData.Constants.EnemyLayer;
-
         if (HasAuthority() && _stateMachine == null)
             _stateMachine = new PlayerStateMachine(this);
 
         _upgrader.Initialize();
 
         Camera.Initialize(HasAuthority());
+
+        PlayerData data = ServiceLocator.Container.Resolve<PlayerData>();
+
+        if (NetworkServer.active && NetworkClient.active)
+            InitWallet(data.MetaCurrency);
+        else
+            CmdInitWallet(data.MetaCurrency);
     }
+
+    [Command(requiresAuthority = false)]
+    private void CmdInitWallet(int metaCurrencyAmount)
+        => InitWallet(metaCurrencyAmount);
+
+    private void InitWallet(int metaCurrencyAmount)
+        => _wallet.Initialize(new() { [CurrencyType.Meta] = metaCurrencyAmount });
+
 
     protected override void OnEntityStartServer()
     {
@@ -238,6 +250,18 @@ public class Player : Entity
     public void Spectate(bool active)
         => Input.SetPlayerInput(!active);
 
+    [TargetRpc]
+    public void SaveData()
+    {
+        var dataProvider = ServiceLocator.Container.Resolve<IDataProvider>();
+        var data = dataProvider.Load<PlayerData>();
+
+        data.MetaCurrency += _wallet.GetAmountOf(CurrencyType.Meta);
+        data.Name = SteamName;
+
+        dataProvider.Save(data);
+    }
+
     public void SetCharacterClass(ScriptableCharacterClass @class)
     {
         if (!@class)
@@ -337,7 +361,7 @@ public class Player : Entity
         ServiceLocator.Container.RegisterSingle(_gameUI);
 
         if (_toggleHUDDirty.toggle)
-            ToggleHUD(_toggleHUDDirty.active);
+            ToggleMatchHUD(_toggleHUDDirty.active);
 
         _isUICreated = true;
     }
@@ -364,7 +388,22 @@ public class Player : Entity
         HandleAllViewsClose();
     }
 
-    public void ToggleHUD(bool active)
+    [TargetRpc]
+    public void TargetSetLobbyHUDActive(bool active)
+        => ToggleLobbyHUD(active);
+
+    public void ToggleLobbyHUD(bool active)
+    {
+        if (active)
+        {
+            _playerHUD.Show<LobbyHUD>();
+            return;
+        }
+
+        _playerHUD.Hide<LobbyHUD>();
+    }
+
+    public void ToggleMatchHUD(bool active)
     {
         if (_playerHUD == null)
         {
@@ -372,14 +411,14 @@ public class Player : Entity
             return;
         }
 
-        _playerHUD.gameObject.SetActive(active);
+        _playerHUD.SetActive(active);
 
         _toggleHUDDirty = (false, active);
     }
 
     [TargetRpc]
-    public void TargetRpcToggleHUD(bool active)
-        => ToggleHUD(active);
+    public void TargetRpcToggleMatchHUD(bool active)
+        => ToggleMatchHUD(active);
 
     private void HandleViewOpen()
     {

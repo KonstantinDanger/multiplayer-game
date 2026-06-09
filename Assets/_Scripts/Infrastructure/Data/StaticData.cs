@@ -7,7 +7,7 @@ public class StaticData : ScriptableObject
     [field: SerializeField] public string StartingSceneName { get; private set; } = "LobbyScene";
     [field: SerializeField] public string LobbySceneName { get; private set; } = "LobbyScene";
     [field: SerializeField] public string GameSceneName { get; private set; }
-    [field: SerializeField] public GameMatchConfig GameMatchData { get; private set; }
+    [field: SerializeField] public GameMatchConfig GameMatchConfig { get; private set; }
     [field: SerializeField] public CharacterClassList ClassList { get; private set; }
     [field: SerializeField] public Player PlayerPrefab { get; private set; }
     [field: SerializeField] public CustomNetworkManager NetworkManagerPrefab { get; private set; }
@@ -42,6 +42,8 @@ public class StaticData : ScriptableObject
             [StatType.projectileScale] = "Radius of all projectiles",
             [StatType.splashRadius] = "Radius of all splash attacks",
         };
+
+        public const string DataAccessKey = "PlayerData";
 
         public static float SecondsInMinute = 60f;
         public static int PlayerLayer = LayerMask.NameToLayer("player");

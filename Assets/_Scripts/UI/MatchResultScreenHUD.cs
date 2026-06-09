@@ -28,7 +28,7 @@ public class MatchResultScreenHUD : HUD
         switch (result)
         {
             case MatchResult.OneSided:
-                _resultText.text = $"Player {matchSummaryData.winner} has won";
+                _resultText.text = $"Player {matchSummaryData.winnerSteamName} has won";
                 break;
 
             case MatchResult.Draw:
@@ -40,8 +40,8 @@ public class MatchResultScreenHUD : HUD
                 break;
 
             case MatchResult.Surrender:
-                _resultText.text = $"Player {matchSummaryData.loser} has surrendered" +
-                    $"\nPlayer {matchSummaryData.winner} has won";
+                _resultText.text = $"Player {matchSummaryData.loserSteamName} has surrendered" +
+                    $"\nPlayer {matchSummaryData.winnerSteamName} has won";
                 break;
         }
 

@@ -73,7 +73,7 @@ public class LevelUpView : UIView
     }
 
     private bool IsUpgradeEnabled()
-        => _wallet.GetAmount(CurrencyTypeToWithdraw) >= _level.RequiredCurrencyForUpgrade
+        => _wallet.GetAmountOf(CurrencyTypeToWithdraw) >= _level.RequiredCurrencyForUpgrade
         && _level.Lvl < _level.MaxLvl;
 
     private void SetLevelLabel(bool upgradeEnabled)

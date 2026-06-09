@@ -114,8 +114,6 @@ public class LobbyView : UIView
     private void HandleUIChange()
     {
 
-        UnityEngine.Debug.Log("is match active " + IsMatchGoing());
-
         _lobbyNameText.text = string.IsNullOrEmpty(_lobby.LobbyName) ? "Offline" : _lobby.LobbyName;
 
         bool playersConnected = NetworkServer.connections.Count == _lobby.MaxPlayers;

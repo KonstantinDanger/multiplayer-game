@@ -14,7 +14,7 @@ public class GameMatchState : GameState
     private readonly List<Player> _players = new();
     private readonly List<PlayerSummaryDataBinder> _dataBinders = new();
 
-    private GameMatchConfig _gameMatchData;
+    private GameMatchConfig _gameMatchConfig;
     private GameFactory _factory;
     private StaticData _staticData;
 
@@ -34,11 +34,11 @@ public class GameMatchState : GameState
 
         _staticData = Resolve<StaticData>();
         _factory = Resolve<GameFactory>();
-        _gameMatchData = _staticData.GameMatchData;
+        _gameMatchConfig = _staticData.GameMatchConfig;
         _gameData = Resolve<PersistentGameData>().GameData;
         _netManager = Resolve<CustomNetworkManager>();
 
-        _drawCountdown = new(_staticData.GameMatchData.DrawCountdown);
+        _drawCountdown = new(_gameMatchConfig.DrawCountdown);
 
         InitSpawnPositions();
         InitZone();
@@ -72,11 +72,6 @@ public class GameMatchState : GameState
         UpdatePlayersMatchHUDs(matchProgress);
     }
 
-    private void UpdatePlayersMatchHUDs(float progress)
-        => _players
-        .ForEach(p => p
-        .UpdateMatchHUD(_matchTime, progress, _match.IsDeathmatchActive));
-
     public override void OnExit()
     {
         Events.ServerOnPlayerDemise -= HandlePlayerDemise;
@@ -88,25 +83,26 @@ public class GameMatchState : GameState
             .ForEach(dataB => dataB
             .Unbind());
 
-        UnityEngine.Debug.Log("_players count " + _players.Count());
-
         _players.ForEach(player =>
         {
             player.SetCanAttack(false);
             player.Dispose();
+            player.TargetSetLobbyHUDActive(true);
         });
 
         NotifyPlayersMatchStatusChanged(false);
+
+        _matchTime = 0f;
+        _players.Clear();
     }
 
     #region Match Outcome
 
     private void HandlePlayerLeaveRequest(uint playerId)
     {
-        UnityEngine.Debug.Log("player leave requested ");
         Player leavedOne = Utils.ServerFindNetPlayerById(playerId);
 
-        if (_match.GetMatchProgress() < _gameMatchData.CancellationThreshold)
+        if (_match.GetMatchProgress() < _gameMatchConfig.CancellationThreshold)
             HandleMatchCancel();
         else
             HandleSurrenderFor(leavedOne);
@@ -131,8 +127,15 @@ public class GameMatchState : GameState
 
     private void HandleMatchCancel()
     {
-        HandleDraw();
+        SetSummaries();
+
+        _gameData.GameMatchData.MatchData = new() { matchTime = _matchTime };
+
+        _gameData.GameMatchData.MatchData.SetDate(DateTime.Now);
+
         SetOutcome(MatchResult.CanceledEarly);
+
+        GoTo<GameMatchSummaryState>();
     }
 
     private void HandleSurrenderFor(Player player)
@@ -143,23 +146,23 @@ public class GameMatchState : GameState
 
     private void HandleDraw()
     {
-        PlayerMatchSummaryData[] _summaries = _players
-            .Select(player => _gameData.GameMatchData
-            .GetSummaryFor(player))
-            .ToArray();
+        SetSummaries();
 
-        _gameData.GameMatchData.MatchData = new()
-        {
-            winner = null,
-            loser = null,
-            matchTime = _matchTime
-        };
+        _gameData.GameMatchData.MatchData = new() { matchTime = _matchTime };
 
         _gameData.GameMatchData.MatchData.SetDate(DateTime.Now);
 
         SetOutcome(MatchResult.Draw);
 
         GoTo<GameMatchSummaryState>();
+    }
+
+    private void SetSummaries()
+    {
+        PlayerMatchSummaryData[] _summaries = _players
+            .Select(player => _gameData.GameMatchData
+            .GetSummaryFor(player))
+            .ToArray();
     }
 
     private void SetOutcome(MatchResult result)
@@ -170,15 +173,12 @@ public class GameMatchState : GameState
         var loser = player;
         var winner = _players.Find(p => p != player);
 
-        PlayerMatchSummaryData[] _summaries = _players
-            .Select(player => _gameData.GameMatchData
-            .GetSummaryFor(player))
-            .ToArray();
+        SetSummaries();
 
         _gameData.GameMatchData.MatchData = new()
         {
-            winner = winner.SteamName,
-            loser = loser.SteamName,
+            winnerSteamName = winner.SteamName,
+            loserSteamName = loser.SteamName,
             matchTime = _matchTime
         };
 
@@ -190,6 +190,11 @@ public class GameMatchState : GameState
     }
 
     #endregion
+
+    private void UpdatePlayersMatchHUDs(float progress)
+        => _players
+        .ForEach(p => p
+        .UpdateMatchHUD(_matchTime, progress, _match.IsDeathmatchActive));
 
     private void NotifyPlayersMatchStatusChanged(bool active)
     {
@@ -217,8 +222,8 @@ public class GameMatchState : GameState
         {
             PlayerData data = new()
             {
-                Name = player.name, //Steam player name
-                Currency = 0, //Fetch currency from server
+                Name = player.SteamName, //Steam player name
+                MetaCurrency = 0, //Fetch currency from server
                 UnlockedClasses = new[] { "Light mage" } //Fetch classes from server 
             };
 
@@ -240,8 +245,9 @@ public class GameMatchState : GameState
             Player player = conn.identity.GetComponent<Player>();
             player.ResetLevel();
             player.Damageable.Respawn();
-            player.TargetRpcToggleHUD(true);
             player.SetCanAttack(true);
+            player.TargetRpcToggleMatchHUD(true);
+            player.TargetSetLobbyHUDActive(false);
             player.GetComponent<AnimatorUpdater>()
                  .Initialize();
             _players.Add(player);
@@ -252,7 +258,7 @@ public class GameMatchState : GameState
 
     private void InitMatch()
     {
-        _match = new(_gameMatchData, _players);
+        _match = new(_gameMatchConfig, _players);
 
         _match.Start();
     }

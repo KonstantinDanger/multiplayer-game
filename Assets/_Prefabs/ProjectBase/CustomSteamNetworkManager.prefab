@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1790009548008434490}
   - component: {fileID: 6499255630739209993}
   - component: {fileID: 7349853785399188205}
-  - component: {fileID: 1825460065090608520}
   - component: {fileID: 2880726102203837750}
   m_Layer: 0
   m_Name: CustomSteamNetworkManager
@@ -113,7 +112,6 @@ MonoBehaviour:
   evaluationMethod: 0
   evaluationInterval: 3
   timeInterpolationGui: 0
-  _gameNetBridgePrefab: {fileID: 2335783222794627391, guid: e9b9bcc54e54be744ba575edd579c8ed, type: 3}
 --- !u!114 &1790009548008434490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,21 +156,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   _networkManager: {fileID: 8638753538948294093}
---- !u!114 &1825460065090608520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8249263870334940582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d54da142af787394898948adede62045, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offsetX: 0
-  offsetY: 0
-  _netManager: {fileID: 8638753538948294093}
 --- !u!114 &2880726102203837750
 MonoBehaviour:
   m_ObjectHideFlags: 0
