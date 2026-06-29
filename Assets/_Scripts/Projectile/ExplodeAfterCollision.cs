@@ -27,6 +27,7 @@ public class ExplodeAfterCollision : AfterCollision
             }
         }
 
+        Utils.StartSplashDamageView(_radius, self.transform.position);
         UnityEngine.Object.Destroy(self.gameObject);
     }
 }

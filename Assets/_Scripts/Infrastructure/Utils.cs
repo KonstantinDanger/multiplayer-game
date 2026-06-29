@@ -5,6 +5,13 @@ using UnityEngine;
 
 public static class Utils
 {
+    public static void StartSplashDamageView(float splashRadius, Vector3 position)
+    {
+        var viewPrefab = Resources.Load<SplashDamageView>("Prefabs/SplashDamageView");
+        var viewInstance = GameObject.Instantiate(viewPrefab, position, Quaternion.identity);
+        viewInstance.StartView(splashRadius);
+    }
+
     public static string ConvertSecondsToTimerFormat(float secondsElapsed)
     {
         int seconds = Mathf.FloorToInt(secondsElapsed % 60);

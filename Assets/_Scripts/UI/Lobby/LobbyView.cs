@@ -124,8 +124,8 @@ public class LobbyView : UIView
 
         SetActive(_startGameButton, IsLobbyOwner() && _lobby.IsCreated && !IsMatchGoing());
 
-        if (_startGameButton.gameObject.activeInHierarchy)
-            _startGameButton.enabled = playersConnected;
+        //if (_startGameButton.gameObject.activeInHierarchy)
+        //    _startGameButton.enabled = playersConnected;
 
         SetActive(_createLobbyButton, !_lobby.IsCreated);
 
