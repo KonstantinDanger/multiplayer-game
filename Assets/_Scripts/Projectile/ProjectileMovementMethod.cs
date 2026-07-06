@@ -10,9 +10,6 @@ public abstract class ProjectileMovementMethod
 
     public MovementUpdate UpdateMethod => _movementUpdateMethod;
 
-    public void Initialize(ProjectileData data)
-        => MovementSpeed = data.Speed;
-
     public abstract void Move(Vector3 velocity);
 }
 

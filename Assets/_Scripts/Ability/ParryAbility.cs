@@ -50,7 +50,7 @@ public class ParryAbility : Ability
         if (!parryTarget.TryGetComponent(out IParryable parryable))
             return false;
 
-        parryable.ReactTo(sender.gameObject);
+        parryable.ReactTo(sender);
 
         return true;
     }

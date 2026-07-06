@@ -27,8 +27,8 @@ MonoBehaviour:
         <UsagePrepareTime>k__BackingField: 0
         _targetDetector:
           rid: 7065201289586540641
-        _parryTime: 0.2
-        _parryRadius: 1
+        _parryTime: 0.5
+        _parryRadius: 2
         _parryAngle: 360
     - rid: 7065201289586540641
       type: {class: TargetDetector, ns: , asm: Assembly-CSharp}

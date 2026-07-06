@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Projectile))]
@@ -6,6 +7,15 @@ public class ParryReactionComponent : MonoBehaviour, IParryable
 {
     [SerializeReference, SubclassSelector] private ProjectileParryReaction _parryReaction;
 
-    public void ReactTo(GameObject parrySender)
-        => _parryReaction.ReactTo(parrySender);
+    private bool _parried;
+
+    public void ReactTo(NetworkBehaviour parrySender)
+    {
+        if (_parried)
+            return;
+
+        _parryReaction.ReactTo(parrySender);
+
+        _parried = true;
+    }
 }

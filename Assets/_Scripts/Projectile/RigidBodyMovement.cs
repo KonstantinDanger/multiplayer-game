@@ -6,6 +6,7 @@ public class RigidBodyMovement : ProjectileMovementMethod
 {
     [SerializeField] private Rigidbody _rigidBody;
     [SerializeField] private ForceMode _forceMode = ForceMode.VelocityChange;
+    [SerializeField, Range(0.001f, 100)] private float _speedMultiplier = 10f;
 
     public override void Move(Vector3 velocity)
     {
@@ -16,8 +17,6 @@ public class RigidBodyMovement : ProjectileMovementMethod
             return;
         }
 
-        _rigidBody.AddForce(velocity, _forceMode);
-        //Vector3 currentVelocity = _rigidBody.linearVelocity;
-        //_rigidBody.linearVelocity = Vector3.ClampMagnitude(currentVelocity, MovementSpeed);
+        _rigidBody.linearVelocity = velocity * _speedMultiplier;
     }
 }

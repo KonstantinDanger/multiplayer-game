@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using Mirror;
 
 public interface IParryable
 {
-    void ReactTo(GameObject parrySender);
+    void ReactTo(NetworkBehaviour parrySender);
 }

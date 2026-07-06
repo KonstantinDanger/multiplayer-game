@@ -32,7 +32,7 @@ MonoBehaviour:
           SenderNetId: 0
           ReceiverNetId: 0
           AttackDirection: {x: 0, y: 0, z: 0}
-        _flightSpeed: 100
+        _flightSpeed: 150
         _projectilePrefab: {fileID: 8014522202720145984, guid: ebbfe0f2fd9bce4499cf0997f41c9df6, type: 3}
     - rid: 9013965155010084937
       type: {class: AttackAbility, ns: , asm: Assembly-CSharp}
