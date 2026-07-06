@@ -8,4 +8,5 @@ public enum StatType
     projectileSpeed = 5,
     projectileScale = 6,
     splashRadius = 7,
+    poise = 8,
 }

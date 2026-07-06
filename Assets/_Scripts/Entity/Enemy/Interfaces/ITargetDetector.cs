@@ -2,7 +2,9 @@
 
 public interface ITargetDetector
 {
+    Transform Origin { get; set; }
+
+    GameObject DetectNearestTarget(float detectionRadius, float fieldOfViewAngle);
+    bool IsInFieldOfView(GameObject target, float fovAngle);
     void ChangeTargetLayers(LayerMask layersToDetect);
-    Entity DetectNearestTarget(float detectionRadius, float fieldOfViewAngle);
-    bool IsInFieldOfView(Entity target, float fovAngle);
 }

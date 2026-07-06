@@ -1,29 +1,28 @@
-﻿using Mirror;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class TargetDetector : NetworkBehaviour, ITargetDetector
+public class TargetDetector : ITargetDetector
 {
+    [field: SerializeField] public Transform Origin { get; set; }
     [SerializeField] private LayerMask _layersToDetect;
-    [SerializeField] private Transform _transform;
 
     private readonly Collider[] _targets = new Collider[8];
 
-    public Entity DetectNearestTarget(float detectionRadius, float fieldOfViewAngle)
+    public GameObject DetectNearestTarget(float detectionRadius, float fieldOfViewAngle)
     {
-        var entities = DetectAllEntities(detectionRadius, fieldOfViewAngle);
+        var entities = DetectAllEntities(Origin, detectionRadius, fieldOfViewAngle);
 
         if (entities.Count == 0)
             return null;
 
-        Entity nearest = null;
+        GameObject nearest = null;
         float minDist = float.MaxValue;
 
         foreach (var entity in entities)
         {
-            float dist = Vector3.Distance(_transform.position, entity.transform.position);
+            float dist = Vector3.Distance(Origin.position, entity.transform.position);
 
             if (dist < minDist)
             {
@@ -35,24 +34,23 @@ public class TargetDetector : NetworkBehaviour, ITargetDetector
         return nearest;
     }
 
-    private List<Entity> DetectAllEntities(float detectionRadius, float fieldOfView)
+    private List<GameObject> DetectAllEntities(Transform origin, float detectionRadius, float fieldOfView)
     {
-        int targets = Physics.OverlapSphereNonAlloc(_transform.position, detectionRadius, _targets, _layersToDetect);
-        List<Entity> entities = new();
+        int targets = Physics.OverlapSphereNonAlloc(origin.position, detectionRadius, _targets, _layersToDetect);
+        List<GameObject> entities = new();
 
         for (int i = 0; i < targets; i++)
-            if (_targets[i].TryGetComponent(out Entity entity))
-                if (entity.gameObject != gameObject)
-                    if (IsInFieldOfView(entity, fieldOfView))
-                        entities.Add(entity);
+            if (_targets[i].gameObject != origin.gameObject)
+                if (IsInFieldOfView(_targets[i].gameObject, fieldOfView))
+                    entities.Add(_targets[i].gameObject);
 
         return entities;
     }
 
-    public bool IsInFieldOfView(Entity target, float fovAngle)
+    public bool IsInFieldOfView(GameObject target, float fovAngle)
     {
-        Vector3 dirToTarget = (target.transform.position - _transform.position).normalized;
-        float angle = Vector3.Angle(_transform.forward, dirToTarget);
+        Vector3 dirToTarget = (target.transform.position - Origin.position).normalized;
+        float angle = Vector3.Angle(Origin.forward, dirToTarget);
         return angle <= fovAngle / 2f;
     }
 

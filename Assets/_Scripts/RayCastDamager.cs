@@ -12,12 +12,12 @@ public class RayCastDamager : NetworkBehaviour, IAttacker
 
     public event Action OnAttack;
 
-    private IMovable _movable;
+    //private IMovable _movable;
 
     public Transform AttackPoint => _attackPoint;
 
-    private void Start()
-        => _movable = GetComponentInParent<IMovable>();
+    //private void Start()
+    //    => _movable = GetComponentInParent<IMovable>();
 
     //public void InflictDamage(Vector3 startPosition, Vector3 direction)
     //{

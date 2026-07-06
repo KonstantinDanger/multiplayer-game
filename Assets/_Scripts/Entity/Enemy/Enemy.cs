@@ -6,7 +6,9 @@ public abstract class Enemy : Entity
     [SerializeField] private EnemyConfig _enemyConfig;
 
     [Header("Enemy Components")]
-    [SerializeField] private InterfaceReference<ITargetDetector> TargetDetectorRef;
+    [field: SerializeReference, SubclassSelector]
+    public ITargetDetector TargetDetector { get; private set; }
+
     [SerializeField] private InterfaceReference<ITargetTrackingMemory> TargetTrackingMemoryRef;
     [SerializeField] private AIBrain _aiBrain;
 
@@ -14,7 +16,6 @@ public abstract class Enemy : Entity
     public TargetDetectionConfig DetectionConfig => _enemyConfig.TargetDetectionConfig;
 
     protected ITargetTrackingMemory TargetTrackingMemory => TargetTrackingMemoryRef.Value;
-    public ITargetDetector TargetDetector => TargetDetectorRef.Value;
 
     protected float DetectionTimer;
 
@@ -23,7 +24,10 @@ public abstract class Enemy : Entity
         base.OnValidate();
 
         if (TargetDetector == null)
-            TargetDetectorRef.Value = GetComponent<ITargetDetector>();
+            TargetDetector = new TargetDetector();
+
+        if (TargetDetector.Origin == null)
+            TargetDetector.Origin = transform;
 
         if (TargetTrackingMemory == null)
             TargetTrackingMemoryRef.Value = GetComponent<ITargetTrackingMemory>();
@@ -57,14 +61,14 @@ public abstract class Enemy : Entity
         if (TargetTrackingMemory.Target)
             return;
 
-        Entity nearest = TargetDetector.DetectNearestTarget(DetectionConfig.DetectionRadius, DetectionConfig.FieldOfViewAngle);
+        GameObject nearest = TargetDetector.DetectNearestTarget(DetectionConfig.DetectionRadius, DetectionConfig.FieldOfViewAngle);
 
-        if (nearest != null)
+        if (nearest != null && nearest.TryGetComponent(out Entity entity))
         {
             if (Vector3.Distance(transform.position, nearest.transform.position) > DetectionConfig.VisionRange)
                 return;
 
-            OnTargetDetected(nearest);
+            OnTargetDetected(entity);
         }
     }
 

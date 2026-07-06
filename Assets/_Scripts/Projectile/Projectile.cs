@@ -1,6 +1,7 @@
 using Mirror;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(NetworkTransformReliable))]
 public class Projectile : NetworkBehaviour

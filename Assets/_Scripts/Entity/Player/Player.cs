@@ -7,8 +7,8 @@ using UnityEngine.InputSystem;
 
 public class Player : Entity
 {
-    [SyncVar] public ulong SteamID;
-    [SyncVar] public string SteamName;
+    [SyncVar, HideInInspector] public ulong SteamID;
+    [SyncVar, HideInInspector] public string SteamName;
 
     private IStateMachine _stateMachine;
 
