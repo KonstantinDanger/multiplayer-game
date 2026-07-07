@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 696533dbd396018409a915c46a7e2a21, type: 3}
-  m_Name: Player_Movement_Config
+  m_Name: Config_Movement_Player
   m_EditorClassIdentifier: 
   <Speed>k__BackingField: 10
   <SprintSpeed>k__BackingField: 13
   <MovementSmoothness>k__BackingField: 0.1
-  <JumpHeight>k__BackingField: 1.2
-  <Gravity>k__BackingField: -14.715
+  <JumpHeight>k__BackingField: 1.1
+  <Gravity>k__BackingField: -22
   <MaxFallSpeed>k__BackingField: 30
-  <AirMovementSpeedMultiplier>k__BackingField: 0.382
   <AirMovementAcceleration>k__BackingField: 96

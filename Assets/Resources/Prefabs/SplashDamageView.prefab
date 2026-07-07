@@ -128,41 +128,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 4279556767091601553}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dc97092e63cefa43b41a2ac910ae860, type: 3}
+  m_Script: {fileID: 11500000, guid: b440d39b4cbcfa241b70b0d7eb311e8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _transform: {fileID: 985657498427790906}
-  _fadeDuration: 0.3
+  _fadeDuration: 0.15
   _meshRenderer: {fileID: 7234336395284296845}
   _alphaFadeCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 1.8005099
-      outSlope: 1.8005099
-      tangentMode: 0
+      value: 0.9
+      inSlope: 0
+      outSlope: -0.012384147
+      tangentMode: 5
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.8189175
+      outWeight: 0.10745505
     - serializedVersion: 3
-      time: 0.098564245
-      value: 0.5011792
-      inSlope: 0.17528504
-      outSlope: 0.17528504
+      time: 0.80236894
+      value: 0.6977346
+      inSlope: -0.9579004
+      outSlope: -0.9579004
       tangentMode: 0
-      weightedMode: 0
-      inWeight: 1
-      outWeight: 0.11480922
+      weightedMode: 3
+      inWeight: 0.11699559
+      outWeight: 0.42716184
     - serializedVersion: 3
-      time: 0.997406
+      time: 1
       value: 0
-      inSlope: -0.14326683
-      outSlope: -0.14326683
-      tangentMode: 0
+      inSlope: -3.5304906
+      outSlope: -3.5304906
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0.0892789
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

@@ -73,7 +73,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 532728802165586786, guid: f3ca8b25bbc90dc4bb3668381906e35c, type: 3}
       propertyPath: m_Name
-      value: Entity
+      value: Prefab_Entity_Default
       objectReference: {fileID: 0}
     - target: {fileID: 532728802165586786, guid: f3ca8b25bbc90dc4bb3668381906e35c, type: 3}
       propertyPath: m_Layer
@@ -154,9 +154,6 @@ PrefabInstance:
       addedObject: {fileID: -7231049775026165172}
     - targetCorrespondingSourceObject: {fileID: 532728802165586786, guid: f3ca8b25bbc90dc4bb3668381906e35c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2574173564829281268}
-    - targetCorrespondingSourceObject: {fileID: 532728802165586786, guid: f3ca8b25bbc90dc4bb3668381906e35c, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 4024613402228473111}
     - targetCorrespondingSourceObject: {fileID: 532728802165586786, guid: f3ca8b25bbc90dc4bb3668381906e35c, type: 3}
       insertIndex: -1
@@ -167,6 +164,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 532728802165586786, guid: f3ca8b25bbc90dc4bb3668381906e35c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7422826612740363923}
+    - targetCorrespondingSourceObject: {fileID: 532728802165586786, guid: f3ca8b25bbc90dc4bb3668381906e35c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3515077570250262858}
+    - targetCorrespondingSourceObject: {fileID: 532728802165586786, guid: f3ca8b25bbc90dc4bb3668381906e35c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3120825081226144678}
   m_SourcePrefab: {fileID: 100100000, guid: f3ca8b25bbc90dc4bb3668381906e35c, type: 3}
 --- !u!1 &1418038051021799968 stripped
 GameObject:
@@ -258,25 +261,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
---- !u!114 &2574173564829281268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1418038051021799968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 965b8109c7598d04997a58505ceb528b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  _layersToDetect:
-    serializedVersion: 2
-    m_Bits: 128
-  _transform: {fileID: 8974813229951714124}
 --- !u!114 &4024613402228473111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,6 +327,59 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+--- !u!114 &3515077570250262858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418038051021799968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76ec450f34d72ea4f8e56408b5fb9828, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mode: 0
+  flickerDuration: 0.15
+  blinkCount: 2
+  useUnscaledTime: 0
+  flickerColor: {r: 1, g: 0.4669811, b: 0.4669811, a: 1}
+  fadeAlpha: 0.2
+  hitMaterial: {fileID: 0}
+  targetRenderers:
+  - {fileID: 8281928187555527932}
+  - {fileID: 3580657821422360161}
+--- !u!114 &3120825081226144678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418038051021799968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87e79f4503a31f940a6af63803e541c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnDamageTaken:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3515077570250262858}
+        m_TargetAssemblyTypeName: DamageTakenEffect, Assembly-CSharp
+        m_MethodName: TriggerFlicker
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDemise:
+    m_PersistentCalls:
+      m_Calls: []
+  _damageSystem: {fileID: 2267410281914650354}
 --- !u!114 &2267410281914650354 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 846172872803219376, guid: f3ca8b25bbc90dc4bb3668381906e35c, type: 3}
@@ -433,8 +470,18 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 986e47519275ed14485299eeb5ff44b8, type: 3}
   m_PrefabInstance: {fileID: 7025576817954603586}
   m_PrefabAsset: {fileID: 0}
+--- !u!137 &3580657821422360161 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5822821947120931875, guid: 986e47519275ed14485299eeb5ff44b8, type: 3}
+  m_PrefabInstance: {fileID: 7025576817954603586}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7418947672974435753 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 986e47519275ed14485299eeb5ff44b8, type: 3}
+  m_PrefabInstance: {fileID: 7025576817954603586}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &8281928187555527932 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7813590141776298306, guid: 986e47519275ed14485299eeb5ff44b8, type: 3}
   m_PrefabInstance: {fileID: 7025576817954603586}
   m_PrefabAsset: {fileID: 0}

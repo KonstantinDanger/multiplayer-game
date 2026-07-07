@@ -17,6 +17,9 @@ public class RigidBodyMovement : ProjectileMovementMethod
             return;
         }
 
-        _rigidBody.linearVelocity = velocity * _speedMultiplier;
+        if (_forceMode == ForceMode.VelocityChange)
+            _rigidBody.linearVelocity = velocity * _speedMultiplier;
+        else
+            _rigidBody.AddForce(velocity, _forceMode);
     }
 }
