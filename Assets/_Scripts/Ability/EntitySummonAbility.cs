@@ -1,5 +1,6 @@
 ﻿using Mirror;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ public class EntitySummonAbility : Ability
 
     private readonly List<Entity> _summonInstances = new();
 
-    protected override bool OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
+    protected override IEnumerator OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
     {
         DeleteNullEntities(_summonInstances);
 
@@ -43,7 +44,7 @@ public class EntitySummonAbility : Ability
         _summonInstances.Add(instance);
         (instance as Enemy).Summonify(_layersToDetect, _summonLayerName, sender);
 
-        return true;
+        yield return null;
     }
 
     private void DeleteNullEntities(List<Entity> summonInstances)

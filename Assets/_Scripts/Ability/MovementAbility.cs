@@ -12,19 +12,15 @@ public class MovementAbility : Ability
     [SerializeField] private float _warpDistance = 10;
     [SerializeField] private float _warpTime = 0.2f;
 
-    protected override bool OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
+    protected override IEnumerator OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
     {
         IRotatable rotatable = sender.GetComponent<IRotatable>();
         IMovable movable = sender.GetComponent<IMovable>();
 
-        var coroutineHolder = ServiceLocator.Container.Resolve<CoroutineHolder>();
-
-        coroutineHolder.StartCoroutine(WarpRoutine(sender.gameObject, movable, rotatable));
-
-        return true;
+        yield return MoveRoutine(sender.gameObject, movable, rotatable);
     }
 
-    private IEnumerator WarpRoutine(GameObject sender, IMovable movable, IRotatable rotatable)
+    private IEnumerator MoveRoutine(GameObject sender, IMovable movable, IRotatable rotatable)
     {
         float warpTimeEnd = Time.time + _warpTime;
         float moveSpeed = _warpDistance / _warpTime;

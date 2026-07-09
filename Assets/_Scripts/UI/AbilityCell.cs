@@ -6,12 +6,12 @@ public class AbilityCell : MonoBehaviour
     [SerializeField] private Image _image;
     [SerializeField] private GaugeBar _rechargeGauge;
 
-    private AbilityHandler _abilityHandler;
+    private AbilitySlot _abilitySlot;
 
-    public void SetAbility(AbilityHandler abilityHandler)
+    public void SetAbility(AbilitySlot abilityHandler)
     {
-        _abilityHandler = abilityHandler;
+        _abilitySlot = abilityHandler;
 
-        _rechargeGauge.Initialize(_abilityHandler);
+        _rechargeGauge.Initialize(_abilitySlot);
     }
 }

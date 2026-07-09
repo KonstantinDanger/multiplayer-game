@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomPropertyDrawer(typeof(AbilityHandler))]
+[CustomPropertyDrawer(typeof(AbilitySlot))]
 public class AbilityHandlerDrawer : PropertyDrawer
 {
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

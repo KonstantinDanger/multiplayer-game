@@ -6,7 +6,7 @@ public interface IAbilityUser
 {
     event Action<UseAbilityData> OnAbilityStartUsing;
 
-    IReadOnlyList<AbilityHandler> Handlers { get; }
+    IReadOnlyList<AbilitySlot> Slots { get; }
 
     void Initialize(List<Ability> abilities);
     void OnUpdate();

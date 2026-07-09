@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class AIAbilityHandler : AbilityHandler
+public class AIAbilityHandler : AbilitySlot
 {
     [SerializeField] private List<Consideration> _considerations = new();
 

@@ -10,7 +10,7 @@ public class AbilitiesHUD : HUD
         for (int i = 0; i < _abilityCells.Count; i++)
         {
             var abilityCell = _abilityCells[i];
-            var abilityHandler = abilities.Handlers[i + 1];
+            var abilityHandler = abilities.Slots[i + 1];
 
             abilityCell.SetAbility(abilityHandler);
         }

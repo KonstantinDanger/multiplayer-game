@@ -11,7 +11,7 @@ public class ParryAbility : Ability
     [SerializeField, Range(0f, 10f)] private float _parryRadius = 0.5f;
     [SerializeField, Range(0f, 720f)] private float _parryAngle = 360;
 
-    protected override bool OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
+    protected override IEnumerator OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
     {
         // Negate damage
         // (Stun or Stagger target) - melee OR 
@@ -19,7 +19,7 @@ public class ParryAbility : Ability
 
         sender.StartCoroutine(ParryRoutine(sender));
 
-        return true;
+        yield return null;
     }
 
     private IEnumerator ParryRoutine(NetworkBehaviour sender)

@@ -4,28 +4,28 @@ using System.Collections.Generic;
 
 public class AbilityUser : NetworkBehaviour, IAbilityUser
 {
-    private readonly List<AbilityHandler> _abilities = new();
+    private readonly List<AbilitySlot> _slots = new();
 
-    public IReadOnlyList<AbilityHandler> Handlers => _abilities;
+    public IReadOnlyList<AbilitySlot> Slots => _slots;
 
     public event Action<UseAbilityData> OnAbilityStartUsing;
 
     public void Initialize(List<Ability> abilities)
     {
-        if (_abilities.Count > 0)
-            _abilities.Clear();
+        if (_slots.Count > 0)
+            _slots.Clear();
 
         abilities.ForEach(ability => Add(ability));
     }
 
     public void OnUpdate()
     {
-        foreach (var ability in _abilities)
+        foreach (var ability in _slots)
             ability?.Update();
     }
 
     public void Add(Ability ability)
-        => _abilities.Add(new(ability));
+        => _slots.Add(new(ability));
 
     /// <summary>
     /// Returns -1 if target ability is not found
@@ -34,7 +34,7 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
     public int FindIndexOf(Ability abilityToUse)
-        => _abilities.FindIndex(handler => handler.Ability.Equals(abilityToUse));
+        => _slots.FindIndex(handler => handler.Ability.Equals(abilityToUse));
 
     //public virtual Ability Use(Ability abilityToUse, NetworkBehaviour target = null)
     //{
@@ -48,18 +48,18 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
 
     public virtual Ability Use(int index, NetworkBehaviour target = null)
     {
-        if (index > _abilities.Count)
+        if (index > _slots.Count)
             throw new System.Exception("Wrong index");
 
-        AbilityHandler selected = _abilities[index];
+        AbilitySlot selectedSlot = _slots[index];
 
-        if (selected == null)
+        if (selectedSlot == null)
             return null;
 
-        if (selected.Perform(this, target))
-            OnAbilityStartUsing.Invoke(SetupData(selected));
+        if (selectedSlot.Use(this, target))
+            OnAbilityStartUsing.Invoke(SetupData(selectedSlot.Ability));
 
-        return selected;
+        return selectedSlot.Ability;
     }
 
     private UseAbilityData SetupData(Ability ability)

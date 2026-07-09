@@ -13,6 +13,7 @@ public sealed class ParryReaction_ReturnToSender : ProjectileParryReaction
             return;
 
         LayerMask excludeLayers = SwapLayers(data, parrySender);
+        //Now attack layers are all layers, except the parrier's one. TODO: include only needed
         Projectile.Data.Damage.AttackLayers = ~excludeLayers;
         Projectile.Collider.excludeLayers = excludeLayers;
 
@@ -33,8 +34,6 @@ public sealed class ParryReaction_ReturnToSender : ProjectileParryReaction
         excludeLayers &= ~(1 << projectileOwnerLayer);
         excludeLayers |= (1 << parrySenderLayer);
 
-        UnityEngine.Debug.Log("Excluded Layers " + Utils.GetLayerNamesFromMask(excludeLayers));
-        UnityEngine.Debug.Log("Attack Layers " + Utils.GetLayerNamesFromMask(~excludeLayers));
         return excludeLayers;
     }
 }
