@@ -10,37 +10,37 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4eedb7db48f6b7c44be8e8c890e9d4ae, type: 3}
-  m_Name: Pyromancer_Ability_2
+  m_Name: Ability_Pyromancer_1
   m_EditorClassIdentifier: 
   _ability:
-    rid: 4564918620506292294
+    rid: 9013964967232143431
   references:
     version: 2
     RefIds:
-    - rid: 4564918620506292294
+    - rid: 9013964967232143431
       type: {class: AttackAbility, ns: , asm: Assembly-CSharp}
       data:
-        <Name>k__BackingField: Fire pistols
-        <CooldownTime>k__BackingField: 2
+        <Name>k__BackingField: Fire fist
+        <CooldownTime>k__BackingField: 5
         <PreparationAnimation>k__BackingField: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
         <UsageAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
-        <UsagePrepareTime>k__BackingField: 0.2
+        <UsagePrepareTime>k__BackingField: 0
         _attack:
-          rid: 9013964976533274693
-    - rid: 9013964976533274693
+          rid: 9013964967232143432
+    - rid: 9013964967232143432
       type: {class: ProjectileLaunchAttack, ns: , asm: Assembly-CSharp}
       data:
-        Amount: 30
-        TimeBetweenAttacks: 0.1
+        Amount: 1
+        TimeBetweenAttacks: 0
         Damage:
-          Amount: 2
+          Amount: 50
           AttackLayers:
             serializedVersion: 2
-            m_Bits: 256
+            m_Bits: 0
           Type: 0
           Range: 0
           SenderNetId: 0
           ReceiverNetId: 0
           AttackDirection: {x: 0, y: 0, z: 0}
-        _flightSpeed: 250
-        _projectilePrefab: {fileID: 8014522202720145984, guid: ebbfe0f2fd9bce4499cf0997f41c9df6, type: 3}
+        _flightSpeed: 200
+        _projectilePrefab: {fileID: 9165549781829025688, guid: 4e89d65d3dfe26a4d8788a6b409d8797, type: 3}

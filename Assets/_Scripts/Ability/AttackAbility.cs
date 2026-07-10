@@ -15,8 +15,7 @@ public class AttackAbility : Ability
 
         //int myLayer = sender.gameObject.layer;
         //LayerMask attackMask = _attack.Damage.AttackLayers & ~(1 << myLayer);
-        //_attack.D
-        //amage.AttackLayers = attackMask;
+        //_attack.Damage.AttackLayers = attackMask;
         _attack.Apply(sender, target);
 
         while (_attack.InProcess)

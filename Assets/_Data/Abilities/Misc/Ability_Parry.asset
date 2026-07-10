@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4eedb7db48f6b7c44be8e8c890e9d4ae, type: 3}
-  m_Name: ScriptableAbility_Parry
+  m_Name: Ability_Parry
   m_EditorClassIdentifier: 
   _ability:
     rid: 7065201289586540623

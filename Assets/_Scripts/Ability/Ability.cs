@@ -31,27 +31,30 @@ public abstract class Ability
         if (!IsReadyToUse)
             return false;
 
+        IsPerforming = true;
+
         var coroutineHolder = ServiceLocator.Container.Resolve<CoroutineHolder>();
         coroutineHolder.StartCoroutine(OnPerformRoutine(sender, target));
 
         return true;
     }
 
-    private void SetNextUseTime()
-        => _nextUsageTime = Time.time + CooldownTime;
-
     private IEnumerator OnPerformRoutine(NetworkBehaviour sender, NetworkBehaviour target)
     {
-        IsPerforming = true;
-
         if (UsagePrepareTime > 0)
             yield return PrepareUsageRoutine();
 
         yield return OnPerform(sender, target);
 
-        SetNextUseTime();
+        yield return OnPerformed(sender, target);
 
         IsPerforming = false;
+    }
+
+    protected virtual IEnumerator OnPerformed(NetworkBehaviour sender, NetworkBehaviour target)
+    {
+        SetNextUseTime(CooldownTime);
+        yield return null;
     }
 
     private IEnumerator PrepareUsageRoutine()
@@ -61,9 +64,13 @@ public abstract class Ability
 
     protected abstract IEnumerator OnPerform(NetworkBehaviour sender, NetworkBehaviour target);
 
+    protected void SetNextUseTime(float cooldownTime)
+        => _nextUsageTime = Time.time + cooldownTime;
+
     public override bool Equals(object obj)
     {
-        Ability other = obj as Ability;
+        if (obj is not Ability other)
+            return false;
 
         return other.Name == Name
             && other.CooldownTime == CooldownTime
