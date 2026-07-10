@@ -13,11 +13,16 @@ public class ComboAbility : Ability
     private readonly List<Ability> _abilities = new();
 
     private int _currentAttackIndex = 0;
-
-    private bool _cachedNext;
+    private bool _cacheNext;
 
     private Ability CurrentAbility => _abilities[_currentAttackIndex];
     private bool IsComboEnded => _currentAttackIndex >= _abilities.Count - 1;
+
+    protected override bool OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target)
+    {
+        _cacheNext = true;
+        return false;
+    }
 
     protected override IEnumerator OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
     {
@@ -27,19 +32,34 @@ public class ComboAbility : Ability
         if (_abilities.Count == 0)
             CacheAbilities();
 
-        //if (CurrentAttack.IsPerforming && !_cachedNext /*&& CurrentAttack.PerformTime >= _nextAttackCacheProgressThreshold*/)
-        //{
-        //    _cachedNext = true;
-        //}
+        while (true)
+        {
+            _cacheNext = false;
 
-        UnityEngine.Debug.Log("Current attack idx " + _currentAttackIndex);
+            UnityEngine.Debug.Log("Current attack idx " + _currentAttackIndex);
+            yield return CurrentAbility.PerformRoutine(sender, target);
 
-        CurrentAbility.Perform(sender, target);
+            if (IsComboEnded || !_cacheNext)
+            {
+                break;
+            }
 
-        while (CurrentAbility.IsPerforming)
-            yield return null;
+            IncrementCombo();
+        }
 
         yield break;
+    }
+
+    protected override IEnumerator OnPerformed(NetworkBehaviour sender, NetworkBehaviour target)
+    {
+        if (IsComboEnded)
+        {
+            UnityEngine.Debug.Log("setting combo end cooldown ");
+            SetNextUseTime(CooldownTime);
+        }
+
+        ResetCombo();
+        yield return null;
     }
 
     private void IncrementCombo()
@@ -53,21 +73,8 @@ public class ComboAbility : Ability
         _currentAttackIndex++;
     }
 
-    protected override IEnumerator OnPerformed(NetworkBehaviour sender, NetworkBehaviour target)
-    {
-        if (IsComboEnded)
-        {
-            SetNextUseTime(CooldownTime);
-        }
-        //else if (_cachedNext)
-        //{
-        //    Perform(sender, target);
-        //    _cachedNext = false;
-        //}
-
-        IncrementCombo();
-        yield return null;
-    }
+    private void ResetCombo()
+        => _currentAttackIndex = 0;
 
     private void CacheAbilities()
         => _scriptableAbilities

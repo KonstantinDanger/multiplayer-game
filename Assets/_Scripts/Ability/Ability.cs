@@ -1,6 +1,7 @@
 ﻿using Mirror;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -15,7 +16,7 @@ public abstract class Ability
     [field: SerializeField, Range(0f, 10f)] public virtual float UsagePrepareTime { get; protected set; } = 0.2f;
 
     public bool IsPerforming { get; private set; }
-    public bool IsReadyToUse => Time.time >= _nextUsageTime && !IsPerforming;
+    public bool IsRecharging => Time.time < _nextUsageTime;
     public float RechargeProgress
     {
         get
@@ -28,19 +29,26 @@ public abstract class Ability
 
     public bool Perform(NetworkBehaviour sender, NetworkBehaviour target)
     {
-        if (!IsReadyToUse)
+        if (IsRecharging)
             return false;
+
+        if (IsPerforming)
+            return OnPerformRequested(sender, target);
 
         IsPerforming = true;
 
         var coroutineHolder = ServiceLocator.Container.Resolve<CoroutineHolder>();
-        coroutineHolder.StartCoroutine(OnPerformRoutine(sender, target));
+        coroutineHolder.StartCoroutine(PerformRoutine(sender, target));
 
         return true;
     }
 
-    private IEnumerator OnPerformRoutine(NetworkBehaviour sender, NetworkBehaviour target)
+    protected virtual bool OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target) => true;
+
+    protected internal IEnumerator PerformRoutine(NetworkBehaviour sender, NetworkBehaviour target)
     {
+        IsPerforming = true;
+
         if (UsagePrepareTime > 0)
             yield return PrepareUsageRoutine();
 
@@ -75,8 +83,8 @@ public abstract class Ability
         return other.Name == Name
             && other.CooldownTime == CooldownTime
             && other.UsagePrepareTime == UsagePrepareTime
-            && other.PreparationAnimation.name == PreparationAnimation.name
-            && other.UsageAnimation.name == UsageAnimation.name;
+            && EqualityComparer<AnimationClip>.Default.Equals(other.PreparationAnimation, PreparationAnimation)
+            && EqualityComparer<AnimationClip>.Default.Equals(UsageAnimation, UsageAnimation);
     }
 
     public override int GetHashCode()
