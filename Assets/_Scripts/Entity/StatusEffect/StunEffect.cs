@@ -1,14 +1,14 @@
 ﻿using System;
 
 [Serializable]
-public class StunEffect : StatusEffect
+public class StunEffect : ProlongedStatusEffect
 {
     // duration
     // incoming damage multiplier
 
     // stuns for a prolonged time
     // decreases defense
-    protected override void Apply(Entity entity) => throw new NotImplementedException();
+    public override void Proc(Entity entity) => throw new NotImplementedException();
 }
 
 

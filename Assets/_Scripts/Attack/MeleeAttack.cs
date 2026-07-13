@@ -13,13 +13,15 @@ public class MeleeAttack : Attack
     {
         IAttacker attacker = sender.GetComponentInChildren<IAttacker>();
 
-        Vector3 attackDirection = target.transform.position - sender.transform.position;
+        Vector3 targetPosition = target == null ? sender.transform.position + sender.transform.forward : target.transform.position;
+
+        Vector3 attackDirection = targetPosition - sender.transform.position;
         Vector3 attackPosition = attacker.AttackPoint.position + attackDirection.normalized * AttackRange;
 
         int targetCount = Physics.OverlapSphereNonAlloc(attackPosition, _attackSplashRadius, _targets, Damage.AttackLayers);
 
 #if UNITY_EDITOR
-        Utils.SpawnTemporarySphere(attackPosition, _attackSplashRadius);
+        Utils.StartSplashDamageView(_attackSplashRadius, attackPosition);
 #endif
         for (int i = 0; i < targetCount; i++)
             if (_targets[i].TryGetComponent(out IDamageable damageable))

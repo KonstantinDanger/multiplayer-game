@@ -367,6 +367,7 @@ GameObject:
   - component: {fileID: 6335237973204876179}
   - component: {fileID: 514405708428278024}
   - component: {fileID: 6606234616696880050}
+  - component: {fileID: 8431226382886630826}
   m_Layer: 7
   m_Name: Prefab_Player
   m_TagString: Untagged
@@ -426,6 +427,7 @@ MonoBehaviour:
   SteamID: 0
   SteamName: 
   _damager: {fileID: 6606234616696880050}
+  _statusEffectForTesting: {fileID: 11400000, guid: a120110f83e54e24da663625de0b8c9d, type: 2}
   _respawn: {fileID: 6200438880601125725}
   _abilities: {fileID: 5132097041645439728}
   _baseCharacterClass: {fileID: 11400000, guid: 9f4fb1f6f2f5b31449d70feab0f1f33e, type: 2}
@@ -963,6 +965,21 @@ MonoBehaviour:
   syncInterval: 0
   _rayCastView: {fileID: 4521963623633174931}
   _attackPoint: {fileID: 3825942550626930170}
+--- !u!114 &8431226382886630826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4047092069969861197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e6747d3a66d52544a54dbc2204abbd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
 --- !u!1 &4641920328616467223
 GameObject:
   m_ObjectHideFlags: 0

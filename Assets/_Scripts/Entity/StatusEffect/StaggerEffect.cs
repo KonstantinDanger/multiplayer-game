@@ -1,17 +1,16 @@
 ﻿using System;
 
 [Serializable]
-public class StaggerEffect : StatusEffect
+public class StaggerEffect : ProlongedStatusEffect
 {
     // duration
 
     // interrupts an attack 
     // stuns for a brief moment
 
-    protected override void Apply(Entity entity)
+    public override void Proc(Entity entity)
     {
         //entity.GetComponent<IAbilityUser>().Cancel();
-
     }
 }
 

@@ -13,6 +13,7 @@ public class Player : Entity
     private IStateMachine _stateMachine;
 
     [SerializeField] private RayCastDamager _damager; //For testing
+    [SerializeField] private ScriptableStatusEffect _statusEffectForTesting; //For testing
     [SerializeField] private Respawn _respawn;
     [SerializeField] private AbilityUser _abilities;
     [SerializeField] private ScriptableCharacterClass _baseCharacterClass;
@@ -148,6 +149,17 @@ public class Player : Entity
         if (Keyboard.current.iKey.wasPressedThisFrame)
         {
             UnityEngine.Debug.Log("Current player max health: " + Damageable.MaxGaugeValue);
+        }
+
+        if (Keyboard.current.pKey.wasPressedThisFrame)
+        {
+            var handler = GetComponent<StatusEffectHandler>();
+
+            handler
+                .TryProc(_statusEffectForTesting
+                .GetNew(), 10, this);
+
+            UnityEngine.Debug.Log(handler);
         }
         //UnityEngine.Debug.Log("Wallet " + _wallet.ToString());
         //UnityEngine.Debug.Log("Stats => " + Stats.ToString());
