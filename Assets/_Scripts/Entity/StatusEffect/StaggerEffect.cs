@@ -8,10 +8,9 @@ public class StaggerEffect : ProlongedStatusEffect
     // interrupts an attack 
     // stuns for a brief moment
 
-    public override void Proc(Entity entity)
+    protected override void OnProc(Entity entity)
     {
         //entity.GetComponent<IAbilityUser>().Cancel();
+
     }
 }
-
-

@@ -4,18 +4,21 @@ using UnityEngine;
 [Serializable]
 public abstract class StatusEffect
 {
-    public float Accumulation { get; private set; } = 0f;
-
-    [SerializeField, Range(0, 1000)] private float _accumulationAmount;
+    [SerializeField, Range(0, 1000)] private float _maxAccumulationAmount;
     [SerializeField, Range(0, 1000)] private float _decaySpeed;
     [SerializeField, Range(0, 1000)] private float _decayDelay;
+
+    private float _accumulation;
+
+    public float Accumulation => Mathf.Clamp(_accumulation, 0f, _maxAccumulationAmount);
+    protected float MaxAccumulationAmount => _maxAccumulationAmount;
 
     public abstract void Proc(Entity entity);
 
     public void Tick(float deltaTime)
     {
         OnTick(deltaTime);
-        OnDecay(deltaTime);
+        OnDecay(deltaTime, _decaySpeed);
     }
 
     protected virtual void OnTick(float deltaTime) { }
@@ -25,17 +28,18 @@ public abstract class StatusEffect
         if (amount <= 0f)
             return false;
 
-        Accumulation += amount;
+        _accumulation += amount;
+        _accumulation = Accumulation;
 
-        return Accumulation >= _accumulationAmount;
+        return Accumulation >= _maxAccumulationAmount;
     }
 
     public void Reset()
-        => _accumulationAmount = 0f;
+        => _maxAccumulationAmount = 0f;
 
-    protected virtual void OnDecay(float deltaTime)
-        => Accumulation -= _decaySpeed * deltaTime;
+    protected virtual void OnDecay(float deltaTime, float decaySpeed)
+        => _accumulation -= decaySpeed * deltaTime;
 
     public override string ToString()
-        => $"Status effect ({GetType()}). Accumulation: [{Accumulation}/{_accumulationAmount}]";
+        => $"Status effect ({GetType()}). Accumulation: [{Accumulation}/{_maxAccumulationAmount}]";
 }

@@ -159,7 +159,8 @@ public class Player : Entity
                 .TryProc(_statusEffectForTesting
                 .GetNew(), 10, this);
 
-            UnityEngine.Debug.Log(handler);
+            //UnityEngine.Debug.Log(handler);
+
         }
         //UnityEngine.Debug.Log("Wallet " + _wallet.ToString());
         //UnityEngine.Debug.Log("Stats => " + Stats.ToString());

@@ -32,10 +32,15 @@ public class StatusEffectHandler : NetworkBehaviour
     {
         StatusEffect eff = GetOrAdd(effect);
 
+        if (eff is ProlongedStatusEffect prolonged && prolonged.Active)
+            return;
+
         if (eff.Accumulate(amount))
         {
             eff.Proc(target);
-            RemoveEffect(effect);
+
+            if (eff is InstantStatusEffect)
+                RemoveEffect(effect);
         }
     }
 

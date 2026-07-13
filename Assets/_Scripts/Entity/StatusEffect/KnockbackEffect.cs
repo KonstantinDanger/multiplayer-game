@@ -7,5 +7,5 @@ public class KnockbackEffect : ProlongedStatusEffect
     // distance
 
     // moves IMovable over distance with time
-    public override void Proc(Entity entity) => throw new NotImplementedException();
+    protected override void OnProc(Entity entity) => throw new NotImplementedException();
 }

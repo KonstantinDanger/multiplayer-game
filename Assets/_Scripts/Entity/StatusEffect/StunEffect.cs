@@ -8,7 +8,8 @@ public class StunEffect : ProlongedStatusEffect
 
     // stuns for a prolonged time
     // decreases defense
-    public override void Proc(Entity entity) => throw new NotImplementedException();
+    protected override void OnProc(Entity entity) => UnityEngine.Debug.Log("Stun has been applied ");
+    protected override void OnTick(float deltaTime) => UnityEngine.Debug.Log("Stun tick ");
 }
 
 

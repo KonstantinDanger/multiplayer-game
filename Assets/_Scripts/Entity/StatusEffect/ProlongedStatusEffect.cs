@@ -1,32 +1,33 @@
 ﻿using System;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public abstract class ProlongedStatusEffect : StatusEffect
 {
     [field: SerializeField, Range(0f, 1000f)] public float Duration { get; private set; }
 
-    private bool _activated;
+    private float _expirationTime;
+    public bool Active => Time.time < _expirationTime && Accumulation > 0f;
 
-    public override void Proc(Entity entity) => _activated = true;
-
-    protected virtual void OnEnd() { }
-
-    protected override void OnTick(float deltaTime)
+    public sealed override void Proc(Entity entity)
     {
-        if (_activated)
-        {
+        if (Active)
             return;
-        }
 
-        OnEnd();
+        _expirationTime = Time.time + Duration;
+
+        OnProc(entity);
     }
 
-    protected override void OnDecay(float deltaTime)
-    {
-        if (_activated)
-            return;
+    protected abstract void OnProc(Entity entity);
 
-        base.OnDecay(deltaTime);
+    protected sealed override void OnDecay(float deltaTime, float decaySpeed)
+    {
+        float decayPerSecond =
+            !Active ?
+            decaySpeed :
+            MaxAccumulationAmount / Duration;
+
+        base.OnDecay(deltaTime, decayPerSecond);
     }
 }
