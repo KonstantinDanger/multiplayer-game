@@ -10,37 +10,41 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4eedb7db48f6b7c44be8e8c890e9d4ae, type: 3}
-  m_Name: LightMage_Ability_3
+  m_Name: Ability_LightMage_PrimaryAttack
   m_EditorClassIdentifier: 
   _ability:
-    rid: 4564918620506292295
+    rid: 4564918603799068740
   references:
     version: 2
     RefIds:
-    - rid: 4564918620506292295
+    - rid: 4564918603799068740
       type: {class: AttackAbility, ns: , asm: Assembly-CSharp}
       data:
-        <Name>k__BackingField: Light burst
-        <CooldownTime>k__BackingField: 10
+        <Name>k__BackingField: Light Ray
+        <CooldownTime>k__BackingField: 0.65
         <PreparationAnimation>k__BackingField: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
         <UsageAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
-        <UsagePrepareTime>k__BackingField: 0.2
+        <UsagePrepareTime>k__BackingField: 0.25
         _attack:
-          rid: 4564918831264825410
-    - rid: 4564918831264825410
+          rid: 4564918645034057793
+    - rid: 4564918645034057793
       type: {class: RayCastAttack, ns: , asm: Assembly-CSharp}
       data:
-        Amount: 33
-        TimeBetweenAttacks: 0.07
-        _damage:
-          Amount: 0
+        Amount: 1
+        TimeBetweenAttacks: 0
+        Damage:
+          Amount: 34
           AttackLayers:
             serializedVersion: 2
-            m_Bits: 0
+            m_Bits: 256
           Type: 0
-          Range: 0
+          Range: 20
           SenderNetId: 0
           ReceiverNetId: 0
           AttackDirection: {x: 0, y: 0, z: 0}
-        _verticalSpreadAngle: 2
-        _horizontalSpreadAngle: 2
+        _verticalSpreadAngle: 0
+        _horizontalSpreadAngle: 0
+        _penetrationCount: 3
+        _damageDecayPercentOverPenetration: 35
+        _useSphereCast: 1
+        _sphereRange: 0.66

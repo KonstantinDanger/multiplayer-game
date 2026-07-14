@@ -3,9 +3,9 @@
 [Serializable]
 public class KnockbackEffect : ProlongedStatusEffect
 {
-    // time
+    // time = this.Duration
     // distance
 
-    // moves IMovable over distance with time
+    // moves IMovable by distance over time
     protected override void OnProc(Entity entity) => throw new NotImplementedException();
 }

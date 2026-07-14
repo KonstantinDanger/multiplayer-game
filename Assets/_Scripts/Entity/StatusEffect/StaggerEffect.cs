@@ -11,6 +11,5 @@ public class StaggerEffect : ProlongedStatusEffect
     protected override void OnProc(Entity entity)
     {
         //entity.GetComponent<IAbilityUser>().Cancel();
-
     }
 }
