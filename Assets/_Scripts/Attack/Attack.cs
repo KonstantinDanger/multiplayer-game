@@ -13,6 +13,7 @@ public abstract class Attack
     private bool _inProcess;
     public bool InProcess => _inProcess;
     public float AttackRange => Damage.Range;
+    public float TimeBetweenAttack => TimeBetweenAttacks;
 
     public void Apply(NetworkBehaviour sender, NetworkBehaviour target)
     {

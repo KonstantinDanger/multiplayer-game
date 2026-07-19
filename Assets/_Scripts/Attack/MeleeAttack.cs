@@ -12,11 +12,12 @@ public class MeleeAttack : Attack
     protected override void OnApply(NetworkBehaviour sender, NetworkBehaviour target)
     {
         IAttacker attacker = sender.GetComponentInChildren<IAttacker>();
+        Vector3 attackPosition = (attacker.AttackPoint.position + attacker.AttackPoint.forward) * Damage.Range;
 
-        Vector3 targetPosition = target == null ? sender.transform.position + sender.transform.forward : target.transform.position;
+        //Vector3 targetPosition = target == null ? sender.transform.position + sender.transform.forward : target.transform.position;
 
-        Vector3 attackDirection = targetPosition - sender.transform.position;
-        Vector3 attackPosition = attacker.AttackPoint.position + attackDirection.normalized * AttackRange;
+        //Vector3 attackDirection = targetPosition - sender.transform.position;
+        //Vector3 attackPosition = attacker.AttackPoint.position + attackDirection.normalized * AttackRange;
 
         int targetCount = Physics.OverlapSphereNonAlloc(attackPosition, _attackSplashRadius, _targets, Damage.AttackLayers);
 

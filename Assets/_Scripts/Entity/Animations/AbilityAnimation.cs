@@ -10,6 +10,8 @@ public class AbilityAnimation : NetworkBehaviour
     [SerializeField] private float _animationTransitionTime = 0.15f;
     [SerializeField] private int _layer;
 
+    private bool _isPlaying = false;
+
     private IAbilityUser AbilityUser => _abilityUser.Value;
 
     private void OnEnable()
@@ -31,6 +33,11 @@ public class AbilityAnimation : NetworkBehaviour
 
     private IEnumerator StartAnimationRoutine(UseAbilityData data)
     {
+        if (_isPlaying)
+            yield break;
+
+        _isPlaying = true;
+
         float animatorSpeed = _animator.speed;
 
         float desiredSpeed = data.UsagePreparationTime == 0 ? 0 :
@@ -45,6 +52,8 @@ public class AbilityAnimation : NetworkBehaviour
         _animator.speed = animatorSpeed;
 
         Play(data.UsageAnimationName);
+
+        _isPlaying = false;
     }
 
     private void Play(string animationName)

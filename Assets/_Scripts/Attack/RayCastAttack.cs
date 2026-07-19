@@ -23,7 +23,7 @@ public class RayCastAttack : Attack
 
     private GameObject _sender;
 
-    protected override void OnApply(NetworkBehaviour sender, NetworkBehaviour target)
+    protected sealed override void OnApply(NetworkBehaviour sender, NetworkBehaviour target)
     {
         _sender = sender != null ? sender.gameObject : null;
 
@@ -48,6 +48,8 @@ public class RayCastAttack : Attack
 
         return rotation * direction;
     }
+
+    protected virtual void OnRayCastHit(RaycastHit hit) { }
 
     private void DoRayCast(Vector3 startPosition, Vector3 direction, RayCastView rayCastView, IMovable movable)
     {
@@ -82,6 +84,9 @@ public class RayCastAttack : Attack
         }
 
         DrawRay(startPosition, direction, rayCastView);
+
+        if (results.Length > 0)
+            OnRayCastHit(results[0]);
     }
 
     private void DrawRay(Vector3 startPosition, Vector3 direction, RayCastView rayCastView)
