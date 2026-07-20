@@ -40,7 +40,6 @@ public abstract class Enemy : Entity
     {
         _aiBrain.Initialize(this, _enemyConfig.AIActions);
         DetectionTimer = DetectionConfig.DetectionInterval;
-
     }
 
     protected override void Update()
@@ -63,13 +62,19 @@ public abstract class Enemy : Entity
 
         GameObject nearest = TargetDetector.DetectNearestTarget(DetectionConfig.DetectionRadius, DetectionConfig.FieldOfViewAngle);
 
-        if (nearest != null && nearest.TryGetComponent(out Entity entity))
-        {
-            if (Vector3.Distance(transform.position, nearest.transform.position) > DetectionConfig.VisionRange)
-                return;
+        if (nearest == null)
+            return;
 
-            OnTargetDetected(entity);
-        }
+        if (nearest.TryGetComponent(out Entity entity))
+            return;
+
+        if (entity.TeamId.Id == TeamId.Id)
+            return;
+
+        if (Vector3.Distance(transform.position, nearest.transform.position) > DetectionConfig.VisionRange)
+            return;
+
+        OnTargetDetected(entity);
     }
 
     protected virtual void OnTargetDetected(Entity entity)

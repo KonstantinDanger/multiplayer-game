@@ -103,6 +103,8 @@ public class Player : Entity
 
         Camera.Initialize(HasAuthority());
 
+        TeamId.Id = (int)netId;
+
         PlayerData data = ServiceLocator.Container.Resolve<PlayerData>();
 
         if (NetworkServer.active && NetworkClient.active)
@@ -117,7 +119,6 @@ public class Player : Entity
 
     private void InitWallet(int metaCurrencyAmount)
         => _wallet.Initialize(new() { [CurrencyType.Meta] = metaCurrencyAmount });
-
 
     protected override void OnEntityStartServer()
     {

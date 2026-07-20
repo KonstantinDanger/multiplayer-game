@@ -19,7 +19,7 @@ public class MeleeAttack : Attack
         //Vector3 attackDirection = targetPosition - sender.transform.position;
         //Vector3 attackPosition = attacker.AttackPoint.position + attackDirection.normalized * AttackRange;
 
-        int targetCount = Physics.OverlapSphereNonAlloc(attackPosition, _attackSplashRadius, _targets, Damage.AttackLayers);
+        int targetCount = Physics.OverlapSphereNonAlloc(attackPosition, _attackSplashRadius, _targets);
 
 #if UNITY_EDITOR
         Utils.StartSplashDamageView(_attackSplashRadius, attackPosition);

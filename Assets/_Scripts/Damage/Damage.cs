@@ -5,7 +5,7 @@ using UnityEngine;
 public struct Damage
 {
     public float Amount;
-    public LayerMask AttackLayers;
+    public Team Team;
     public DamageType Type;
     public float Range;
 
@@ -19,5 +19,5 @@ public struct Damage
         => Utils.NetIdToGameObject(ReceiverNetId);
 
     public override readonly string ToString()
-        => $"Damage amount: {Amount} | Type: {Type} | Range: {Range} | Attack layers: {{{Utils.GetLayerNamesFromMask(AttackLayers)}}}";
+        => $"Damage amount: {Amount} | Type: {Type} | Range: {Range} | Team: {Team}";
 }

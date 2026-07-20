@@ -12,10 +12,11 @@ public sealed class ParryReaction_ReturnToSender : ProjectileParryReaction
         if (data.Sender == parrySender)
             return;
 
-        LayerMask excludeLayers = SwapLayers(data, parrySender);
+        //if (data.Sender.TryGetComponent(out Entity entity) && entity.TeamId.Id == )
+        //    return;
+
         //Now attack layers are all layers, except the parrier's one. TODO: include only needed
-        Projectile.Data.Damage.AttackLayers = ~excludeLayers;
-        Projectile.Collider.excludeLayers = excludeLayers;
+        Projectile.Data.Damage.Team.Id = SwapTeams(data, parrySender);
 
         Vector3 moveDirection = -Projectile.Data.Direction;
         moveDirection.Normalize();
@@ -24,16 +25,5 @@ public sealed class ParryReaction_ReturnToSender : ProjectileParryReaction
         Projectile.Data.SenderId = parrySender.netId;
     }
 
-    private LayerMask SwapLayers(ProjectileData data, NetworkBehaviour parrySender)
-    {
-        int parrySenderLayer = parrySender.gameObject.layer;
-        int projectileOwnerLayer = data.Sender.layer;
-
-        LayerMask excludeLayers = Projectile.Collider.excludeLayers;
-
-        excludeLayers &= ~(1 << projectileOwnerLayer);
-        excludeLayers |= (1 << parrySenderLayer);
-
-        return excludeLayers;
-    }
+    private int SwapTeams(ProjectileData data, NetworkBehaviour parrySender) => -1;
 }

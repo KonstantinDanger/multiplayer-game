@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Entity : NetworkBehaviour, IDisposable, IStatUser
 {
+    [SyncVar] public Team TeamId = new() { Id = Team.EnemyTeam };
+
     [SerializeField] private InterfaceReference<IMovable> _movement;
     [SerializeField] private InterfaceReference<IRotatable> _rotatable;
     [SerializeField] private InterfaceReference<IDamageable> _damageable;

@@ -1,5 +1,4 @@
-﻿using Mirror;
-using UnityEngine;
+﻿using UnityEngine;
 
 public static class EnemyExtensions
 {
@@ -7,10 +6,14 @@ public static class EnemyExtensions
     /// Makes an enemy act like an ally (summon)
     /// </summary>
     /// <param name="entity"></param>
-    public static void Summonify(this Enemy enemy, LayerMask layersToDetect, string summonLayerName, NetworkBehaviour owner)
+    public static void Summonify(this Enemy enemy, LayerMask layersToDetect, string summonLayerName, Entity owner, bool attacksEveryone = false)
     {
-        enemy.TargetDetector.ChangeTargetLayers(layersToDetect);
-        enemy.gameObject.layer = LayerMask.NameToLayer(summonLayerName);
+        //enemy.TargetDetector.ChangeTargetLayers(layersToDetect);
+        //enemy.gameObject.layer = LayerMask.NameToLayer(summonLayerName);
+        enemy.TeamId.Id = owner.TeamId.Id;
+
+        //if (attacksEveryone)
+        //    enemy.TeamId.Id += ;
 
         Wallet summonWallet = enemy.GetComponent<Wallet>();
         Wallet ownerWallet = owner.GetComponent<Wallet>();

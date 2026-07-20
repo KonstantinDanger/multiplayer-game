@@ -16,6 +16,9 @@ public class EntitySummonAbility : Ability
 
     protected override IEnumerator OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
     {
+        if (sender is not Entity entitySender)
+            yield break;
+
         DeleteNullEntities(_summonInstances);
 
         if (_summonInstances.Count == _maxSummonCount)
@@ -42,7 +45,7 @@ public class EntitySummonAbility : Ability
 
         Entity instance = factory.SummonEntity(_entityPrefab, summonPosition, rotation, owner: sender);
         _summonInstances.Add(instance);
-        (instance as Enemy).Summonify(_layersToDetect, _summonLayerName, sender);
+        (instance as Enemy).Summonify(_layersToDetect, _summonLayerName, entitySender);
 
         yield return null;
     }
