@@ -26,6 +26,9 @@ public abstract class Attack
         if (target != null)
             Damage.ReceiverNetId = target.netId;
 
+        if (sender.TryGetComponent(out Entity entity))
+            Damage.TeamId = entity.TeamId;
+
         var coroutineHolder = ServiceLocator.Container.Resolve<CoroutineHolder>();
 
         if (RequireAlternatingAttacks())

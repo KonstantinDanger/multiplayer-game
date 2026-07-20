@@ -58,10 +58,16 @@ public class Projectile : NetworkBehaviour
             MoveProjectile(Time.fixedDeltaTime);
     }
 
-    private void MoveProjectile(float deltaTime) 
+    private void MoveProjectile(float deltaTime)
         => _movementMethod.Move(Data.Speed * deltaTime * Data.Direction);
 
     private void OnTriggerEnter(Collider other)
-        => _collisionReaction.Collide(other, this);
+    {
+        if (other.TryGetComponent(out Entity entity))
+            if (entity.TeamId == Data.Damage.TeamId)
+                return;
+
+        _collisionReaction.Collide(other, this);
+    }
 }
 

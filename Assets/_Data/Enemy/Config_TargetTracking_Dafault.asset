@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68a5d91b03c5c36429d571b14360ccd6, type: 3}
-  m_Name: MidRange_TargetDetectionConfig
+  m_Script: {fileID: 11500000, guid: 7cd35eaf8a3451c479e54ad83b3eaa37, type: 3}
+  m_Name: Config_TargetTracking_Dafault
   m_EditorClassIdentifier: 
-  <FieldOfViewAngle>k__BackingField: 120
-  <VisionRange>k__BackingField: 20
-  <DetectionRadius>k__BackingField: 30
-  <DetectionInterval>k__BackingField: 2
+  <CanRetargetWhileTargeted>k__BackingField: 0
+  <ForgettingTimeout>k__BackingField: 10

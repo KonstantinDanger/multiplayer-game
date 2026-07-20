@@ -5,7 +5,7 @@ using UnityEngine;
 public struct Damage
 {
     public float Amount;
-    public Team Team;
+    public Team TeamId;
     public DamageType Type;
     public float Range;
 
@@ -19,5 +19,5 @@ public struct Damage
         => Utils.NetIdToGameObject(ReceiverNetId);
 
     public override readonly string ToString()
-        => $"Damage amount: {Amount} | Type: {Type} | Range: {Range} | Team: {Team}";
+        => $"Damage amount: {Amount} | Type: {Type} | Range: {Range} | TeamId: {TeamId}";
 }

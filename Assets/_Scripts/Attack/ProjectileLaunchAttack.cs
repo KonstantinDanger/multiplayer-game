@@ -10,7 +10,6 @@ public class ProjectileLaunchAttack : Attack
 
     private GameFactory _factory;
     private IStatUser _statUser;
-    private Projectile _projectileInstance;
 
     private float _flightSpeedMultiplier = 1f;
     private float _scaleMultiplier = 1f;
@@ -37,7 +36,7 @@ public class ProjectileLaunchAttack : Attack
         Damage damage = Damage;
         damage.Amount *= _damageMultiplier;
 
-        _projectileInstance = _factory.SpawnProjectile(
+        _factory.SpawnProjectile(
             _projectilePrefab,
             rotatable.Forward,
             _flightSpeed * _flightSpeedMultiplier,

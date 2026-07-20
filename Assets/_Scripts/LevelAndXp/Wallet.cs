@@ -14,7 +14,7 @@ public class Wallet : NetworkBehaviour
     public event Action<CurrencyType, int, int> ClientOnCurrencyChange;
     public event Action<CurrencyType, int, int> ServerOnCurrencyChange;
 
-    private readonly SyncDictionary<CurrencyType, int> _currencies = new()
+    private SyncDictionary<CurrencyType, int> _currencies = new()
     {
         [CurrencyType.Match] = 0,
         [CurrencyType.Meta] = 0,
@@ -23,9 +23,7 @@ public class Wallet : NetworkBehaviour
     public void Initialize(Dictionary<CurrencyType, int> currencies)
     {
         foreach (KeyValuePair<CurrencyType, int> pair in currencies)
-        {
             _currencies[pair.Key] = pair.Value;
-        }
 
         if (NetworkServer.active)
             RpcOnCurrencyChange(CurrencyType.Meta, 0, 0);

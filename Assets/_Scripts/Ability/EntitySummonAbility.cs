@@ -8,15 +8,13 @@ using UnityEngine;
 public class EntitySummonAbility : Ability
 {
     [SerializeField, Range(1, 20)] private int _maxSummonCount;
-    [SerializeField] private string _summonLayerName;
-    [SerializeField] private LayerMask _layersToDetect;
     [SerializeField] private Entity _entityPrefab;
 
     private readonly List<Entity> _summonInstances = new();
 
     protected override IEnumerator OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
     {
-        if (sender is not Entity entitySender)
+        if (!sender.TryGetComponent(out Entity entitySender))
             yield break;
 
         DeleteNullEntities(_summonInstances);
@@ -45,7 +43,7 @@ public class EntitySummonAbility : Ability
 
         Entity instance = factory.SummonEntity(_entityPrefab, summonPosition, rotation, owner: sender);
         _summonInstances.Add(instance);
-        (instance as Enemy).Summonify(_layersToDetect, _summonLayerName, entitySender);
+        instance.Summonify(entitySender);
 
         yield return null;
     }

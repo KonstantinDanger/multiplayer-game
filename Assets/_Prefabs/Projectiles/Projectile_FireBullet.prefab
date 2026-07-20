@@ -167,10 +167,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7130635161872041549, guid: d50c0d7d71c33ae4f8a4d246a04bcc38, type: 3}
-      propertyPath: managedReferences[9013964967232143427].OnCollided.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 3024903083146950707}
-    - target: {fileID: 7130635161872041549, guid: d50c0d7d71c33ae4f8a4d246a04bcc38, type: 3}
       propertyPath: managedReferences[9013964967232143427].OnCollided.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
@@ -310,22 +306,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: FireTrail
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4817838932947710555, guid: 36e929de43bfc8143a7ee6b2b71f4410, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36e929de43bfc8143a7ee6b2b71f4410, type: 3}
---- !u!114 &3024903083146950707 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4817838932947710555, guid: 36e929de43bfc8143a7ee6b2b71f4410, type: 3}
-  m_PrefabInstance: {fileID: 7721135310441024104}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 588a612fc6c05d54180f9023fa236448, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &6372967555720855143 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3699618660143641615, guid: 36e929de43bfc8143a7ee6b2b71f4410, type: 3}
