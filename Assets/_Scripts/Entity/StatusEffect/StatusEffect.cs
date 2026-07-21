@@ -6,7 +6,6 @@ public abstract class StatusEffect
 {
     [SerializeField, Range(0, 1000)] private float _maxAccumulationAmount;
     [SerializeField, Range(0, 1000)] private float _decaySpeed;
-    [SerializeField, Range(0, 1000)] private float _decayDelay;
 
     private float _accumulation;
 

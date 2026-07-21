@@ -13,51 +13,16 @@ MonoBehaviour:
   m_Name: Ability_Pyromancer_5
   m_EditorClassIdentifier: 
   _ability:
-    rid: 7065201579902369899
+    rid: 7065201625982304337
   references:
     version: 2
     RefIds:
-    - rid: 7065201579902369899
-      type: {class: AttackAbility, ns: , asm: Assembly-CSharp}
+    - rid: 7065201625982304337
+      type: {class: StatusEffectAbility, ns: , asm: Assembly-CSharp}
       data:
-        <Name>k__BackingField: Judgement Cut
-        <CooldownTime>k__BackingField: 1
+        <Name>k__BackingField: Lit
+        <CooldownTime>k__BackingField: 0.2
         <PreparationAnimation>k__BackingField: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
         <UsageAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
-        <UsagePrepareTime>k__BackingField: 0.3
-        _attack:
-          rid: 7065201579902369900
-    - rid: 7065201579902369900
-      type: {class: RayCastEndpointAttack, ns: , asm: Assembly-CSharp}
-      data:
-        Amount: 1
-        TimeBetweenAttacks: 0
-        Damage:
-          Amount: 10
-          AttackLayers:
-            serializedVersion: 2
-            m_Bits: 0
-          Type: 0
-          Range: 10
-          SenderNetId: 0
-          ReceiverNetId: 0
-          AttackDirection: {x: 0, y: 0, z: 0}
-        _particlePrefab: {fileID: 7364936370289906279, guid: 74c549d1b06b6b140a1fd9536eea637f, type: 3}
-        _attack:
-          rid: 7065201579902369901
-    - rid: 7065201579902369901
-      type: {class: MeleeAttack, ns: , asm: Assembly-CSharp}
-      data:
-        Amount: 10
-        TimeBetweenAttacks: 0.1
-        Damage:
-          Amount: 3
-          AttackLayers:
-            serializedVersion: 2
-            m_Bits: 0
-          Type: 0
-          Range: 1
-          SenderNetId: 0
-          ReceiverNetId: 0
-          AttackDirection: {x: 0, y: 0, z: 0}
-        _attackSplashRadius: 1
+        <UsagePrepareTime>k__BackingField: 0.05
+        _effect: {fileID: 11400000, guid: 50966a1dd34e403499cf62a3e5ffa484, type: 2}

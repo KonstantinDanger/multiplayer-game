@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [CreateAssetMenu(menuName = "Ability/Ability")]
 public class ScriptableAbility : ScriptableObject
@@ -7,4 +8,7 @@ public class ScriptableAbility : ScriptableObject
 
     public Ability GetNew()
         => Utils.GetInstancedCopyOf(_ability);
+
+    public Type GetAbilityType()
+        => _ability.GetType();
 }

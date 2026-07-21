@@ -25,7 +25,7 @@ MonoBehaviour:
         <PreparationAnimation>k__BackingField: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
         <UsageAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
         <UsagePrepareTime>k__BackingField: 0
-        _directional: 1
+        _directional: 0
         _resetVerticalDirection: 1
         _warpDistance: 5
         _warpTime: 0.2
