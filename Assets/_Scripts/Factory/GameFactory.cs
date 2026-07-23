@@ -1,4 +1,5 @@
 ﻿using Mirror;
+using System.Collections;
 using UnityEngine;
 
 public class GameFactory : NetworkBehaviour
@@ -58,6 +59,45 @@ public class GameFactory : NetworkBehaviour
         SpawnOnServer(summon.gameObject, owner.gameObject);
 
         return summon;
+    }
+
+    [Server]
+    public void SpawnDecoy(NetworkBehaviour sender, float lifetime, Vector3 position, Quaternion rotation)
+    {
+        string decoyName = $"{sender.name}'s decoy";
+
+        var decoy = new GameObject(decoyName);
+        decoy.AddComponent<NetworkIdentity>();
+        decoy.AddComponent<NetworkTransformReliable>();
+        var visuals = new GameObject($"{decoyName} visuals");
+
+        visuals.transform.SetParent(decoy.transform);
+
+        SkinnedMeshRenderer[] sMeshRenderers = sender.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+        if (sMeshRenderers.Length > 0)
+        {
+            foreach (SkinnedMeshRenderer mRend in sMeshRenderers)
+            {
+                Utils.CloneMeshRenderer(mRend, visuals.transform);
+            }
+        }
+
+        visuals.transform.Rotate(gameObject.transform.right, -90f);
+
+        decoy.transform.SetPositionAndRotation(position, rotation);
+        SpawnOnServer(decoy, sender.gameObject);
+        Destroy(decoy, lifetime);
+    }
+
+    [Server]
+    private void Destroy(GameObject gameObject, float lifeTime)
+        => StartCoroutine(DestroyGameObjectRoutine(gameObject, lifeTime));
+
+    private IEnumerator DestroyGameObjectRoutine(GameObject gameObject, float lifeTime)
+    {
+        yield return new WaitForSeconds(lifeTime);
+        NetworkServer.Destroy(gameObject);
     }
 
     [Server]

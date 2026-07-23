@@ -64,13 +64,30 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
 
     private UseAbilityData SetupData(Ability ability)
     {
-        return new UseAbilityData()
-        {
-            UsagePreparationAnimDuration = ability.PreparationAnimation.averageDuration,
-            PreparationAnimationName = ability.PreparationAnimation.name,
-            UsagePreparationTime = ability.UsagePrepareTime,
+        UseAbilityData data = new();
 
-            UsageAnimationName = ability.UsageAnimation.name,
-        };
+        if (ability.PreparationAnimation == null)
+        {
+            data.UsagePreparationTime = 0f;
+            data.UsagePreparationAnimDuration = 0f;
+            data.PreparationAnimationName = string.Empty;
+        }
+        else if (ability.UsageAnimation == null)
+        {
+            data.UsageAnimationName = string.Empty;
+        }
+        else
+        {
+            data = new UseAbilityData()
+            {
+                UsagePreparationAnimDuration = ability.PreparationAnimation.averageDuration,
+                PreparationAnimationName = ability.PreparationAnimation.name,
+                UsagePreparationTime = ability.UsagePrepareTime,
+
+                UsageAnimationName = ability.UsageAnimation.name,
+            };
+        }
+
+        return data;
     }
 }

@@ -100,4 +100,72 @@ public static class Utils
 
         return netObject.gameObject;
     }
+
+    /// <summary>
+    /// Creates a copy of the skeleton in its current pose.
+    /// Returns the cloned root bone and a bone mapping.
+    /// </summary>
+    public static Transform CloneSkeleton(SkinnedMeshRenderer source, Transform parent, out Dictionary<Transform, Transform> boneMap)
+    {
+        boneMap = new Dictionary<Transform, Transform>();
+
+        static Transform CloneRecursive(Transform src, Transform dstParent, Dictionary<Transform, Transform> bones)
+        {
+            var go = new GameObject(src.name);
+            var dst = go.transform;
+
+            dst.SetParent(dstParent, false);
+
+            // Copy current pose
+            dst.SetLocalPositionAndRotation(src.localPosition, src.localRotation);
+            dst.localScale = src.localScale;
+
+            bones[src] = dst;
+
+            foreach (Transform child in src)
+                CloneRecursive(child, dst, bones);
+
+            return dst;
+        }
+
+        Transform clonedRoot = CloneRecursive(source.rootBone, parent, boneMap);
+
+        return clonedRoot;
+    }
+
+    /// <summary>
+    /// Creates a fully functional clone of a SkinnedMeshRenderer.
+    /// </summary>
+    public static SkinnedMeshRenderer CloneMeshRenderer(SkinnedMeshRenderer source, Transform parent)
+    {
+        CloneSkeleton(source, parent, out Dictionary<Transform, Transform> boneMap);
+
+        GameObject go = new GameObject(source.name);
+        go.transform.SetParent(parent, false);
+
+        go.transform.SetLocalPositionAndRotation(source.transform.localPosition, source.transform.localRotation);
+        go.transform.localScale = source.transform.localScale;
+
+        var dst = go.AddComponent<SkinnedMeshRenderer>();
+
+        dst.sharedMesh = source.sharedMesh;
+        dst.sharedMaterials = source.sharedMaterials;
+
+        dst.rootBone = boneMap[source.rootBone];
+
+        Transform[] bones = new Transform[source.bones.Length];
+
+        for (int i = 0; i < bones.Length; i++)
+            bones[i] = boneMap[source.bones[i]];
+
+        dst.bones = bones;
+
+        dst.updateWhenOffscreen = source.updateWhenOffscreen;
+        dst.shadowCastingMode = source.shadowCastingMode;
+        dst.receiveShadows = source.receiveShadows;
+        dst.lightProbeUsage = source.lightProbeUsage;
+        dst.reflectionProbeUsage = source.reflectionProbeUsage;
+
+        return dst;
+    }
 }

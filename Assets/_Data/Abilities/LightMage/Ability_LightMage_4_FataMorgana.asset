@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eedb7db48f6b7c44be8e8c890e9d4ae, type: 3}
+  m_Name: Ability_LightMage_4_FataMorgana
+  m_EditorClassIdentifier: 
+  _ability:
+    rid: 7065201674773332046
+  references:
+    version: 2
+    RefIds:
+    - rid: 7065201674773332046
+      type: {class: DecoySpawnAbility, ns: , asm: Assembly-CSharp}
+      data:
+        <Name>k__BackingField: Fata Morgana
+        <CooldownTime>k__BackingField: 1
+        <PreparationAnimation>k__BackingField: {fileID: 0}
+        <UsageAnimation>k__BackingField: {fileID: 0}
+        <UsagePrepareTime>k__BackingField: 0
+        _decoyAmount: 10
+        _decoyLifetime: 5
+        _spawnPositionSpreadX: 5
+        _spawnPositionSpreadY: 0
+        _spawnPositionSpreadZ: 5
+        _swapWithClone: 1
