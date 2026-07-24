@@ -39,6 +39,11 @@ public abstract class Attack
 
         for (int i = 0; i < Amount; i++)
             OnApply(sender, target);
+
+        if (sender.TryGetComponent(out IAttacker attacker))
+            attacker.PerformAttack();
+
+        Damage.SenderNetId = sender.netId;
     }
 
 

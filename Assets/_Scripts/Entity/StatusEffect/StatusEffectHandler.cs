@@ -28,7 +28,7 @@ public class StatusEffectHandler : NetworkBehaviour
             RemoveEffect(eff);
     }
 
-    public void TryProc(StatusEffect effect, float amount, Entity target)
+    public void TryProc(StatusEffect effect, float amount)
     {
         StatusEffect eff = GetOrAdd(effect);
 
@@ -37,7 +37,7 @@ public class StatusEffectHandler : NetworkBehaviour
 
         if (eff.Accumulate(amount))
         {
-            eff.Proc(target);
+            eff.Proc(this);
 
             if (eff is InstantStatusEffect)
                 RemoveEffect(effect);

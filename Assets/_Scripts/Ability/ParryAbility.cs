@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class ParryAbility : Ability
 {
-    [SerializeReference, SubclassSelector] private ITargetDetector _targetDetector;
+    [SerializeReference, SubclassSelector] private TargetDetector _targetDetector;
 
     [SerializeField, Range(0f, 5f)] private float _parryTime = 0.08f;
     [SerializeField, Range(0f, 10f)] private float _parryRadius = 0.5f;

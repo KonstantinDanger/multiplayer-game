@@ -7,7 +7,7 @@ public abstract class Enemy : Entity
 
     [Header("Enemy Components")]
     [field: SerializeReference, SubclassSelector]
-    public ITargetDetector TargetDetector { get; private set; }
+    public TargetDetector TargetDetector { get; private set; }
 
     [SerializeField] private InterfaceReference<ITargetTrackingMemory> TargetTrackingMemoryRef;
     [SerializeField] private AIBrain _aiBrain;
@@ -24,7 +24,7 @@ public abstract class Enemy : Entity
         base.OnValidate();
 
         if (TargetDetector == null)
-            TargetDetector = new TargetDetector();
+            TargetDetector = new TargetDetectorSphereOverlapper();
 
         if (TargetDetector.Origin == null)
             TargetDetector.Origin = transform;

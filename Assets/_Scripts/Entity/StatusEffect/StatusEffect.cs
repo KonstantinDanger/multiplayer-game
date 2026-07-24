@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mirror;
+using System;
 using UnityEngine;
 
 [Serializable]
@@ -12,7 +13,7 @@ public abstract class StatusEffect
     public float Accumulation => Mathf.Clamp(_accumulation, 0f, _maxAccumulationAmount);
     protected float MaxAccumulationAmount => _maxAccumulationAmount;
 
-    public abstract void Proc(Entity entity);
+    public abstract void Proc(NetworkBehaviour target);
 
     public void Tick(float deltaTime)
     {
@@ -34,10 +35,15 @@ public abstract class StatusEffect
     }
 
     public void Reset()
-        => _maxAccumulationAmount = 0f;
+    {
+        _maxAccumulationAmount = 0f;
+        OnReset();
+    }
 
     protected virtual void OnDecay(float deltaTime, float decaySpeed)
         => _accumulation -= decaySpeed * deltaTime;
+
+    protected virtual void OnReset() { }
 
     public override string ToString()
         => $"Status effect ({GetType()}). Accumulation: [{Accumulation}/{_maxAccumulationAmount}]";

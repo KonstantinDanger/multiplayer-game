@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d1c2d4ae7b15254b87b8890a6bdf798, type: 3}
-  m_Name: New Flee Config
+  m_Name: Config_Flee
   m_EditorClassIdentifier: 
   <ChaoticAngleVariation>k__BackingField: 45
   <SineFrequency>k__BackingField: 1.5

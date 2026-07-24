@@ -27,7 +27,7 @@ public class TargetTrackingMemory : NetworkBehaviour, ITargetTrackingMemory
         StopCoroutine(_forgetTargetRoutine);
     }
 
-    public void Forget()
+    public void ForgetTarget()
         => StartCoroutine(_forgetTargetRoutine);
 
     private IEnumerator ForgetTargetRoutine()
