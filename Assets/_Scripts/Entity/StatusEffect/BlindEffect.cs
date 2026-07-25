@@ -6,16 +6,16 @@ public class BlindEffect : ProlongedStatusEffect
     private NetworkBehaviour _entitysTarget;
     private TargetTrackingMemory _entitysMemory;
 
-    protected override void OnProc(Entity entity)
+    protected override void OnProc(NetworkBehaviour target)
     {
-        if (entity is Player player)
+        if (target is Player player)
         {
             if (player.TryGetComponent(out BlindScreenEffectPlayer blindEffect))
             {
                 blindEffect.Blind(Duration);
             }
         }
-        if (entity.TryGetComponent(out _entitysMemory))
+        if (target.TryGetComponent(out _entitysMemory))
         {
             _entitysTarget = _entitysMemory.Target;
 

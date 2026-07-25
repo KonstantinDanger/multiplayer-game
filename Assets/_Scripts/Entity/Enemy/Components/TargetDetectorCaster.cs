@@ -20,7 +20,7 @@ public class TargetDetectorCaster : TargetDetector
     [SerializeField] private bool _useSphereCast;
     [SerializeField, Range(0f, 5f)] private float _sphereRange;
 
-    public override int DetectAllTargets(GameObject sender, Vector3 origin, Vector3 direction, float detectionRadius, out List<GameObject> targets, bool includeSender = false)
+    public override int DetectAllTargets(GameObject sender, Vector3 origin, Vector3 direction, float detectionRadius, out List<GameObject> targets)
     {
         Ray ray = new Ray(origin, direction);
 
@@ -33,13 +33,24 @@ public class TargetDetectorCaster : TargetDetector
             ? Physics.SphereCastNonAlloc(ray, _sphereRange, results, detectionRadius, layersToDetect, QueryTriggerInteraction.Ignore)
             : Physics.RaycastNonAlloc(ray, results, detectionRadius, layersToDetect, QueryTriggerInteraction.Ignore);
 
+        if (resultCount == 0)
+        {
+            targets = new();
+            return 0;
+        }
+
         if (!includeSender && sender == results.FirstOrDefault().collider.gameObject)
         {
             Array.Copy(results, 0, results, 0, resultCount);
             resultCount--;
         }
 
-        targets = new(results.Select(hit => hit.collider.gameObject));
+        if (resultCount > 0)
+            targets = new(results
+                .Where(hit => hit.collider != null)
+                .Select(hit => hit.collider.gameObject));
+        else
+            targets = new();
 
         return resultCount;
     }

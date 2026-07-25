@@ -4,14 +4,18 @@ using System.Collections;
 using UnityEngine;
 
 [Serializable]
-public class MeleeAttack : Attack
+public class DefaultAttack : Attack
 {
-    [SerializeField, Range(0.1f, 5)] private float _attackSplashRadius;
-
-    private readonly Collider[] _targets = new Collider[8];
-
     protected override IEnumerator OnApply(NetworkBehaviour sender, GameObject target)
     {
+        if (target == null)
+            yield break;
+
+        if (!target.TryGetComponent(out IDamageable damageable))
+            yield break;
+
+        damageable.TakeDamage(Damage);
+
         //#if UNITY_EDITOR
         //        Utils.StartSplashDamageView(_attackSplashRadius, attackPosition);
         //#endif

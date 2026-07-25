@@ -10,7 +10,7 @@ public class TargetDetectorSphereOverlapper : TargetDetector
 
     private readonly Collider[] _targets = new Collider[16];
 
-    public override int DetectAllTargets(GameObject sender, Vector3 origin, Vector3 direction, float detectionRadius, out List<GameObject> targets, bool includeSender = false)
+    public override int DetectAllTargets(GameObject sender, Vector3 origin, Vector3 direction, float detectionRadius, out List<GameObject> targets)
     {
         int targetCount = Physics.OverlapSphereNonAlloc(origin, detectionRadius, _targets, layersToDetect);
         targets = new();
@@ -22,7 +22,7 @@ public class TargetDetectorSphereOverlapper : TargetDetector
             if (!includeSender && currentObject == sender)
                 continue;
 
-            if (!_ignoreFieldOfView && !IsInFieldOfView(currentObject, _fieldOfViewAngle))
+            if (!_ignoreFieldOfView && !IsInFieldOfView(currentObject, origin, direction, _fieldOfViewAngle))
                 continue;
 
             targets.Add(currentObject);
@@ -31,10 +31,10 @@ public class TargetDetectorSphereOverlapper : TargetDetector
         return targets.Count;
     }
 
-    public bool IsInFieldOfView(GameObject target, float fovAngle)
+    public bool IsInFieldOfView(GameObject target, Vector3 origin, Vector3 direction, float fovAngle)
     {
-        Vector3 dirToTarget = (target.transform.position - Origin.position).normalized;
-        float angle = Vector3.Angle(Origin.forward, dirToTarget);
+        Vector3 dirToTarget = (target.transform.position - origin).normalized;
+        float angle = Vector3.Angle(direction, dirToTarget);
         return angle <= fovAngle / 2f;
     }
 }

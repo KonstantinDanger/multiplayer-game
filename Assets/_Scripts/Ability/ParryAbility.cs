@@ -1,5 +1,7 @@
 ﻿using Mirror;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
@@ -9,7 +11,6 @@ public class ParryAbility : Ability
 
     [SerializeField, Range(0f, 5f)] private float _parryTime = 0.08f;
     [SerializeField, Range(0f, 10f)] private float _parryRadius = 0.5f;
-    [SerializeField, Range(0f, 720f)] private float _parryAngle = 360;
 
     protected override IEnumerator OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
     {
@@ -40,9 +41,12 @@ public class ParryAbility : Ability
 
     private bool Parry(NetworkBehaviour sender)
     {
-        _targetDetector.Origin = GetDetectionOriginFrom(sender);
+        Vector3 origin = GetDetectionOriginFrom(sender).position;
+        Vector3 direction = sender.GetComponent<IRotatable>().Forward;
 
-        var parryTarget = _targetDetector.DetectNearestTarget(_parryRadius, _parryAngle);
+        _targetDetector.DetectAllTargets(sender.gameObject, origin, direction, _parryRadius, out List<GameObject> targets);
+
+        var parryTarget = targets.SortByDistance(sender.gameObject).FirstOrDefault();
 
         if (parryTarget == null || sender == null)
             return false;

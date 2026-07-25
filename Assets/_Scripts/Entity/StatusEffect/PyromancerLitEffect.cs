@@ -1,4 +1,5 @@
-﻿using Mono.CecilX;
+﻿using Mirror;
+using Mono.CecilX;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,7 @@ public class PyromancerLitEffect : ProlongedStatusEffect
     [SerializeField, Range(0f, 500f)] private float _damagePercentBuff = 15f;
     [SerializeField] private List<TypeReference/*Type of AttackAbility*/> _buffableAbilities;
 
-    protected override void OnProc(Entity entity)
+    protected override void OnProc(NetworkBehaviour target)
     {
         //cache entity
     }

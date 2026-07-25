@@ -156,9 +156,7 @@ public class Player : Entity
         {
             var handler = GetComponent<StatusEffectHandler>();
 
-            handler
-                .TryProc(_statusEffectForTesting
-                .GetNew(), 10, this);
+            handler.TryProc(_statusEffectForTesting.GetNew(), 10);
 
             //UnityEngine.Debug.Log(handler);
 

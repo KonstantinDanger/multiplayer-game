@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mirror;
+using System;
 using UnityEngine;
 
 [Serializable]
@@ -9,17 +10,17 @@ public abstract class ProlongedStatusEffect : StatusEffect
     private float _expirationTime;
     public bool Active => Time.time < _expirationTime && Accumulation > 0f;
 
-    public sealed override void Proc(Entity entity)
+    public sealed override void Proc(NetworkBehaviour target)
     {
         if (Active)
             return;
 
         _expirationTime = Time.time + Duration;
 
-        OnProc(entity);
+        OnProc(target);
     }
 
-    protected abstract void OnProc(Entity entity);
+    protected abstract void OnProc(NetworkBehaviour target);
 
     protected sealed override void OnDecay(float deltaTime, float decaySpeed)
     {

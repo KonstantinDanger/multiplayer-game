@@ -15,8 +15,22 @@ MonoBehaviour:
   <CurrencyDrop>k__BackingField: 10000
   <IsNeutral>k__BackingField: 0
   <TargetDetectionConfig>k__BackingField: {fileID: 11400000, guid: 8104fd2cada7a1f45af32fa586a2348c, type: 2}
+  _targetDetector:
+    rid: 7065201713519525975
   _aiActions:
   - {fileID: 11400000, guid: 9944aadf376d07f4daa81f6b405f0ccd, type: 2}
   - {fileID: 11400000, guid: 83f9bdbc27cc4ac47bbb48cd9ac05b1c, type: 2}
   - {fileID: 11400000, guid: eaec4432d8489504eb15b77b7d0d8b75, type: 2}
   - {fileID: 11400000, guid: 93c985695376df04fa0ee34b5078d362, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 7065201713519525975
+      type: {class: TargetDetectorSphereOverlapper, ns: , asm: Assembly-CSharp}
+      data:
+        layersToDetect:
+          serializedVersion: 2
+          m_Bits: 896
+        includeSender: 0
+        _fieldOfViewAngle: 0
+        _ignoreFieldOfView: 1

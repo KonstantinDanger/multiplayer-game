@@ -1,4 +1,6 @@
 ﻿using AYellowpaper;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public abstract class Enemy : Entity
@@ -6,8 +8,6 @@ public abstract class Enemy : Entity
     [SerializeField] private EnemyConfig _enemyConfig;
 
     [Header("Enemy Components")]
-    [field: SerializeReference, SubclassSelector]
-    public TargetDetector TargetDetector { get; private set; }
 
     [SerializeField] private InterfaceReference<ITargetTrackingMemory> TargetTrackingMemoryRef;
     [SerializeField] private AIBrain _aiBrain;
@@ -15,6 +15,7 @@ public abstract class Enemy : Entity
     public EnemyConfig Config => _enemyConfig;
     public TargetDetectionConfig DetectionConfig => _enemyConfig.TargetDetectionConfig;
 
+    private TargetDetector _targetDetector;
     protected ITargetTrackingMemory TargetTrackingMemory => TargetTrackingMemoryRef.Value;
 
     protected float DetectionTimer;
@@ -23,11 +24,10 @@ public abstract class Enemy : Entity
     {
         base.OnValidate();
 
-        if (TargetDetector == null)
-            TargetDetector = new TargetDetectorSphereOverlapper();
+        _targetDetector = _enemyConfig.GetNewTargetDetector();
 
-        if (TargetDetector.Origin == null)
-            TargetDetector.Origin = transform;
+        if (_targetDetector == null)
+            _targetDetector = new TargetDetectorSphereOverlapper();
 
         if (TargetTrackingMemory == null)
             TargetTrackingMemoryRef.Value = GetComponent<ITargetTrackingMemory>();
@@ -60,7 +60,9 @@ public abstract class Enemy : Entity
         if (TargetTrackingMemory.Target)
             return;
 
-        GameObject nearest = TargetDetector.DetectNearestTarget(DetectionConfig.DetectionRadius, DetectionConfig.FieldOfViewAngle);
+        _targetDetector.DetectAllTargets(gameObject, GetComponent<IAttacker>().AttackPoint.position, Rotatable.Forward, DetectionConfig.DetectionRadius, out List<GameObject> targets);
+
+        GameObject nearest = targets.SortByDistance(gameObject).FirstOrDefault();
 
         if (nearest == null)
             return;
