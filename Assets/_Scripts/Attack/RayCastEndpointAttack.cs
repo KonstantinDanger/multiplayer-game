@@ -9,7 +9,7 @@ public class RayCastEndpointAttack : Attack
     [SerializeField] private ParticleSystem _particlePrefab;
     [SerializeReference, SubclassSelector] private Attack _attack;
 
-    protected override void OnApply(NetworkBehaviour sender, NetworkBehaviour target)
+    protected override IEnumerator OnApply(NetworkBehaviour sender, GameObject target)
     {
         var attacker = sender.GetComponentInChildren<IAttacker>();
         var rotatable = sender.GetComponent<IRotatable>();
@@ -27,7 +27,7 @@ public class RayCastEndpointAttack : Attack
             endPos = startPosition + direction * Damage.Range;
         }
 
-        _attack.Apply(sender, target);
+        yield return _attack.Apply(sender);
         sender.StartCoroutine(SpawnParticles(_particlePrefab, endPos));
     }
 

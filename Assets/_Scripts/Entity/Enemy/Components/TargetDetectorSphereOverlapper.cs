@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 [Serializable]
@@ -11,15 +10,12 @@ public class TargetDetectorSphereOverlapper : TargetDetector
 
     private readonly Collider[] _targets = new Collider[16];
 
-    public override GameObject DetectNearestTarget(GameObject sender, Vector3 origin, Vector3 direction, float detectionRadius, bool includeSender = false)
-        => DetectAllTargets(sender, origin, direction, detectionRadius, includeSender).FirstOrDefault();
-
-    public override IEnumerable<GameObject> DetectAllTargets(GameObject sender, Vector3 origin, Vector3 direction, float detectionRadius, bool includeSender = false)
+    public override int DetectAllTargets(GameObject sender, Vector3 origin, Vector3 direction, float detectionRadius, out List<GameObject> targets, bool includeSender = false)
     {
-        int targets = Physics.OverlapSphereNonAlloc(origin, detectionRadius, _targets, layersToDetect);
-        List<GameObject> entities = new();
+        int targetCount = Physics.OverlapSphereNonAlloc(origin, detectionRadius, _targets, layersToDetect);
+        targets = new();
 
-        for (int i = 0; i < targets; i++)
+        for (int i = 0; i < targetCount; i++)
         {
             GameObject currentObject = _targets[i].gameObject;
 
@@ -29,10 +25,10 @@ public class TargetDetectorSphereOverlapper : TargetDetector
             if (!_ignoreFieldOfView && !IsInFieldOfView(currentObject, _fieldOfViewAngle))
                 continue;
 
-            entities.Add(currentObject);
+            targets.Add(currentObject);
         }
 
-        return entities;
+        return targets.Count;
     }
 
     public bool IsInFieldOfView(GameObject target, float fovAngle)

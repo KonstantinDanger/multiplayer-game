@@ -20,33 +20,28 @@ public class TargetDetectorCaster : TargetDetector
     [SerializeField] private bool _useSphereCast;
     [SerializeField, Range(0f, 5f)] private float _sphereRange;
 
-    public override IEnumerable<GameObject> DetectAllTargets(GameObject sender, Vector3 origin, Vector3 direction, float detectionRadius, bool includeSender = false)
-        => DoCast(sender, new Ray(origin, direction), detectionRadius, includeSender);
-
-    public override GameObject DetectNearestTarget(GameObject sender, Vector3 origin, Vector3 direction, float detectionRadius, bool includeSender = false)
-        => DetectAllTargets(sender, origin, direction, detectionRadius, includeSender).FirstOrDefault();
-
-    private IEnumerable<GameObject> DoCast(GameObject sender, Ray ray, float range, bool includeSender)
+    public override int DetectAllTargets(GameObject sender, Vector3 origin, Vector3 direction, float detectionRadius, out List<GameObject> targets, bool includeSender = false)
     {
+        Ray ray = new Ray(origin, direction);
+
         ray.direction = CalculateSpreadDirection(ray.direction);
 
         RaycastHit[] results = new RaycastHit[MaxTargetHits];
-        int targetResults;
+        int resultCount;
 
-        targetResults = _useSphereCast
-            ? Physics.SphereCastNonAlloc(ray, _sphereRange, results, range, layersToDetect, QueryTriggerInteraction.Ignore)
-            : Physics.RaycastNonAlloc(ray, results, range, layersToDetect, QueryTriggerInteraction.Ignore);
+        resultCount = _useSphereCast
+            ? Physics.SphereCastNonAlloc(ray, _sphereRange, results, detectionRadius, layersToDetect, QueryTriggerInteraction.Ignore)
+            : Physics.RaycastNonAlloc(ray, results, detectionRadius, layersToDetect, QueryTriggerInteraction.Ignore);
 
         if (!includeSender && sender == results.FirstOrDefault().collider.gameObject)
         {
-            Array.Copy(results, 0, results, 0, targetResults);
-            targetResults--;
+            Array.Copy(results, 0, results, 0, resultCount);
+            resultCount--;
         }
 
-        if (targetResults > 1)
-            Array.Sort(results, 0, targetResults, Comparer<RaycastHit>.Create((a, b) => a.distance.CompareTo(b.distance)));
+        targets = new(results.Select(hit => hit.collider.gameObject));
 
-        return results.Select(hit => hit.collider.gameObject);
+        return resultCount;
     }
 
     private Vector3 CalculateSpreadDirection(Vector3 direction)

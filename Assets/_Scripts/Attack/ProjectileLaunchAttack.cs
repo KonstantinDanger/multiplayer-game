@@ -1,5 +1,6 @@
 ﻿using Mirror;
 using System;
+using System.Collections;
 using UnityEngine;
 
 [Serializable]
@@ -15,7 +16,7 @@ public class ProjectileLaunchAttack : Attack
     private float _scaleMultiplier = 1f;
     private float _damageMultiplier = 1f;
 
-    protected override void OnApply(NetworkBehaviour sender, NetworkBehaviour target)
+    protected override IEnumerator OnApply(NetworkBehaviour sender, GameObject target)
     {
         _factory = ServiceLocator.Container.Resolve<GameFactory>();
 
@@ -46,6 +47,8 @@ public class ProjectileLaunchAttack : Attack
             Quaternion.LookRotation(rotatable.Forward),
             _scaleMultiplier,
             null);
+
+        yield return null;
     }
 }
 

@@ -1,6 +1,7 @@
 ﻿using Mirror;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -10,49 +11,55 @@ public abstract class Attack
     [SerializeField, Range(0, 5)] protected float TimeBetweenAttacks = 0;
     [SerializeField] public Damage Damage;
 
+    [Header("Target detection")]
+    [SerializeReference, SubclassSelector] private TargetDetector _targetDetector;
+
     private bool _inProcess;
     public bool InProcess => _inProcess;
     public float AttackRange => Damage.Range;
     public float TimeBetweenAttack => TimeBetweenAttacks;
 
-    public void Apply(NetworkBehaviour sender, NetworkBehaviour target)
+    public IEnumerator Apply(NetworkBehaviour sender)
     {
         if (_inProcess)
-            return;
+            yield break;
 
         if (sender != null)
             Damage.SenderNetId = sender.netId;
 
-        if (target != null)
-            Damage.ReceiverNetId = target.netId;
-
         if (sender.TryGetComponent(out Entity entity))
             Damage.TeamId = entity.TeamId;
 
-        var coroutineHolder = ServiceLocator.Container.Resolve<CoroutineHolder>();
+        sender.TryGetComponent(out IAttacker attacker);
+        sender.TryGetComponent(out IRotatable rotatable);
+
+        _targetDetector.DetectAllTargets(
+            sender.gameObject,
+            attacker.AttackPoint.position,
+            rotatable.Forward,
+            Damage.Range,
+            out List<GameObject> targets);
 
         if (RequireAlternatingAttacks())
         {
-            coroutineHolder.StartCoroutine(AlternateAttacksRoutine(sender, target));
-            return;
+            yield return AlternateAttacksRoutine(sender, targets);
         }
 
         for (int i = 0; i < Amount; i++)
-            OnApply(sender, target);
-
-        if (sender.TryGetComponent(out IAttacker attacker))
-            attacker.PerformAttack();
-
-        Damage.SenderNetId = sender.netId;
+        {
+            for (int j = 0; j < targets.Count; j++)
+            {
+                yield return OnApply(sender, targets[j]);
+            }
+        }
     }
 
-
-    protected abstract void OnApply(NetworkBehaviour sender, NetworkBehaviour target);
+    protected abstract IEnumerator OnApply(NetworkBehaviour sender, GameObject target);
 
     private bool RequireAlternatingAttacks()
         => Amount > 1 && TimeBetweenAttacks > 0f;
 
-    private IEnumerator AlternateAttacksRoutine(NetworkBehaviour sender, NetworkBehaviour target)
+    private IEnumerator AlternateAttacksRoutine(NetworkBehaviour sender, List<GameObject> targets)
     {
         _inProcess = true;
 
@@ -65,7 +72,11 @@ public abstract class Attack
 
             if (elapsedAttackTime >= TimeBetweenAttacks)
             {
-                OnApply(sender, target);
+                for (int j = 0; j < targets.Count; j++)
+                {
+                    yield return OnApply(sender, targets[j]);
+                }
+
                 elapsedAttackTime = 0f;
                 currentAttackNum++;
             }
