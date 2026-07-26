@@ -8,6 +8,8 @@ using UnityEngine;
 public class StatusEffectAbility : Ability
 {
     [SerializeField] private ScriptableStatusEffect _effect;
+    [SerializeField] private bool _procGuarantee;
+    [Header("if proc guarantee option is selected accumulation amount won't be considered")]
     [SerializeField, Range(0f, 10000f)] private float _accumulationAmount;
     [SerializeField, Range(0f, 10000f)] private float _detectionRange;
     [SerializeField] private bool _procOnSelfOnly = true;
@@ -39,6 +41,6 @@ public class StatusEffectAbility : Ability
     private void TryProc(GameObject target, StatusEffect effect)
     {
         if (target.TryGetComponent(out StatusEffectHandler effectsHandler))
-            effectsHandler.TryProc(effect, _accumulationAmount);
+            effectsHandler.TryProc(effect, _procGuarantee ? effect.MaxAccumulationAmount : _accumulationAmount);
     }
 }

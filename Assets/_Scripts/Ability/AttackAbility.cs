@@ -13,9 +13,9 @@ public class AttackAbility : Ability
         if (sender == null)
             yield break;
 
-        //int myLayer = sender.gameObject.layer;
-        //LayerMask attackMask = _attack.Damage.AttackLayers & ~(1 << myLayer);
-        //_attack.Damage.AttackLayers = attackMask;
+        if (_attack.InProcess)
+            yield break;
+
         yield return _attack.Apply(sender);
 
         if (sender.TryGetComponent(out IAttacker attacker))

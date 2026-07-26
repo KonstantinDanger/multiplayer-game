@@ -20,6 +20,6 @@ MonoBehaviour:
     - rid: 7065201690031423569
       type: {class: BlindEffect, ns: , asm: Assembly-CSharp}
       data:
-        _maxAccumulationAmount: 0
-        _decaySpeed: 0
+        _maxAccumulationAmount: 100
+        _decaySpeed: 5
         <Duration>k__BackingField: 5

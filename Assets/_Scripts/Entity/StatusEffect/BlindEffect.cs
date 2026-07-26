@@ -1,4 +1,5 @@
 ﻿using Mirror;
+using UnityEngine;
 
 [System.Serializable]
 public class BlindEffect : ProlongedStatusEffect
@@ -6,9 +7,9 @@ public class BlindEffect : ProlongedStatusEffect
     private NetworkBehaviour _entitysTarget;
     private TargetTrackingMemory _entitysMemory;
 
-    protected override void OnProc(NetworkBehaviour target)
+    protected override void OnProc(GameObject target)
     {
-        if (target is Player player)
+        if (target.TryGetComponent(out Player player))
         {
             if (player.TryGetComponent(out BlindScreenEffectPlayer blindEffect))
             {

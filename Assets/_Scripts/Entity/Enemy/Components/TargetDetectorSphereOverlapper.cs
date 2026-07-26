@@ -5,10 +5,12 @@ using UnityEngine;
 [Serializable]
 public class TargetDetectorSphereOverlapper : TargetDetector
 {
+    private const int MaxTargetCount = 128;
+
     [SerializeField, Range(0f, 360f)] private float _fieldOfViewAngle;
     [SerializeField] private bool _ignoreFieldOfView;
 
-    private readonly Collider[] _targets = new Collider[16];
+    private readonly Collider[] _targets = new Collider[MaxTargetCount];
 
     public override int DetectAllTargets(GameObject sender, Vector3 origin, Vector3 direction, float detectionRadius, out List<GameObject> targets)
     {

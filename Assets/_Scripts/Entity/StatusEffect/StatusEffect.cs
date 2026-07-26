@@ -1,5 +1,4 @@
-﻿using Mirror;
-using System;
+﻿using System;
 using UnityEngine;
 
 [Serializable]
@@ -11,9 +10,9 @@ public abstract class StatusEffect
     private float _accumulation;
 
     public float Accumulation => Mathf.Clamp(_accumulation, 0f, _maxAccumulationAmount);
-    protected float MaxAccumulationAmount => _maxAccumulationAmount;
+    public float MaxAccumulationAmount => _maxAccumulationAmount;
 
-    public abstract void Proc(NetworkBehaviour target);
+    public abstract void Proc(GameObject target);
 
     public void Tick(float deltaTime)
     {

@@ -30,23 +30,15 @@ public abstract class Attack
         if (sender.TryGetComponent(out Entity entity))
             Damage.TeamId = entity.TeamId;
 
-        sender.TryGetComponent(out IAttacker attacker);
-        sender.TryGetComponent(out IRotatable rotatable);
-
-        _targetDetector.DetectAllTargets(
-            sender.gameObject,
-            attacker.AttackPoint.position,
-            rotatable.Forward,
-            Damage.Range,
-            out List<GameObject> targets);
-
         if (RequireAlternatingAttacks())
         {
-            yield return AlternateAttacksRoutine(sender, targets);
+            yield return AlternateAttacksRoutine(sender);
         }
 
         for (int i = 0; i < Amount; i++)
         {
+            var targets = FindTargets(sender.gameObject);
+
             for (int j = 0; j < targets.Count; j++)
             {
                 yield return OnApply(sender, targets[j]);
@@ -59,7 +51,22 @@ public abstract class Attack
     private bool RequireAlternatingAttacks()
         => Amount > 1 && TimeBetweenAttacks > 0f;
 
-    private IEnumerator AlternateAttacksRoutine(NetworkBehaviour sender, List<GameObject> targets)
+    private List<GameObject> FindTargets(GameObject sender)
+    {
+        sender.TryGetComponent(out IAttacker attacker);
+        sender.TryGetComponent(out IRotatable rotatable);
+
+        _targetDetector.DetectAllTargets(
+            sender,
+            attacker.AttackPoint.position,
+            rotatable.Forward,
+            Damage.Range,
+            out List<GameObject> targets);
+
+        return targets;
+    }
+
+    private IEnumerator AlternateAttacksRoutine(NetworkBehaviour sender)
     {
         _inProcess = true;
 
@@ -72,6 +79,8 @@ public abstract class Attack
 
             if (elapsedAttackTime >= TimeBetweenAttacks)
             {
+                var targets = FindTargets(sender.gameObject);
+
                 for (int j = 0; j < targets.Count; j++)
                 {
                     yield return OnApply(sender, targets[j]);

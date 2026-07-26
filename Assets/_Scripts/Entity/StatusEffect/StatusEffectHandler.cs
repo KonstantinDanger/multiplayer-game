@@ -1,6 +1,7 @@
 ﻿using Mirror;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -13,7 +14,7 @@ public class StatusEffectHandler : NetworkBehaviour
         if (_effects.Count == 0)
             return;
 
-        foreach (var effect in _effects.Values)
+        foreach (var effect in _effects.Values.ToList())
         {
             effect.Tick(Time.deltaTime);
 
@@ -37,7 +38,7 @@ public class StatusEffectHandler : NetworkBehaviour
 
         if (eff.Accumulate(amount))
         {
-            eff.Proc(this);
+            eff.Proc(gameObject);
 
             if (eff is InstantStatusEffect)
                 RemoveEffect(effect);
@@ -56,10 +57,12 @@ public class StatusEffectHandler : NetworkBehaviour
 
     private void RemoveEffect(StatusEffect effect)
     {
-        if (_effects.TryGetValue(effect.GetType(), out StatusEffect eff))
+        Type type = effect.GetType();
+
+        if (_effects.TryGetValue(type, out StatusEffect eff))
         {
             eff.Reset();
-            _effects.Remove(effect.GetType());
+            _effects.Remove(type);
         }
     }
 

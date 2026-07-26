@@ -21,6 +21,9 @@ public abstract class Ability
     {
         get
         {
+            if (IsPerforming)
+                return 0f;
+
             float elapsedTime = Time.time - (_nextUsageTime - CooldownTime);
 
             return Mathf.Clamp(elapsedTime, 0f, CooldownTime);
@@ -43,7 +46,7 @@ public abstract class Ability
         return true;
     }
 
-    protected virtual bool OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target) => true;
+    protected virtual bool OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target) => !IsPerforming;
 
     protected internal IEnumerator PerformRoutine(NetworkBehaviour sender, NetworkBehaviour target)
     {

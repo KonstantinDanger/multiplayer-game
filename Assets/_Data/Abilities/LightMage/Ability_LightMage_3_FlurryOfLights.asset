@@ -48,8 +48,7 @@ MonoBehaviour:
           serializedVersion: 2
           m_Bits: 896
         includeSender: 0
-        _verticalSpreadAngle: 0.08
-        _horizontalSpreadAngle: 0.08
-        _penetrationCount: 1
+        _verticalSpreadAngle: 5
+        _horizontalSpreadAngle: 5
         _useSphereCast: 0
         _sphereRange: 0

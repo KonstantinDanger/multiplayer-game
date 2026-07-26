@@ -993,7 +993,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f11b7dc5049f0d42aa7a2186d8f7ef8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxExposure: 6
+  _maxExposure: 7
   _exposureCurve:
     serializedVersion: 2
     m_Curve:
@@ -1007,31 +1007,40 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.1
-      value: 0.9
-      inSlope: 0
-      outSlope: 0
+      time: 0.42341056
+      value: 0.88162583
+      inSlope: -0.61510444
+      outSlope: -0.61510444
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.22000456
+      outWeight: 0.219853
     - serializedVersion: 3
-      time: 0.35
-      value: 0.5
-      inSlope: 0
-      outSlope: 0
+      time: 0.8352509
+      value: 0.011197776
+      inSlope: -2.8596315
+      outSlope: -2.8596315
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.17256469
+      outWeight: 0.88668257
     - serializedVersion: 3
-      time: 1
+      time: 0.87581277
+      value: -0.17426395
+      inSlope: 0.0049029295
+      outSlope: 0.0049029295
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 1.001831
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2.2749527
+      outSlope: 2.2749527
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33821008
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

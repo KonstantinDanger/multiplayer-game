@@ -7,13 +7,13 @@ using Random = UnityEngine.Random;
 [Serializable]
 public class TargetDetectorCaster : TargetDetector
 {
-    private const int MaxTargetHits = 64;
+    private const int MaxTargetHits = 128;
 
     [SerializeField, Range(0, 360)] private float _verticalSpreadAngle;
     [SerializeField, Range(0, 360)] private float _horizontalSpreadAngle;
 
-    [Header("Penetration")]
-    [SerializeField, Range(1, 20)] private int _penetrationCount;
+    //[Header("Penetration")]
+    //[SerializeField, Range(1, 20)] private int _penetrationCount = 1;
     //[SerializeField, Range(0, 100)] private float _damageDecayPercentOverPenetration;
 
     [Header("Sphere cast")]
@@ -22,9 +22,7 @@ public class TargetDetectorCaster : TargetDetector
 
     public override int DetectAllTargets(GameObject sender, Vector3 origin, Vector3 direction, float detectionRadius, out List<GameObject> targets)
     {
-        Ray ray = new Ray(origin, direction);
-
-        ray.direction = CalculateSpreadDirection(ray.direction);
+        Ray ray = new Ray(origin, CalculateSpread(direction));
 
         RaycastHit[] results = new RaycastHit[MaxTargetHits];
         int resultCount;
@@ -55,7 +53,7 @@ public class TargetDetectorCaster : TargetDetector
         return resultCount;
     }
 
-    private Vector3 CalculateSpreadDirection(Vector3 direction)
+    private Vector3 CalculateSpread(Vector3 direction)
     {
         float horizontalAngle = Random.Range(-_horizontalSpreadAngle, _horizontalSpreadAngle);
         float verticalAngle = Random.Range(-_verticalSpreadAngle, _verticalSpreadAngle);

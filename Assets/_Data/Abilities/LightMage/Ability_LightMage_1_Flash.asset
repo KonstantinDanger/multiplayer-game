@@ -27,5 +27,5 @@ MonoBehaviour:
         <UsagePrepareTime>k__BackingField: 0
         _directional: 0
         _resetVerticalDirection: 0
-        _warpDistance: 8
-        _warpTime: 0.1
+        _warpDistance: 15
+        _warpTime: 0.2
