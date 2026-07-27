@@ -87,11 +87,11 @@ public class GameFactory : NetworkBehaviour
 
         decoy.transform.SetPositionAndRotation(position, rotation);
         SpawnOnServer(decoy.gameObject, sender.gameObject);
-        Destroy(decoy, lifetime);
+        ServerDestroy(decoy.gameObject, lifetime);
     }
 
     [Server]
-    private void Destroy(GameObject gameObject, float lifeTime)
+    private void ServerDestroy(GameObject gameObject, float lifeTime)
         => StartCoroutine(DestroyGameObjectRoutine(gameObject, lifeTime));
 
     private IEnumerator DestroyGameObjectRoutine(GameObject gameObject, float lifeTime)

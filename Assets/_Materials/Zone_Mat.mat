@@ -113,26 +113,26 @@ Material:
     - _CutHeight: 0.17
     - _CutSmoothness: 0.5
     - _Cutoff: 0
-    - _CutoffHeight: -0.211
-    - _CutoffSmoothness: 0.124
+    - _CutoffHeight: -0.12
+    - _CutoffSmoothness: 0.099
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DistortionStrength: 0.2
+    - _DistortionStrength: 0
     - _DstBlend: 10
     - _DstBlendAlpha: 10
     - _EnvironmentReflections: 1
-    - _FlowSpeed: 0.925
-    - _FresnelIntensity: 0.58
-    - _FresnelPower: 26.88
+    - _FlowSpeed: 2
+    - _FresnelIntensity: 1.08
+    - _FresnelPower: 6.01
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _IntersectionIntensity: 0.41
-    - _IntersectionPower: 5
+    - _IntersectionPower: 1.55
     - _IntersectionThickness: 0.1
     - _Metallic: 0
     - _NoiseIntensity: 0.4
-    - _NoiseScale: 8.62
+    - _NoiseScale: 10
     - _NoiseSpeed: 2.19
     - _NoiseStrength: 1
     - _OcclusionStrength: 1
@@ -146,20 +146,20 @@ Material:
     - _SrcBlendAlpha: 1
     - _Surface: 1
     - _VoronoiScale: 5
-    - _WaveAmplitude: 0.3
-    - _WaveFrequency: 3
-    - _WaveScale: 3.88
-    - _WaveSpeed: 0
+    - _WaveAmplitude: 0.31
+    - _WaveFrequency: 2.71
+    - _WaveScale: 4.38
+    - _WaveSpeed: 1.14
     - _WaveStrength: 0.1
     - _WorkflowMode: 1
     - _ZWrite: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 0, b: 0, a: 0.16862746}
     - _Color: {r: 1, g: 0, b: 0, a: 0.16862746}
-    - _EdgeColor: {r: 1, g: 0.6125001, b: 0, a: 0.8}
+    - _EdgeColor: {r: 1, g: 1, b: 1, a: 0.8}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _IntersectionColor: {r: 0, g: 0.7525759, b: 1, a: 1}
-    - _MainColor: {r: 1, g: 0.5330188, b: 0.5330188, a: 1}
+    - _IntersectionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MainColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 1, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
