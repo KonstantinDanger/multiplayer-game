@@ -5,17 +5,19 @@ using System.Collections.Generic;
 public class AbilityUser : NetworkBehaviour, IAbilityUser
 {
     private readonly List<AbilitySlot> _slots = new();
+    private ParallelAbilityExecutionMatrix _executionMatrix;
 
     public IReadOnlyList<AbilitySlot> Slots => _slots;
 
     public event Action<UseAbilityData> OnAbilityStartUsing;
 
-    public void Initialize(List<Ability> abilities)
+    public void Initialize(List<Ability> abilities, ParallelAbilityExecutionMatrix executionMatrix)
     {
         if (_slots.Count > 0)
             _slots.Clear();
 
         abilities.ForEach(ability => Add(ability));
+        _executionMatrix = executionMatrix;
     }
 
     public void OnUpdate()
@@ -56,10 +58,32 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
         if (selectedSlot == null)
             return null;
 
+        if (IsAnyAbilityPerforming(out Ability performingOne))
+        {
+            if (!_executionMatrix.CanParallelExecute(performingOne, selectedSlot.Ability))
+                return null;
+        }
+
         if (selectedSlot.Use(this, target))
             OnAbilityStartUsing.Invoke(SetupData(selectedSlot.Ability));
 
         return selectedSlot.Ability;
+    }
+
+    private bool IsAnyAbilityPerforming(out Ability performingOne)
+    {
+        performingOne = null;
+
+        foreach (var slot in _slots)
+        {
+            if (slot.Ability.IsPerforming)
+            {
+                performingOne = slot.Ability;
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private UseAbilityData SetupData(Ability ability)

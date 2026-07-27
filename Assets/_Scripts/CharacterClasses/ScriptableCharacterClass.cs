@@ -7,6 +7,7 @@ public class ScriptableCharacterClass : ScriptableObject
 {
     [field: SerializeField] public string ClassName { get; private set; }
     [field: SerializeField] public Sprite PreviewSprite { get; private set; }
+    [field: SerializeField] public ParallelAbilityExecutionMatrix AbilityExecutionMatrix { get; private set; }
 
     [SerializeField] private List<ScriptableAbility> _abilities = new();
 

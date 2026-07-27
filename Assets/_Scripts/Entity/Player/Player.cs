@@ -284,7 +284,8 @@ public class Player : Entity
         _abilities.Initialize(CharacterClass
             .GetNew()
             .Abilities
-            .ToList());
+            .ToList(),
+            @class.AbilityExecutionMatrix);
     }
 
     private void HandleInteraction()

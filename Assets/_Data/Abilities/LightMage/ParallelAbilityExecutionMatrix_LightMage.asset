@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91149951e6a534b4f939a4b91764bc08, type: 3}
-  m_Name: CharacterClass_LightMage
+  m_Script: {fileID: 11500000, guid: 9d885fd9e15c0884cb518fcb67a0f11b, type: 3}
+  m_Name: ParallelAbilityExecutionMatrix_LightMage
   m_EditorClassIdentifier: 
-  <ClassName>k__BackingField: Light mage
-  <PreviewSprite>k__BackingField: {fileID: 21300000, guid: 9da05197933a4224fa21ecbdb6947579, type: 3}
-  <AbilityExecutionMatrix>k__BackingField: {fileID: 11400000, guid: b2d31f910e629bf4e9f06d4856fc9dca, type: 2}
   _abilities:
   - {fileID: 11400000, guid: 69d27dc5081091741880e54f069640da, type: 2}
   - {fileID: 11400000, guid: 82798b1bc7d42134782d0561d4639e51, type: 2}
   - {fileID: 11400000, guid: 0f23177815711eb47ab6954a8ea221fc, type: 2}
   - {fileID: 11400000, guid: bb84605409aa4074f896411841281a3a, type: 2}
   - {fileID: 11400000, guid: 4f1fe4502ee38364789c1e1b78645a7a, type: 2}
+  - {fileID: 11400000, guid: deca4cc698d7f7e4dbad7e576bce46df, type: 2}
+  _transitions:
+    values: 000000000000000000010101000000000000000100000100000000000000000000000000

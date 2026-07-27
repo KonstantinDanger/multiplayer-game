@@ -127,9 +127,9 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _IntersectionIntensity: 0.41
-    - _IntersectionPower: 1.55
-    - _IntersectionThickness: 0.1
+    - _IntersectionIntensity: 0.73
+    - _IntersectionPower: 2.54
+    - _IntersectionThickness: 0.28
     - _Metallic: 0
     - _NoiseIntensity: 0.4
     - _NoiseScale: 10
@@ -149,7 +149,7 @@ Material:
     - _WaveAmplitude: 0.31
     - _WaveFrequency: 2.71
     - _WaveScale: 4.38
-    - _WaveSpeed: 1.14
+    - _WaveSpeed: 0.36
     - _WaveStrength: 0.1
     - _WorkflowMode: 1
     - _ZWrite: 0
