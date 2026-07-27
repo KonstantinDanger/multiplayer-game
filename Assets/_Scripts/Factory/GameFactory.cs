@@ -66,11 +66,11 @@ public class GameFactory : NetworkBehaviour
     {
         string decoyName = $"{sender.name}'s decoy";
 
-        var decoy = new GameObject(decoyName);
-        decoy.AddComponent<NetworkIdentity>();
-        decoy.AddComponent<NetworkTransformReliable>();
-        var visuals = new GameObject($"{decoyName} visuals");
+        var decoy = Instantiate(Utils.GetEmptyNetGameObjectPrefab());
+        decoy.name = decoyName;
 
+        var visuals = Instantiate(Utils.GetEmptyNetGameObjectPrefab());
+        visuals.name = $"{decoyName} visuals";
         visuals.transform.SetParent(decoy.transform);
 
         SkinnedMeshRenderer[] sMeshRenderers = sender.GetComponentsInChildren<SkinnedMeshRenderer>();
@@ -86,7 +86,7 @@ public class GameFactory : NetworkBehaviour
         visuals.transform.Rotate(gameObject.transform.right, -90f);
 
         decoy.transform.SetPositionAndRotation(position, rotation);
-        SpawnOnServer(decoy, sender.gameObject);
+        SpawnOnServer(decoy.gameObject, sender.gameObject);
         Destroy(decoy, lifetime);
     }
 

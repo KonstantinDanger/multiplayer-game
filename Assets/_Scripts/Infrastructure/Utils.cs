@@ -5,6 +5,9 @@ using UnityEngine;
 
 public static class Utils
 {
+    public static NetworkBehaviour GetEmptyNetGameObjectPrefab()
+        => Resources.Load<EmptyNetworkGameObject>("Prefabs/EmptyNetworkGameObject");
+
     public static void StartSplashDamageView(float splashRadius, Vector3 position)
     {
         var viewPrefab = Resources.Load<SplashDamageView>("Prefabs/SplashDamageView");
