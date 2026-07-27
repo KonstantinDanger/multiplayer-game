@@ -16,7 +16,7 @@ MonoBehaviour:
   <PreviewSprite>k__BackingField: {fileID: 21300000, guid: 9da05197933a4224fa21ecbdb6947579, type: 3}
   <AbilityExecutionMatrix>k__BackingField: {fileID: 11400000, guid: b2d31f910e629bf4e9f06d4856fc9dca, type: 2}
   _abilities:
-  - {fileID: 11400000, guid: 69d27dc5081091741880e54f069640da, type: 2}
+  - {fileID: 11400000, guid: e341ffd0a93cfb84fa92897b9ae7ddd9, type: 2}
   - {fileID: 11400000, guid: 82798b1bc7d42134782d0561d4639e51, type: 2}
   - {fileID: 11400000, guid: 0f23177815711eb47ab6954a8ea221fc, type: 2}
   - {fileID: 11400000, guid: bb84605409aa4074f896411841281a3a, type: 2}

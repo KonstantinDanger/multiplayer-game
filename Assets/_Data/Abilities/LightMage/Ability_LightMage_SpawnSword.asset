@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eedb7db48f6b7c44be8e8c890e9d4ae, type: 3}
+  m_Name: Ability_LightMage_SpawnSword
+  m_EditorClassIdentifier: 
+  _ability:
+    rid: 7065201759134941295
+  references:
+    version: 2
+    RefIds:
+    - rid: 7065201759134941295
+      type: {class: WeaponSpawnAbility, ns: , asm: Assembly-CSharp}
+      data:
+        <Name>k__BackingField: Light Ray
+        <CooldownTime>k__BackingField: 0.65
+        <PreparationAnimation>k__BackingField: {fileID: -203655887218126122, guid: 36d64a78e9396394f88fc98e43314f79, type: 3}
+        <UsageAnimation>k__BackingField: {fileID: -203655887218126122, guid: 36d64a78e9396394f88fc98e43314f79, type: 3}
+        <UsagePrepareTime>k__BackingField: 0
+        _weapon: {fileID: 11400000, guid: ef95814ac64f1c7469d9fc6211f33297, type: 2}
+        _spawnTime: 2

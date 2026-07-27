@@ -32,7 +32,7 @@ public class DamageTakenEffect : MonoBehaviour
     [Range(0f, 1f)]
     public float fadeAlpha = 0.2f;
 
-    [Header("Material Swap Settings (if mode = MaterialSwap)")]
+    [Header("Materials Swap Settings (if mode = MaterialSwap)")]
     public Material hitMaterial;
 
     [Header("Renderers")]
