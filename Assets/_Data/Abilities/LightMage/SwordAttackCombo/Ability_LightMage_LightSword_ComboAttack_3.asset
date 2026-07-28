@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4eedb7db48f6b7c44be8e8c890e9d4ae, type: 3}
-  m_Name: Ability_LightMage_Sword_ComboAttack_2
+  m_Name: Ability_LightMage_LightSword_ComboAttack_3
   m_EditorClassIdentifier: 
   _ability:
     rid: 7065201759134941297
@@ -20,10 +20,10 @@ MonoBehaviour:
     - rid: 7065201759134941297
       type: {class: AttackAbility, ns: , asm: Assembly-CSharp}
       data:
-        <Name>k__BackingField: 
+        <Name>k__BackingField: Light sword attack 3
         <CooldownTime>k__BackingField: 0
         <PreparationAnimation>k__BackingField: {fileID: 0}
-        <UsageAnimation>k__BackingField: {fileID: 0}
+        <UsageAnimation>k__BackingField: {fileID: -203655887218126122, guid: 136b1c96118f8624fa7b6ad07db66723, type: 3}
         <UsagePrepareTime>k__BackingField: 0.2
         _attack:
           rid: 7065201759134941298
@@ -33,7 +33,7 @@ MonoBehaviour:
         Amount: 1
         TimeBetweenAttacks: 0
         Damage:
-          Amount: 14
+          Amount: 18
           Type: 0
           Range: 1
           SenderNetId: 0

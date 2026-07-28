@@ -10,6 +10,7 @@ public class MovementAnimations : NetworkBehaviour
     [SerializeField] private MovementConfig _config;
     [SerializeField] private float _rotationSmoothness = 0.03f;
     [SerializeField] private float _speedDeadZoneThreshold = 0.1f;
+    [SerializeField] private float _movementSmoothness = 0.1f;
 
     [SerializeField] private bool _serverSide = true;
 
@@ -94,7 +95,7 @@ public class MovementAnimations : NetworkBehaviour
             _horizontalVelocity = 0f;
         }
 
-        _anim.SetFloat(_verticalInputParamName, _verticalVelocity);
-        _anim.SetFloat(_horizontalInputParamName, _horizontalVelocity);
+        _anim.SetFloat(_verticalInputParamName, _verticalVelocity, _movementSmoothness, Time.deltaTime);
+        _anim.SetFloat(_horizontalInputParamName, _horizontalVelocity, _movementSmoothness, Time.deltaTime);
     }
 }

@@ -12,6 +12,9 @@ public class ParallelAbilityExecutionMatrix : ScriptableObject
         if (current == null || next == null)
             return false;
 
+        if (current == next)
+            return true;
+
         int currentIndex = GetIndexOf(current);
         int nextIndex = GetIndexOf(next);
 

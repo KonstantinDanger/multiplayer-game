@@ -4,6 +4,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum AbilityRequestStatus
+{
+    Success, InterruptWithSuccess, Deny
+}
+
 [Serializable]
 public abstract class Ability
 {
@@ -36,7 +41,20 @@ public abstract class Ability
             return false;
 
         if (IsPerforming)
-            return OnPerformRequested(sender, target);
+        {
+            //return OnPerformRequested(sender, target);
+            switch (OnPerformRequested(sender, target))
+            {
+                case AbilityRequestStatus.Success:
+                    break;
+
+                case AbilityRequestStatus.InterruptWithSuccess:
+                    return true;
+
+                case AbilityRequestStatus.Deny:
+                    return false;
+            }
+        }
 
         IsPerforming = true;
 
@@ -46,7 +64,8 @@ public abstract class Ability
         return true;
     }
 
-    protected virtual bool OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target) => !IsPerforming;
+    protected virtual AbilityRequestStatus OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target)
+        => IsPerforming ? AbilityRequestStatus.Deny : AbilityRequestStatus.Success;
 
     protected internal IEnumerator PerformRoutine(NetworkBehaviour sender, NetworkBehaviour target)
     {

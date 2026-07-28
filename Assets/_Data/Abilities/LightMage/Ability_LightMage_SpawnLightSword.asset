@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4eedb7db48f6b7c44be8e8c890e9d4ae, type: 3}
-  m_Name: Ability_LightMage_SpawnSword
+  m_Name: Ability_LightMage_SpawnLightSword
   m_EditorClassIdentifier: 
   _ability:
     rid: 7065201759134941295
@@ -23,7 +23,7 @@ MonoBehaviour:
         <Name>k__BackingField: Light Ray
         <CooldownTime>k__BackingField: 0.65
         <PreparationAnimation>k__BackingField: {fileID: -203655887218126122, guid: 36d64a78e9396394f88fc98e43314f79, type: 3}
-        <UsageAnimation>k__BackingField: {fileID: -203655887218126122, guid: 36d64a78e9396394f88fc98e43314f79, type: 3}
+        <UsageAnimation>k__BackingField: {fileID: 4061839508520268033, guid: 36d64a78e9396394f88fc98e43314f79, type: 3}
         <UsagePrepareTime>k__BackingField: 0
         _weapon: {fileID: 11400000, guid: ef95814ac64f1c7469d9fc6211f33297, type: 2}
         _spawnTime: 2

@@ -21,13 +21,13 @@ MonoBehaviour:
       type: {class: ComboAbility, ns: , asm: Assembly-CSharp}
       data:
         <Name>k__BackingField: Light sword combo
-        <CooldownTime>k__BackingField: 0.65
+        <CooldownTime>k__BackingField: 1
         <PreparationAnimation>k__BackingField: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
         <UsageAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
         <UsagePrepareTime>k__BackingField: 0
         _scriptableAbilities:
         - {fileID: 11400000, guid: acc641fb9d6d1724883d1e992ead30c7, type: 2}
         - {fileID: 11400000, guid: 4b902449419aff04ea41f08bf5bfd028, type: 2}
-        - {fileID: 11400000, guid: b6af9fe4ea56d6e459791e2554674a67, type: 2}
-        - {fileID: 11400000, guid: ca15e10521efaef46a23e540be12249a, type: 2}
-        _nextAttackCacheProgressThreshold: 0.5
+        - {fileID: 11400000, guid: 2be41ed96c3144a48becd0999ddf6d14, type: 2}
+        - {fileID: 11400000, guid: 95b1032c2f9c85b4f95ca3083dbe2c78, type: 2}
+        _abilityUsageRecoveryTime: 0.5

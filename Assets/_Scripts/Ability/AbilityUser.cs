@@ -58,16 +58,27 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
         if (selectedSlot == null)
             return null;
 
-        if (IsAnyAbilityPerforming(out Ability performingOne))
-        {
-            if (!_executionMatrix.CanParallelExecute(performingOne, selectedSlot.Ability))
-                return null;
-        }
+        if (!RequestUsage(selectedSlot))
+            return null;
 
         if (selectedSlot.Use(this, target))
             OnAbilityStartUsing.Invoke(SetupData(selectedSlot.Ability));
 
         return selectedSlot.Ability;
+    }
+
+    private bool RequestUsage(AbilitySlot slot)
+    {
+        if (_executionMatrix == null)
+            return true;
+
+        if (IsAnyAbilityPerforming(out Ability performingOne))
+        {
+            if (!_executionMatrix.CanParallelExecute(performingOne, slot.Ability))
+                return false;
+        }
+
+        return true;
     }
 
     private bool IsAnyAbilityPerforming(out Ability performingOne)
