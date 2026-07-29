@@ -3,25 +3,33 @@ using Mirror;
 using System.Collections;
 using UnityEngine;
 
-public class AbilityAnimation : NetworkBehaviour
+public class AbilityVisualPerformer : NetworkBehaviour
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private InterfaceReference<IAbilityUser> _abilityUser;
     [SerializeField] private float _animationTransitionTime = 0.15f;
-    [SerializeField] private int _layer;
+    [SerializeField] private int _abilityAnimationsLayer = 1;
 
     private bool _isPlaying = false;
 
     private IAbilityUser AbilityUser => _abilityUser.Value;
 
     private void OnEnable()
-        => AbilityUser.OnAbilityStartUsing += HandleAttack;
+    {
+        AbilityUser.OnStartUsing += HandleUsageStart;
+        AbilityUser.OnPerform += HandlePerform;
+    }
 
     private void OnDisable()
-        => AbilityUser.OnAbilityStartUsing -= HandleAttack;
+        => AbilityUser.OnStartUsing -= HandleUsageStart;
 
-    private void HandleAttack(UseAbilityData data)
+    private void HandleUsageStart(UseAbilityData data)
         => RpcPlayAttackAnimation(data);
+
+    private void HandlePerform(float duration)
+    {
+
+    }
 
     [Command(requiresAuthority = false)]
     private void CmdPlayAttackAnimation(UseAbilityData data)
@@ -57,5 +65,5 @@ public class AbilityAnimation : NetworkBehaviour
     }
 
     private void Play(string animationName)
-        => _animator.CrossFadeInFixedTime(animationName, _animationTransitionTime, _layer);
+        => _animator.CrossFadeInFixedTime(animationName, _animationTransitionTime, _abilityAnimationsLayer);
 }

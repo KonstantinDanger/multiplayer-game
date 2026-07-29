@@ -21,7 +21,7 @@ public class ParallelAbilityExecutionMatrix : ScriptableObject
         if (currentIndex < 0 || nextIndex < 0)
         {
             Debug.LogWarning(
-                $"Ability '{current?.Name}' or '{next?.Name}' is not available.");
+                $"Ability '{current?.ToString()}' or '{next?.ToString()}' is not available.");
 
             return false;
         }

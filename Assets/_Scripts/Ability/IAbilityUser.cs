@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public interface IAbilityUser
 {
-    event Action<UseAbilityData> OnAbilityStartUsing;
+    event Action<UseAbilityData> OnStartUsing;
 
     IReadOnlyList<AbilitySlot> Slots { get; }
 

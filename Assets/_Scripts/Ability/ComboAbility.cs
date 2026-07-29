@@ -16,9 +16,6 @@ public class ComboAbility : Ability
     private int _currentAttackIndex = 0;
     private bool _cacheNext;
 
-    public override AnimationClip PreparationAnimation => CurrentAbility.PreparationAnimation;
-    public override AnimationClip UsageAnimation => CurrentAbility.UsageAnimation;
-
     private Ability CurrentAbility => _abilities[_currentAttackIndex];
     private bool IsComboEnded => _currentAttackIndex >= _abilities.Count - 1;
 

@@ -1,23 +1,19 @@
 ﻿using Mirror;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-public enum AbilityRequestStatus
-{
-    Success, InterruptWithSuccess, Deny
-}
 
 [Serializable]
 public abstract class Ability
 {
+    public event Action<float> Started;
+    public event Action<float> Performed;
+    public event Action Finished;
+    //public event Action<float> OnInterrupt;
+
     private float _nextUsageTime = 0;
 
-    [field: SerializeField] public virtual string Name { get; protected set; }
     [field: SerializeField] public virtual float CooldownTime { get; protected set; }
-    [field: SerializeField] public virtual AnimationClip PreparationAnimation { get; protected set; }
-    [field: SerializeField] public virtual AnimationClip UsageAnimation { get; protected set; }
     [field: SerializeField, Range(0f, 10f)] public virtual float UsagePrepareTime { get; protected set; } = 0.2f;
 
     public bool IsPerforming { get; private set; }
@@ -84,11 +80,13 @@ public abstract class Ability
     protected virtual IEnumerator OnPerformed(NetworkBehaviour sender, NetworkBehaviour target)
     {
         SetNextUseTime(CooldownTime);
+        Finished?.Invoke();
         yield return null;
     }
 
     private IEnumerator PrepareUsageRoutine()
     {
+        Started?.Invoke(UsagePrepareTime);
         yield return new WaitForSeconds(UsagePrepareTime);
     }
 
@@ -102,11 +100,9 @@ public abstract class Ability
         if (obj is not Ability other)
             return false;
 
-        return other.Name == Name
+        return GetHashCode() == other.GetHashCode()
             && other.CooldownTime == CooldownTime
-            && other.UsagePrepareTime == UsagePrepareTime
-            && EqualityComparer<AnimationClip>.Default.Equals(other.PreparationAnimation, PreparationAnimation)
-            && EqualityComparer<AnimationClip>.Default.Equals(UsageAnimation, UsageAnimation);
+            && other.UsagePrepareTime == UsagePrepareTime;
     }
 
     public override int GetHashCode()

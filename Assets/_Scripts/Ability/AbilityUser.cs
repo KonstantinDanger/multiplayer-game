@@ -9,7 +9,7 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
 
     public IReadOnlyList<AbilitySlot> Slots => _slots;
 
-    public event Action<UseAbilityData> OnAbilityStartUsing;
+    public event Action<UseAbilityData> OnStartUsing;
 
     public void Initialize(List<Ability> abilities, ParallelAbilityExecutionMatrix executionMatrix)
     {
@@ -38,16 +38,6 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
     public int FindIndexOf(Ability abilityToUse)
         => _slots.FindIndex(handler => handler.Ability.Equals(abilityToUse));
 
-    //public virtual Ability Use(Ability abilityToUse, NetworkBehaviour target = null)
-    //{
-    //    AbilityHandler ability = _abilities.Find(handler => handler.Ability.Equals(abilityToUse));
-
-    //    if (ability.Perform(this, target))
-    //        OnAbilityStartUsing.Invoke(SetupData(ability));
-
-    //    return ability;
-    //}
-
     public virtual Ability Use(int index, NetworkBehaviour target = null)
     {
         if (index > _slots.Count)
@@ -62,7 +52,7 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
             return null;
 
         if (selectedSlot.Use(this, target))
-            OnAbilityStartUsing.Invoke(SetupData(selectedSlot.Ability));
+            OnStartUsing.Invoke(SetupData(selectedSlot.Ability));
 
         return selectedSlot.Ability;
     }
@@ -97,32 +87,32 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
         return false;
     }
 
-    private UseAbilityData SetupData(Ability ability)
-    {
-        UseAbilityData data = new();
+    //private UseAbilityData SetupData(Ability ability)
+    //{
+    //    UseAbilityData data = new();
 
-        if (ability.PreparationAnimation == null)
-        {
-            data.UsagePreparationTime = 0f;
-            data.UsagePreparationAnimDuration = 0f;
-            data.PreparationAnimationName = string.Empty;
-        }
-        else if (ability.UsageAnimation == null)
-        {
-            data.UsageAnimationName = string.Empty;
-        }
-        else
-        {
-            data = new UseAbilityData()
-            {
-                UsagePreparationAnimDuration = ability.PreparationAnimation.averageDuration,
-                PreparationAnimationName = ability.PreparationAnimation.name,
-                UsagePreparationTime = ability.UsagePrepareTime,
+    //    if (ability.PreparationAnimation == null)
+    //    {
+    //        data.UsagePreparationTime = 0f;
+    //        data.UsagePreparationAnimDuration = 0f;
+    //        data.PreparationAnimationName = string.Empty;
+    //    }
+    //    else if (ability.UsageAnimation == null)
+    //    {
+    //        data.UsageAnimationName = string.Empty;
+    //    }
+    //    else
+    //    {
+    //        data = new UseAbilityData()
+    //        {
+    //            UsagePreparationAnimDuration = ability.PreparationAnimation.averageDuration,
+    //            PreparationAnimationName = ability.PreparationAnimation.name,
+    //            UsagePreparationTime = ability.UsagePrepareTime,
 
-                UsageAnimationName = ability.UsageAnimation.name,
-            };
-        }
+    //            UsageAnimationName = ability.UsageAnimation.name,
+    //        };
+    //    }
 
-        return data;
-    }
+    //    return data;
+    //}
 }
