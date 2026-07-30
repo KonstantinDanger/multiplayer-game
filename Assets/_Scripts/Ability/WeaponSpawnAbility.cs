@@ -11,6 +11,8 @@ public class WeaponSpawnAbility : Ability
 
     public bool Skipped { get; private set; }
 
+    public override float Duration => _spawnTime;
+
     protected override IEnumerator OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
     {
         Skipped = false;

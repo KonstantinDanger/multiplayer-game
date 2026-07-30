@@ -19,6 +19,8 @@ public class ComboAbility : Ability
     private Ability CurrentAbility => _abilities[_currentAttackIndex];
     private bool IsComboEnded => _currentAttackIndex >= _abilities.Count - 1;
 
+    public override float Duration => CurrentAbility.Duration;
+
     protected override AbilityRequestStatus OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target)
     {
         _cacheNext = true;

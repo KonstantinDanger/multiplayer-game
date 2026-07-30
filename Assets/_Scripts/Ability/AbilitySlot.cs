@@ -4,10 +4,6 @@ using System;
 [Serializable]
 public class AbilitySlot : IGauge
 {
-    public event Action<float> OnPreparation;
-    public event Action<float> OnPerformed;
-    public event Action OnFinish;
-
     public event Action OnUsageDeny;
     public event Action OnValueChanged;
 
@@ -16,13 +12,16 @@ public class AbilitySlot : IGauge
     public float CurrentGaugeValue => Ability.RechargeProgress;
     public float MaxGaugeValue => Ability.CooldownTime;
 
-    public AbilitySlot(Ability ability)
+    public AbilitySlot(Ability ability,
+    Action<float> handleAbilityPreparation,
+    Action<float> handleAbilityPerform,
+    Action handleAbilityFinish)
     {
         Ability = ability;
 
-        Ability.Started += duration => OnPreparation.Invoke(duration);
-        Ability.Performed += duration => OnPerformed.Invoke(duration);
-        Ability.Finished += () => OnFinish.Invoke();
+        Ability.OnPreparationStarted += handleAbilityPreparation;
+        Ability.OnPerformStarted += handleAbilityPerform;
+        Ability.OnFinished += handleAbilityFinish;
     }
 
     public void Update()

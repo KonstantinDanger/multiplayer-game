@@ -6,16 +6,16 @@ using UnityEngine;
 [Serializable]
 public abstract class Ability
 {
-    public event Action<float> Started;
-    public event Action<float> Performed;
-    public event Action Finished;
-    //public event Action<float> OnInterrupt;
+    public event Action<float> OnPreparationStarted;
+    public event Action<float> OnPerformStarted;
+    public event Action OnFinished;
 
     private float _nextUsageTime = 0;
 
     [field: SerializeField] public virtual float CooldownTime { get; protected set; }
     [field: SerializeField, Range(0f, 10f)] public virtual float UsagePrepareTime { get; protected set; } = 0.2f;
 
+    public virtual float Duration => 0f;
     public bool IsPerforming { get; private set; }
     public bool IsRecharging => Time.time < _nextUsageTime;
     public float RechargeProgress
@@ -38,7 +38,6 @@ public abstract class Ability
 
         if (IsPerforming)
         {
-            //return OnPerformRequested(sender, target);
             switch (OnPerformRequested(sender, target))
             {
                 case AbilityRequestStatus.Success:
@@ -70,27 +69,28 @@ public abstract class Ability
         if (UsagePrepareTime > 0)
             yield return PrepareUsageRoutine();
 
+        OnPerformStarted?.Invoke(Duration);
         yield return OnPerform(sender, target);
 
         yield return OnPerformed(sender, target);
+        OnFinished?.Invoke();
 
         IsPerforming = false;
     }
 
-    protected virtual IEnumerator OnPerformed(NetworkBehaviour sender, NetworkBehaviour target)
-    {
-        SetNextUseTime(CooldownTime);
-        Finished?.Invoke();
-        yield return null;
-    }
-
     private IEnumerator PrepareUsageRoutine()
     {
-        Started?.Invoke(UsagePrepareTime);
+        OnPreparationStarted?.Invoke(UsagePrepareTime);
         yield return new WaitForSeconds(UsagePrepareTime);
     }
 
     protected abstract IEnumerator OnPerform(NetworkBehaviour sender, NetworkBehaviour target);
+
+    protected virtual IEnumerator OnPerformed(NetworkBehaviour sender, NetworkBehaviour target)
+    {
+        SetNextUseTime(CooldownTime);
+        yield return null;
+    }
 
     protected void SetNextUseTime(float cooldownTime)
         => _nextUsageTime = Time.time + cooldownTime;

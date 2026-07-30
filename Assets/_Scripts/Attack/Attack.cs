@@ -18,6 +18,7 @@ public abstract class Attack
     public bool InProcess => _inProcess;
     public float AttackRange => Damage.Range;
     public float TimeBetweenAttack => TimeBetweenAttacks;
+    public float Duration => TimeBetweenAttacks * Mathf.Clamp(Amount - 1, 0f, Amount);
 
     public IEnumerator Apply(NetworkBehaviour sender)
     {

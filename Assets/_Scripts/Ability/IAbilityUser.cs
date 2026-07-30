@@ -4,14 +4,15 @@ using System.Collections.Generic;
 
 public interface IAbilityUser
 {
-    event Action<UseAbilityData> OnStartUsing;
+    event Action<IAbilityPresentationData, float> OnPreparation;
+    event Action<IAbilityPresentationData, float> OnPerform;
+    event Action<IAbilityPresentationData> OnFinish;
 
     IReadOnlyList<AbilitySlot> Slots { get; }
 
     void OnUpdate();
-    //Ability Use(Ability abilityToUse, NetworkBehaviour target = null);
     Ability Use(int index, NetworkBehaviour target = null);
     void Add(Ability ability);
     int FindIndexOf(Ability abilityToUse);
-    void Initialize(List<Ability> abilities, ParallelAbilityExecutionMatrix executionMatrix);
+    void Initialize(List<ScriptableAbility> abilities, ParallelAbilityExecutionMatrix executionMatrix);
 }

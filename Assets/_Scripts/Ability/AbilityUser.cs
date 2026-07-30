@@ -5,18 +5,31 @@ using System.Collections.Generic;
 public class AbilityUser : NetworkBehaviour, IAbilityUser
 {
     private readonly List<AbilitySlot> _slots = new();
+    private readonly Dictionary<Ability, ScriptableAbility> _scriptableAbilities = new();
+
     private ParallelAbilityExecutionMatrix _executionMatrix;
 
     public IReadOnlyList<AbilitySlot> Slots => _slots;
 
-    public event Action<UseAbilityData> OnStartUsing;
+    public event Action<IAbilityPresentationData, float> OnPreparation;
+    public event Action<IAbilityPresentationData, float> OnPerform;
+    public event Action<IAbilityPresentationData> OnFinish;
 
-    public void Initialize(List<Ability> abilities, ParallelAbilityExecutionMatrix executionMatrix)
+    public void Initialize(List<ScriptableAbility> abilities, ParallelAbilityExecutionMatrix executionMatrix)
     {
         if (_slots.Count > 0)
+        {
+            _scriptableAbilities.Clear();
             _slots.Clear();
+        }
 
-        abilities.ForEach(ability => Add(ability));
+        foreach (ScriptableAbility scriptableAbility in abilities)
+        {
+            Ability instance = scriptableAbility.GetNew();
+            _scriptableAbilities.Add(instance, scriptableAbility);
+            Add(instance);
+        }
+
         _executionMatrix = executionMatrix;
     }
 
@@ -27,7 +40,10 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
     }
 
     public void Add(Ability ability)
-        => _slots.Add(new(ability));
+        => _slots.Add(new AbilitySlot(ability,
+            (duration) => HandleAbilityPreparation(ability, duration),
+            (duration) => HandleAbilityPerform(ability, duration),
+            () => HandleAbilityFinish(ability)));
 
     /// <summary>
     /// Returns -1 if target ability is not found
@@ -41,7 +57,7 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
     public virtual Ability Use(int index, NetworkBehaviour target = null)
     {
         if (index > _slots.Count)
-            throw new System.Exception("Wrong index");
+            throw new Exception("Wrong index");
 
         AbilitySlot selectedSlot = _slots[index];
 
@@ -51,8 +67,10 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
         if (!RequestUsage(selectedSlot))
             return null;
 
-        if (selectedSlot.Use(this, target))
-            OnStartUsing.Invoke(SetupData(selectedSlot.Ability));
+        selectedSlot.Use(this, target);
+
+        //if (selectedSlot.Use(this, target))
+        //    OnPreparation.Invoke(SetupData(selectedSlot.Ability));
 
         return selectedSlot.Ability;
     }
@@ -85,6 +103,23 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
         }
 
         return false;
+    }
+
+    private void HandleAbilityPreparation(Ability ability, float duration)
+        => OnPreparation?.Invoke(FindPresentationData(ability), duration);
+
+    private void HandleAbilityPerform(Ability ability, float duration)
+        => OnPerform?.Invoke(FindPresentationData(ability), duration);
+
+    private void HandleAbilityFinish(Ability ability)
+        => OnFinish?.Invoke(FindPresentationData(ability));
+
+    private IAbilityPresentationData FindPresentationData(Ability ability)
+    {
+        if (!_scriptableAbilities.TryGetValue(key: ability, out ScriptableAbility scriptable))
+            throw new Exception("No abilities found");
+
+        return scriptable;
     }
 
     //private UseAbilityData SetupData(Ability ability)

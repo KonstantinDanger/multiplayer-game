@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Ability/Ability")]
-public class ScriptableAbility : ScriptableObject
+public class ScriptableAbility : ScriptableObject, IAbilityPresentationData
 {
-    [field: SerializeField] public virtual string Name { get; protected set; }
+    [field: SerializeField] public virtual string Name { get; private set; }
     [SerializeReference, SubclassSelector] private Ability _ability;
     [field: Header("Animations")]
-    [field: SerializeField] public virtual AnimationClip PreparationAnimation { get; protected set; }
-    [field: SerializeField] public virtual AnimationClip UsageAnimation { get; protected set; }
+    [field: SerializeField] public virtual AnimationClip PreparationAnimation { get; private set; }
+    [field: SerializeField] public virtual AnimationClip UsageAnimation { get; private set; }
     //[field: Header("VFX")]
     //[field: Header("SFX")]
 
@@ -23,6 +23,9 @@ public class ScriptableAbility : ScriptableObject
     {
         if (obj is not ScriptableAbility other)
             return false;
+
+        if (PreparationAnimation == null || UsageAnimation == null)
+            return base.Equals(obj);
 
         return other.Equals(obj)
             && EqualityComparer<AnimationClip>.Default.Equals(other.PreparationAnimation, PreparationAnimation)

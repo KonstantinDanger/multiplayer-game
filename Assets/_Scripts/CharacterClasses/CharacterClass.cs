@@ -3,11 +3,11 @@
 [System.Serializable]
 public class CharacterClass
 {
-    private readonly List<Ability> _abilities = new();
+    private readonly List<ScriptableAbility> _abilities = new();
 
-    public IReadOnlyList<Ability> Abilities => _abilities;
+    public IReadOnlyList<ScriptableAbility> Abilities => _abilities;
 
-    public CharacterClass(List<Ability> abilities)
+    public CharacterClass(List<ScriptableAbility> abilities)
         => _abilities = abilities;
 }
 

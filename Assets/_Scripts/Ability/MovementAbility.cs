@@ -12,6 +12,8 @@ public class MovementAbility : Ability
     [SerializeField] private float _warpDistance = 10;
     [SerializeField] private float _warpTime = 0.2f;
 
+    public override float Duration => _warpTime;
+
     protected override IEnumerator OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
     {
         IRotatable rotatable = sender.GetComponent<IRotatable>();

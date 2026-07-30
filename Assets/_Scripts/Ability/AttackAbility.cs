@@ -8,6 +8,8 @@ public class AttackAbility : Ability
 {
     [SerializeReference, SubclassSelector] private Attack _attack;
 
+    public override float Duration => _attack.Duration;
+
     protected override IEnumerator OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
     {
         if (sender == null)
