@@ -12,22 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eedb7db48f6b7c44be8e8c890e9d4ae, type: 3}
   m_Name: Ability_LightMage_4_FataMorgana
   m_EditorClassIdentifier: 
+  <Name>k__BackingField: 
   _ability:
     rid: 7065201674773332046
+  <SpriteIcon>k__BackingField: {fileID: 21300000, guid: e691198d56e3a1848b5009e1ff94dbb5, type: 3}
+  <PreparationAnimation>k__BackingField: {fileID: 0}
+  <UsageAnimation>k__BackingField: {fileID: 0}
   references:
     version: 2
     RefIds:
     - rid: 7065201674773332046
       type: {class: DecoySpawnAbility, ns: , asm: Assembly-CSharp}
       data:
-        <Name>k__BackingField: Fata Morgana
         <CooldownTime>k__BackingField: 1
-        <PreparationAnimation>k__BackingField: {fileID: 0}
-        <UsageAnimation>k__BackingField: {fileID: 0}
         <UsagePrepareTime>k__BackingField: 0
         _decoyAmount: 10
         _decoyLifetime: 5
         _spawnPositionSpreadX: 5
         _spawnPositionSpreadY: 0
         _spawnPositionSpreadZ: 5
+        _maxRandomRotationRange: 90
         _swapWithClone: 1

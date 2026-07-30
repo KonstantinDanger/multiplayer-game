@@ -7,6 +7,10 @@ public class ScriptableAbility : ScriptableObject, IAbilityPresentationData
 {
     [field: SerializeField] public virtual string Name { get; private set; }
     [SerializeReference, SubclassSelector] private Ability _ability;
+
+    [field: Header("UI")]
+    [field: SerializeField] public Sprite SpriteIcon { get; private set; }
+
     [field: Header("Animations")]
     [field: SerializeField] public virtual AnimationClip PreparationAnimation { get; private set; }
     [field: SerializeField] public virtual AnimationClip UsageAnimation { get; private set; }

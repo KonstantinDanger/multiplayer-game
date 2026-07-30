@@ -5,14 +5,15 @@ public class AbilitiesHUD : HUD
 {
     [SerializeField] private List<AbilityCell> _abilityCells = new();
 
-    public void Initialize(AbilityUser abilities)
+    public void Initialize(AbilityUser abilityUser)
     {
         for (int i = 0; i < _abilityCells.Count; i++)
         {
-            var abilityCell = _abilityCells[i];
-            var abilityHandler = abilities.Slots[i + 1];
+            AbilityCell abilityCell = _abilityCells[i];
+            AbilitySlot abilitySlot = abilityUser.Slots[i + 1];
+            IAbilityPresentationData data = abilityUser.ScriptableAbilities[abilitySlot.Ability];
 
-            abilityCell.SetAbility(abilityHandler);
+            abilityCell.SetAbility(abilitySlot, data);
         }
     }
 }

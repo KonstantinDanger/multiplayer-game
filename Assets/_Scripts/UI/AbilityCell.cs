@@ -8,9 +8,12 @@ public class AbilityCell : MonoBehaviour
 
     private AbilitySlot _abilitySlot;
 
-    public void SetAbility(AbilitySlot abilityHandler)
+    public void SetAbility(AbilitySlot abilityHandler, IAbilityPresentationData abilityData)
     {
         _abilitySlot = abilityHandler;
+
+        if (abilityData.SpriteIcon != null)
+            _image.sprite = abilityData.SpriteIcon;
 
         _rechargeGauge.Initialize(_abilitySlot);
     }

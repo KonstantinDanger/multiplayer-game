@@ -12,18 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eedb7db48f6b7c44be8e8c890e9d4ae, type: 3}
   m_Name: Ability_LightMage_3_FlurryOfLights
   m_EditorClassIdentifier: 
+  <Name>k__BackingField: 
   _ability:
     rid: 7065201714978619479
+  <SpriteIcon>k__BackingField: {fileID: 21300000, guid: 14a0f66a7be165c4ba476e3d7c40e390, type: 3}
+  <PreparationAnimation>k__BackingField: {fileID: 0}
+  <UsageAnimation>k__BackingField: {fileID: 0}
   references:
     version: 2
     RefIds:
     - rid: 7065201714978619479
       type: {class: AttackAbility, ns: , asm: Assembly-CSharp}
       data:
-        <Name>k__BackingField: Flurry of lights
         <CooldownTime>k__BackingField: 1
-        <PreparationAnimation>k__BackingField: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
-        <UsageAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
         <UsagePrepareTime>k__BackingField: 0
         _attack:
           rid: 7065201714978619480

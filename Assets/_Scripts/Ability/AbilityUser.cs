@@ -10,10 +10,12 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
     private ParallelAbilityExecutionMatrix _executionMatrix;
 
     public IReadOnlyList<AbilitySlot> Slots => _slots;
+    public IReadOnlyDictionary<Ability, ScriptableAbility> ScriptableAbilities => _scriptableAbilities;
 
     public event Action<IAbilityPresentationData, float> OnPreparation;
     public event Action<IAbilityPresentationData, float> OnPerform;
     public event Action<IAbilityPresentationData> OnFinish;
+    public event Action<IAbilityPresentationData> OnAbilitySet;
 
     public void Initialize(List<ScriptableAbility> abilities, ParallelAbilityExecutionMatrix executionMatrix)
     {
@@ -28,6 +30,7 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
             Ability instance = scriptableAbility.GetNew();
             _scriptableAbilities.Add(instance, scriptableAbility);
             Add(instance);
+            OnAbilitySet?.Invoke(scriptableAbility);
         }
 
         _executionMatrix = executionMatrix;
@@ -40,10 +43,12 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
     }
 
     public void Add(Ability ability)
-        => _slots.Add(new AbilitySlot(ability,
-            (duration) => HandleAbilityPreparation(ability, duration),
-            (duration) => HandleAbilityPerform(ability, duration),
-            () => HandleAbilityFinish(ability)));
+    {
+        _slots.Add(new AbilitySlot(ability,
+                (duration) => HandleAbilityPreparation(ability, duration),
+                (duration) => HandleAbilityPerform(ability, duration),
+                () => HandleAbilityFinish(ability)));
+    }
 
     /// <summary>
     /// Returns -1 if target ability is not found
