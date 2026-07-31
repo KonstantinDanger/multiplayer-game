@@ -33,18 +33,21 @@ public class AbilityVisualPerformer : NetworkBehaviour
     }
 
     private void HandleUsagePreparation(IAbilityPresentationData data, float duration)
-        => PlayAnimation(data.PreparationAnimation, duration);
+        => PlayAnimation(data.PreparationAnimation, duration, data.ConsiderAbilityDuration);
     //RpcPlayAttackAnimation(data, duration);
 
     private void HandlePerform(IAbilityPresentationData data, float duration)
-        => PlayAnimation(data.UsageAnimation, duration);
+        => PlayAnimation(data.UsageAnimation, duration, data.ConsiderAbilityDuration);
 
     private void HandleFinish(IAbilityPresentationData data) { }
 
-    private void PlayAnimation(AnimationClip animation, float playTime)
+    private void PlayAnimation(AnimationClip animation, float playTime, bool considerAbilityDuration)
     {
         if (animation == null)
             return;
+
+        if (!considerAbilityDuration)
+            playTime = animation.length;
 
         if (_animationRoutine != null)
             StopCoroutine(_animationRoutine);
@@ -64,6 +67,8 @@ public class AbilityVisualPerformer : NetworkBehaviour
         Play(animation.name);
 
         yield return new WaitForSeconds(animationDuration);
+
+        _animator.speed = _initialAnimatorSpeed;
 
         _animationRoutine = null;
     }

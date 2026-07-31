@@ -10,20 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4eedb7db48f6b7c44be8e8c890e9d4ae, type: 3}
-  m_Name: Ability_LightMage_PrimaryAttack
+  m_Name: Ability_LightMage_6_PiercingLight
   m_EditorClassIdentifier: 
+  <Name>k__BackingField: Piercing light
   _ability:
     rid: 4564918603799068740
+  <SpriteIcon>k__BackingField: {fileID: 21300000, guid: 3925691c2a021aa429c1dc89712a1253, type: 3}
+  <PreparationAnimation>k__BackingField: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
+  <UsageAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
   references:
     version: 2
     RefIds:
     - rid: 4564918603799068740
       type: {class: AttackAbility, ns: , asm: Assembly-CSharp}
       data:
-        <Name>k__BackingField: Light Ray
         <CooldownTime>k__BackingField: 0.65
-        <PreparationAnimation>k__BackingField: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
-        <UsageAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
         <UsagePrepareTime>k__BackingField: 0.25
         _attack:
           rid: 7065201713519525998
@@ -50,6 +51,5 @@ MonoBehaviour:
         includeSender: 0
         _verticalSpreadAngle: 0
         _horizontalSpreadAngle: 0
-        _penetrationCount: 1
         _useSphereCast: 1
         _sphereRange: 0.42
