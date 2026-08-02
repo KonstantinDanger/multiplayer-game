@@ -16,6 +16,7 @@ MonoBehaviour:
   _ability:
     rid: 7065201759134941296
   <SpriteIcon>k__BackingField: {fileID: 21300000, guid: b11f9c52da2945740b5078d84177a9ab, type: 3}
+  <ConsiderAbilityDuration>k__BackingField: 0
   <PreparationAnimation>k__BackingField: {fileID: 0}
   <UsageAnimation>k__BackingField: {fileID: 0}
   references:
@@ -31,4 +32,4 @@ MonoBehaviour:
         - {fileID: 11400000, guid: 4b902449419aff04ea41f08bf5bfd028, type: 2}
         - {fileID: 11400000, guid: 2be41ed96c3144a48becd0999ddf6d14, type: 2}
         - {fileID: 11400000, guid: 95b1032c2f9c85b4f95ca3083dbe2c78, type: 2}
-        _abilityUsageRecoveryTime: 0.5
+        _abilityUsageRecoveryTime: 0.2

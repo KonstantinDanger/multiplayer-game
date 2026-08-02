@@ -16,8 +16,9 @@ MonoBehaviour:
   _ability:
     rid: 7065201759134941297
   <SpriteIcon>k__BackingField: {fileID: 21300000, guid: c890dd06d4a350946ab11e4778bf47d8, type: 3}
-  <PreparationAnimation>k__BackingField: {fileID: 0}
-  <UsageAnimation>k__BackingField: {fileID: -203655887218126122, guid: a61e301dc70de13419f68c983d19281c, type: 3}
+  <ConsiderAbilityDuration>k__BackingField: 0
+  <PreparationAnimation>k__BackingField: {fileID: -203655887218126122, guid: 389a9ae17f947ee49b8db9f2fb824b02, type: 3}
+  <UsageAnimation>k__BackingField: {fileID: 0}
   references:
     version: 2
     RefIds:

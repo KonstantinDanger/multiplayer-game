@@ -47,9 +47,9 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
         _abilityInstances.Add(instance);
 
         _slots.Add(new AbilitySlot(instance,
-                (a, duration) => HandleAbilityPreparation(ability, duration),
-                (a, duration) => HandleAbilityPerform(ability, duration),
-                (a) => HandleAbilityFinish(ability)));
+                (a, duration) => HandleAbilityPreparation(a, duration),
+                (a, duration) => HandleAbilityPerform(a, duration),
+                (a) => HandleAbilityFinish(a)));
 
         if (ability is ComboAbility comboAbility)
         {

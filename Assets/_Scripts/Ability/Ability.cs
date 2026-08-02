@@ -69,7 +69,7 @@ public abstract class Ability
         if (UsagePrepareTime > 0)
             yield return PrepareUsageRoutine();
 
-        OnPerformStarted?.Invoke(this, Duration);
+        OnPerformStartedEventInvoke();
         yield return OnPerform(sender, target);
 
         yield return OnPerformed(sender, target);
@@ -92,9 +92,11 @@ public abstract class Ability
         yield return null;
     }
 
-    protected void RaisePreparationStarted(float duration) => OnPreparationStarted?.Invoke(this, duration);
-    protected void RaisePerformStarted(float duration) => OnPerformStarted?.Invoke(this, duration);
-    protected void RaiseFinished() => OnFinished?.Invoke(this);
+    protected virtual void OnPerformStartedEventInvoke() => OnPerformStarted?.Invoke(this, Duration);
+
+    protected void RaisePreparationStarted(Ability source, float duration) => OnPreparationStarted?.Invoke(source, duration);
+    protected void RaisePerformStarted(Ability source, float duration) => OnPerformStarted?.Invoke(source, duration);
+    protected void RaiseFinished(Ability source) => OnFinished?.Invoke(source);
 
     protected void SetNextUseTime(float cooldownTime)
         => _nextUsageTime = Time.time + cooldownTime;

@@ -19,6 +19,37 @@ public class ComboAbility : Ability
     private bool IsComboEnded => _currentAttackIndex >= _abilities.Count - 1;
 
     public override float Duration { get; protected set; } = 0f;
+
+    public List<AbilityInstance> CacheAbilities()
+    {
+        List<AbilityInstance> instances = new();
+
+        _scriptableAbilities.ForEach(scriptableAbility =>
+        {
+            var subAbilityInstance = scriptableAbility.GetNew();
+
+            subAbilityInstance.OnPreparationStarted += (current, duration) => TryInvoke(() => RaisePreparationStarted(current, duration));
+            subAbilityInstance.OnPerformStarted += (current, duration) => TryInvoke(() => RaisePerformStarted(current, duration));
+            subAbilityInstance.OnFinished += current => TryInvoke(() => RaiseFinished(current));
+
+            _abilities.Add(subAbilityInstance);
+
+            instances.Add(new AbilityInstance(subAbilityInstance, scriptableAbility));
+        });
+
+        return instances;
+    }
+
+    private void TryInvoke(Action action)
+    {
+        if (CurrentAbility is WeaponSpawnAbility weaponSpawnAbility && weaponSpawnAbility.Skipped)
+            return;
+
+        action?.Invoke();
+    }
+
+    protected override void OnPerformStartedEventInvoke() { return; }
+
     protected override AbilityRequestStatus OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target)
     {
         _cacheNext = true;
@@ -92,24 +123,4 @@ public class ComboAbility : Ability
 
     private void ResetCombo()
         => _currentAttackIndex = 0;
-
-    public List<AbilityInstance> CacheAbilities()
-    {
-        List<AbilityInstance> instances = new();
-
-        _scriptableAbilities.ForEach(scriptableAbility =>
-        {
-            var subAbilityInstance = scriptableAbility.GetNew();
-
-            subAbilityInstance.OnPreparationStarted += (current, duration) => RaisePreparationStarted(duration);
-            subAbilityInstance.OnPerformStarted += (current, duration) => RaisePerformStarted(duration);
-            subAbilityInstance.OnFinished += _ => RaiseFinished();
-
-            _abilities.Add(subAbilityInstance);
-
-            instances.Add(new AbilityInstance(subAbilityInstance, scriptableAbility));
-        });
-
-        return instances;
-    }
 }
