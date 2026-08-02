@@ -12,7 +12,7 @@ public interface IAbilityUser
 
     void OnUpdate();
     Ability Use(int index, NetworkBehaviour target = null);
-    void Add(Ability ability);
+    void Add(AbilityInstance instance);
     int FindIndexOf(Ability abilityToUse);
     void Initialize(List<ScriptableAbility> abilities, ParallelAbilityExecutionMatrix executionMatrix);
 }

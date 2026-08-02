@@ -6,16 +6,16 @@ using UnityEngine;
 [Serializable]
 public abstract class Ability
 {
-    public event Action<float> OnPreparationStarted;
-    public event Action<float> OnPerformStarted;
-    public event Action OnFinished;
+    public event Action<Ability, float> OnPreparationStarted;
+    public event Action<Ability, float> OnPerformStarted;
+    public event Action<Ability> OnFinished;
 
     private float _nextUsageTime = 0;
 
     [field: SerializeField] public virtual float CooldownTime { get; protected set; }
     [field: SerializeField, Range(0f, 10f)] public virtual float UsagePrepareTime { get; protected set; } = 0.2f;
 
-    public virtual float Duration => 0f;
+    public virtual float Duration { get; protected set; } = 0f;
     public bool IsPerforming { get; private set; }
     public bool IsRecharging => Time.time < _nextUsageTime;
     public float RechargeProgress
@@ -69,18 +69,18 @@ public abstract class Ability
         if (UsagePrepareTime > 0)
             yield return PrepareUsageRoutine();
 
-        OnPerformStarted?.Invoke(Duration);
+        OnPerformStarted?.Invoke(this, Duration);
         yield return OnPerform(sender, target);
 
         yield return OnPerformed(sender, target);
-        OnFinished?.Invoke();
+        OnFinished?.Invoke(this);
 
         IsPerforming = false;
     }
 
     private IEnumerator PrepareUsageRoutine()
     {
-        OnPreparationStarted?.Invoke(UsagePrepareTime);
+        OnPreparationStarted?.Invoke(this, UsagePrepareTime);
         yield return new WaitForSeconds(UsagePrepareTime);
     }
 
@@ -91,6 +91,10 @@ public abstract class Ability
         SetNextUseTime(CooldownTime);
         yield return null;
     }
+
+    protected void RaisePreparationStarted(float duration) => OnPreparationStarted?.Invoke(this, duration);
+    protected void RaisePerformStarted(float duration) => OnPerformStarted?.Invoke(this, duration);
+    protected void RaiseFinished() => OnFinished?.Invoke(this);
 
     protected void SetNextUseTime(float cooldownTime)
         => _nextUsageTime = Time.time + cooldownTime;

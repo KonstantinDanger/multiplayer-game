@@ -7,17 +7,19 @@ public class AbilitySlot : IGauge
     public event Action OnUsageDeny;
     public event Action OnValueChanged;
 
-    public Ability Ability { get; private set; }
+    private Ability Ability => AbilityInstance.ability;
+
+    public AbilityInstance AbilityInstance { get; private set; }
 
     public float CurrentGaugeValue => Ability.RechargeProgress;
     public float MaxGaugeValue => Ability.CooldownTime;
 
-    public AbilitySlot(Ability ability,
-    Action<float> handleAbilityPreparation,
-    Action<float> handleAbilityPerform,
-    Action handleAbilityFinish)
+    public AbilitySlot(AbilityInstance instance,
+    Action<Ability, float> handleAbilityPreparation,
+    Action<Ability, float> handleAbilityPerform,
+    Action<Ability> handleAbilityFinish)
     {
-        Ability = ability;
+        AbilityInstance = instance;
 
         Ability.OnPreparationStarted += handleAbilityPreparation;
         Ability.OnPerformStarted += handleAbilityPerform;

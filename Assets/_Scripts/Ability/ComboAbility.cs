@@ -8,7 +8,6 @@ using UnityEngine;
 public class ComboAbility : Ability
 {
     [SerializeField] private List<ScriptableAbility> _scriptableAbilities = new();
-    //[SerializeField, Range(0f, 1f)] private float _nextAttackCacheProgressThreshold = 0.5f;
     [SerializeField, Range(0f, 2f)] private float _abilityUsageRecoveryTime = 0.5f;
 
     private readonly List<Ability> _abilities = new();
@@ -19,11 +18,11 @@ public class ComboAbility : Ability
     private Ability CurrentAbility => _abilities[_currentAttackIndex];
     private bool IsComboEnded => _currentAttackIndex >= _abilities.Count - 1;
 
-    public override float Duration => CurrentAbility.Duration;
-
+    public override float Duration { get; protected set; } = 0f;
     protected override AbilityRequestStatus OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target)
     {
         _cacheNext = true;
+
         return AbilityRequestStatus.InterruptWithSuccess;
     }
 
@@ -32,13 +31,10 @@ public class ComboAbility : Ability
         if (sender == null)
             yield break;
 
-        if (_abilities.Count == 0)
-            CacheAbilities();
-
         while (true)
         {
             _cacheNext = false;
-
+            Duration = CurrentAbility.Duration;
             UnityEngine.Debug.Log("Current attack idx " + _currentAttackIndex);
             yield return CurrentAbility.PerformRoutine(sender, target);
 
@@ -97,9 +93,23 @@ public class ComboAbility : Ability
     private void ResetCombo()
         => _currentAttackIndex = 0;
 
-    private void CacheAbilities()
-        => _scriptableAbilities
-            .ForEach(sa => _abilities
-            .Add(sa
-            .GetNew()));
+    public List<AbilityInstance> CacheAbilities()
+    {
+        List<AbilityInstance> instances = new();
+
+        _scriptableAbilities.ForEach(scriptableAbility =>
+        {
+            var subAbilityInstance = scriptableAbility.GetNew();
+
+            subAbilityInstance.OnPreparationStarted += (current, duration) => RaisePreparationStarted(duration);
+            subAbilityInstance.OnPerformStarted += (current, duration) => RaisePerformStarted(duration);
+            subAbilityInstance.OnFinished += _ => RaiseFinished();
+
+            _abilities.Add(subAbilityInstance);
+
+            instances.Add(new AbilityInstance(subAbilityInstance, scriptableAbility));
+        });
+
+        return instances;
+    }
 }

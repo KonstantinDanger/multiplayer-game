@@ -18,7 +18,8 @@ public class UseAbilityAction : AIAction
         _rotator = self.GetComponent<IRotatable>();
 
         _abilityToUse = _ability.GetNew();
-        _abilityUser.Add(_abilityToUse);
+        var instance = new AbilityInstance(_abilityToUse, _ability);
+        _abilityUser.Add(instance);
     }
 
     public override void Execute(Enemy self, NetworkBehaviour target)

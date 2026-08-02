@@ -5,12 +5,11 @@ using System.Collections.Generic;
 public class AbilityUser : NetworkBehaviour, IAbilityUser
 {
     private readonly List<AbilitySlot> _slots = new();
-    private readonly Dictionary<Ability, ScriptableAbility> _scriptableAbilities = new();
+    private readonly List<AbilityInstance> _abilityInstances = new();
 
     private ParallelAbilityExecutionMatrix _executionMatrix;
 
     public IReadOnlyList<AbilitySlot> Slots => _slots;
-    public IReadOnlyDictionary<Ability, ScriptableAbility> ScriptableAbilities => _scriptableAbilities;
 
     public event Action<IAbilityPresentationData, float> OnPreparation;
     public event Action<IAbilityPresentationData, float> OnPerform;
@@ -21,14 +20,13 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
     {
         if (_slots.Count > 0)
         {
-            _scriptableAbilities.Clear();
+            _abilityInstances.Clear();
             _slots.Clear();
         }
 
         foreach (ScriptableAbility scriptableAbility in abilities)
         {
-            Ability instance = scriptableAbility.GetNew();
-            _scriptableAbilities.Add(instance, scriptableAbility);
+            AbilityInstance instance = new(scriptableAbility.GetNew(), scriptableAbility);
             Add(instance);
             OnAbilitySet?.Invoke(scriptableAbility);
         }
@@ -42,12 +40,26 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
             ability?.Update();
     }
 
-    public void Add(Ability ability)
+    public void Add(AbilityInstance instance)
     {
-        _slots.Add(new AbilitySlot(ability,
-                (duration) => HandleAbilityPreparation(ability, duration),
-                (duration) => HandleAbilityPerform(ability, duration),
-                () => HandleAbilityFinish(ability)));
+        Ability ability = instance.ability;
+
+        _abilityInstances.Add(instance);
+
+        _slots.Add(new AbilitySlot(instance,
+                (a, duration) => HandleAbilityPreparation(ability, duration),
+                (a, duration) => HandleAbilityPerform(ability, duration),
+                (a) => HandleAbilityFinish(ability)));
+
+        if (ability is ComboAbility comboAbility)
+        {
+            var cached = comboAbility.CacheAbilities();
+
+            cached.ForEach(cachedInstance =>
+            {
+                _abilityInstances.Add(cachedInstance);
+            });
+        }
     }
 
     /// <summary>
@@ -57,7 +69,7 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
     public int FindIndexOf(Ability abilityToUse)
-        => _slots.FindIndex(handler => handler.Ability.Equals(abilityToUse));
+        => _slots.FindIndex(slot => slot.AbilityInstance.ability.Equals(abilityToUse));
 
     public virtual Ability Use(int index, NetworkBehaviour target = null)
     {
@@ -77,7 +89,7 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
         //if (selectedSlot.Use(this, target))
         //    OnPreparation.Invoke(SetupData(selectedSlot.Ability));
 
-        return selectedSlot.Ability;
+        return selectedSlot.AbilityInstance.ability;
     }
 
     private bool RequestUsage(AbilitySlot slot)
@@ -87,7 +99,7 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
 
         if (IsAnyAbilityPerforming(out Ability performingOne))
         {
-            if (!_executionMatrix.CanParallelExecute(performingOne, slot.Ability))
+            if (!_executionMatrix.CanParallelExecute(performingOne, slot.AbilityInstance.ability))
                 return false;
         }
 
@@ -100,9 +112,9 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
 
         foreach (var slot in _slots)
         {
-            if (slot.Ability.IsPerforming)
+            if (slot.AbilityInstance.ability.IsPerforming)
             {
-                performingOne = slot.Ability;
+                performingOne = slot.AbilityInstance.ability;
                 return true;
             }
         }
@@ -120,12 +132,9 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
         => OnFinish?.Invoke(FindPresentationData(ability));
 
     private IAbilityPresentationData FindPresentationData(Ability ability)
-    {
-        if (!_scriptableAbilities.TryGetValue(key: ability, out ScriptableAbility scriptable))
-            throw new Exception("No abilities found");
-
-        return scriptable;
-    }
+        => _abilityInstances
+        .Find(instance => instance.ability
+        .Equals(ability))?.presentationData;
 
     //private UseAbilityData SetupData(Ability ability)
     //{
