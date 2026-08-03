@@ -7,17 +7,34 @@ public class PlayerModelVisuals : MonoBehaviour
     [SerializeField] private Renderer _headMeshRenderer;
     [SerializeField] private Transform[] _jointsFixedHorizontallyToHead;
 
+    [Header("First person")]
+    [SerializeField] private string _firstPersonLayerName;
+    [SerializeField] private Renderer[] _firstPersonObjects;
+
+    private void Start()
+    {
+        HideHead();
+        SetupFirstPersonObjects();
+    }
+
     void LateUpdate()
     {
         if (!_player.HasAuthority())
             return;
 
-        _headMeshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-
-        //_headMeshRenderer.enabled = false;
-
         FixateJointsWithTheHead(_jointsFixedHorizontallyToHead);
     }
+
+    private void SetupFirstPersonObjects()
+    {
+        foreach (var obj in _firstPersonObjects)
+        {
+            obj.gameObject.layer = LayerMask.NameToLayer(_firstPersonLayerName.Trim());
+        }
+    }
+
+    private void HideHead()
+        => _headMeshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
 
     private void FixateJointsWithTheHead(IEnumerable<Transform> joints)
     {
