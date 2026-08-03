@@ -6,17 +6,18 @@ using UnityEngine;
 public class AbilityVisualPerformer : NetworkBehaviour
 {
     [SerializeField] private Animator _animator;
+    [SerializeField] private string _animationSpeedParamName = "AnimationSpeed";
     [SerializeField] private InterfaceReference<IAbilityUser> _abilityUser;
     [SerializeField] private float _animationTransitionTime = 0.15f;
     [SerializeField] private int _abilityAnimationsLayer = 1;
 
     private Coroutine _animationRoutine;
-    private float _initialAnimatorSpeed;
+    private float _initialAnimationSpeed;
 
     private IAbilityUser AbilityUser => _abilityUser.Value;
 
     private void Start()
-        => _initialAnimatorSpeed = _animator.speed;
+        => _initialAnimationSpeed = _animator.GetFloat(_animationSpeedParamName);
 
     private void OnEnable()
     {
@@ -57,18 +58,18 @@ public class AbilityVisualPerformer : NetworkBehaviour
 
     private IEnumerator StartAnimationRoutine(AnimationClip animation, float playTime)
     {
-        float animatorSpeed = _initialAnimatorSpeed;
+        float animationSpeed = _initialAnimationSpeed;
 
         float animationDuration = animation.length;
-        float desiredSpeed = playTime == 0f ? 0f : animatorSpeed * animationDuration / playTime;
+        float desiredSpeed = playTime == 0f ? 0f : _animator.speed * animationSpeed * animationDuration / playTime;
 
-        _animator.speed = desiredSpeed;
+        _animator.SetFloat(_animationSpeedParamName, desiredSpeed);
 
         Play(animation.name);
 
         yield return new WaitForSeconds(animationDuration);
 
-        _animator.speed = _initialAnimatorSpeed;
+        _animator.SetFloat(_animationSpeedParamName, _initialAnimationSpeed);
 
         _animationRoutine = null;
     }

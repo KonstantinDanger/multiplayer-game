@@ -16,7 +16,7 @@ MonoBehaviour:
   _ability:
     rid: 7065201759134941297
   <SpriteIcon>k__BackingField: {fileID: 21300000, guid: c890dd06d4a350946ab11e4778bf47d8, type: 3}
-  <ConsiderAbilityDuration>k__BackingField: 0
+  <ConsiderAbilityDuration>k__BackingField: 1
   <PreparationAnimation>k__BackingField: {fileID: -203655887218126122, guid: 136b1c96118f8624fa7b6ad07db66723, type: 3}
   <UsageAnimation>k__BackingField: {fileID: 0}
   references:
@@ -26,7 +26,7 @@ MonoBehaviour:
       type: {class: AttackAbility, ns: , asm: Assembly-CSharp}
       data:
         <CooldownTime>k__BackingField: 0
-        <UsagePrepareTime>k__BackingField: 0.2
+        <UsagePrepareTime>k__BackingField: 0.6
         _attack:
           rid: 7065201759134941298
     - rid: 7065201759134941298

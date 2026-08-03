@@ -34,10 +34,10 @@ ModelImporter:
       name: Animation_SwordSlash_2
       takeName: mixamo.com
       internalID: -203655887218126122
-      firstFrame: 55
+      firstFrame: 49
       lastFrame: 69
       wrapMode: 0
-      orientationOffsetY: 24.06
+      orientationOffsetY: 203.1
       level: 0
       cycleOffset: 0
       loop: 0

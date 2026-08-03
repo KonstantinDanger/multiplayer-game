@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RandomColorSetter : NetworkBehaviour
 {
-    [SerializeField] private Renderer _renderer;
+    [SerializeField] private Renderer[] _renderers;
 
     [SyncVar(hook = nameof(OnColorChanged))] private Color _color;
 
@@ -28,11 +28,16 @@ public class RandomColorSetter : NetworkBehaviour
             _color = GetRandomColor();
         }
 
-        OnColorChanged(_renderer.material.color, _color);
+        OnColorChanged(Color.blue, _color);
     }
 
     private void OnColorChanged(Color old, Color newColor)
-        => _renderer.material.color = newColor;
+    {
+        foreach (var renderer in _renderers)
+        {
+            renderer.material.color = newColor;
+        }
+    }
 
     private Color GetRandomColor()
         => _randomColors[Random.Range(0, 9)];
