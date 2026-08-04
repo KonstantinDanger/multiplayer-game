@@ -34,16 +34,22 @@ public abstract class Attack
         if (RequireAlternatingAttacks())
         {
             yield return AlternateAttacksRoutine(sender);
+            yield break;
         }
 
         for (int i = 0; i < Amount; i++)
         {
-            var targets = FindTargets(sender.gameObject);
+            yield return OnTargetsDetected(sender);
+        }
+    }
 
-            for (int j = 0; j < targets.Count; j++)
-            {
-                yield return OnApply(sender, targets[j]);
-            }
+    protected virtual IEnumerator OnTargetsDetected(NetworkBehaviour sender)
+    {
+        var targets = FindTargets(sender.gameObject);
+
+        for (int j = 0; j < targets.Count; j++)
+        {
+            yield return OnApply(sender, targets[j]);
         }
     }
 
@@ -80,12 +86,7 @@ public abstract class Attack
 
             if (elapsedAttackTime >= TimeBetweenAttacks)
             {
-                var targets = FindTargets(sender.gameObject);
-
-                for (int j = 0; j < targets.Count; j++)
-                {
-                    yield return OnApply(sender, targets[j]);
-                }
+                yield return OnTargetsDetected(sender);
 
                 elapsedAttackTime = 0f;
                 currentAttackNum++;

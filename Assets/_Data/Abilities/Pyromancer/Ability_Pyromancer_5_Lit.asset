@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eedb7db48f6b7c44be8e8c890e9d4ae, type: 3}
+  m_Name: Ability_Pyromancer_5_Lit
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: Lit
+  _ability:
+    rid: 7065201625982304337
+  <SpriteIcon>k__BackingField: {fileID: 21300000, guid: 4d7635c366a76274c85747592d98d2f5, type: 3}
+  <ConsiderAbilityDuration>k__BackingField: 1
+  <PreparationAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
+  <UsageAnimation>k__BackingField: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 7065201625982304337
+      type: {class: StatusEffectAbility, ns: , asm: Assembly-CSharp}
+      data:
+        <CooldownTime>k__BackingField: 0.2
+        <UsagePrepareTime>k__BackingField: 0.05
+        _effect: {fileID: 11400000, guid: 50966a1dd34e403499cf62a3e5ffa484, type: 2}
+        _procGuarantee: 1
+        _accumulationAmount: 0
+        _detectionRange: 0
+        _procOnSelfOnly: 1
+        _targetDetector:
+          rid: 8956606431401345118
+    - rid: 8956606431401345118
+      type: {class: TargetDetectorSphereOverlapper, ns: , asm: Assembly-CSharp}
+      data:
+        layersToDetect:
+          serializedVersion: 2
+          m_Bits: 896
+        includeSender: 1
+        _fieldOfViewAngle: 0
+        _ignoreFieldOfView: 1

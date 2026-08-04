@@ -10,20 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4eedb7db48f6b7c44be8e8c890e9d4ae, type: 3}
-  m_Name: Ability_Pyromancer_3
+  m_Name: Ability_Pyromancer_3_Rush
   m_EditorClassIdentifier: 
+  <Name>k__BackingField: Rush
   _ability:
     rid: 9013964976533274694
+  <SpriteIcon>k__BackingField: {fileID: 21300000, guid: 3925691c2a021aa429c1dc89712a1253, type: 3}
+  <ConsiderAbilityDuration>k__BackingField: 1
+  <PreparationAnimation>k__BackingField: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
+  <UsageAnimation>k__BackingField: {fileID: 0}
   references:
     version: 2
     RefIds:
     - rid: 9013964976533274694
       type: {class: MovementAbility, ns: , asm: Assembly-CSharp}
       data:
-        <Name>k__BackingField: Flaming dash
         <CooldownTime>k__BackingField: 2
-        <PreparationAnimation>k__BackingField: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
-        <UsageAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
         <UsagePrepareTime>k__BackingField: 0
         _directional: 0
         _resetVerticalDirection: 1

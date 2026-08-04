@@ -16,14 +16,17 @@ public class ProjectileLaunchAttack : Attack
     private float _scaleMultiplier = 1f;
     private float _damageMultiplier = 1f;
 
+    protected override IEnumerator OnTargetsDetected(NetworkBehaviour sender)
+    {
+        yield return OnApply(sender, null);
+    }
+
     protected override IEnumerator OnApply(NetworkBehaviour sender, GameObject target)
     {
         _factory = ServiceLocator.Container.Resolve<GameFactory>();
 
         var attacker = sender.GetComponentInChildren<IAttacker>();
         var rotatable = sender.GetComponent<IRotatable>();
-
-        attacker.PerformAttack();
 
         if (sender.TryGetComponent(out _statUser))
         {

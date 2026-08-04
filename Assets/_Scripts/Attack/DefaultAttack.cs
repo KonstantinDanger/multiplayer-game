@@ -19,10 +19,6 @@ public class DefaultAttack : Attack
 
         damageable.TakeDamage(Damage);
 
-        //#if UNITY_EDITOR
-        //        Utils.StartSplashDamageView(_attackSplashRadius, attackPosition);
-        //#endif
-        //}
         yield return null;
     }
 }
