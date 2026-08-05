@@ -152,15 +152,15 @@ public class Player : Entity
             UnityEngine.Debug.Log("Current player max health: " + Damageable.MaxGaugeValue);
         }
 
+        var handler = GetComponent<StatusEffectHandler>();
         if (Keyboard.current.pKey.wasPressedThisFrame)
         {
-            var handler = GetComponent<StatusEffectHandler>();
 
             handler.TryProc(_statusEffectForTesting.GetNew(), 10);
 
-            //UnityEngine.Debug.Log(handler);
 
         }
+        UnityEngine.Debug.Log(handler);
         //UnityEngine.Debug.Log("Wallet " + _wallet.ToString());
         //UnityEngine.Debug.Log("Stats => " + Stats.ToString());
 

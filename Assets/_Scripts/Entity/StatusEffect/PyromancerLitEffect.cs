@@ -11,6 +11,8 @@ public class PyromancerLitEffect : ProlongedStatusEffect
 
     private IAbilityUser _abilityUser;
 
+    private bool _succeed;
+
     public override void OnValidate()
     {
         if (_buffableAbilities.Count == 0)
@@ -49,6 +51,9 @@ public class PyromancerLitEffect : ProlongedStatusEffect
         if (!Active)
             return;
 
+        if (_succeed)
+            return;
+
         TryBuffNextAbility();
     }
 
@@ -58,13 +63,21 @@ public class PyromancerLitEffect : ProlongedStatusEffect
             .Where(instance => _buffableAbilities.Any(ability => instance.Contains(ability)))
             .FirstOrDefault(instance => instance.ability.UseTime > ExpirationTime - Duration && instance.ability.UseTime < ExpirationTime);
 
-        if (nextUsedAbility != null)
-        {
-            UnityEngine.Debug.Log("used ability " + nextUsedAbility.presentationData.Name);
+        if (nextUsedAbility == null)
+            return;
 
-            float damage = (nextUsedAbility.ability as AttackAbility).DamageAmount;
-            //We need to somehow buff attack from selected ability only once per attack cycle and then reset to default!
-            UnityEngine.Debug.Log("Base damage: " + damage + " | Amplified damage: " + (damage + damage * (_damagePercentBuff / 100f)));
-        }
+        UnityEngine.Debug.Log("used ability " + nextUsedAbility.presentationData.Name);
+
+        float damage = (nextUsedAbility.ability as AttackAbility).DamageAmount;
+        //We need to somehow buff attack from selected ability only once per attack cycle and then reset to default!
+        UnityEngine.Debug.Log("Base damage: " + damage + " | Amplified damage: " + (damage + damage * (_damagePercentBuff / 100f)));
+        _succeed = true;
+    }
+
+    protected override void OnReset()
+    {
+        base.OnReset();
+
+        _succeed = false;
     }
 }
