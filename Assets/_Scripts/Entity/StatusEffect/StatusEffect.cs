@@ -20,6 +20,8 @@ public abstract class StatusEffect
         OnDecay(deltaTime, _decaySpeed);
     }
 
+    public virtual void OnValidate() { }
+
     protected virtual void OnTick(float deltaTime) { }
 
     public bool Accumulate(float amount)

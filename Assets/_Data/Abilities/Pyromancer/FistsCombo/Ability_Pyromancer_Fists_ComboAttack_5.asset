@@ -35,7 +35,7 @@ MonoBehaviour:
         Amount: 1
         TimeBetweenAttacks: 0
         Damage:
-          Amount: 10
+          Amount: 15
           Type: 0
           Range: 1
           SenderNetId: 0

@@ -30,7 +30,7 @@ MonoBehaviour:
         _effect: {fileID: 11400000, guid: 50966a1dd34e403499cf62a3e5ffa484, type: 2}
         _procGuarantee: 1
         _accumulationAmount: 0
-        _detectionRange: 0
+        _detectionRange: 1
         _procOnSelfOnly: 1
         _targetDetector:
           rid: 8956606431401345118

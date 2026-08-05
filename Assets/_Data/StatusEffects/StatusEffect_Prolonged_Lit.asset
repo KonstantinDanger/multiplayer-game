@@ -20,7 +20,14 @@ MonoBehaviour:
     - rid: 7065201625982304339
       type: {class: PyromancerLitEffect, ns: , asm: Assembly-CSharp}
       data:
-        _maxAccumulationAmount: 0
+        _maxAccumulationAmount: 303
         _decaySpeed: 0
-        <Duration>k__BackingField: 0.05
-        _damagePercentBuff: 15
+        <Duration>k__BackingField: 0.2
+        _damagePercentBuff: 10
+        _buffableAbilities:
+        - {fileID: 11400000, guid: 6b8279facf83ed542a2e151750fd6731, type: 2}
+        - {fileID: 11400000, guid: e573b67e5b1a53d48a532dae0b0dfb1a, type: 2}
+        - {fileID: 11400000, guid: 529b8eb4126d84844817414037809f69, type: 2}
+        - {fileID: 11400000, guid: 93e25446bc4334640b25e3d5f54c41b3, type: 2}
+        - {fileID: 11400000, guid: 687e1e702fe7c694699398175a8c7781, type: 2}
+        - {fileID: 11400000, guid: 5aaa52b627d90c049abab9bb1fb1a26d, type: 2}

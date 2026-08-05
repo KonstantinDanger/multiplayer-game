@@ -10,6 +10,8 @@ public class AttackAbility : Ability
 
     public override float Duration => _attack.Duration;
 
+    public float DamageAmount => _attack.Damage.Amount;
+
     protected override IEnumerator OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
     {
         if (sender == null)

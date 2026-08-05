@@ -9,6 +9,7 @@ public interface IAbilityUser
     event Action<IAbilityPresentationData> OnFinish;
 
     IReadOnlyList<AbilitySlot> Slots { get; }
+    IReadOnlyList<AbilityInstance> AbilityInstances { get; }
 
     void OnUpdate();
     Ability Use(int index, NetworkBehaviour target = null);

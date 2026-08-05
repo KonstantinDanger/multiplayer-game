@@ -18,6 +18,7 @@ public abstract class Ability
     public virtual float Duration { get; protected set; } = 0f;
     public bool IsPerforming { get; private set; }
     public bool IsRecharging => Time.time < _nextUsageTime;
+    public float UseTime { get; private set; }
     public float RechargeProgress
     {
         get
@@ -65,6 +66,7 @@ public abstract class Ability
     protected internal IEnumerator PerformRoutine(NetworkBehaviour sender, NetworkBehaviour target)
     {
         IsPerforming = true;
+        UseTime = Time.time;
 
         if (UsagePrepareTime > 0)
             yield return PrepareUsageRoutine();

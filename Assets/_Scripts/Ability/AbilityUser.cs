@@ -10,6 +10,7 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
     private ParallelAbilityExecutionMatrix _executionMatrix;
 
     public IReadOnlyList<AbilitySlot> Slots => _slots;
+    public IReadOnlyList<AbilityInstance> AbilityInstances => _abilityInstances;
 
     public event Action<IAbilityPresentationData, float> OnPreparation;
     public event Action<IAbilityPresentationData, float> OnPerform;

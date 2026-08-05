@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Ability/Ability")]
 public class ScriptableAbility : ScriptableObject, IAbilityPresentationData
 {
-    [field: SerializeField] public virtual string Name { get; private set; }
+    [field: SerializeField] public string Name { get; private set; }
     [SerializeReference, SubclassSelector] private Ability _ability;
 
     [field: Header("UI")]
@@ -22,20 +22,4 @@ public class ScriptableAbility : ScriptableObject, IAbilityPresentationData
 
     public Type GetAbilityType()
         => _ability.GetType();
-
-    //public override bool Equals(object obj)
-    //{
-    //    if (obj is not ScriptableAbility other)
-    //        return false;
-
-    //    if (PreparationAnimation == null || UsageAnimation == null)
-    //        return base.Equals(obj);
-
-    //    return other.Equals(obj)
-    //        && EqualityComparer<AnimationClip>.Default.Equals(other.PreparationAnimation, PreparationAnimation)
-    //        && EqualityComparer<AnimationClip>.Default.Equals(UsageAnimation, UsageAnimation);
-    //}
-
-    //public override int GetHashCode()
-    //    => base.GetHashCode();
 }
