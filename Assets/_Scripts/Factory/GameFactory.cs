@@ -79,11 +79,10 @@ public class GameFactory : NetworkBehaviour
         {
             foreach (SkinnedMeshRenderer mRend in sMeshRenderers)
             {
-                Utils.CloneMeshRenderer(mRend, visuals.transform);
+                var renderer = Utils.CloneMeshRenderer(mRend, visuals.transform);
+                renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
             }
         }
-
-        visuals.transform.Rotate(gameObject.transform.right, -90f);
 
         decoy.transform.SetPositionAndRotation(position, rotation);
         SpawnOnServer(decoy.gameObject, sender.gameObject);

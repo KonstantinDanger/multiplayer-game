@@ -16,7 +16,7 @@ public class BlindEffect : ProlongedStatusEffect
                 blindEffect.Blind(Duration);
             }
         }
-        if (target.TryGetComponent(out _entitysMemory))
+        else if (target.TryGetComponent(out _entitysMemory))
         {
             _entitysTarget = _entitysMemory.Target;
 

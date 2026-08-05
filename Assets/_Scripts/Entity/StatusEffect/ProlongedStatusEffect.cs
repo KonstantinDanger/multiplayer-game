@@ -9,14 +9,18 @@ public abstract class ProlongedStatusEffect : StatusEffect
     protected float ExpirationTime { get; set; }
     public bool Active => Time.time < ExpirationTime || Accumulation > 0f;
 
+    private bool _applied;
+
     public sealed override void Proc(GameObject target)
     {
-        if (Active)
+        if (_applied)
             return;
 
         ExpirationTime = Time.time + Duration;
 
         OnProc(target);
+
+        _applied = true;
     }
 
     protected abstract void OnProc(GameObject target);
