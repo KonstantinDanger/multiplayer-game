@@ -45,7 +45,6 @@ public class Projectile : NetworkBehaviour
     private void Destroy()
         => NetworkServer.Destroy(gameObject);
 
-
     private void Update()
     {
         if (_movementMethod.UpdateMethod == MovementUpdate.Common)
@@ -63,11 +62,23 @@ public class Projectile : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out Entity entity))
-            if (entity.TeamId == Data.Damage.TeamId)
-                return;
+        if (MatchesTeam(other.gameObject))
+            return;
 
         _collisionReaction.Collide(other, this);
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (MatchesTeam(other.gameObject))
+            return;
+
+        _collisionReaction.ContinuousCollide(other, this);
+    }
+
+    private bool MatchesTeam(GameObject gameObject)
+        => gameObject.TryGetComponent(out Entity entity)
+        && entity.TeamId == Data.Damage.TeamId;
+
 }
 

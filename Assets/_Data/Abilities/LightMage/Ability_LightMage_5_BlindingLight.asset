@@ -40,6 +40,6 @@ MonoBehaviour:
         layersToDetect:
           serializedVersion: 2
           m_Bits: 896
-        includeSender: 1
+        includeSender: 0
         _fieldOfViewAngle: 90
-        _ignoreFieldOfView: 1
+        _ignoreFieldOfView: 0

@@ -15,15 +15,19 @@ public abstract class ProjectileCollisionReaction
     {
         OnCollide(collider, self);
 
-        if (_afterCollision == null)
-        {
-            UnityEngine.Object.Destroy(self.gameObject);
-            return;
-        }
+        //if (_afterCollision == null)
+        //{
+        //    UnityEngine.Object.Destroy(self.gameObject);
+        //    return;
+        //}
 
         OnCollided?.Invoke();
         _afterCollision?.PerformAfterCollision(collider, self);
     }
 
+    public void ContinuousCollide(Collider other, Projectile self)
+        => OnContinuousCollide(other, self);
+
     protected abstract void OnCollide(Collider collider, Projectile self);
+    protected virtual void OnContinuousCollide(Collider collider, Projectile self) { }
 }
