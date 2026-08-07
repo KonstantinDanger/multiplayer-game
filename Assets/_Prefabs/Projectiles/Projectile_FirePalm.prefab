@@ -379,7 +379,7 @@ Transform:
   m_GameObject: {fileID: 3883377695013094524}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 0.139, y: 0, z: 0}
+  m_LocalPosition: {x: 0.355, y: -1.119, z: 0}
   m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -823,7 +823,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1402403251394149760, guid: d50c0d7d71c33ae4f8a4d246a04bcc38, type: 3}
       propertyPath: m_Name
-      value: Projectile_FireHand
+      value: Projectile_FirePalm
       objectReference: {fileID: 0}
     - target: {fileID: 2216374892289821564, guid: d50c0d7d71c33ae4f8a4d246a04bcc38, type: 3}
       propertyPath: _assetId
@@ -886,12 +886,36 @@ PrefabInstance:
       value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 7130635161872041549, guid: d50c0d7d71c33ae4f8a4d246a04bcc38, type: 3}
+      propertyPath: managedReferences[9013964967232143428]._alignToSurface
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130635161872041549, guid: d50c0d7d71c33ae4f8a4d246a04bcc38, type: 3}
       propertyPath: managedReferences[9013964967232143428]._speedMultiplier
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7130635161872041549, guid: d50c0d7d71c33ae4f8a4d246a04bcc38, type: 3}
       propertyPath: managedReferences[8956606477348110339]._timeBetweenAttacks
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130635161872041549, guid: d50c0d7d71c33ae4f8a4d246a04bcc38, type: 3}
+      propertyPath: managedReferences[9013964967232143428]._rotationSmoothness
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130635161872041549, guid: d50c0d7d71c33ae4f8a4d246a04bcc38, type: 3}
+      propertyPath: managedReferences[9013964967232143428]._surfaceFloatOffset
+      value: 1.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130635161872041549, guid: d50c0d7d71c33ae4f8a4d246a04bcc38, type: 3}
+      propertyPath: managedReferences[9013964967232143428]._surfaceLayers.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130635161872041549, guid: d50c0d7d71c33ae4f8a4d246a04bcc38, type: 3}
+      propertyPath: managedReferences[9013964967232143428]._surfaceCheckRayLength
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130635161872041549, guid: d50c0d7d71c33ae4f8a4d246a04bcc38, type: 3}
+      propertyPath: managedReferences[9013964967232143428]._surfaceAlignmentDistance
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 7130635161872041549, guid: d50c0d7d71c33ae4f8a4d246a04bcc38, type: 3}
       propertyPath: managedReferences[8956606477348110339].OnCollided.m_PersistentCalls.m_Calls.Array.size
@@ -927,14 +951,14 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.8066146, y: 4.362583, z: 1}
-  m_Center: {x: -0.16052115, y: 1.6515346, z: 0}
+  m_Size: {x: 2.8126168, y: 4.25149, z: 1}
+  m_Center: {x: -0.00016635656, y: 0.52975726, z: 0}
 --- !u!4 &6780759387875041017 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5806848949953003524, guid: d50c0d7d71c33ae4f8a4d246a04bcc38, type: 3}

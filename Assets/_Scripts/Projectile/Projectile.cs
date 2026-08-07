@@ -58,7 +58,7 @@ public class Projectile : NetworkBehaviour
     }
 
     private void MoveProjectile(float deltaTime)
-        => _movementMethod.Move(Data.Speed * deltaTime * Data.Direction);
+        => _movementMethod.Move(this, Data.Speed * deltaTime * Data.Direction);
 
     private void OnTriggerEnter(Collider other)
     {
@@ -79,6 +79,5 @@ public class Projectile : NetworkBehaviour
     private bool MatchesTeam(GameObject gameObject)
         => gameObject.TryGetComponent(out Entity entity)
         && entity.TeamId == Data.Damage.TeamId;
-
 }
 

@@ -8,7 +8,7 @@ public class RigidBodyMovement : ProjectileMovementMethod
     [SerializeField] private ForceMode _forceMode = ForceMode.VelocityChange;
     [SerializeField, Range(0.001f, 100)] private float _speedMultiplier = 10f;
 
-    public override void Move(Vector3 velocity)
+    protected override void OnMove(Projectile self, Vector3 velocity)
     {
         if (velocity == Vector3.zero)
         {
