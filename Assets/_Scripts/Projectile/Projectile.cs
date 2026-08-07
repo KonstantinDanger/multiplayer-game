@@ -58,7 +58,7 @@ public class Projectile : NetworkBehaviour
     }
 
     private void MoveProjectile(float deltaTime)
-        => _movementMethod.Move(this, Data.Speed * deltaTime * Data.Direction);
+        => _movementMethod.Move(this, Data.Speed * deltaTime * Data.Direction, deltaTime);
 
     private void OnTriggerEnter(Collider other)
     {
