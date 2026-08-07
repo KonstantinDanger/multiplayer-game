@@ -46,20 +46,20 @@ public abstract class ProjectileMovementMethod
 
         velocity = projectedDirection * velocity.magnitude;
 
-        MaintainHeight(self, ref hit, ref velocity);
+        MaintainHeight(self, ref hit, ref velocity, deltaTime);
 
         AlignRotation(self, ref hit, velocity, deltaTime);
 
         return velocity;
     }
 
-    private void MaintainHeight(Projectile self, ref RaycastHit hit, ref Vector3 velocity)
+    private void MaintainHeight(Projectile self, ref RaycastHit hit, ref Vector3 velocity, float deltaTime)
     {
         float distance = Vector3.Dot(self.transform.position - hit.point, hit.normal);
         float heightError = _surfaceFloatOffset - distance;
         Vector3 heightCorrection = hit.normal * heightError;
 
-        velocity = velocity + heightCorrection * Time.deltaTime;
+        velocity = velocity + heightCorrection * deltaTime;
     }
 
     private static Vector3 ProjectOnPlane(Projectile self, ref RaycastHit hit, Vector3 moveDirection)
