@@ -16,6 +16,7 @@ MonoBehaviour:
   _ability:
     rid: 4564918620506292294
   <SpriteIcon>k__BackingField: {fileID: 21300000, guid: 406984ac0d0fc2c4bbaf906048f7c43e, type: 3}
+  <ConsiderAbilityDuration>k__BackingField: 0
   <PreparationAnimation>k__BackingField: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
   <UsageAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
   references:
@@ -31,10 +32,11 @@ MonoBehaviour:
     - rid: 7065201713519525997
       type: {class: DefaultAttack, ns: , asm: Assembly-CSharp}
       data:
-        Amount: 8
+        Amount: 20
         TimeBetweenAttacks: 0
+        _detectTargetsOnEachAttack: 1
         Damage:
-          Amount: 5
+          Amount: 2
           Type: 0
           Range: 15
           SenderNetId: 0
@@ -49,7 +51,7 @@ MonoBehaviour:
           serializedVersion: 2
           m_Bits: 896
         includeSender: 0
-        _verticalSpreadAngle: 0.15
-        _horizontalSpreadAngle: 0.15
+        _verticalSpreadAngle: 4
+        _horizontalSpreadAngle: 4
         _useSphereCast: 0
         _sphereRange: 0

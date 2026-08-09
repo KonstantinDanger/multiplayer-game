@@ -9,6 +9,7 @@ public abstract class Attack
 {
     [SerializeField, Range(1, 1000)] protected int Amount = 1;
     [SerializeField, Range(0, 5)] protected float TimeBetweenAttacks = 0;
+    [SerializeField] private bool _detectTargetsOnEachAttack;
     [SerializeField] public Damage Damage;
 
     [Header("Target detection")]
@@ -34,19 +35,23 @@ public abstract class Attack
         if (RequireAlternatingAttacks())
         {
             yield return AlternateAttacksRoutine(sender);
+
             yield break;
         }
 
+        List<GameObject> cachedTargets = FindTargets(sender.gameObject);
+
         for (int i = 0; i < Amount; i++)
         {
-            yield return OnTargetsDetected(sender);
+            yield return OnTargetsDetected(sender,
+                _detectTargetsOnEachAttack == true ?
+                FindTargets(sender.gameObject) :
+                cachedTargets);
         }
     }
 
-    protected virtual IEnumerator OnTargetsDetected(NetworkBehaviour sender)
+    protected virtual IEnumerator OnTargetsDetected(NetworkBehaviour sender, List<GameObject> targets)
     {
-        var targets = FindTargets(sender.gameObject);
-
         for (int j = 0; j < targets.Count; j++)
         {
             yield return OnApply(sender, targets[j]);
@@ -80,13 +85,17 @@ public abstract class Attack
         int currentAttackNum = 1;
         float elapsedAttackTime = TimeBetweenAttacks;
 
+        List<GameObject> cachedTargets = FindTargets(sender.gameObject);
+
         while (currentAttackNum <= Amount)
         {
             elapsedAttackTime += Time.deltaTime;
 
             if (elapsedAttackTime >= TimeBetweenAttacks)
             {
-                yield return OnTargetsDetected(sender);
+                yield return OnTargetsDetected(sender, _detectTargetsOnEachAttack == true ?
+                FindTargets(sender.gameObject) :
+                cachedTargets);
 
                 elapsedAttackTime = 0f;
                 currentAttackNum++;

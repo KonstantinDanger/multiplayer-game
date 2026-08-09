@@ -16,6 +16,7 @@ MonoBehaviour:
   _ability:
     rid: 7065201714978619479
   <SpriteIcon>k__BackingField: {fileID: 21300000, guid: 14a0f66a7be165c4ba476e3d7c40e390, type: 3}
+  <ConsiderAbilityDuration>k__BackingField: 0
   <PreparationAnimation>k__BackingField: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
   <UsageAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
   references:
@@ -33,6 +34,7 @@ MonoBehaviour:
       data:
         Amount: 20
         TimeBetweenAttacks: 0.1
+        _detectTargetsOnEachAttack: 1
         Damage:
           Amount: 1.5
           Type: 0

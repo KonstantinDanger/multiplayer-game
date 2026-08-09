@@ -1,6 +1,7 @@
 ﻿using Mirror;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -16,12 +17,15 @@ public class ProjectileLaunchAttack : Attack
     private float _scaleMultiplier = 1f;
     private float _damageMultiplier = 1f;
 
-    protected override IEnumerator OnTargetsDetected(NetworkBehaviour sender)
+    protected override IEnumerator OnTargetsDetected(NetworkBehaviour sender, List<GameObject> targets)
     {
         yield return OnApply(sender, null);
     }
 
     protected override IEnumerator OnApply(NetworkBehaviour sender, GameObject target)
+        => LaunchProjectile(sender);
+
+    protected IEnumerator LaunchProjectile(NetworkBehaviour sender)
     {
         _factory = ServiceLocator.Container.Resolve<GameFactory>();
 
