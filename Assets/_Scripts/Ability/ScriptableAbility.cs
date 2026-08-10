@@ -14,7 +14,9 @@ public class ScriptableAbility : ScriptableObject, IAbilityPresentationData
     [field: SerializeField] public bool ConsiderAbilityDuration { get; private set; }
     [field: SerializeField] public AnimationClip PreparationAnimation { get; private set; }
     [field: SerializeField] public AnimationClip UsageAnimation { get; private set; }
-    //[field: Header("VFX")]
+    [field: Header("VFX")]
+
+    [field: SerializeField] public ParticleSystem PerformParticle { get; private set; }
     //[field: Header("SFX")]
 
     public Ability GetNew()

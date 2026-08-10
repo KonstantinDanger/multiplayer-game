@@ -37,19 +37,16 @@ public abstract class Ability
         if (IsRecharging)
             return false;
 
-        if (IsPerforming)
+        switch (OnPerformRequested(sender, target))
         {
-            switch (OnPerformRequested(sender, target))
-            {
-                case AbilityRequestStatus.Success:
-                    break;
+            case AbilityRequestStatus.Success:
+                break;
 
-                case AbilityRequestStatus.InterruptWithSuccess:
-                    return true;
+            case AbilityRequestStatus.InterruptWithSuccess:
+                return true;
 
-                case AbilityRequestStatus.Deny:
-                    return false;
-            }
+            case AbilityRequestStatus.Deny:
+                return false;
         }
 
         IsPerforming = true;

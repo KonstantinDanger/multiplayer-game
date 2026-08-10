@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7455861525682740901}
   - component: {fileID: -4226432399139009220}
   m_Layer: 0
-  m_Name: FireWall
+  m_Name: Projectile_FireWall_Old
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
