@@ -7,62 +7,85 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class StatusEffectHandler : NetworkBehaviour
 {
-    private readonly Dictionary<Type, StatusEffect> _effects = new();
+    public event Action<IStatusEffectPresentationData> OnInstantEffectProc;
+    public event Action<IStatusEffectPresentationData> OnProlongedEffectProc;
+    public event Action<IStatusEffectPresentationData> OnProlongedEffectRemoved;
+
+    private readonly Dictionary<ScriptableStatusEffect, StatusEffectInstance> _effects = new();
 
     private void Update()
     {
         if (_effects.Count == 0)
             return;
 
-        foreach (var effect in _effects.Values.ToList())
+        foreach (var pair in _effects.ToList())
         {
+            StatusEffect effect = pair.Value.Effect;
+
             effect.Tick(Time.deltaTime);
 
             if (effect.Accumulation <= 0f)
-                RemoveEffect(effect);
+                RemoveEffect(pair.Key);
         }
     }
 
-    public void Cleanse(StatusEffect effect)
+    public void Cleanse(ScriptableStatusEffect effect)
     {
-        if (_effects.TryGetValue(effect.GetType(), out StatusEffect eff))
-            RemoveEffect(eff);
+        if (_effects.ContainsKey(effect))
+            RemoveEffect(effect);
     }
 
-    public void TryProc(StatusEffect effect, float amount)
+    public void CleanseAll()
+    {
+        foreach (var item in _effects)
+            item.Value.Effect.Reset();
+
+        _effects.Clear();
+    }
+
+    public void TryProc(ScriptableStatusEffect effect, float accumulationAmount, bool procGuarantee = false)
     {
         StatusEffect eff = GetOrAdd(effect);
 
         if (eff is ProlongedStatusEffect prolonged && prolonged.Active)
             return;
 
-        if (eff.Accumulate(amount))
+        if (procGuarantee)
+            accumulationAmount = eff.MaxAccumulationAmount;
+
+        if (eff.Accumulate(accumulationAmount))
         {
             eff.Proc(gameObject);
 
             if (eff is InstantStatusEffect)
+            {
+                OnInstantEffectProc?.Invoke(effect);
                 RemoveEffect(effect);
+            }
+            else
+            {
+                OnProlongedEffectProc?.Invoke(effect);
+            }
         }
     }
 
-    private StatusEffect GetOrAdd(StatusEffect effect)
+    private StatusEffect GetOrAdd(ScriptableStatusEffect effect)
     {
-        Type type = effect.GetType();
+        if (!_effects.ContainsKey(effect))
+            _effects.Add(effect, new StatusEffectInstance(effect, effect.GetNew()));
 
-        if (!_effects.ContainsKey(type))
-            _effects.Add(type, effect);
-
-        return _effects[type];
+        return _effects[effect].Effect;
     }
 
-    private void RemoveEffect(StatusEffect effect)
+    private void RemoveEffect(ScriptableStatusEffect effect)
     {
-        Type type = effect.GetType();
-
-        if (_effects.TryGetValue(type, out StatusEffect eff))
+        if (_effects.TryGetValue(effect, out StatusEffectInstance instance))
         {
-            eff.Reset();
-            _effects.Remove(type);
+            instance.Effect.Reset();
+            _effects.Remove(effect);
+
+            if (instance.Effect is ProlongedStatusEffect)
+                OnProlongedEffectRemoved?.Invoke(effect);
         }
     }
 

@@ -397,6 +397,7 @@ GameObject:
   - component: {fileID: 6766108360299921559}
   - component: {fileID: 1912689362476828142}
   - component: {fileID: 9105974345789240010}
+  - component: {fileID: 6674899953503546016}
   m_Layer: 7
   m_Name: Prefab_Player
   m_TagString: Untagged
@@ -1000,6 +1001,25 @@ MonoBehaviour:
   _movable:
     _underlyingValue: {fileID: 3077047436821481876}
   _velocityAngleToRenderTrail: 180
+--- !u!114 &6674899953503546016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4047092069969861197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d37e681b0ac4d84c8c3eb3cd20eea2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  _effectHandler: {fileID: 8431226382886630826}
+  _meshRenderer: {fileID: 0}
+  _skinnedMeshRenderer: {fileID: 3577611303703540176}
+  _shapeType: 14
 --- !u!1 &4641920328616467223
 GameObject:
   m_ObjectHideFlags: 0

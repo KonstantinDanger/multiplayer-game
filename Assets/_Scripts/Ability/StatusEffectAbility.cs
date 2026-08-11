@@ -32,15 +32,17 @@ public class StatusEffectAbility : Ability
             if (_procOnSelfOnly && item != sender.gameObject)
                 continue;
 
-            TryProc(item, _effect.GetNew());
+            TryProc(item, _effect);
         }
 
         yield return null;
     }
 
-    private void TryProc(GameObject target, StatusEffect effect)
+    private void TryProc(GameObject target, ScriptableStatusEffect effect)
     {
         if (target.TryGetComponent(out StatusEffectHandler effectsHandler))
-            effectsHandler.TryProc(effect, _procGuarantee ? effect.MaxAccumulationAmount : _accumulationAmount);
+        {
+            effectsHandler.TryProc(effect, _accumulationAmount, _procGuarantee);
+        }
     }
 }

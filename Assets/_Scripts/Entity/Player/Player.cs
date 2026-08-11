@@ -156,7 +156,7 @@ public class Player : Entity
         if (Keyboard.current.pKey.wasPressedThisFrame)
         {
 
-            handler.TryProc(_statusEffectForTesting.GetNew(), 10);
+            handler.TryProc(_statusEffectForTesting, 10);
 
 
         }

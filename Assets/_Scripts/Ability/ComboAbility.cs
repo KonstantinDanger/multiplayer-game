@@ -52,6 +52,9 @@ public class ComboAbility : Ability
 
     protected override AbilityRequestStatus OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target)
     {
+        if (!IsPerforming)
+            return AbilityRequestStatus.Success;
+
         _cacheNext = true;
 
         return AbilityRequestStatus.InterruptWithSuccess;

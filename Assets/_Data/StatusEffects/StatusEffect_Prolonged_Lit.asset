@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _statusEffect:
     rid: 7065201625982304339
+  <ProcParticle>k__BackingField: {fileID: 4055360347088348806, guid: 1a47d208a32e3dd419f4324452f1885f, type: 3}
+  <ProlongedStatusParticle>k__BackingField: {fileID: 4055360347088348806, guid: 1a47d208a32e3dd419f4324452f1885f, type: 3}
   references:
     version: 2
     RefIds:

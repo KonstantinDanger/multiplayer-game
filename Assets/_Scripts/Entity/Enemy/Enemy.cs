@@ -24,11 +24,6 @@ public abstract class Enemy : Entity
     {
         base.OnValidate();
 
-        _targetDetector = _enemyConfig.GetNewTargetDetector();
-
-        if (_targetDetector == null)
-            _targetDetector = new TargetDetectorSphereOverlapper();
-
         if (TargetTrackingMemory == null)
             TargetTrackingMemoryRef.Value = GetComponent<ITargetTrackingMemory>();
 
@@ -38,6 +33,11 @@ public abstract class Enemy : Entity
 
     private void Awake()
     {
+        _targetDetector = _enemyConfig.GetNewTargetDetector();
+
+        if (_targetDetector == null)
+            _targetDetector = new TargetDetectorSphereOverlapper();
+
         _aiBrain.Initialize(this, _enemyConfig.AIActions);
         DetectionTimer = DetectionConfig.DetectionInterval;
     }

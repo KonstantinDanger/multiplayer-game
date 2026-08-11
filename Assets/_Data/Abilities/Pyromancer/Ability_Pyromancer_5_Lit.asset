@@ -19,6 +19,7 @@ MonoBehaviour:
   <ConsiderAbilityDuration>k__BackingField: 1
   <PreparationAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
   <UsageAnimation>k__BackingField: {fileID: 0}
+  <PerformParticle>k__BackingField: {fileID: 0}
   references:
     version: 2
     RefIds:
