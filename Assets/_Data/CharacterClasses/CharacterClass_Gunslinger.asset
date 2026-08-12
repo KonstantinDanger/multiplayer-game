@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91149951e6a534b4f939a4b91764bc08, type: 3}
+  m_Name: CharacterClass_Gunslinger
+  m_EditorClassIdentifier: 
+  <ClassName>k__BackingField: Gunslinger
+  <PreviewSprite>k__BackingField: {fileID: 21300000, guid: b123bdad4f47a734c80135e456f2d162, type: 3}
+  <AbilityExecutionMatrix>k__BackingField: {fileID: 0}
+  _abilities:
+  - {fileID: 11400000, guid: 1ad7edddd0f42164e95058d574f81e0f, type: 2}
+  - {fileID: 11400000, guid: deca4cc698d7f7e4dbad7e576bce46df, type: 2}
+  - {fileID: 11400000, guid: 3fab281483d5e3347851c4b9b57d83fb, type: 2}
+  - {fileID: 11400000, guid: d0b26a49790c58144873c066c279c4ef, type: 2}
+  - {fileID: 11400000, guid: 385662e833fdaff4fac72050b2cae99e, type: 2}
+  _weaponUser:
+    rid: 8956606609910923367
+  references:
+    version: 2
+    RefIds:
+    - rid: 8956606609910923367
+      type: {class: MultipleWeaponsUser, ns: , asm: Assembly-CSharp}
+      data: 

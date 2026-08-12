@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eedb7db48f6b7c44be8e8c890e9d4ae, type: 3}
+  m_Name: Ability_Gunslinger_Revolver_2_Parry
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: Parry
+  _ability:
+    rid: 8956606609910923373
+  <SpriteIcon>k__BackingField: {fileID: 21300000, guid: 530bcabb1501d8148a19a77465ecac03, type: 3}
+  <ConsiderAbilityDuration>k__BackingField: 0
+  <PreparationAnimation>k__BackingField: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
+  <UsageAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
+  <PerformParticle>k__BackingField: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 8956606609910923373
+      type: {class: ParryAbility, ns: , asm: Assembly-CSharp}
+      data:
+        <CooldownTime>k__BackingField: 1
+        <UsagePrepareTime>k__BackingField: 0
+        _targetDetector:
+          rid: 8956606609910923374
+        _parryTime: 0.08
+        _parryRadius: 0.5
+    - rid: 8956606609910923374
+      type: {class: TargetDetectorCaster, ns: , asm: Assembly-CSharp}
+      data:
+        layersToDetect:
+          serializedVersion: 2
+          m_Bits: 896
+        includeSender: 0
+        _verticalSpreadAngle: 0
+        _horizontalSpreadAngle: 0
+        _useSphereCast: 1
+        _sphereRange: 0.1

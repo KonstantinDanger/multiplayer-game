@@ -23,6 +23,7 @@ public class Player : Entity
     [SerializeField] private Interactor _interactor;
     [SerializeField] private InterfaceReference<IPlayerInputBrain> _inputRef;
     [SerializeField] private MatchStatusReceiver _matchStatusReceiver;
+    [SerializeField] private WeaponUserComponent _weaponUserComponent;
 
     public ScriptableCharacterClass CharacterClass { get; private set; }
     public IPlayerInputBrain Input => _inputRef.Value;
@@ -280,6 +281,8 @@ public class Player : Entity
             throw new System.Exception("No class found!");
 
         CharacterClass = @class;
+
+        _weaponUserComponent.Initialize(@class.GetWeaponUser());
 
         _abilities.Initialize(CharacterClass
             .GetNew()

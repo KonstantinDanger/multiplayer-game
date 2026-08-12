@@ -1,40 +1,31 @@
 ﻿using System;
-using UnityEngine;
 
+[Serializable]
 public class SingleWeaponUser : WeaponUser
 {
-    [SerializeField] private Transform _weaponHolderTransform;
-    [SerializeField] private MeshFilter _weaponMesh;
-    [SerializeField] private MeshRenderer _weaponRenderer;
+    private ScriptableWeapon _selectedWeapon;
 
-    private ScriptableWeapon _weapon;
+    public override ScriptableWeapon SelectedWeapon => _selectedWeapon;
 
     public override void Equip(ScriptableWeapon weapon)
     {
-        if (HasEquipped())
+        if (HasEquipped(weapon))
             Unequip();
 
-        _weapon = weapon;
-        Mesh mesh = weapon.Mesh;
-        mesh.bounds = new Bounds(_weaponHolderTransform.localPosition, mesh.bounds.size);
-        _weaponMesh.mesh = weapon.Mesh;
+        _selectedWeapon = weapon;
 
-        Material[] materials = new Material[weapon.Materials.Length];
-
-        Array.Copy(weapon.Materials, materials, weapon.Materials.Length);
-
-        _weaponRenderer.materials = materials;
-
-        _weaponMesh.mesh.RecalculateBounds();
+        SetMesh(SelectedWeapon.Mesh, SelectedWeapon.Materials);
     }
 
-    public override bool HasEquipped()
-        => _weapon != null;
+    public override bool HasEquipped(ScriptableWeapon weapon)
+        => SelectedWeapon == weapon;
+
+    public override bool HasEquippedAny()
+        => SelectedWeapon != null;
 
     public override void Unequip()
     {
-        _weapon = null;
-        _weaponMesh.mesh.Clear();
-        _weaponRenderer.materials = null;
+        _selectedWeapon = null;
+        ResetMesh();
     }
 }

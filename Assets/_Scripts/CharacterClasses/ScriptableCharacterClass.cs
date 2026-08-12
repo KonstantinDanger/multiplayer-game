@@ -10,11 +10,16 @@ public class ScriptableCharacterClass : ScriptableObject
 
     [SerializeField] private List<ScriptableAbility> _abilities = new();
 
+    [SerializeReference, SubclassSelector] private WeaponUser _weaponUser;
+
     public CharacterClass GetNew()
     {
         List<ScriptableAbility> abilities = new(_abilities);
 
         return new(abilities);
     }
+
+    public WeaponUser GetWeaponUser()
+        => _weaponUser == null ? null : Utils.GetInstancedCopyOf(_weaponUser);
 }
 

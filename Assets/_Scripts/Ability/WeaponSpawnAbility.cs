@@ -17,8 +17,16 @@ public class WeaponSpawnAbility : Ability
     {
         Skipped = false;
 
-        if (!sender.TryGetComponent(out WeaponUser weaponUser))
+        if (!sender.TryGetComponent(out WeaponUserComponent weaponUserComponent))
             yield break;
+
+        WeaponUser weaponUser = weaponUserComponent.WeaponUser;
+
+        if (weaponUser == null)
+        {
+            UnityEngine.Debug.Log("No weapon user found while performing weapon spawn ability ");
+            yield break;
+        }
 
         if (WeaponExists(weaponUser))
         {
@@ -32,13 +40,8 @@ public class WeaponSpawnAbility : Ability
     }
 
     private bool WeaponExists(WeaponUser user)
-        => user.HasEquipped();
+        => user.HasEquippedAny();
 
     private void SpawnWeapon(WeaponUser user)
-    {
-        if (WeaponExists(user))
-            return;
-
-        user.Equip(_weapon);
-    }
+        => user.Equip(_weapon);
 }

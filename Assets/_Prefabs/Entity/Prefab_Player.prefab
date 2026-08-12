@@ -395,9 +395,9 @@ GameObject:
   - component: {fileID: 6606234616696880050}
   - component: {fileID: 8431226382886630826}
   - component: {fileID: 6766108360299921559}
-  - component: {fileID: 1912689362476828142}
   - component: {fileID: 9105974345789240010}
   - component: {fileID: 6674899953503546016}
+  - component: {fileID: 9056516261049268748}
   m_Layer: 7
   m_Name: Prefab_Player
   m_TagString: Untagged
@@ -458,10 +458,10 @@ MonoBehaviour:
   SteamID: 0
   SteamName: 
   _damager: {fileID: 6606234616696880050}
-  _statusEffectForTesting: {fileID: 11400000, guid: cd1e1e28873709348a44aae9ce9d2503, type: 2}
+  _statusEffectForTesting: {fileID: 11400000, guid: d2ff61c7e9363f4449a0765292f7b535, type: 2}
   _respawn: {fileID: 6200438880601125725}
   _abilities: {fileID: 5132097041645439728}
-  _baseCharacterClass: {fileID: 11400000, guid: 9f4fb1f6f2f5b31449d70feab0f1f33e, type: 2}
+  _baseCharacterClass: {fileID: 11400000, guid: c5ec7c1fbf6a2704abdc7b817a31b5f5, type: 2}
   _level: {fileID: 3897486771464272008}
   _upgrader: {fileID: 8354765473121511370}
   _wallet: {fileID: 3853550027420888497}
@@ -469,6 +469,7 @@ MonoBehaviour:
   _inputRef:
     _underlyingValue: {fileID: 5886189041842934009}
   _matchStatusReceiver: {fileID: 514405708428278024}
+  _weaponUserComponent: {fileID: 9056516261049268748}
 --- !u!143 &856957943013325311
 CharacterController:
   m_ObjectHideFlags: 0
@@ -967,24 +968,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1912689362476828142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4047092069969861197}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cafeee9f7a18b834c871c045ac7ae8dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  _weaponHolderTransform: {fileID: 2096463974987129432}
-  _weaponMesh: {fileID: 3756047099896886134}
-  _weaponRenderer: {fileID: 13023902701254484}
 --- !u!114 &9105974345789240010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1020,6 +1003,21 @@ MonoBehaviour:
   _meshRenderer: {fileID: 0}
   _skinnedMeshRenderer: {fileID: 3577611303703540176}
   _shapeType: 14
+--- !u!114 &9056516261049268748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4047092069969861197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9768f150e7d43bc4e95d626d1d9a562e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponHolderTransform: {fileID: 7483603879052790454}
+  _weaponMesh: {fileID: 3756047099896886134}
+  _weaponRenderer: {fileID: 13023902701254484}
 --- !u!1 &4641920328616467223
 GameObject:
   m_ObjectHideFlags: 0

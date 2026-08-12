@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-public class MultipleWeaponUser : WeaponUser
+[Serializable]
+public class MultipleWeaponsUser : WeaponUser
 {
-    private List<ScriptableWeapon> _weapons = new();
+    private readonly List<ScriptableWeapon> _weapons = new();
 
     private int _selectedIndex;
 
-    private ScriptableWeapon SelectedWeapon => _weapons.Count == 0 ? null : _weapons[_selectedIndex - 1];
+    public override ScriptableWeapon SelectedWeapon => _weapons.Count == 0 ? null : _weapons[_selectedIndex - 1];
 
     public void EquipNext()
     {
@@ -14,7 +16,9 @@ public class MultipleWeaponUser : WeaponUser
             _selectedIndex = 0;
         else
             _selectedIndex++;
-        // Update mesh
+
+        ResetMesh();
+        SetMesh(SelectedWeapon.Mesh, SelectedWeapon.Materials);
     }
 
     public void EquipPrev()
@@ -24,7 +28,8 @@ public class MultipleWeaponUser : WeaponUser
         else
             _selectedIndex--;
 
-        // Update mesh
+        ResetMesh();
+        SetMesh(SelectedWeapon.Mesh, SelectedWeapon.Materials);
     }
 
     public override void Equip(ScriptableWeapon weapon)
@@ -34,12 +39,14 @@ public class MultipleWeaponUser : WeaponUser
 
         _weapons.Add(weapon);
 
-        // Assign mesh
-
         _selectedIndex++;
+
+        ResetMesh();
+        SetMesh(SelectedWeapon.Mesh, SelectedWeapon.Materials);
     }
 
-    public override bool HasEquipped() => SelectedWeapon != null;
+    public override bool HasEquipped(ScriptableWeapon weapon)
+        => _weapons.Contains(weapon);
 
     public override void Unequip()
     {
@@ -49,4 +56,7 @@ public class MultipleWeaponUser : WeaponUser
         _weapons.RemoveAt(_selectedIndex - 1);
         _selectedIndex--;
     }
+
+    public override bool HasEquippedAny()
+        => _weapons.Count > 0;
 }
