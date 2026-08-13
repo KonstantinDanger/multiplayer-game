@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4eedb7db48f6b7c44be8e8c890e9d4ae, type: 3}
-  m_Name: Ability_Gunslinger_Crossbow_1_Primary
+  m_Name: Ability_Gunslinger_Crossbow_3_TripleShot
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Crossbow shot
+  <Name>k__BackingField: Triple shot
   _ability:
     rid: 8956606609910923370
-  <SpriteIcon>k__BackingField: {fileID: 21300000, guid: 530bcabb1501d8148a19a77465ecac03, type: 3}
+  <SpriteIcon>k__BackingField: {fileID: 21300000, guid: b123bdad4f47a734c80135e456f2d162, type: 3}
   <ConsiderAbilityDuration>k__BackingField: 0
   <PreparationAnimation>k__BackingField: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
   <UsageAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
@@ -29,25 +29,25 @@ MonoBehaviour:
         <CooldownTime>k__BackingField: 1
         <UsagePrepareTime>k__BackingField: 0
         _attack:
-          rid: 8956606632581922816
-    - rid: 8956606632581922816
+          rid: 8956606632581922819
+    - rid: 8956606632581922819
       type: {class: ProjectileLaunchAttack, ns: , asm: Assembly-CSharp}
       data:
-        Amount: 1
-        TimeBetweenAttacks: 0
+        Amount: 3
+        TimeBetweenAttacks: 0.1
         _detectTargetsOnEachAttack: 0
         Damage:
-          Amount: 2
+          Amount: 17
           Type: 0
           Range: 15
           SenderNetId: 0
           ReceiverNetId: 0
           AttackDirection: {x: 0, y: 0, z: 0}
         _targetDetector:
-          rid: 8956606632581922822
-        _flightSpeed: 200
+          rid: 8956606632581922821
+        _flightSpeed: 175
         _projectilePrefab: {fileID: 8014522202720145984, guid: ebbfe0f2fd9bce4499cf0997f41c9df6, type: 3}
-    - rid: 8956606632581922822
+    - rid: 8956606632581922821
       type: {class: TargetDetectorNone, ns: , asm: Assembly-CSharp}
       data:
         layersToDetect:

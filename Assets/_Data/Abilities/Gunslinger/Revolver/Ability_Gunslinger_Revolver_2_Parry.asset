@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eedb7db48f6b7c44be8e8c890e9d4ae, type: 3}
   m_Name: Ability_Gunslinger_Revolver_2_Parry
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Parry
+  <Name>k__BackingField: Parry shot
   _ability:
     rid: 8956606609910923373
   <SpriteIcon>k__BackingField: {fileID: 21300000, guid: 530bcabb1501d8148a19a77465ecac03, type: 3}

@@ -12,7 +12,7 @@ public class SummonObjectAbility : Ability
 
     private GameObject _objectInstance;
 
-    protected override AbilityRequestStatus OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target)
+    protected internal override AbilityRequestStatus OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target)
     {
         if (!PerformRayCast(sender, out RaycastHit hit))
             return AbilityRequestStatus.Deny;

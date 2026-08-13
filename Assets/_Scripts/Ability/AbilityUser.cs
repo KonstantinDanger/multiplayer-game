@@ -1,6 +1,7 @@
 ﻿using Mirror;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class AbilityUser : NetworkBehaviour, IAbilityUser
 {
@@ -52,9 +53,9 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
                 (a, duration) => HandleAbilityPerform(a, duration),
                 (a) => HandleAbilityFinish(a)));
 
-        if (ability is ComboAbility comboAbility)
+        if (ability is ICacheAbilities abilityCacher)
         {
-            var cached = comboAbility.CacheAbilities();
+            var cached = abilityCacher.CacheAbilities().ToList();
 
             cached.ForEach(cachedInstance =>
             {

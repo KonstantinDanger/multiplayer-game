@@ -57,7 +57,7 @@ public abstract class Ability
         return true;
     }
 
-    protected virtual AbilityRequestStatus OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target)
+    protected internal virtual AbilityRequestStatus OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target)
         => IsPerforming ? AbilityRequestStatus.Deny : AbilityRequestStatus.Success;
 
     protected internal IEnumerator PerformRoutine(NetworkBehaviour sender, NetworkBehaviour target)

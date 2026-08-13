@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4eedb7db48f6b7c44be8e8c890e9d4ae, type: 3}
-  m_Name: Ability_Gunslinger_Revolver_3_CoinToss
+  m_Name: Ability_Gunslinger_Crossbow_2_Dash
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Coin toss
+  <Name>k__BackingField: Hunter dash
   _ability:
-    rid: -2
-  <SpriteIcon>k__BackingField: {fileID: 21300000, guid: 530bcabb1501d8148a19a77465ecac03, type: 3}
+    rid: 8956606632581922818
+  <SpriteIcon>k__BackingField: {fileID: 21300000, guid: c46be55a65cb30e44b7c89e3c0d531da, type: 3}
   <ConsiderAbilityDuration>k__BackingField: 0
   <PreparationAnimation>k__BackingField: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
   <UsageAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
@@ -23,5 +23,12 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 8956606632581922818
+      type: {class: MovementAbility, ns: , asm: Assembly-CSharp}
+      data:
+        <CooldownTime>k__BackingField: 1
+        <UsagePrepareTime>k__BackingField: 0
+        _directional: 1
+        _resetVerticalDirection: 1
+        _warpDistance: 10
+        _warpTime: 0.2

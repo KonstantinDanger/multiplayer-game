@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eedb7db48f6b7c44be8e8c890e9d4ae, type: 3}
   m_Name: Ability_Gunslinger_Shotgun_1_Primary
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Revolver shot
+  <Name>k__BackingField: Shotgund shot
   _ability:
     rid: 8956606609910923370
-  <SpriteIcon>k__BackingField: {fileID: 21300000, guid: 530bcabb1501d8148a19a77465ecac03, type: 3}
+  <SpriteIcon>k__BackingField: {fileID: 21300000, guid: 8d95bcf261f259f4786a397bc66e3705, type: 3}
   <ConsiderAbilityDuration>k__BackingField: 0
   <PreparationAnimation>k__BackingField: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
   <UsageAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
@@ -33,11 +33,11 @@ MonoBehaviour:
     - rid: 8956606609910923371
       type: {class: DefaultAttack, ns: , asm: Assembly-CSharp}
       data:
-        Amount: 1
+        Amount: 8
         TimeBetweenAttacks: 0
-        _detectTargetsOnEachAttack: 0
+        _detectTargetsOnEachAttack: 1
         Damage:
-          Amount: 15
+          Amount: 6
           Type: 0
           Range: 15
           SenderNetId: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
           serializedVersion: 2
           m_Bits: 896
         includeSender: 0
-        _verticalSpreadAngle: 0
-        _horizontalSpreadAngle: 0
+        _verticalSpreadAngle: 15
+        _horizontalSpreadAngle: 15
         _useSphereCast: 1
-        _sphereRange: 0.13
+        _sphereRange: 0.06

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class ComboAbility : Ability
+public class ComboAbility : Ability, ICacheAbilities
 {
     [SerializeField] private List<ScriptableAbility> _scriptableAbilities = new();
     [SerializeField, Range(0f, 2f)] private float _abilityUsageRecoveryTime = 0.5f;
@@ -20,7 +20,7 @@ public class ComboAbility : Ability
 
     public override float Duration { get; protected set; } = 0f;
 
-    public List<AbilityInstance> CacheAbilities()
+    public IEnumerable<AbilityInstance> CacheAbilities()
     {
         List<AbilityInstance> instances = new();
 
@@ -50,7 +50,7 @@ public class ComboAbility : Ability
 
     protected override void OnPerformStartedEventInvoke() { return; }
 
-    protected override AbilityRequestStatus OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target)
+    protected internal override AbilityRequestStatus OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target)
     {
         if (!IsPerforming)
             return AbilityRequestStatus.Success;

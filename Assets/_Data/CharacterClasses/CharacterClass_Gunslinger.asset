@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ClassName>k__BackingField: Gunslinger
   <PreviewSprite>k__BackingField: {fileID: 21300000, guid: b123bdad4f47a734c80135e456f2d162, type: 3}
-  <AbilityExecutionMatrix>k__BackingField: {fileID: 0}
+  <AbilityExecutionMatrix>k__BackingField: {fileID: 11400000, guid: 178e23b86f504bb4ebe2d500ad06d3ac, type: 2}
   _abilities:
-  - {fileID: 11400000, guid: 1ad7edddd0f42164e95058d574f81e0f, type: 2}
-  - {fileID: 11400000, guid: deca4cc698d7f7e4dbad7e576bce46df, type: 2}
-  - {fileID: 11400000, guid: 3fab281483d5e3347851c4b9b57d83fb, type: 2}
-  - {fileID: 11400000, guid: d0b26a49790c58144873c066c279c4ef, type: 2}
-  - {fileID: 11400000, guid: 385662e833fdaff4fac72050b2cae99e, type: 2}
+  - {fileID: 11400000, guid: 1705437ab5d91fa4c81e9a04122b9a9e, type: 2}
+  - {fileID: 11400000, guid: 96d38245158382e448d84ca47e9edc52, type: 2}
+  - {fileID: 11400000, guid: 769a910fd7a620a42a2d53355832e6ba, type: 2}
+  - {fileID: 11400000, guid: e8e427d9e1e1455448d41518f4c3818b, type: 2}
+  - {fileID: 11400000, guid: e9a5ed164f04c7b4f8525f42f0518b3b, type: 2}
   _weaponUser:
     rid: 8956606609910923367
   references:
@@ -28,4 +28,5 @@ MonoBehaviour:
     RefIds:
     - rid: 8956606609910923367
       type: {class: MultipleWeaponsUser, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        <InitialWeapon>k__BackingField: {fileID: 11400000, guid: c4546d5a22cb4da4daff09fc6dc11310, type: 2}

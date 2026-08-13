@@ -26,7 +26,7 @@ MonoBehaviour:
     - rid: 8956606609910923370
       type: {class: AttackAbility, ns: , asm: Assembly-CSharp}
       data:
-        <CooldownTime>k__BackingField: 1
+        <CooldownTime>k__BackingField: 0.3
         <UsagePrepareTime>k__BackingField: 0
         _attack:
           rid: 8956606609910923371

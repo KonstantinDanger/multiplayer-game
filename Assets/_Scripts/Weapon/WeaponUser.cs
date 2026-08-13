@@ -3,6 +3,8 @@ using UnityEngine;
 
 public abstract class WeaponUser
 {
+    [field: SerializeField] public ScriptableWeapon InitialWeapon { get; private set; }
+
     private Transform _weaponHolderTransform;
     private MeshFilter _weaponMesh;
     private MeshRenderer _weaponRenderer;
@@ -14,6 +16,9 @@ public abstract class WeaponUser
         _weaponHolderTransform = weaponHolderTransform;
         _weaponMesh = weaponMesh;
         _weaponRenderer = weaponRenderer;
+
+        if (InitialWeapon != null)
+            Equip(InitialWeapon);
     }
 
     public abstract void Equip(ScriptableWeapon weapon);
@@ -38,6 +43,6 @@ public abstract class WeaponUser
     protected void ResetMesh()
     {
         _weaponMesh.mesh.Clear();
-        _weaponRenderer.materials = null;
+        _weaponRenderer.materials = new Material[] { };
     }
 }

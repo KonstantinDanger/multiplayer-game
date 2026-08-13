@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4eedb7db48f6b7c44be8e8c890e9d4ae, type: 3}
-  m_Name: Ability_Gunslinger_Crossbow_1_Primary
+  m_Name: Ability_Gunslinger_Shotgun_2_FirstAbility_Block(TODO)
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Crossbow shot
+  <Name>k__BackingField: Shotgund shot
   _ability:
     rid: 8956606609910923370
-  <SpriteIcon>k__BackingField: {fileID: 21300000, guid: 530bcabb1501d8148a19a77465ecac03, type: 3}
+  <SpriteIcon>k__BackingField: {fileID: 21300000, guid: 8d95bcf261f259f4786a397bc66e3705, type: 3}
   <ConsiderAbilityDuration>k__BackingField: 0
   <PreparationAnimation>k__BackingField: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
   <UsageAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
@@ -29,28 +29,30 @@ MonoBehaviour:
         <CooldownTime>k__BackingField: 1
         <UsagePrepareTime>k__BackingField: 0
         _attack:
-          rid: 8956606632581922816
-    - rid: 8956606632581922816
-      type: {class: ProjectileLaunchAttack, ns: , asm: Assembly-CSharp}
+          rid: 8956606609910923371
+    - rid: 8956606609910923371
+      type: {class: DefaultAttack, ns: , asm: Assembly-CSharp}
       data:
-        Amount: 1
+        Amount: 8
         TimeBetweenAttacks: 0
-        _detectTargetsOnEachAttack: 0
+        _detectTargetsOnEachAttack: 1
         Damage:
-          Amount: 2
+          Amount: 6
           Type: 0
           Range: 15
           SenderNetId: 0
           ReceiverNetId: 0
           AttackDirection: {x: 0, y: 0, z: 0}
         _targetDetector:
-          rid: 8956606632581922822
-        _flightSpeed: 200
-        _projectilePrefab: {fileID: 8014522202720145984, guid: ebbfe0f2fd9bce4499cf0997f41c9df6, type: 3}
-    - rid: 8956606632581922822
-      type: {class: TargetDetectorNone, ns: , asm: Assembly-CSharp}
+          rid: 8956606609910923372
+    - rid: 8956606609910923372
+      type: {class: TargetDetectorCaster, ns: , asm: Assembly-CSharp}
       data:
         layersToDetect:
           serializedVersion: 2
-          m_Bits: 0
+          m_Bits: 896
         includeSender: 0
+        _verticalSpreadAngle: 15
+        _horizontalSpreadAngle: 15
+        _useSphereCast: 1
+        _sphereRange: 0.06

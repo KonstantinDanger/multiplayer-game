@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d885fd9e15c0884cb518fcb67a0f11b, type: 3}
+  m_Name: ParallelAbilityExecutionMatrix_Gunslinger
+  m_EditorClassIdentifier: 
+  _abilities:
+  - {fileID: 11400000, guid: 2c30ff84f47cd2a4da05d1fd06b3d867, type: 2}
+  - {fileID: 11400000, guid: bcf246e2806d5a84d841dd9041ffa38c, type: 2}
+  - {fileID: 11400000, guid: 0df700ee0227f8644baaa7e7d0ea0a31, type: 2}
+  - {fileID: 11400000, guid: d38822ff0ccfc554fac6440b7ac81f36, type: 2}
+  - {fileID: 11400000, guid: 357c953f06f34c748a630124dcb66071, type: 2}
+  - {fileID: 11400000, guid: 11ae2f2279ce6be46b6ec3bafac5f404, type: 2}
+  - {fileID: 11400000, guid: 6c03f0e2b45e058429c1ed097c061302, type: 2}
+  - {fileID: 11400000, guid: 0d8d65304acbfd244b15a58682f386e0, type: 2}
+  - {fileID: 11400000, guid: bc6af60d1bc486745a9d206aa484b1e4, type: 2}
+  - {fileID: 11400000, guid: e9a5ed164f04c7b4f8525f42f0518b3b, type: 2}
+  - {fileID: 11400000, guid: 96d38245158382e448d84ca47e9edc52, type: 2}
+  - {fileID: 11400000, guid: 769a910fd7a620a42a2d53355832e6ba, type: 2}
+  - {fileID: 11400000, guid: e8e427d9e1e1455448d41518f4c3818b, type: 2}
+  - {fileID: 11400000, guid: 1705437ab5d91fa4c81e9a04122b9a9e, type: 2}
+  _transitions:
+    values: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

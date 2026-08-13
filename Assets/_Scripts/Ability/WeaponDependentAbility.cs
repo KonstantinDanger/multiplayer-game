@@ -2,17 +2,21 @@
 using Mirror;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class WeaponDependentAbility : Ability
+public class WeaponDependentAbility : Ability, ICacheAbilities
 {
     [SerializeField]
     private SerializedDictionary<ScriptableWeapon, ScriptableAbility> _weaponAbilities = new();
 
+    private readonly Dictionary<ScriptableWeapon, Ability> _weaponAbilityInstances = new();
+
+    private Ability _selectedAbilityInstance;
     private WeaponUser _user;
 
-    protected override AbilityRequestStatus OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target)
+    protected internal override AbilityRequestStatus OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target)
     {
         if (_weaponAbilities.Count == 0)
             return AbilityRequestStatus.Deny;
@@ -33,7 +37,12 @@ public class WeaponDependentAbility : Ability
             return AbilityRequestStatus.Deny;
         }
 
-        return base.OnPerformRequested(sender, target);
+        _selectedAbilityInstance = _weaponAbilityInstances[_user.SelectedWeapon];
+
+        if (_selectedAbilityInstance.IsRecharging)
+            return AbilityRequestStatus.Deny;
+
+        return _selectedAbilityInstance.OnPerformRequested(sender, target);
     }
 
     protected override IEnumerator OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
@@ -46,11 +55,29 @@ public class WeaponDependentAbility : Ability
             yield break;
         }
 
-        ScriptableAbility selectedAbility = _weaponAbilities[selectedWeapon];
-
-        // Add ability caching as in a combo ability
-        Ability instance = selectedAbility.GetNew();
-
-        yield return instance.PerformRoutine(sender, target);
+        yield return _selectedAbilityInstance.PerformRoutine(sender, target);
     }
+
+    public IEnumerable<AbilityInstance> CacheAbilities()
+    {
+        List<AbilityInstance> instances = new();
+
+        foreach (var weapon in _weaponAbilities)
+        {
+            ScriptableAbility scriptableAbility = weapon.Value;
+            Ability subAbilityInstance = scriptableAbility.GetNew();
+
+            subAbilityInstance.OnPreparationStarted += (current, duration) => RaisePreparationStarted(current, duration);
+            subAbilityInstance.OnPerformStarted += (current, duration) => RaisePerformStarted(current, duration);
+            subAbilityInstance.OnFinished += current => RaiseFinished(current);
+
+            _weaponAbilityInstances.Add(weapon.Key, subAbilityInstance);
+
+            instances.Add(new AbilityInstance(subAbilityInstance, scriptableAbility));
+        }
+
+        return instances;
+    }
+
+    protected override void OnPerformStartedEventInvoke() { return; }
 }

@@ -8,7 +8,7 @@ public class MultipleWeaponsUser : WeaponUser
 
     private int _selectedIndex;
 
-    public override ScriptableWeapon SelectedWeapon => _weapons.Count == 0 ? null : _weapons[_selectedIndex - 1];
+    public override ScriptableWeapon SelectedWeapon => _weapons.Count == 0 ? null : _weapons[_selectedIndex];
 
     public void EquipNext()
     {
@@ -24,7 +24,7 @@ public class MultipleWeaponsUser : WeaponUser
     public void EquipPrev()
     {
         if (_selectedIndex == 0)
-            _selectedIndex = _weapons.Count - 1;
+            _selectedIndex = _weapons.Count;
         else
             _selectedIndex--;
 
@@ -39,10 +39,7 @@ public class MultipleWeaponsUser : WeaponUser
 
         _weapons.Add(weapon);
 
-        _selectedIndex++;
-
-        ResetMesh();
-        SetMesh(SelectedWeapon.Mesh, SelectedWeapon.Materials);
+        EquipNext();
     }
 
     public override bool HasEquipped(ScriptableWeapon weapon)
@@ -54,7 +51,7 @@ public class MultipleWeaponsUser : WeaponUser
             return;
 
         _weapons.RemoveAt(_selectedIndex - 1);
-        _selectedIndex--;
+        EquipPrev();
     }
 
     public override bool HasEquippedAny()
