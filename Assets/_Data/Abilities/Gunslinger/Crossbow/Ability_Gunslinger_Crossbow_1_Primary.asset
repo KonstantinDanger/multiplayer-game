@@ -17,8 +17,8 @@ MonoBehaviour:
     rid: 8956606609910923370
   <SpriteIcon>k__BackingField: {fileID: 21300000, guid: 530bcabb1501d8148a19a77465ecac03, type: 3}
   <ConsiderAbilityDuration>k__BackingField: 0
-  <PreparationAnimation>k__BackingField: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
-  <UsageAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
+  <PreparationAnimation>k__BackingField: {fileID: 0}
+  <UsageAnimation>k__BackingField: {fileID: -203655887218126122, guid: bbf847321a1a76e43a76ae3d1c84423f, type: 3}
   <PerformParticle>k__BackingField: {fileID: 0}
   references:
     version: 2
@@ -37,7 +37,7 @@ MonoBehaviour:
         TimeBetweenAttacks: 0
         _detectTargetsOnEachAttack: 0
         Damage:
-          Amount: 2
+          Amount: 34
           Type: 0
           Range: 15
           SenderNetId: 0

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Weapon_Crossbow
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Revolver
-  <Mesh>k__BackingField: {fileID: -1524051437164771255, guid: 8e15d5846a98e1545a3cf8f8603f2765, type: 3}
+  <Mesh>k__BackingField: {fileID: 1137627392480201426, guid: 7e1e75bcc3bbe0741b24b0b12fc6d044, type: 3}
   <Materials>k__BackingField:
-  - {fileID: 8554655104631171556, guid: 8e15d5846a98e1545a3cf8f8603f2765, type: 3}
+  - {fileID: 2100000, guid: 7df8b6062e07d3f4cbd17aa2ba5d84a0, type: 2}
   <Permanent>k__BackingField: 1
   <Lifetime>k__BackingField: 20
   <Durability>k__BackingField: 0

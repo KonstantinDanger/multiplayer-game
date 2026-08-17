@@ -15,7 +15,7 @@ MonoBehaviour:
   <Name>k__BackingField: Revolver
   <Mesh>k__BackingField: {fileID: 294697112482340938, guid: 6aca71ae368d6d54aa39cb7d16f60300, type: 3}
   <Materials>k__BackingField:
-  - {fileID: 4835078630258379571, guid: 6aca71ae368d6d54aa39cb7d16f60300, type: 3}
+  - {fileID: 2100000, guid: e4dd7b262ef2b6740acf3729f89dbe11, type: 2}
   <Permanent>k__BackingField: 1
   <Lifetime>k__BackingField: 20
   <Durability>k__BackingField: 0

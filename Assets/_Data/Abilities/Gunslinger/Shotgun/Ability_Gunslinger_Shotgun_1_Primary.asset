@@ -17,8 +17,8 @@ MonoBehaviour:
     rid: 8956606609910923370
   <SpriteIcon>k__BackingField: {fileID: 21300000, guid: 8d95bcf261f259f4786a397bc66e3705, type: 3}
   <ConsiderAbilityDuration>k__BackingField: 0
-  <PreparationAnimation>k__BackingField: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
-  <UsageAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
+  <PreparationAnimation>k__BackingField: {fileID: 0}
+  <UsageAnimation>k__BackingField: {fileID: -203655887218126122, guid: bbf847321a1a76e43a76ae3d1c84423f, type: 3}
   <PerformParticle>k__BackingField: {fileID: 0}
   references:
     version: 2
@@ -52,7 +52,7 @@ MonoBehaviour:
           serializedVersion: 2
           m_Bits: 896
         includeSender: 0
-        _verticalSpreadAngle: 15
-        _horizontalSpreadAngle: 15
+        _verticalSpreadAngle: 12
+        _horizontalSpreadAngle: 12
         _useSphereCast: 1
         _sphereRange: 0.06
