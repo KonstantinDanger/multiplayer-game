@@ -28,7 +28,6 @@ public abstract class WeaponUser
 
     protected void SetMesh(Mesh mesh, Material[] materials)
     {
-        mesh.bounds = new Bounds(_weaponHolderTransform.localPosition, mesh.bounds.size);
         _weaponMesh.mesh = mesh;
 
         Material[] copiedMaterials = new Material[materials.Length];

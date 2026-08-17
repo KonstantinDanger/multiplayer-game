@@ -24,7 +24,7 @@ public class MultipleWeaponsUser : WeaponUser
     public void EquipPrev()
     {
         if (_selectedIndex == 0)
-            _selectedIndex = _weapons.Count;
+            _selectedIndex = _weapons.Count - 1;
         else
             _selectedIndex--;
 

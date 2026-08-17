@@ -29,4 +29,4 @@ MonoBehaviour:
     - rid: 8956606609910923367
       type: {class: MultipleWeaponsUser, ns: , asm: Assembly-CSharp}
       data:
-        <InitialWeapon>k__BackingField: {fileID: 11400000, guid: c4546d5a22cb4da4daff09fc6dc11310, type: 2}
+        <InitialWeapon>k__BackingField: {fileID: 11400000, guid: f8830e23c33eb85438e437888bf642e4, type: 2}

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Weapon_Shotgun
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Revolver
-  <Mesh>k__BackingField: {fileID: -1524051437164771255, guid: 8e15d5846a98e1545a3cf8f8603f2765, type: 3}
+  <Mesh>k__BackingField: {fileID: 294697112482340938, guid: 6aca71ae368d6d54aa39cb7d16f60300, type: 3}
   <Materials>k__BackingField:
-  - {fileID: 8554655104631171556, guid: 8e15d5846a98e1545a3cf8f8603f2765, type: 3}
+  - {fileID: 4835078630258379571, guid: 6aca71ae368d6d54aa39cb7d16f60300, type: 3}
   <Permanent>k__BackingField: 1
   <Lifetime>k__BackingField: 20
   <Durability>k__BackingField: 0
