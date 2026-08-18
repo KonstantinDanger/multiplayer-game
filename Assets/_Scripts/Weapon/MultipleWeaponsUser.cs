@@ -8,6 +8,7 @@ public class MultipleWeaponsUser : WeaponUser
 
     private int _selectedIndex;
 
+    public int WeaponsAmount => _weapons.Count;
     public override ScriptableWeapon SelectedWeapon => _weapons.Count == 0 ? null : _weapons[_selectedIndex];
 
     public void EquipNext()

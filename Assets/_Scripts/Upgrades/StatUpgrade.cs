@@ -6,7 +6,7 @@ public class StatUpgrade : Upgrade
 {
     [SerializeField] private StatParameter _statParameter;
 
-    protected override void OnPerform(GameObject target)
+    protected override void OnObtain(GameObject target)
     {
         EntityStats stats = target.GetComponent<IStatUser>().Stats;
 

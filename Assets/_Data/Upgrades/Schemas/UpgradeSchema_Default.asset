@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e06f32e415654d4393541bae6542ba8, type: 3}
-  m_Name: Default Upgrade Schema
+  m_Name: UpgradeSchema_Default
   m_EditorClassIdentifier: 
   _upgradeNodes:
   - _upgradeRef: {fileID: 11400000, guid: 9fcafd4ee3a25154aa621270da3b7ed8, type: 2}
@@ -23,6 +23,15 @@ MonoBehaviour:
     _nextUpgrades: []
     <IsUnlocked>k__BackingField: 1
   - _upgradeRef: {fileID: 11400000, guid: ecfa4a907f6ebf14db756087f39535b4, type: 2}
+    _nextUpgrades: []
+    <IsUnlocked>k__BackingField: 1
+  - _upgradeRef: {fileID: 11400000, guid: fe7cde00f57da7a458b787818f463d6e, type: 2}
+    _nextUpgrades: []
+    <IsUnlocked>k__BackingField: 1
+  - _upgradeRef: {fileID: 11400000, guid: 3570397a169ba354ebb69179fba3e9ea, type: 2}
+    _nextUpgrades: []
+    <IsUnlocked>k__BackingField: 1
+  - _upgradeRef: {fileID: 11400000, guid: 518f7fda7588f6842a6d2f4cb09f311d, type: 2}
     _nextUpgrades: []
     <IsUnlocked>k__BackingField: 1
   references:

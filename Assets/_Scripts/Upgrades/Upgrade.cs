@@ -6,13 +6,13 @@ public abstract class Upgrade
 {
     private Action OnUpgrade;
 
-    public void Perform(GameObject target)
+    public void Obtain(GameObject target)
     {
-        OnPerform(target);
+        OnObtain(target);
         OnUpgrade?.Invoke();
     }
 
-    protected abstract void OnPerform(GameObject target);
+    protected abstract void OnObtain(GameObject target);
     public void Construct(Action onUpgrade)
         => OnUpgrade = onUpgrade;
 }

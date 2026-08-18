@@ -45,7 +45,7 @@ public class UpgradeCard : MonoBehaviour
 
     private void Obtain()
     {
-        _upgrade.Perform(_owner);
+        _upgrade.Obtain(_owner);
         OnObtain?.Invoke();
     }
 }

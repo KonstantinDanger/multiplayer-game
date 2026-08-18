@@ -10,7 +10,9 @@ public class WeaponSwitchAbility : Ability
     [SerializeField] private bool _switchToNext;
     [SerializeField, Range(0f, 10f)] private float _switchTime;
 
-    private WeaponUser _weaponUser;
+    public override float Duration => base.Duration + _switchTime;
+
+    private MultipleWeaponsUser _weaponUser;
 
     protected internal override AbilityRequestStatus OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target)
     {
@@ -23,9 +25,12 @@ public class WeaponSwitchAbility : Ability
             return AbilityRequestStatus.Deny;
         }
 
-        _weaponUser = userComponent.WeaponUser;
+        if (userComponent.WeaponUser is not MultipleWeaponsUser weaponUser)
+            return AbilityRequestStatus.Deny;
 
-        if (!userComponent.WeaponUser.HasEquippedAny())
+        _weaponUser = weaponUser;
+
+        if (!_weaponUser.HasEquippedAny() || _weaponUser.WeaponsAmount == 1)
             return AbilityRequestStatus.Deny;
 
         return base.OnPerformRequested(sender, target);
@@ -33,15 +38,12 @@ public class WeaponSwitchAbility : Ability
 
     protected override IEnumerator OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
     {
-        if (_weaponUser is not MultipleWeaponsUser multipleWeaponUser)
-            yield break;
-
         yield return new WaitForSeconds(_switchTime);
 
         if (_switchToNext)
-            multipleWeaponUser.EquipNext();
+            _weaponUser.EquipNext();
         else
-            multipleWeaponUser.EquipPrev();
+            _weaponUser.EquipPrev();
 
         yield return null;
     }
