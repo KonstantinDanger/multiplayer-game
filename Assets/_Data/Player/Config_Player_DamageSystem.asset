@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47a534f649827df41b751bc00ac60a30, type: 3}
-  m_Name: Config_Camera_Player
+  m_Script: {fileID: 11500000, guid: 5196aae9728517246a909d81e7aefe0e, type: 3}
+  m_Name: Config_Player_DamageSystem
   m_EditorClassIdentifier: 
-  <MaxRotationAngle>k__BackingField: 90
-  <MinRotationAngle>k__BackingField: -90
+  <BaseHp>k__BackingField: 100
+  _damageHandlers: []
+  references:
+    version: 2
+    RefIds: []

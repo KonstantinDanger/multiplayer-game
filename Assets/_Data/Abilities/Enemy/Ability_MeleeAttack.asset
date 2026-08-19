@@ -12,34 +12,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eedb7db48f6b7c44be8e8c890e9d4ae, type: 3}
   m_Name: Ability_MeleeAttack
   m_EditorClassIdentifier: 
+  <Name>k__BackingField: 
   _ability:
-    rid: 9013965155010084937
+    rid: 8956606769815879681
+  <SpriteIcon>k__BackingField: {fileID: 0}
+  <ConsiderAbilityDuration>k__BackingField: 0
+  <PreparationAnimation>k__BackingField: {fileID: 0}
+  <UsageAnimation>k__BackingField: {fileID: 0}
+  <PerformParticle>k__BackingField: {fileID: 0}
   references:
     version: 2
     RefIds:
-    - rid: 9013965155010084937
+    - rid: 8956606769815879681
       type: {class: AttackAbility, ns: , asm: Assembly-CSharp}
       data:
-        <Name>k__BackingField: Melee attack
-        <CooldownTime>k__BackingField: 1.45
-        <PreparationAnimation>k__BackingField: {fileID: -3685351510310962205, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
-        <UsageAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
-        <UsagePrepareTime>k__BackingField: 0.3
+        <CooldownTime>k__BackingField: 0
+        <UsagePrepareTime>k__BackingField: 0.2
         _attack:
-          rid: 9013965155010084939
-    - rid: 9013965155010084939
-      type: {class: MeleeAttack, ns: , asm: Assembly-CSharp}
+          rid: 8956606769815879682
+    - rid: 8956606769815879682
+      type: {class: DefaultAttack, ns: , asm: Assembly-CSharp}
       data:
         Amount: 1
         TimeBetweenAttacks: 0
+        _detectTargetsOnEachAttack: 0
         Damage:
-          Amount: 10
-          AttackLayers:
-            serializedVersion: 2
-            m_Bits: 896
+          Amount: 0
           Type: 0
-          Range: 0.5
+          Range: 0
           SenderNetId: 0
           ReceiverNetId: 0
           AttackDirection: {x: 0, y: 0, z: 0}
-        _attackSplashRadius: 0.5
+        _targetDetector:
+          rid: 8956606769815879683
+    - rid: 8956606769815879683
+      type: {class: TargetDetectorSphereOverlapper, ns: , asm: Assembly-CSharp}
+      data:
+        layersToDetect:
+          serializedVersion: 2
+          m_Bits: 0
+        includeSender: 0
+        _fieldOfViewAngle: 0
+        _ignoreFieldOfView: 0

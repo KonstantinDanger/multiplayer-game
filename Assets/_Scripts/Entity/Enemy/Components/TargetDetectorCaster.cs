@@ -28,8 +28,8 @@ public class TargetDetectorCaster : TargetDetector
         int resultCount;
 
         resultCount = _useSphereCast
-            ? Physics.SphereCastNonAlloc(ray, _sphereRange, results, detectionRadius, layersToDetect, QueryTriggerInteraction.Ignore)
-            : Physics.RaycastNonAlloc(ray, results, detectionRadius, layersToDetect, QueryTriggerInteraction.Ignore);
+            ? Physics.SphereCastNonAlloc(ray, _sphereRange, results, detectionRadius, layersToDetect)
+            : Physics.RaycastNonAlloc(ray, results, detectionRadius, layersToDetect);
 
         if (resultCount == 0)
         {
