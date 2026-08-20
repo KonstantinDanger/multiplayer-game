@@ -45,7 +45,7 @@ MonoBehaviour:
           AttackDirection: {x: 0, y: 0, z: 0}
         _targetDetector:
           rid: 8956606769815879776
-        _flightSpeed: 70
+        _flightSpeed: 700
         _projectilePrefab: {fileID: 371262213700906238, guid: 18ccd96d58bf72e4da5c9219f1dafc3a, type: 3}
     - rid: 8956606769815879776
       type: {class: TargetDetectorNone, ns: , asm: Assembly-CSharp}

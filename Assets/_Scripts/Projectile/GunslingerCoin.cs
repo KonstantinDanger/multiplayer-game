@@ -1,23 +1,30 @@
 using Mirror;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Projectile))]
-public class GunslingerCoin : NetworkBehaviour
+public class GunslingerCoin : NetworkBehaviour, IDamageable
 {
-    [SerializeField] private DamageSystem _damageSystem;
     [SerializeField, Range(0f, 10f)] private float _damageRedirectMultiplier;
     [SerializeField] private TargetDetectorSphereOverlapper _targetDetector;
     [SerializeField, Range(0f, 200f)] private float _targetDetectionRange;
     [SerializeField] private Projectile _projectile;
 
-    private void OnEnable()
-        => _damageSystem.ServerOnDamageTaken += HandleDamageTaken;
+    public bool IsDead => false;
+    public float CurrentGaugeValue => 1f;
+    public float MaxGaugeValue => 1f;
 
-    private void OnDisable()
-        => _damageSystem.ServerOnDamageTaken -= HandleDamageTaken;
+    public event Action<Damage> ServerOnDamageTaken;
+    public event Action<Damage> ServerOnDemise;
+    public event Action<Damage> ClientOnDamageTaken;
+    public event Action<Damage> ClientOnDemise;
+    public event Action OnValueChanged;
 
-    private void HandleDamageTaken(Damage damage)
+    public void Respawn() { }
+
+    public void TakeDamage(Damage damage)
     {
         _targetDetector.DetectAllTargets(
             gameObject,
@@ -28,6 +35,10 @@ public class GunslingerCoin : NetworkBehaviour
 
         if (targets.Count == 0)
             return;
+
+        targets = targets
+            .OrderBy(obj => Vector3.Distance(obj.transform.position, transform.position))
+            .ToList();
 
         foreach (GameObject item in targets)
         {
@@ -44,5 +55,7 @@ public class GunslingerCoin : NetworkBehaviour
 
         NetworkServer.Destroy(gameObject);
     }
+
+    public void Initialize(StatParameter baseHealth, IEnumerable<DamageHandler> damageHandlers) { }
 }
 

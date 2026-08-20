@@ -11,13 +11,22 @@ public class CurvedVerticalVelocityModifier : ProjectileMovementVelocityModifier
     private float _elapsedTime;
 
     private bool _cached;
-    private Vector3 _cachedVelocity = Vector3.zero;
+    private Vector3 _senderVelocity = Vector3.zero;
+    private Vector3 _baseVelocity;
 
     public override Vector3 Modify(Projectile self, Vector3 velocity, float deltaTime)
     {
         if (!_cached)
         {
-            _cachedVelocity = velocity;
+            _baseVelocity = velocity;
+            _baseVelocity.y = 0f;
+
+            if (self.Data.Sender.TryGetComponent(out IMovable movable))
+            {
+                _senderVelocity = movable.Velocity;
+                _senderVelocity.y = 0f;
+            }
+
             _cached = true;
         }
 
@@ -31,16 +40,16 @@ public class CurvedVerticalVelocityModifier : ProjectileMovementVelocityModifier
         float h1 = _verticalMovementCurve.Evaluate(t1);
         float h2 = _verticalMovementCurve.Evaluate(t2);
 
-        // dh/dt in normalized curve units.
         float derivative = (h2 - h1) / (t2 - t1);
 
-        //float verticalVelocityHeight = _verticalMovementCurve.Evaluate(normalizedTime) * _maxHeight;
-        float verticalVelocityHeight = derivative * _maxHeight / _moveTime;
-
-        velocity.y = verticalVelocityHeight;
+        float verticalVelocity = derivative * _maxHeight / _moveTime;
 
         _elapsedTime += deltaTime;
 
-        return velocity;
+        Vector3 vel = (_senderVelocity + _baseVelocity).normalized * _senderVelocity.magnitude;
+
+        vel.y = verticalVelocity;
+
+        return vel;
     }
 }
