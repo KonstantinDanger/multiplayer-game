@@ -53,7 +53,12 @@ public class PhysicsBasedNavMeshMovable : MonoBehaviour, IMovable
         Vector3 velocity = Time.fixedDeltaTime * speed * direction;
         _rigidBody.AddForce(velocity, _forceMode);
 
-        _rigidBody.linearVelocity = Vector3.ClampMagnitude(_rigidBody.linearVelocity, speed);
+
+        Vector3 currentVelocity = _rigidBody.linearVelocity;
+        currentVelocity.y = 0f;
+        currentVelocity = Vector3.ClampMagnitude(currentVelocity, speed);
+        currentVelocity.y = _rigidBody.linearVelocity.y;
+        _rigidBody.linearVelocity = currentVelocity;
 
         OnMove?.Invoke();
     }
