@@ -19,6 +19,7 @@ MonoBehaviour:
   <ConsiderAbilityDuration>k__BackingField: 1
   <PreparationAnimation>k__BackingField: {fileID: -203655887218126122, guid: 4bc56abeed0ff9c49b22747cab7e1a9a, type: 3}
   <UsageAnimation>k__BackingField: {fileID: 0}
+  <PerformParticle>k__BackingField: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -26,7 +27,7 @@ MonoBehaviour:
       type: {class: AttackAbility, ns: , asm: Assembly-CSharp}
       data:
         <CooldownTime>k__BackingField: 0
-        <UsagePrepareTime>k__BackingField: 0.3
+        <UsagePrepareTime>k__BackingField: 0.1
         _attack:
           rid: 7065201759134941298
     - rid: 7065201759134941298
@@ -34,6 +35,7 @@ MonoBehaviour:
       data:
         Amount: 1
         TimeBetweenAttacks: 0
+        _detectTargetsOnEachAttack: 0
         Damage:
           Amount: 13
           Type: 0

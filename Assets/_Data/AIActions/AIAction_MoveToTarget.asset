@@ -58,4 +58,4 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-        _detectionConfig: {fileID: 11400000, guid: 312489336bf2c314f98f90c27314f65a, type: 2}
+        _detectionConfig: {fileID: 11400000, guid: 8104fd2cada7a1f45af32fa586a2348c, type: 2}

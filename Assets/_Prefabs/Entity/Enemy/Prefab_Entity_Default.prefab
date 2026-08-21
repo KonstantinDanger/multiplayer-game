@@ -172,6 +172,9 @@ PrefabInstance:
       addedObject: {fileID: 3120825081226144678}
     - targetCorrespondingSourceObject: {fileID: 532728802165586786, guid: f3ca8b25bbc90dc4bb3668381906e35c, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 5405692851591419612}
+    - targetCorrespondingSourceObject: {fileID: 532728802165586786, guid: f3ca8b25bbc90dc4bb3668381906e35c, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 1328672432576330446}
   m_SourcePrefab: {fileID: 100100000, guid: f3ca8b25bbc90dc4bb3668381906e35c, type: 3}
 --- !u!1 &1418038051021799968 stripped
@@ -311,10 +314,11 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   _animator: {fileID: 3464756085198946259}
+  _animationSpeedParamName: AnimationSpeed
   _abilityUser:
     _underlyingValue: {fileID: 4024613402228473111}
   _animationTransitionTime: 0.15
-  _layer: 1
+  _abilityAnimationsLayer: 1
 --- !u!114 &7422826612740363923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,6 +356,7 @@ MonoBehaviour:
   targetRenderers:
   - {fileID: 8281928187555527932}
   - {fileID: 3580657821422360161}
+  - {fileID: 2559207726423622669}
 --- !u!114 &3120825081226144678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,6 +388,33 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _damageSystem: {fileID: 2267410281914650354}
+--- !u!54 &5405692851591419612
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418038051021799968}
+  serializedVersion: 4
+  m_Mass: 60
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 2
 --- !u!114 &1328672432576330446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -483,6 +515,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 986e47519275ed14485299eeb5ff44b8, type: 3}
+--- !u!137 &2559207726423622669 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -4396642182433536433, guid: 986e47519275ed14485299eeb5ff44b8, type: 3}
+  m_PrefabInstance: {fileID: 7025576817954603586}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &3464756085198946259 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 986e47519275ed14485299eeb5ff44b8, type: 3}

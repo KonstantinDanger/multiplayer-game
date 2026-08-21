@@ -120,6 +120,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fd5d8730d6b1ab641ba9248ae7fd4730, type: 3}
   m_PrefabInstance: {fileID: 516870305979378176}
   m_PrefabAsset: {fileID: 0}
+--- !u!137 &345674421451796089 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -8944043581513169799, guid: fd5d8730d6b1ab641ba9248ae7fd4730, type: 3}
+  m_PrefabInstance: {fileID: 516870305979378176}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &859381723754141521 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: fd5d8730d6b1ab641ba9248ae7fd4730, type: 3}
@@ -178,9 +183,39 @@ MonoBehaviour:
   stretchRange: 0
   giveWorldHeightOffset: 0
   worldHeightOffset: 0
+--- !u!137 &971853942570423590 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -8480011136146587866, guid: fd5d8730d6b1ab641ba9248ae7fd4730, type: 3}
+  m_PrefabInstance: {fileID: 516870305979378176}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &1958772040123406134 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7204987525803475658, guid: fd5d8730d6b1ab641ba9248ae7fd4730, type: 3}
+  m_PrefabInstance: {fileID: 516870305979378176}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &3142809650539697054 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -6002794212237526626, guid: fd5d8730d6b1ab641ba9248ae7fd4730, type: 3}
+  m_PrefabInstance: {fileID: 516870305979378176}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &3953833617676122532 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -5624260962127440988, guid: fd5d8730d6b1ab641ba9248ae7fd4730, type: 3}
+  m_PrefabInstance: {fileID: 516870305979378176}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &6216901973352486801 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: fd5d8730d6b1ab641ba9248ae7fd4730, type: 3}
+  m_PrefabInstance: {fileID: 516870305979378176}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &7388332889715616967 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7036007247680145095, guid: fd5d8730d6b1ab641ba9248ae7fd4730, type: 3}
+  m_PrefabInstance: {fileID: 516870305979378176}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &8652052082158366854 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -54595935507621242, guid: fd5d8730d6b1ab641ba9248ae7fd4730, type: 3}
   m_PrefabInstance: {fileID: 516870305979378176}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5092638318533552301
@@ -231,6 +266,38 @@ PrefabInstance:
       propertyPath: managedReferences[7065201289586540654].<Origin>k__BackingField
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3515077570250262858, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+      propertyPath: targetRenderers.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3515077570250262858, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+      propertyPath: 'targetRenderers.Array.data[0]'
+      value: 
+      objectReference: {fileID: 3142809650539697054}
+    - target: {fileID: 3515077570250262858, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+      propertyPath: 'targetRenderers.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1958772040123406134}
+    - target: {fileID: 3515077570250262858, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+      propertyPath: 'targetRenderers.Array.data[2]'
+      value: 
+      objectReference: {fileID: 971853942570423590}
+    - target: {fileID: 3515077570250262858, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+      propertyPath: 'targetRenderers.Array.data[3]'
+      value: 
+      objectReference: {fileID: 345674421451796089}
+    - target: {fileID: 3515077570250262858, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+      propertyPath: 'targetRenderers.Array.data[4]'
+      value: 
+      objectReference: {fileID: 8652052082158366854}
+    - target: {fileID: 3515077570250262858, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+      propertyPath: 'targetRenderers.Array.data[5]'
+      value: 
+      objectReference: {fileID: 7388332889715616967}
+    - target: {fileID: 3515077570250262858, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+      propertyPath: 'targetRenderers.Array.data[6]'
+      value: 
+      objectReference: {fileID: 3953833617676122532}
     - target: {fileID: 6106239776272415403, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
       propertyPath: _damageableRef._underlyingValue
       value: 
@@ -306,6 +373,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 3815294379760866614}
   m_SourcePrefab: {fileID: 100100000, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+--- !u!54 &984122914502983281 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 5405692851591419612, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+  m_PrefabInstance: {fileID: 5092638318533552301}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2427302658731195966 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7422826612740363923, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
@@ -360,21 +432,9 @@ MonoBehaviour:
   <RotationConfig>k__BackingField: {fileID: 11400000, guid: 35c754a5163c48840abde2ccbebe65f2, type: 2}
   <DamageSystemConfig>k__BackingField: {fileID: 11400000, guid: d6fd6658551c3f9448b6f02de80c06af, type: 2}
   _enemyConfig: {fileID: 11400000, guid: 98b41ea2d44f9b04889fef2af0e86c9f, type: 2}
-  <TargetDetector>k__BackingField:
-    rid: 7065201289586540686
   TargetTrackingMemoryRef:
     _underlyingValue: {fileID: 8000739011326451782}
   _aiBrain: {fileID: 6704321744617439969}
-  references:
-    version: 2
-    RefIds:
-    - rid: 7065201289586540686
-      type: {class: TargetDetector, ns: , asm: Assembly-CSharp}
-      data:
-        <Origin>k__BackingField: {fileID: 4188451577050409953}
-        _layersToDetect:
-          serializedVersion: 2
-          m_Bits: 640
 --- !u!114 &1435455419400485427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,6 +460,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _agent: {fileID: 5603228043229722897}
+  _rigidBody: {fileID: 984122914502983281}
+  _forceMode: 0
 --- !u!114 &3815294379760866614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -423,6 +485,7 @@ MonoBehaviour:
   _config: {fileID: 11400000, guid: e3cb813506387f54dbb1d9c3eaa58da3, type: 2}
   _rotationSmoothness: 0.03
   _speedDeadZoneThreshold: 0.1
+  _movementSmoothness: 0.1
   _serverSide: 1
   _verticalInputParamName: VerticalVelocity
   _horizontalInputParamName: HorizontalVelocity

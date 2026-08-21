@@ -31,9 +31,6 @@ public class AttackAbility : Ability
         if (sender.TryGetComponent(out IAttacker attacker))
             attacker.PerformAttack();
 
-
-        UnityEngine.Debug.Log("damage is  " + _attack.Damage.Amount);
-
         _attack.Damage = initialDamage;
     }
 

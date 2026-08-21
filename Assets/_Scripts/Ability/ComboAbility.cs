@@ -69,7 +69,6 @@ public class ComboAbility : Ability, ICacheAbilities
         {
             _cacheNext = false;
             Duration = CurrentAbility.Duration;
-            UnityEngine.Debug.Log("Current attack idx " + _currentAttackIndex);
             yield return CurrentAbility.PerformRoutine(sender, target);
 
             if (CurrentAbility is WeaponSpawnAbility weaponAbility && weaponAbility.Skipped)
@@ -99,10 +98,7 @@ public class ComboAbility : Ability, ICacheAbilities
     protected override IEnumerator OnPerformed(NetworkBehaviour sender, NetworkBehaviour target)
     {
         if (IsComboEnded)
-        {
-            UnityEngine.Debug.Log("setting combo end cooldown ");
             SetNextUseTime(CooldownTime);
-        }
 
         ResetCombo();
         yield return null;

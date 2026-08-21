@@ -67,7 +67,6 @@ public class PlayerMovement : NetworkBehaviour, IMovable
             ref _movementDelta,
             smoothness);
 
-        //_horizontalVelocity.y = 0f;
         _controller.Move(_horizontalVelocity * Time.deltaTime);
 
         if (NetworkClient.active)

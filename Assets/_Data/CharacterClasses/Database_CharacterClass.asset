@@ -20,3 +20,6 @@ MonoBehaviour:
     - Key: {fileID: 11400000, guid: 9f4fb1f6f2f5b31449d70feab0f1f33e, type: 2}
       Value:
         <Amount>k__BackingField: 0
+    - Key: {fileID: 11400000, guid: 33e4ab612dabe7f41b5c0eea4653d5b1, type: 2}
+      Value:
+        <Amount>k__BackingField: 0
