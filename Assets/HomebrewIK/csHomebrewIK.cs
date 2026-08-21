@@ -676,6 +676,8 @@ namespace FischlWorks
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
+            return;
+
             // Debug draw function relies on objects that are dynamically located during runtime
             if (Application.isPlaying == false)
             {

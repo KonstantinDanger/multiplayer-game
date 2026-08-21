@@ -161,7 +161,7 @@ public class Player : Entity
 
 
         }
-        UnityEngine.Debug.Log(handler);
+        //UnityEngine.Debug.Log(handler);
         //UnityEngine.Debug.Log("Wallet " + _wallet.ToString());
         //UnityEngine.Debug.Log("Stats => " + Stats.ToString());
 

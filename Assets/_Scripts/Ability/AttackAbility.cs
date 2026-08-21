@@ -12,8 +12,14 @@ public class AttackAbility : Ability
 
     public float DamageAmount => _attack.Damage.Amount;
 
+    private float _boostedDamageMultiplier = 0f;
+
     protected override IEnumerator OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
     {
+        Damage initialDamage = _attack.Damage;
+
+        _attack.Damage.Amount += initialDamage.Amount * _boostedDamageMultiplier;
+
         if (sender == null)
             yield break;
 
@@ -24,5 +30,18 @@ public class AttackAbility : Ability
 
         if (sender.TryGetComponent(out IAttacker attacker))
             attacker.PerformAttack();
+
+
+        UnityEngine.Debug.Log("damage is  " + _attack.Damage.Amount);
+
+        _attack.Damage = initialDamage;
+    }
+
+    public void BoostDamage(float percent)
+    {
+        if (percent <= 0)
+            return;
+
+        _boostedDamageMultiplier = percent / 100f;
     }
 }

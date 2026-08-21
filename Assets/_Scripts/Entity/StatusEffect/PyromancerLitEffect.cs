@@ -68,9 +68,11 @@ public class PyromancerLitEffect : ProlongedStatusEffect
 
         UnityEngine.Debug.Log("used ability " + nextUsedAbility);
 
-        float damage = (nextUsedAbility.ability as AttackAbility).DamageAmount;
-        //We need to somehow buff attack from selected ability only once per attack cycle and then reset to default!
-        UnityEngine.Debug.Log("Base damage: " + damage + " | Amplified damage: " + (damage + damage * (_damagePercentBuff / 100f)));
+        AttackAbility ability = nextUsedAbility.ability as AttackAbility;
+
+        float damage = ability.DamageAmount;
+        ability.BoostDamage(_damagePercentBuff);
+
         _succeed = true;
     }
 
