@@ -26,7 +26,6 @@ public class UseAbilityAction : AIAction
     {
         IsLocked = true;
         int abilityIndex = _abilityUser.FindIndexOf(_abilityToUse);
-        //_runtimeSelectedAbility = _abilityUser.Use(_abilityToUse, target);
         _runtimeSelectedAbility = _abilityUser.Use(abilityIndex, target);
 
         Vector3 rotationDir = target.transform.position - self.transform.position;

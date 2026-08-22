@@ -66,8 +66,6 @@ public class PyromancerLitEffect : ProlongedStatusEffect
         if (nextUsedAbility == null)
             return;
 
-        UnityEngine.Debug.Log("used ability " + nextUsedAbility);
-
         AttackAbility ability = nextUsedAbility.ability as AttackAbility;
 
         float damage = ability.DamageAmount;

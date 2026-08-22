@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 010244a6db13d7242b9a2186b950aeea, type: 3}
   m_Name: Config_Rotation_Enemy_Base
   m_EditorClassIdentifier: 
-  <RotationSpeed>k__BackingField: 200
+  <RotationSpeed>k__BackingField: 8

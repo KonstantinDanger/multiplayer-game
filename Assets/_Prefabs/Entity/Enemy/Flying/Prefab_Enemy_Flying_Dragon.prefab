@@ -309,7 +309,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _agent: {fileID: 523145679028086505}
   _rigidBody: {fileID: 5127474196180148617}
-  _forceMode: 0
+  _forceMode: 2
 --- !u!114 &4320886150369610306 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8362763484965608921, guid: 89d21a7e6eff3b5418c90425c03e59c6, type: 3}

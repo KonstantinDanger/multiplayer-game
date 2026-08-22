@@ -46,8 +46,6 @@ public abstract class Enemy : Entity
     {
         _aiBrain.OnUpdate(Time.deltaTime, TargetTrackingMemory.Target);
 
-        UnityEngine.Debug.Log("Target " + TargetTrackingMemory.Target);
-
         DetectionTimer += Time.deltaTime;
 
         if (DetectionTimer >= DetectionConfig.DetectionInterval)

@@ -32,5 +32,5 @@ MonoBehaviour:
           serializedVersion: 2
           m_Bits: 896
         includeSender: 0
-        _fieldOfViewAngle: 0
-        _ignoreFieldOfView: 1
+        _fieldOfViewAngle: 120
+        _ignoreFieldOfView: 0

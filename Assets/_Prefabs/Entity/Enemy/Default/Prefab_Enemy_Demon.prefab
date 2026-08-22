@@ -461,7 +461,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _agent: {fileID: 5603228043229722897}
   _rigidBody: {fileID: 984122914502983281}
-  _forceMode: 0
+  _forceMode: 2
 --- !u!114 &3815294379760866614
 MonoBehaviour:
   m_ObjectHideFlags: 0

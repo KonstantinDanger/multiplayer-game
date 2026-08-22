@@ -486,13 +486,13 @@ PrefabInstance:
       insertIndex: 3
       addedObject: {fileID: 8240144490476455423}
     - targetCorrespondingSourceObject: {fileID: 1418038051021799968, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
-      insertIndex: 16
+      insertIndex: 15
       addedObject: {fileID: 1435455419400485427}
     - targetCorrespondingSourceObject: {fileID: 1418038051021799968, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
-      insertIndex: 17
+      insertIndex: 16
       addedObject: {fileID: -4566607709360255179}
     - targetCorrespondingSourceObject: {fileID: 1418038051021799968, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
-      insertIndex: 18
+      insertIndex: 17
       addedObject: {fileID: 1698896213003175026}
     - targetCorrespondingSourceObject: {fileID: 1418038051021799968, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
       insertIndex: 22
@@ -657,7 +657,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _agent: {fileID: 5603228043229722897}
   _rigidBody: {fileID: 984122914502983281}
-  _forceMode: 0
+  _forceMode: 2
 --- !u!114 &1698896213003175026
 MonoBehaviour:
   m_ObjectHideFlags: 0

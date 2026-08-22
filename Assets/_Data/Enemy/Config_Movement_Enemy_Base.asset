@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696533dbd396018409a915c46a7e2a21, type: 3}
   m_Name: Config_Movement_Enemy_Base
   m_EditorClassIdentifier: 
-  <Speed>k__BackingField: 7
+  <Speed>k__BackingField: 7.7
   <SprintSpeed>k__BackingField: 10
   <MovementSmoothness>k__BackingField: 0.03
   <JumpHeight>k__BackingField: 2
   <Gravity>k__BackingField: -9.81
   <MaxFallSpeed>k__BackingField: 30
-  <AirMovementSpeedMultiplier>k__BackingField: 2
   <AirMovementAcceleration>k__BackingField: 150
