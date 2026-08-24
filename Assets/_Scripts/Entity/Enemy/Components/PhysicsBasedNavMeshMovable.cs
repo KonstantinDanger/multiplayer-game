@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(SurfaceChecker))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(NavMeshAgent))]
 public class PhysicsBasedNavMeshMovable : MonoBehaviour, IMovable
@@ -9,12 +10,13 @@ public class PhysicsBasedNavMeshMovable : MonoBehaviour, IMovable
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private Rigidbody _rigidBody;
     [SerializeField] private ForceMode _forceMode;
+    [SerializeField] private SurfaceChecker _surfaceChecker;
 
     public bool IsGravityActive { get; set; }
     public Vector3 Velocity => _rigidBody.linearVelocity;
     public Vector3 MoveDirection => Velocity.normalized;
 
-    public bool IsGrounded => _agent.isOnNavMesh;
+    public bool IsGrounded => _surfaceChecker.IsGrounded;
 
     public event Action OnMove;
 
@@ -37,14 +39,17 @@ public class PhysicsBasedNavMeshMovable : MonoBehaviour, IMovable
 
     public void Move(Vector3 position, float speed, bool resetVerticalDirection = true, float smoothness = 0.03f)
     {
+
+        UnityEngine.Debug.Log("is grounded? " + IsGrounded);
+
         if (!IsGrounded)
         {
             _agent.ResetPath();
             return;
         }
 
-        if (resetVerticalDirection)
-            ResetVerticalVelocity();
+        //if (resetVerticalDirection)
+        //    ResetVerticalVelocity();
 
         _agent.SetDestination(position);
 

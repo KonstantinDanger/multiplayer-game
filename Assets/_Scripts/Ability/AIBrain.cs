@@ -45,7 +45,7 @@ public class AIBrain : NetworkBehaviour
         _currentAction.Execute(_self, target);
 
 
-        UnityEngine.Debug.Log("Current action: " + _currentAction);
+        //UnityEngine.Debug.Log("Current action: " + _currentAction);
     }
 
     private AIAction FindBestAction(Enemy self, NetworkBehaviour target)

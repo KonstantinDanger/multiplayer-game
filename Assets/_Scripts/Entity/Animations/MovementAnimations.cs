@@ -23,32 +23,15 @@ public class MovementAnimations : NetworkBehaviour
 
 
     private IMovable Movable => _movable.Value;
-    private IRotatable Rotatable => _rotatable.Value;
 
     private float _verticalVelocity;
     private float _horizontalVelocity;
-    private float _rotationAngleDelta;
 
     private void OnEnable()
-    {
-        Movable.OnMove += HandleMove;
-        Rotatable.OnRotate += HandleRotation;
-    }
+        => Movable.OnMove += HandleMove;
 
     private void OnDisable()
-    {
-        Movable.OnMove -= HandleMove;
-
-        Rotatable.OnRotate -= HandleRotation;
-    }
-
-    private void HandleRotation(float rotationAngle)
-    {
-        //float targetRotation = rotationAngle * 360;
-        //_rotationAngleDelta = Mathf.Lerp(_rotationAngleDelta, targetRotation, _rotationSmoothness);
-
-        //_anim.SetFloat(_movementAngle, _rotationAngleDelta * Time.deltaTime);
-    }
+        => Movable.OnMove -= HandleMove;
 
     private void HandleMove()
     {
@@ -58,19 +41,12 @@ public class MovementAnimations : NetworkBehaviour
         if (!hasAuthority)
             return;
 
-        bool isGrounded = Movable.Velocity.y < 0.1f;
+        bool isGrounded = Movable.IsGrounded;
 
         if (isGrounded)
             HandleGroundedMovement();
 
         _anim.SetBool(_isGroundedParamName, isGrounded);
-    }
-
-    private void HandleAirborneMovement()
-    {
-        //float velocityY = Movable.Velocity.y;
-        //velocityY = Mathf.Clamp(velocityY, -1, 1);
-        //_anim.SetFloat(_airborneVelocityParamName, velocityY);
     }
 
     private void HandleGroundedMovement()

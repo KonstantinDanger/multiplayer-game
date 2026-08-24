@@ -22,7 +22,7 @@ MonoBehaviour:
       data:
         _consideration:
           rid: 147410461514530891
-        _ability: {fileID: 11400000, guid: defb1ee14590e974789089cb5fed3fa4, type: 2}
+        _ability: {fileID: 11400000, guid: dd913dcd0a5a01243b3b5952173f5c24, type: 2}
     - rid: 147410461514530891
       type: {class: DistanceToTargetConsideration, ns: , asm: Assembly-CSharp}
       data:

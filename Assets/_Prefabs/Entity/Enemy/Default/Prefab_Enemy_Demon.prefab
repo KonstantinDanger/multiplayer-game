@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2106724011342725509
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8563048909734455594}
+  m_Layer: 8
+  m_Name: GroundChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8563048909734455594
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106724011342725509}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.12, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8449181767076808634}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4247046261404740723
 GameObject:
   m_ObjectHideFlags: 0
@@ -30,6 +61,38 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 46992798278503915}
+  m_Father: {fileID: 4188451577050409953}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4669672104329010309
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8449181767076808634}
+  m_Layer: 8
+  m_Name: SurfaceCheckers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8449181767076808634
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4669672104329010309}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8563048909734455594}
   m_Father: {fileID: 4188451577050409953}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &516870305979378176
@@ -357,6 +420,9 @@ PrefabInstance:
     - {fileID: 7907957236900200211, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8974813229951714124, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 8449181767076808634}
+    - targetCorrespondingSourceObject: {fileID: 8974813229951714124, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8714091955952671561}
     m_AddedComponents:
@@ -372,6 +438,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1418038051021799968, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3815294379760866614}
+    - targetCorrespondingSourceObject: {fileID: 1418038051021799968, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1711924394343783007}
   m_SourcePrefab: {fileID: 100100000, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
 --- !u!54 &984122914502983281 stripped
 Rigidbody:
@@ -462,6 +531,7 @@ MonoBehaviour:
   _agent: {fileID: 5603228043229722897}
   _rigidBody: {fileID: 984122914502983281}
   _forceMode: 2
+  _surfaceChecker: {fileID: 1711924394343783007}
 --- !u!114 &3815294379760866614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -492,6 +562,42 @@ MonoBehaviour:
   _movementAngle: MovementAngle
   _airborneVelocityParamName: AirborneVelocity
   _isGroundedParamName: IsGrounded
+--- !u!114 &1711924394343783007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6125262222170548877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0cea83d08bc71842b9cec338c9df19a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _groundCheck: {fileID: 8563048909734455594}
+  _ceilingCheck: {fileID: 0}
+  _wallCheck: {fileID: 0}
+  _ledgeCheck: {fileID: 0}
+  _aboveLedgeCheck: {fileID: 0}
+  _slopeCheckDistance: 1
+  _groundCheckRadius: 0.5
+  _ceilingCheckRadius: 0.4
+  _wallCheckRadius: 0.4
+  _ledgeCheckRadius: 0.4
+  _ledgeAboveCheckDistance: 1
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  _ceilingLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _wallLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _ledgeLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _debugEnabled: 1
 --- !u!114 &6475008800849618527 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2267410281914650354, guid: a218dc46898b4e4428eb54df3b03f967, type: 3}
