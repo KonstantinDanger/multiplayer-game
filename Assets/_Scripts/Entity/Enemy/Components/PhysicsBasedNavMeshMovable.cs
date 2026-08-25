@@ -39,12 +39,9 @@ public class PhysicsBasedNavMeshMovable : MonoBehaviour, IMovable
 
     public void Move(Vector3 position, float speed, bool resetVerticalDirection = true, float smoothness = 0.03f)
     {
-
-        UnityEngine.Debug.Log("is grounded? " + IsGrounded);
-
         if (!IsGrounded)
         {
-            _agent.ResetPath();
+            //_agent.ResetPath();
             return;
         }
 

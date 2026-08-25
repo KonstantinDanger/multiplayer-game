@@ -8,7 +8,8 @@ public class TargetTrackingConsideration : CurvedConsideration
 
     public override float Evaluate(NetworkBehaviour sender, NetworkBehaviour target)
     {
-        _targetTracking = sender.GetComponent<ITargetTrackingMemory>();
+        if (_targetTracking == null)
+            _targetTracking = sender.GetComponent<ITargetTrackingMemory>();
 
         int normalizedValue = _targetTracking.Target == null ? 0 : 1;
 
