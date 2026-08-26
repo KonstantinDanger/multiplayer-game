@@ -2,17 +2,15 @@
 using System;
 
 [Serializable]
-public class TargetTrackingConsideration : CurvedConsideration
+public class TargetTrackingConsideration : BooleanConsideration
 {
     private ITargetTrackingMemory _targetTracking;
 
-    public override float Evaluate(NetworkBehaviour sender, NetworkBehaviour target)
+    protected override bool OnEvaluate(NetworkBehaviour sender, NetworkBehaviour target)
     {
         if (_targetTracking == null)
             _targetTracking = sender.GetComponent<ITargetTrackingMemory>();
 
-        int normalizedValue = _targetTracking.Target == null ? 0 : 1;
-
-        return ConsiderationCurve.Evaluate(normalizedValue);
+        return _targetTracking.Target != null;
     }
 }

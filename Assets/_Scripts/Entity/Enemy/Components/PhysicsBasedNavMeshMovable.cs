@@ -7,7 +7,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class PhysicsBasedNavMeshMovable : MonoBehaviour, IMovable
 {
-    [SerializeField] private NavMeshAgent _agent;
+    //[SerializeField] private NavMeshAgent _agent;
     [SerializeField] private Rigidbody _rigidBody;
     [SerializeField] private ForceMode _forceMode;
     [SerializeField] private SurfaceChecker _surfaceChecker;
@@ -23,12 +23,12 @@ public class PhysicsBasedNavMeshMovable : MonoBehaviour, IMovable
     private void OnValidate()
         => transform.TryGetComponent(out Rigidbody _rigidBody);
 
-    private void Start()
-    {
-        _agent.updatePosition = false;
-        _agent.updateRotation = false;
-        _agent.updateUpAxis = false;
-    }
+    //private void Start()
+    //{
+    //    _agent.updatePosition = false;
+    //    _agent.updateRotation = false;
+    //    _agent.updateUpAxis = false;
+    //}
 
     public void ResetVerticalVelocity()
     {
@@ -37,22 +37,23 @@ public class PhysicsBasedNavMeshMovable : MonoBehaviour, IMovable
         _rigidBody.linearVelocity = velocity;
     }
 
-    public void Move(Vector3 position, float speed, bool resetVerticalDirection = true, float smoothness = 0.03f)
+    public void Move(Vector3 direction, /*Vector3 position,*/ float speed, bool resetVerticalDirection = true, float smoothness = 0.03f)
     {
-        if (!IsGrounded)
-        {
-            //_agent.ResetPath();
-            return;
-        }
+        //if (!IsGrounded)
+        //{
+        //    //_agent.ResetPath();
+        //    return;
+        //}
 
         //if (resetVerticalDirection)
         //    ResetVerticalVelocity();
 
-        _agent.SetDestination(position);
+        //_agent.SetDestination(position);
 
-        _agent.nextPosition = transform.position;
-        Vector3 direction = (_agent.steeringTarget - transform.position).normalized;
-        Vector3 velocity = Time.fixedDeltaTime * speed * direction;
+        //_agent.nextPosition = transform.position;
+        //Vector3 direction = (_agent.steeringTarget - transform.position).normalized;
+
+        Vector3 velocity = Time.fixedDeltaTime * speed * direction.normalized;
         _rigidBody.AddForce(velocity, _forceMode);
 
         Vector3 currentVelocity = _rigidBody.linearVelocity;
@@ -66,7 +67,8 @@ public class PhysicsBasedNavMeshMovable : MonoBehaviour, IMovable
 
     public void ApplyGravity(float gravity, float maxFallSpeed)
     {
-        IsGravityActive = !_agent.isOnNavMesh;
+        IsGravityActive = !IsGrounded;
+        //IsGravityActive = !_agent.isOnNavMesh;
 
         { /*Applies gravity*/}
     }

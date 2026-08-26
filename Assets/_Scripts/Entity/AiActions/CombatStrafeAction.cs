@@ -12,6 +12,7 @@ public class CombatStrafeAction : AIAction
 
     private Transform _selfTransform;
     private IMovable _movable;
+    private IRotatable _rotatable;
 
     private float _nextChangeDirectionTime;
     private bool _rightDirection;
@@ -20,6 +21,9 @@ public class CombatStrafeAction : AIAction
     {
         if (!self.TryGetComponent(out _movable))
             throw new Exception("No IMovable found!");
+
+        if (!self.TryGetComponent(out _rotatable))
+            throw new Exception("No IRotatable found!");
 
         _selfTransform = self.transform;
 
@@ -31,21 +35,21 @@ public class CombatStrafeAction : AIAction
 
     public override void Execute(Enemy self, NetworkBehaviour target)
     {
-        Vector3 strafeDirection = self.transform.right;
-
         if (Time.time >= _nextChangeDirectionTime)
         {
             SetNextDirectionChangeTime();
             SetRandomDirection();
-
-            strafeDirection = GetStrafeDirection();
         }
 
-        Strafe(strafeDirection, self.MovementConfig.StrafeSpeed);
+        //if (target == null)
+        //    target = GameObject.FindObjectOfType(typeof(Player), true) as Player;
+
+        //_rotatable.Rotate(target.transform.position - self.transform.position, self.RotationConfig.RotationSpeed);
+        Strafe(GetStrafeDirection(), self.MovementConfig.StrafeSpeed);
     }
 
     private void Strafe(Vector3 direction, float speed)
-        => _movable.Move(direction * speed, speed);
+        => _movable.Move(direction, speed);
 
     private Vector3 GetStrafeDirection()
     {

@@ -21,33 +21,23 @@ MonoBehaviour:
       type: {class: CombatStrafeAction, ns: , asm: Assembly-CSharp}
       data:
         _consideration:
-          rid: 8956606912043679744
+          rid: 8956606927224438878
         _minTimeToChangeDirection: 2
         _maxTimeToChangeDirection: 5
-    - rid: 8956606912043679744
+    - rid: 8956606927224438878
+      type: {class: CompoundConsideration, ns: , asm: Assembly-CSharp}
+      data:
+        _considerations:
+        - rid: 8956606927224438879
+        - rid: 8956606927224438880
+        _operation: 2
+    - rid: 8956606927224438879
       type: {class: HasPathToTargetConsideration, ns: , asm: Assembly-CSharp}
       data:
-        <ConsiderationCurve>k__BackingField:
-          serializedVersion: 2
-          m_Curve:
-          - serializedVersion: 3
-            time: 0
-            value: 0.2487518
-            inSlope: -0.2481275
-            outSlope: -0.2481275
-            tangentMode: 34
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0.33333334
-          - serializedVersion: 3
-            time: 1
-            value: 0.00062429905
-            inSlope: -0.2481275
-            outSlope: -0.2481275
-            tangentMode: 34
-            weightedMode: 0
-            inWeight: 0.33333334
-            outWeight: 0
-          m_PreInfinity: 2
-          m_PostInfinity: 2
-          m_RotationOrder: 4
+        _valueOfTrue: 0.25
+        _valueOfFalse: 0
+    - rid: 8956606927224438880
+      type: {class: TargetTrackingConsideration, ns: , asm: Assembly-CSharp}
+      data:
+        _valueOfTrue: 1
+        _valueOfFalse: 0
