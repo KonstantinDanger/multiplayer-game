@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class NavMeshPatrol : NetworkBehaviour, IPatrol
 {
     private PatrolConfig _config;
-    private IMovable _movable;
+    private INavigationBasedMover _movable;
 
     private Vector3 _currentWaypoint;
     private Vector3 _patrolOrigin;
@@ -17,7 +17,7 @@ public class NavMeshPatrol : NetworkBehaviour, IPatrol
 
     public bool IsWaiting => _isWaiting;
 
-    public void Initialize(PatrolConfig patrolConfig, IMovable movable, Transform patrolOrigin, Transform transform)
+    public void Initialize(PatrolConfig patrolConfig, INavigationBasedMover movable, Transform patrolOrigin, Transform transform)
     {
         _config = patrolConfig;
         _movable = movable;

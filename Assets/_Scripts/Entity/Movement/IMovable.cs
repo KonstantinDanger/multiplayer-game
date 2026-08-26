@@ -1,5 +1,17 @@
+using AYellowpaper;
 using System;
 using UnityEngine;
+
+[RequireComponent(typeof(IMovable))]
+public class NavMeshDirectionChanger : MonoBehaviour, INavMeshDirectionChanger
+{
+    [SerializeField] private InterfaceReference<IMovable> _movableRef;
+    [SerializeField] private UnityEngine.AI.NavMeshAgent _agent;
+
+
+}
+
+public interface INavMeshDirectionChanger { }
 
 public interface IMovable
 {

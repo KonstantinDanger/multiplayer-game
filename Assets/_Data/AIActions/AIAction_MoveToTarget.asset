@@ -21,8 +21,15 @@ MonoBehaviour:
       type: {class: MoveToTargetAction, ns: , asm: Assembly-CSharp}
       data:
         _consideration:
-          rid: 147410461514530889
-    - rid: 147410461514530889
+          rid: 8956606927224438898
+    - rid: 8956606927224438898
+      type: {class: CompoundConsideration, ns: , asm: Assembly-CSharp}
+      data:
+        _considerations:
+        - rid: 8956606927224438899
+        - rid: 8956606927224438900
+        _operation: 2
+    - rid: 8956606927224438899
       type: {class: DistanceToTargetConsideration, ns: , asm: Assembly-CSharp}
       data:
         <ConsiderationCurve>k__BackingField:
@@ -59,3 +66,8 @@ MonoBehaviour:
           m_PostInfinity: 2
           m_RotationOrder: 4
         _detectionConfig: {fileID: 11400000, guid: 8104fd2cada7a1f45af32fa586a2348c, type: 2}
+    - rid: 8956606927224438900
+      type: {class: HasPathToTargetConsideration, ns: , asm: Assembly-CSharp}
+      data:
+        _valueOfTrue: 1
+        _valueOfFalse: 0

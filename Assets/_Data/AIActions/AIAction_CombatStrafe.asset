@@ -34,7 +34,7 @@ MonoBehaviour:
     - rid: 8956606927224438879
       type: {class: HasPathToTargetConsideration, ns: , asm: Assembly-CSharp}
       data:
-        _valueOfTrue: 0.25
+        _valueOfTrue: 0.35
         _valueOfFalse: 0
     - rid: 8956606927224438880
       type: {class: TargetTrackingConsideration, ns: , asm: Assembly-CSharp}

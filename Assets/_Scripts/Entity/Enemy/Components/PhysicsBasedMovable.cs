@@ -1,13 +1,10 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.AI;
 
 [RequireComponent(typeof(SurfaceChecker))]
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(NavMeshAgent))]
-public class PhysicsBasedNavMeshMovable : MonoBehaviour, IMovable
+public class PhysicsBasedMovable : MonoBehaviour, IMovable
 {
-    //[SerializeField] private NavMeshAgent _agent;
     [SerializeField] private Rigidbody _rigidBody;
     [SerializeField] private ForceMode _forceMode;
     [SerializeField] private SurfaceChecker _surfaceChecker;
@@ -23,13 +20,6 @@ public class PhysicsBasedNavMeshMovable : MonoBehaviour, IMovable
     private void OnValidate()
         => transform.TryGetComponent(out Rigidbody _rigidBody);
 
-    //private void Start()
-    //{
-    //    _agent.updatePosition = false;
-    //    _agent.updateRotation = false;
-    //    _agent.updateUpAxis = false;
-    //}
-
     public void ResetVerticalVelocity()
     {
         Vector3 velocity = _rigidBody.linearVelocity;
@@ -37,21 +27,13 @@ public class PhysicsBasedNavMeshMovable : MonoBehaviour, IMovable
         _rigidBody.linearVelocity = velocity;
     }
 
-    public void Move(Vector3 direction, /*Vector3 position,*/ float speed, bool resetVerticalDirection = true, float smoothness = 0.03f)
+    public void Move(Vector3 direction, float speed, bool resetVerticalDirection = true, float smoothness = 0.03f)
     {
-        //if (!IsGrounded)
-        //{
-        //    //_agent.ResetPath();
-        //    return;
-        //}
+        if (!IsGrounded)
+            return;
 
         //if (resetVerticalDirection)
         //    ResetVerticalVelocity();
-
-        //_agent.SetDestination(position);
-
-        //_agent.nextPosition = transform.position;
-        //Vector3 direction = (_agent.steeringTarget - transform.position).normalized;
 
         Vector3 velocity = Time.fixedDeltaTime * speed * direction.normalized;
         _rigidBody.AddForce(velocity, _forceMode);
@@ -68,9 +50,10 @@ public class PhysicsBasedNavMeshMovable : MonoBehaviour, IMovable
     public void ApplyGravity(float gravity, float maxFallSpeed)
     {
         IsGravityActive = !IsGrounded;
-        //IsGravityActive = !_agent.isOnNavMesh;
 
-        { /*Applies gravity*/}
+        Vector3 velocity = _rigidBody.linearVelocity;
+        velocity.y = Mathf.Clamp(velocity.y, float.MinValue, maxFallSpeed);
+        _rigidBody.linearVelocity = velocity;
     }
 
     public void Jump(float jumpHeight, float gravity)

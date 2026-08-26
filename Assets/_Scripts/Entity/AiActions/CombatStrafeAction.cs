@@ -29,8 +29,6 @@ public class CombatStrafeAction : AIAction
 
         SetNextDirectionChangeTime();
         SetRandomDirection();
-
-        IsLocked = true;
     }
 
     public override void Execute(Enemy self, NetworkBehaviour target)
@@ -41,10 +39,7 @@ public class CombatStrafeAction : AIAction
             SetRandomDirection();
         }
 
-        //if (target == null)
-        //    target = GameObject.FindObjectOfType(typeof(Player), true) as Player;
-
-        //_rotatable.Rotate(target.transform.position - self.transform.position, self.RotationConfig.RotationSpeed);
+        _rotatable.Rotate(target.transform.position - self.transform.position, self.RotationConfig.RotationSpeed);
         Strafe(GetStrafeDirection(), self.MovementConfig.StrafeSpeed);
     }
 

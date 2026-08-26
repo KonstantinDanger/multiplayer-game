@@ -7,8 +7,15 @@ public class MoveToTargetAction : AIAction
 {
     private CapsuleCollider _collider;
 
+    private INavigationBasedMover _navigationMover;
+
     public override void Initialize(NetworkBehaviour self)
-        => _collider = self.GetComponent<CapsuleCollider>();
+    {
+        _collider = self.GetComponent<CapsuleCollider>();
+
+        if (!self.TryGetComponent(out _navigationMover))
+            throw new Exception("No direction mover found!");
+    }
 
     public override void Execute(Enemy self, NetworkBehaviour target)
     {
@@ -17,7 +24,7 @@ public class MoveToTargetAction : AIAction
         if (distanceToTarget <= _collider.radius)
             return;
 
-        self.Movable.Move(target.transform.position, self.MovementConfig.Speed);
+        _navigationMover.Move(target.transform.position, self.MovementConfig.Speed);
         self.Rotatable?.Rotate((target.transform.position - self.transform.position).normalized, self.RotationConfig.RotationSpeed);
     }
 }
