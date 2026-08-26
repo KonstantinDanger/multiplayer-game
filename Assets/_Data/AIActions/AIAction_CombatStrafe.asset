@@ -30,6 +30,7 @@ MonoBehaviour:
         _considerations:
         - rid: 8956606927224438879
         - rid: 8956606927224438880
+        - rid: 8956606927224438918
         _operation: 2
     - rid: 8956606927224438879
       type: {class: HasPathToTargetConsideration, ns: , asm: Assembly-CSharp}
@@ -41,3 +42,40 @@ MonoBehaviour:
       data:
         _valueOfTrue: 1
         _valueOfFalse: 0
+    - rid: 8956606927224438918
+      type: {class: DistanceToTargetConsideration, ns: , asm: Assembly-CSharp}
+      data:
+        <ConsiderationCurve>k__BackingField:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 1
+            inSlope: 0
+            outSlope: -0.012384147
+            tangentMode: 5
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0.10745505
+          - serializedVersion: 3
+            time: 0.9665716
+            value: 0.97952783
+            inSlope: -0.09829384
+            outSlope: -0.09829384
+            tangentMode: 0
+            weightedMode: 3
+            inWeight: 0.10944184
+            outWeight: 0.42716184
+          - serializedVersion: 3
+            time: 1
+            value: 0
+            inSlope: -29.30229
+            outSlope: -29.30229
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        _detectionConfig: {fileID: 11400000, guid: 8104fd2cada7a1f45af32fa586a2348c, type: 2}

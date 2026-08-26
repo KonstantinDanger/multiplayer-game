@@ -16,3 +16,4 @@ MonoBehaviour:
   _patrolSpeed: 5
   _waitTimeAtPoint: 3
   _waypointReachedDistance: 0.5
+  _rotationSpeed: 1.2

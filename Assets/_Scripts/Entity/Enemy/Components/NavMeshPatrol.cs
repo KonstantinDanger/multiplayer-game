@@ -7,6 +7,7 @@ public class NavMeshPatrol : NetworkBehaviour, IPatrol
 {
     private PatrolConfig _config;
     private INavigationBasedMover _movable;
+    private IRotatable _rotatable;
 
     private Vector3 _currentWaypoint;
     private Vector3 _patrolOrigin;
@@ -17,12 +18,13 @@ public class NavMeshPatrol : NetworkBehaviour, IPatrol
 
     public bool IsWaiting => _isWaiting;
 
-    public void Initialize(PatrolConfig patrolConfig, INavigationBasedMover movable, Transform patrolOrigin, Transform transform)
+    public void Initialize(PatrolConfig patrolConfig, INavigationBasedMover movable, Transform patrolOrigin, Transform transform, IRotatable rotatable)
     {
         _config = patrolConfig;
         _movable = movable;
         _patrolOrigin = patrolOrigin.position;
         _transform = transform;
+        _rotatable = rotatable;
     }
 
     public void OnUpdate(float deltaTime)
@@ -39,6 +41,8 @@ public class NavMeshPatrol : NetworkBehaviour, IPatrol
         if (_hasWaypoint)
         {
             _movable.Move(_currentWaypoint, _config.PatrolSpeed);
+            Vector3 rotationDirection = _currentWaypoint - transform.position;
+            _rotatable.Rotate(rotationDirection, _config.RotationSpeed);
 
             if (HasApproachedToTarget(_currentWaypoint))
             {
