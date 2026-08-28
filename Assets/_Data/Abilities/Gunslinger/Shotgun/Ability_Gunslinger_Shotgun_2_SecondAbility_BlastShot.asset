@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eedb7db48f6b7c44be8e8c890e9d4ae, type: 3}
+  m_Name: Ability_Gunslinger_Shotgun_2_SecondAbility_BlastShot
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: Shotgun shot
+  _ability:
+    rid: 8956606979911450625
+  <SpriteIcon>k__BackingField: {fileID: 21300000, guid: 8d95bcf261f259f4786a397bc66e3705, type: 3}
+  <ConsiderAbilityDuration>k__BackingField: 0
+  <PreparationAnimation>k__BackingField: {fileID: -203655887218126122, guid: bbf847321a1a76e43a76ae3d1c84423f, type: 3}
+  <UsageAnimation>k__BackingField: {fileID: 0}
+  <PerformParticle>k__BackingField: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 8956606979911450625
+      type: {class: CompoundAbility, ns: , asm: Assembly-CSharp}
+      data:
+        <CooldownTime>k__BackingField: 1
+        <UsagePrepareTime>k__BackingField: 0
+        _abilities:
+        - {fileID: 11400000, guid: 11ae2f2279ce6be46b6ec3bafac5f404, type: 2}
+        - {fileID: 11400000, guid: e04dc73b9235861479ba000f8e06834f, type: 2}

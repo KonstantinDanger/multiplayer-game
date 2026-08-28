@@ -14,10 +14,15 @@ public class CompoundAbility : Ability, ICacheAbilities
 
     public IEnumerable<AbilityInstance> CacheAbilities()
     {
-        _cached = _abilities.
-            Select(ability => new AbilityInstance(ability
+        _cached = _abilities
+            .Select(ability => new AbilityInstance(ability
             .GetNew(), ability))
             .ToList();
+
+        //(_abilities
+        //    .Where(ability => ability is ICacheAbilities)
+        //    .Select(ability => (ability as ICacheAbilities)
+        //    .CacheAbilities());
 
         return _cached;
     }
