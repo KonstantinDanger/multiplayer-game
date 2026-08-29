@@ -15,14 +15,11 @@ public class CompoundAbility : Ability, ICacheAbilities
     public IEnumerable<AbilityInstance> CacheAbilities()
     {
         _cached = _abilities
-            .Select(ability => new AbilityInstance(ability
-            .GetNew(), ability))
+            .Select(ability => new AbilityInstance(ability.GetNew(), ability))
+            //.Concat(_abilities
+            //.OfType<ICacheAbilities>()
+            //.SelectMany(ability => ability.CacheAbilities()))
             .ToList();
-
-        //(_abilities
-        //    .Where(ability => ability is ICacheAbilities)
-        //    .Select(ability => (ability as ICacheAbilities)
-        //    .CacheAbilities());
 
         return _cached;
     }
