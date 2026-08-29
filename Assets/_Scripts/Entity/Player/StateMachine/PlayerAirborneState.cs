@@ -39,6 +39,7 @@ public class PlayerAirborneState : PlayerState
             return;
         }
 
+        player.Movable.UpdateExternalForce(_cfg.ExternalForceDrag);
         MaintainAirborneVelocity(deltaTime);
     }
 

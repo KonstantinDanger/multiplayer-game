@@ -18,7 +18,7 @@ public class CompoundAbility : Ability, ICacheAbilities
             .Select(ability => new AbilityInstance(ability.GetNew(), ability))
             //.Concat(_abilities
             //.OfType<ICacheAbilities>()
-            //.SelectMany(ability => ability.CacheAbilities()))
+            //.SelectMany(ability => ability.CacheAbilities())) ///If compound ability can have compound abilities within itself
             .ToList();
 
         return _cached;

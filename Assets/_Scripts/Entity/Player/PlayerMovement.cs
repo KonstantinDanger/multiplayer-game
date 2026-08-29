@@ -4,18 +4,20 @@ using UnityEngine;
 
 [RequireComponent(typeof(NetworkTransformBase))]
 [RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(SurfaceChecker))]
 public class PlayerMovement : NetworkBehaviour, IMovable
 {
     public event Action OnMove;
 
     [SerializeField] private CharacterController _controller;
     [SerializeField] private float _groundedSnapForce = 5f;
+    [SerializeField] private SurfaceChecker _surfaceChecker;
 
-    public Vector3 Velocity => new(_horizontalVelocity.x, _verticalVelocity, _horizontalVelocity.z);
+    public Vector3 Velocity => new Vector3(_horizontalVelocity.x, _verticalVelocity, _horizontalVelocity.z) + _externalForce;
     public Vector3 MoveDirection { get; private set; }
 
     public bool IsGravityActive { get; set; } = true;
-    public bool IsGrounded => _controller.isGrounded;
+    public bool IsGrounded => _surfaceChecker.IsGrounded;
 
     private Vector3 _externalForce;
     private Vector3 _movementDelta;
@@ -33,10 +35,10 @@ public class PlayerMovement : NetworkBehaviour, IMovable
         if (Mathf.Abs(_verticalVelocity) >= maxFallSpeed)
             _verticalVelocity = -maxFallSpeed;
 
-        if (_controller.isGrounded && _verticalVelocity < 0f)
+        if (IsGrounded && _verticalVelocity < 0f)
             _verticalVelocity = -_groundedSnapForce;
 
-        Vector3 verticalVelocity = new(0, _verticalVelocity, 0);
+        Vector3 verticalVelocity = new(0f, _verticalVelocity + _externalForce.y, 0f);
 
         _controller.Move(verticalVelocity * Time.deltaTime);
     }
@@ -46,7 +48,7 @@ public class PlayerMovement : NetworkBehaviour, IMovable
 
     public void Jump(float jumpHeight, float gravity)
     {
-        if (!_controller.isGrounded)
+        if (!IsGrounded)
             return;
 
         _verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);

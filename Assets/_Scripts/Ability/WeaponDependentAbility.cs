@@ -71,6 +71,12 @@ public class WeaponDependentAbility : Ability, ICacheAbilities
             subAbilityInstance.OnPerformStarted += (current, duration) => RaisePerformStarted(current, duration);
             subAbilityInstance.OnFinished += current => RaiseFinished(current);
 
+            if (subAbilityInstance is ICacheAbilities cacher)
+            {
+                IEnumerable<AbilityInstance> cachedInner = cacher.CacheAbilities();
+                instances.AddRange(cachedInner);
+            }
+
             _weaponAbilityInstances.Add(weapon.Key, subAbilityInstance);
 
             instances.Add(new AbilityInstance(subAbilityInstance, scriptableAbility));

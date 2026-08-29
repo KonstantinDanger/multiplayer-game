@@ -28,5 +28,5 @@ MonoBehaviour:
       data:
         <CooldownTime>k__BackingField: 1
         <UsagePrepareTime>k__BackingField: 0
-        _force: 10
+        _force: 0.33
         _forward: 0

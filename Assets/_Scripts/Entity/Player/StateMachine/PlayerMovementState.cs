@@ -27,6 +27,7 @@ public class PlayerMovementState : PlayerGroundedState
         _movementDirection = GetMovementDirection(MovementInput);
         Movable.Move(_movementDirection, _currentSpeed, true, MovementConfig.MovementSmoothness);
         Movable.ApplyGravity(MovementConfig.Gravity, MovementConfig.MaxFallSpeed);
+        Movable.UpdateExternalForce(MovementConfig.ExternalForceDrag);
 
         base.OnUpdate(deltaTime);
     }

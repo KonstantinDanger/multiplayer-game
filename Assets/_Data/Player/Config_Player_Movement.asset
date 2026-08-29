@@ -19,3 +19,5 @@ MonoBehaviour:
   <Gravity>k__BackingField: -20
   <MaxFallSpeed>k__BackingField: 30
   <AirMovementAcceleration>k__BackingField: 96
+  <StrafeSpeed>k__BackingField: 5
+  <ExternalForceDrag>k__BackingField: 6

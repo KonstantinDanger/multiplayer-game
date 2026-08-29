@@ -11,4 +11,5 @@ public class MovementConfig : ScriptableObject
     [field: SerializeField, Range(1f, 50f)] public float MaxFallSpeed { get; private set; } = 30f;
     [field: SerializeField, Range(1f, 500f)] public float AirMovementAcceleration { get; private set; } = 150f;
     [field: SerializeField, Range(0.5f, 500f)] public float StrafeSpeed { get; private set; } = 5f;
+    [field: SerializeField, Range(0.5f, 500f)] public float ExternalForceDrag { get; private set; } = 1f;
 }

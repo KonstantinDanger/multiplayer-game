@@ -12,13 +12,17 @@ public class AddForceAbility : Ability
     [SerializeField] private bool _forward;
 
     private IMovable _movable;
+    private IRotatable _rotatable;
 
     protected override IEnumerator OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
     {
         if (_movable == null)
             sender.TryGetComponent(out _movable);
 
-        Vector3 direction = _forward ? sender.transform.forward : -sender.transform.forward;
+        if (_rotatable == null)
+            sender.TryGetComponent(out _rotatable);
+
+        Vector3 direction = _forward ? _rotatable.Forward : -_rotatable.Forward;
         Vector3 force = direction * _force;
 
         _movable.AddExternalForce(force);
