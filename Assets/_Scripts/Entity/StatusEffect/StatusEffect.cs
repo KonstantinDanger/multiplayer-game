@@ -47,5 +47,5 @@ public abstract class StatusEffect
     protected virtual void OnReset() { }
 
     public override string ToString()
-        => $"Status effect ({GetType()}). Accumulation: [{Accumulation}/{_maxAccumulationAmount}]";
+        => $"Status effect ({GetType()}). accumulatedCharges: [{Accumulation}/{_maxAccumulationAmount}]";
 }

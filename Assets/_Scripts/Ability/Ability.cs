@@ -92,7 +92,6 @@ public abstract class Ability
     }
 
     protected virtual void OnPerformStartedEventInvoke() => OnPerformStarted?.Invoke(this, Duration);
-
     protected void RaisePreparationStarted(Ability source, float duration) => OnPreparationStarted?.Invoke(source, duration);
     protected void RaisePerformStarted(Ability source, float duration) => OnPerformStarted?.Invoke(source, duration);
     protected void RaiseFinished(Ability source) => OnFinished?.Invoke(source);

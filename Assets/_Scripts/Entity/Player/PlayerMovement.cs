@@ -35,7 +35,7 @@ public class PlayerMovement : NetworkBehaviour, IMovable
         if (Mathf.Abs(_verticalVelocity) >= maxFallSpeed)
             _verticalVelocity = -maxFallSpeed;
 
-        if (IsGrounded && _verticalVelocity < 0f)
+        if (IsGrounded && _verticalVelocity < 0f && _externalForce.y <= 0.01f)
             _verticalVelocity = -_groundedSnapForce;
 
         Vector3 verticalVelocity = new(0f, _verticalVelocity + _externalForce.y, 0f);
