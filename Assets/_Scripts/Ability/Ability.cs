@@ -71,10 +71,10 @@ public abstract class Ability
         OnPerformStartedEventInvoke();
         yield return OnPerform(sender, target);
 
+        IsPerforming = false;
+
         yield return OnPerformed(sender, target);
         OnFinished?.Invoke(this);
-
-        IsPerforming = false;
     }
 
     private IEnumerator PrepareUsageRoutine()

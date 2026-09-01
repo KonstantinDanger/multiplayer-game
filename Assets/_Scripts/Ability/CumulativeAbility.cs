@@ -4,21 +4,39 @@ using System.Collections;
 using UnityEngine;
 
 [Serializable]
-public abstract class CumulativeAbility : Ability
+public class CumulativeAbility : Ability, IGauge
 {
-    [SerializeField, Min(1)] private int _charges = 1;
+    [SerializeField] private ScriptableAbility _ability;
+    [SerializeField, Min(1)] private int _maxCharges = 1;
     [SerializeField, Min(0.01f)] private float _chargesPerSecond = 1f;
 
-    private float _accumulation;
+    private float _accumulation = 1f;
+    private Ability _cached;
 
-    private int AccumulatedCharges => Mathf.Clamp(Mathf.FloorToInt(_accumulation), 0, _charges);
+    public event Action OnValueChanged;
+
+    private int AccumulatedCharges => Mathf.Clamp(Mathf.FloorToInt(_accumulation), 0, _maxCharges);
+
+    public float CurrentGaugeValue => AccumulatedCharges;
+    public float MaxGaugeValue => _maxCharges;
 
     protected internal override AbilityRequestStatus OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target)
     {
+        if (_cached == null)
+            _cached = _ability.GetNew();
+
         if (AccumulatedCharges <= 0)
             return AbilityRequestStatus.Deny;
 
         return base.OnPerformRequested(sender, target);
+    }
+
+    protected override IEnumerator OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
+    {
+        yield return _cached.PerformRoutine(sender, target);
+        _accumulation--;
+
+        UnityEngine.Debug.Log("performed cumulative ability. Accumulated charges: " + AccumulatedCharges);
     }
 
     protected override IEnumerator OnPerformed(NetworkBehaviour sender, NetworkBehaviour target)
@@ -29,9 +47,13 @@ public abstract class CumulativeAbility : Ability
 
     private IEnumerator AccumulateRoutine(float accumulationPerSecond)
     {
-        while (!IsPerforming && AccumulatedCharges < _charges)
+        while (true)
         {
+            if (IsPerforming || AccumulatedCharges >= _maxCharges)
+                yield break;
+
             _accumulation += accumulationPerSecond * Time.deltaTime;
+
             yield return null;
         }
     }

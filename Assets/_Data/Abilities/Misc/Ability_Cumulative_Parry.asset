@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eedb7db48f6b7c44be8e8c890e9d4ae, type: 3}
+  m_Name: Ability_Cumulative_Parry
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: 
+  _ability:
+    rid: 5051938209874051149
+  <SpriteIcon>k__BackingField: {fileID: 21300000, guid: 917871e5c6d34ed4b93dfafad1277db5, type: 3}
+  <ConsiderAbilityDuration>k__BackingField: 0
+  <PreparationAnimation>k__BackingField: {fileID: 3094330708855449807, guid: c2160d1a58a158543817a3f1c504dc91, type: 3}
+  <UsageAnimation>k__BackingField: {fileID: 0}
+  <PerformParticle>k__BackingField: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 5051938209874051149
+      type: {class: CumulativeAbility, ns: , asm: Assembly-CSharp}
+      data:
+        <CooldownTime>k__BackingField: 0.2
+        <UsagePrepareTime>k__BackingField: 0
+        _ability: {fileID: 11400000, guid: 47f4666cb41757b40b14887782a6cf4d, type: 2}
+        _maxCharges: 5
+        _chargesPerSecond: 0.5
