@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class WeaponDependentAbility : Ability, ICacheAbilities
+public class WeaponDependentAbility : Ability, IPresentInnerAbility, ICacheAbilities
 {
     [SerializeField]
     private SerializedDictionary<ScriptableWeapon, ScriptableAbility> _weaponAbilities = new();
@@ -15,6 +15,8 @@ public class WeaponDependentAbility : Ability, ICacheAbilities
 
     private Ability _selectedAbilityInstance;
     private WeaponUser _user;
+
+    public IAbilityPresentationData InnerAbilityPresentation => _weaponAbilities[_user?.SelectedWeapon];
 
     protected internal override AbilityRequestStatus OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target)
     {

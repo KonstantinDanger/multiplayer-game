@@ -11,6 +11,7 @@ public class AbilitiesHUD : HUD
         {
             AbilityCell abilityCell = _abilityCells[i];
             AbilitySlot abilitySlot = abilityUser.Slots[i + 1];
+            abilityUser.GetPresentationData(abilitySlot);
             IAbilityPresentationData data = abilitySlot.AbilityInstance.presentationData;
 
             abilityCell.SetAbility(abilitySlot, data);
