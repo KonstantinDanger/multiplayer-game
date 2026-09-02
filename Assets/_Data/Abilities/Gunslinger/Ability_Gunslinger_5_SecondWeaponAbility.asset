@@ -15,7 +15,7 @@ MonoBehaviour:
   <Name>k__BackingField: Current weapon second ability
   _ability:
     rid: 8956606609910923375
-  <SpriteIcon>k__BackingField: {fileID: 21300000, guid: 530bcabb1501d8148a19a77465ecac03, type: 3}
+  <SpriteIcon>k__BackingField: {fileID: 0}
   <ConsiderAbilityDuration>k__BackingField: 0
   <PreparationAnimation>k__BackingField: {fileID: 0}
   <UsageAnimation>k__BackingField: {fileID: 0}

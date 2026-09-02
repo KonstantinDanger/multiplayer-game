@@ -16,7 +16,15 @@ public class WeaponDependentAbility : Ability, IPresentInnerAbility, ICacheAbili
     private Ability _selectedAbilityInstance;
     private WeaponUser _user;
 
-    public IAbilityPresentationData InnerAbilityPresentation => _weaponAbilities[_user?.SelectedWeapon];
+    public IAbilityPresentationData GetInnerAbilityPresentation(NetworkBehaviour owner)
+    {
+        if (_user == null)
+            if (owner.TryGetComponent(out WeaponUserComponent weaponComponent))
+                _user = weaponComponent.WeaponUser;
+
+        return _weaponAbilities[_user?.SelectedWeapon];
+
+    }
 
     protected internal override AbilityRequestStatus OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target)
     {

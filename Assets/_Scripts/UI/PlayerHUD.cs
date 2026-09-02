@@ -28,7 +28,7 @@ public class PlayerHUD : HUD
             HandleLevelChange(_level.Lvl);
     }
 
-    public void Initialize(AbilityUser abilities, IDamageable damageable, Level level, Respawn respawn, Wallet wallet)
+    public void Initialize(IAbilityUser abilities, IDamageable damageable, Level level, Respawn respawn, Wallet wallet)
     {
         _level = level;
         _wallet = wallet;

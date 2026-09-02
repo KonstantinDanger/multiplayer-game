@@ -138,9 +138,15 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
         .Find(instance => instance.ability
         .Equals(ability))?.presentationData;
 
-    public void GetPresentationData(AbilitySlot abilitySlot)
+    public IAbilityPresentationData GetPresentationData(AbilitySlot abilitySlot)
     {
-        //_slots.Find(abilitySlot) <- if is a IPresentInnerAbility innerPresenter => return innerPresenter.InnerAbilityPresentation
+        Ability selectedAbility = abilitySlot.AbilityInstance.ability;
+
+        if (selectedAbility is IPresentInnerAbility innerPresenter)
+            if (innerPresenter.GetInnerAbilityPresentation(this) != null)
+                return innerPresenter.GetInnerAbilityPresentation(this);
+
+        return abilitySlot.AbilityInstance.presentationData;
     }
 
     //private UseAbilityData SetupData(Ability ability)

@@ -15,7 +15,7 @@ MonoBehaviour:
   <Name>k__BackingField: Current weapon first ability
   _ability:
     rid: 8956606609910923375
-  <SpriteIcon>k__BackingField: {fileID: 21300000, guid: 313eb4d0157f6ec418d857892d7b44ad, type: 3}
+  <SpriteIcon>k__BackingField: {fileID: 0}
   <ConsiderAbilityDuration>k__BackingField: 0
   <PreparationAnimation>k__BackingField: {fileID: 0}
   <UsageAnimation>k__BackingField: {fileID: 0}
