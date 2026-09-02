@@ -16,5 +16,4 @@ public interface IAbilityUser
     void Add(AbilityInstance instance);
     int FindIndexOf(Ability abilityToUse);
     void Initialize(List<ScriptableAbility> abilities, ParallelAbilityExecutionMatrix executionMatrix);
-    IAbilityPresentationData GetPresentationData(AbilitySlot abilitySlot);
 }

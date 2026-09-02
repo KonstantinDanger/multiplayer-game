@@ -358,7 +358,7 @@ public class Player : Entity
         CharacterSelectView charSelectInstance = Instantiate(charSelectUIPrefab, _gameUI.transform);
         _menu = Instantiate(data.LobbyUIPrefab, _gameUI.transform);
 
-        _playerHUD.Initialize(_abilities, Damageable, _level, _respawn, _wallet);
+        _playerHUD.Initialize(this, _abilities, Damageable, _level, _respawn, _wallet);
         _upgradeView.Initialize(gameObject, _upgrader);
         _levelUpView.Initialize(_level, _wallet);
         charSelectInstance.Initialize(data.ClassList, this);
