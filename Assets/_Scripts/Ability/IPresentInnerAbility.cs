@@ -2,5 +2,5 @@
 
 public interface IPresentInnerAbility
 {
-    public IAbilityPresentationData GetInnerAbilityPresentation(NetworkBehaviour owner);
+    public AbilityInstance GetInnerAbilityInstance(NetworkBehaviour owner);
 }

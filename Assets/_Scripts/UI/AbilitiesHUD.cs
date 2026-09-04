@@ -14,12 +14,18 @@ public class AbilitiesHUD : HUD
             AbilitySlot abilitySlot = abilityUser.Slots[i + 1];
 
             AbilityInstance currentInstance = abilitySlot.AbilityInstance;
+            Ability outputAbility = currentInstance.ability;
 
             IAbilityPresentationData data = currentInstance.presentationData;
+            bool isCumulative = false;
 
             if (currentInstance.ability is IPresentInnerAbility innerPresenter)
             {
-                IAbilityPresentationData presentationData = innerPresenter.GetInnerAbilityPresentation(owner);
+                AbilityInstance innerInstance = innerPresenter.GetInnerAbilityInstance(owner);
+                IAbilityPresentationData presentationData = innerInstance.presentationData;
+                outputAbility = innerInstance.ability;
+
+                isCumulative = innerInstance.ability is CumulativeAbility;
 
                 if (presentationData != null)
                 {
@@ -30,7 +36,7 @@ public class AbilitiesHUD : HUD
             //IAbilityPresentationData data = abilityUser.GetPresentationData(abilitySlot);
             //IAbilityPresentationData data = abilitySlot.AbilityInstance.presentationData;
 
-            abilityCell.SetAbility(abilitySlot, data);
+            abilityCell.SetAbility(abilitySlot, outputAbility, data, isCumulative);
         }
     }
 }
