@@ -33,6 +33,9 @@ public class GaugeBar : MonoBehaviour
 
     private void HandleValueChanged()
     {
+        if (Gauge is CumulativeAbility)
+            UnityEngine.Debug.Log("asdasdasdas ");
+
         float value = Gauge.CurrentGaugeValue / Gauge.MaxGaugeValue;
         value = Mathf.Clamp01(value);
 

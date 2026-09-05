@@ -20,6 +20,8 @@ public class CumulativeAbility : Ability, IGauge
     public float CurrentGaugeValue => AccumulatedCharges;
     public float MaxGaugeValue => _maxCharges;
 
+    public void UpdateValueChange() => OnValueChanged?.Invoke();
+
     protected internal override AbilityRequestStatus OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target)
     {
         if (_cached == null)
@@ -34,7 +36,10 @@ public class CumulativeAbility : Ability, IGauge
     protected override IEnumerator OnPerform(NetworkBehaviour sender, NetworkBehaviour target)
     {
         yield return _cached.PerformRoutine(sender, target);
+
         _accumulation--;
+
+        OnValueChanged?.Invoke();
 
         UnityEngine.Debug.Log("performed cumulative ability. Accumulated charges: " + AccumulatedCharges);
     }
@@ -53,6 +58,9 @@ public class CumulativeAbility : Ability, IGauge
                 yield break;
 
             _accumulation += accumulationPerSecond * Time.deltaTime;
+
+            UnityEngine.Debug.Log("value changed ");
+            OnValueChanged?.Invoke();
 
             yield return null;
         }

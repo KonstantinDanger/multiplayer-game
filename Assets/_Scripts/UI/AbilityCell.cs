@@ -9,6 +9,8 @@ public class AbilityCell : MonoBehaviour
 
     private AbilitySlot _abilitySlot;
 
+    private CumulativeAbility _cumulativeAbility;
+
     public void SetAbility(AbilitySlot slot, Ability ability, IAbilityPresentationData abilityData, bool cumulative)
     {
         _abilitySlot = slot;
@@ -20,7 +22,22 @@ public class AbilityCell : MonoBehaviour
 
         _accumulationGauge.gameObject.SetActive(cumulative);
 
+
         if (cumulative)
-            _accumulationGauge.Initialize(ability as CumulativeAbility);
+        {
+            _cumulativeAbility = ability as CumulativeAbility;
+            _accumulationGauge.Initialize(_cumulativeAbility);
+        }
+    }
+
+    private void Update()
+        => TryUpdateCumulativeAbility(_cumulativeAbility);
+
+    private void TryUpdateCumulativeAbility(CumulativeAbility ability)
+    {
+        if (ability == null)
+            return;
+
+        ability.UpdateValueChange();
     }
 }
