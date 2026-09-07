@@ -7,6 +7,7 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
 {
     private readonly List<AbilitySlot> _slots = new();
     private readonly List<AbilityInstance> _abilityInstances = new();
+    private readonly SyncList<AbilitySlotData> _slotsData = new();
 
     private ParallelAbilityExecutionMatrix _executionMatrix;
 
@@ -17,6 +18,13 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
     public event Action<IAbilityPresentationData, float> OnPerform;
     public event Action<IAbilityPresentationData> OnFinish;
     public event Action<IAbilityPresentationData> OnAbilitySet;
+    public event Action<int, AbilitySlotData> OnAbilitySlotStateChange;
+
+    public override void OnStartClient()
+        => _slotsData.OnChange += HandleSlotDataChange;
+
+    public override void OnStopClient()
+        => _slotsData.OnChange -= HandleSlotDataChange;
 
     public void Initialize(List<ScriptableAbility> abilities, ParallelAbilityExecutionMatrix executionMatrix)
     {
@@ -92,6 +100,19 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
         //    OnPreparation.Invoke(SetupData(selectedSlot.Ability));
 
         return selectedSlot.AbilityInstance.ability;
+    }
+
+    private void HandleSlotDataChange(SyncList<AbilitySlotData>.Operation operation, int slotIndex, AbilitySlotData data)
+        => OnAbilitySlotStateChange?.Invoke(slotIndex, data);
+
+    private void UpdateSlotData(int slotIndex, AbilitySlotData data)
+    {
+        _slotsData[slotIndex] = new()
+        {
+            SlotIndex = slotIndex,
+            CurrentCharges = data.CurrentCharges,
+            MaxCharges = data.MaxCharges,
+        };
     }
 
     private bool RequestUsage(AbilitySlot slot)

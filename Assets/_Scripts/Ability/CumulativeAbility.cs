@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine;
 
 [Serializable]
-public class CumulativeAbility : Ability, IGauge
+public class CumulativeAbility : Ability
 {
     [SerializeField] private ScriptableAbility _ability;
     [SerializeField, Min(1)] private int _maxCharges = 1;
@@ -13,14 +13,8 @@ public class CumulativeAbility : Ability, IGauge
     private float _accumulation = 1f;
     private Ability _cached;
 
-    public event Action OnValueChanged;
-
-    private int AccumulatedCharges => Mathf.Clamp(Mathf.FloorToInt(_accumulation), 0, _maxCharges);
-
-    public float CurrentGaugeValue => AccumulatedCharges;
-    public float MaxGaugeValue => _maxCharges;
-
-    public void UpdateValueChange() => OnValueChanged?.Invoke();
+    public int AccumulatedCharges => Mathf.Clamp(Mathf.FloorToInt(_accumulation), 0, _maxCharges);
+    public int MaxCharged => _maxCharges;
 
     protected internal override AbilityRequestStatus OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target)
     {
@@ -39,8 +33,6 @@ public class CumulativeAbility : Ability, IGauge
 
         _accumulation--;
 
-        OnValueChanged?.Invoke();
-
         UnityEngine.Debug.Log("performed cumulative ability. Accumulated charges: " + AccumulatedCharges);
     }
 
@@ -58,9 +50,6 @@ public class CumulativeAbility : Ability, IGauge
                 yield break;
 
             _accumulation += accumulationPerSecond * Time.deltaTime;
-
-            UnityEngine.Debug.Log("value changed ");
-            OnValueChanged?.Invoke();
 
             yield return null;
         }

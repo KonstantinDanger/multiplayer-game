@@ -1,11 +1,16 @@
 ﻿using Mirror;
 using System;
+using UnityEngine;
 
 [Serializable]
 public class AbilitySlot : IGauge
 {
     public event Action OnUsageDeny;
     public event Action OnValueChanged;
+
+    public int AccumulationCharges { get; private set; }
+
+    public IGauge AccumulationGauge { get; private set; } = null;
 
     private Ability Ability => AbilityInstance.ability;
 
@@ -24,10 +29,17 @@ public class AbilitySlot : IGauge
         Ability.OnPreparationStarted += handleAbilityPreparation;
         Ability.OnPerformStarted += handleAbilityPerform;
         Ability.OnFinished += handleAbilityFinish;
+
+        if (Ability is CumulativeAbility cumulative)
+            AccumulationGauge = new CumulativeAbilityGauge(cumulative);
     }
 
     public void Update()
-        => OnValueChanged?.Invoke();
+    {
+        AccumulationCharges = AccumulationGauge == null ? -1 : Mathf.FloorToInt(AccumulationGauge.CurrentGaugeValue);
+
+        OnValueChanged?.Invoke();
+    }
 
     public bool Use(NetworkBehaviour sender, NetworkBehaviour target)
     {
