@@ -14,7 +14,7 @@ public class CumulativeAbility : Ability
     private Ability _cached;
 
     public int AccumulatedCharges => Mathf.Clamp(Mathf.FloorToInt(_accumulation), 0, _maxCharges);
-    public int MaxCharged => _maxCharges;
+    public int MaxCharges => _maxCharges;
 
     protected internal override AbilityRequestStatus OnPerformRequested(NetworkBehaviour sender, NetworkBehaviour target)
     {

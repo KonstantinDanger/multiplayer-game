@@ -24,7 +24,7 @@ public class CumulativeAbilityGauge : IGauge
         }
     }
 
-    public float MaxGaugeValue => _ability.MaxCharged;
+    public float MaxGaugeValue => _ability.MaxCharges;
 
     public event Action OnValueChanged;
 }

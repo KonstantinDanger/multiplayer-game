@@ -33,19 +33,18 @@ public class GaugeBar : MonoBehaviour
 
     private void HandleValueChanged()
     {
-        if (Gauge is CumulativeAbility)
-            UnityEngine.Debug.Log("asdasdasdas ");
-
         float value = Gauge.CurrentGaugeValue / Gauge.MaxGaugeValue;
         value = Mathf.Clamp01(value);
 
+        SetValue(value);
+    }
+
+    public void SetValue(float value)
+    {
         if (_reverseGauge)
             value = 1f - value;
 
-        SetSliderValue(value);
+        _slider.value = value;
     }
-
-    private void SetSliderValue(float value)
-        => _slider.value = value;
 }
 

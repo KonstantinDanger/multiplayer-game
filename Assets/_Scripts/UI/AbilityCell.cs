@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class AbilityCell : MonoBehaviour
@@ -7,22 +8,36 @@ public class AbilityCell : MonoBehaviour
     [SerializeField] private GaugeBar _rechargeGauge;
     [SerializeField] private GaugeBar _accumulationGauge;
 
-    private AbilitySlot _abilitySlot;
+    private event Action<int, AbilitySlotData> OnAbilitySlotStateChange;
 
-    public void SetAbility(AbilitySlot slot, IAbilityPresentationData abilityData)
+    private bool _isSet;
+
+    public void SetAbility(IAbilityPresentationData abilityData, Action<int, AbilitySlotData> onAbilitySlotStateChange)
     {
-        _abilitySlot = slot;
+        if (_isSet)
+            OnAbilitySlotStateChange -= HandleSlotStateChange;
+
+        OnAbilitySlotStateChange = onAbilitySlotStateChange;
+
+        OnAbilitySlotStateChange += HandleSlotStateChange;
 
         if (abilityData.SpriteIcon != null)
             _image.sprite = abilityData.SpriteIcon;
 
-        _rechargeGauge.Initialize(_abilitySlot);
+        _isSet = true;
+    }
 
-        bool cumulative = slot.AccumulationGauge != null;
+    private void HandleSlotStateChange(int index, AbilitySlotData data)
+    {
+        _rechargeGauge.SetValue(data.RechargeProgress);
 
-        _accumulationGauge.gameObject.SetActive(cumulative);
+        if (data.MaxCharges == 0)
+        {
+            _accumulationGauge.gameObject.SetActive(false);
+            return;
+        }
 
-        if (cumulative)
-            _accumulationGauge.Initialize(slot.AccumulationGauge);
+        _accumulationGauge.gameObject.SetActive(true);
+        _accumulationGauge.SetValue((float)data.AccumulatedCharges / data.MaxCharges);
     }
 }
