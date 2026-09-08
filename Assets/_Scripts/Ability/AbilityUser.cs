@@ -56,11 +56,13 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
 
         _abilityInstances.Add(instance);
 
+        _slotsData[_slots.Count] = new();
+
         _slots.Add(new AbilitySlot(instance,
                 (a, duration) => HandleAbilityPreparation(a, duration),
                 (a, duration) => HandleAbilityPerform(a, duration),
                 (a) => HandleAbilityFinish(a),
-                OnAbilitySlotStateChange));
+                (data) => UpdateSlotData(_slotsData.Count - 1, data)));
 
         if (ability is ICacheAbilities abilityCacher)
         {
@@ -110,7 +112,6 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
     {
         _slotsData[slotIndex] = new()
         {
-            SlotIndex = slotIndex,
             AccumulatedCharges = data.AccumulatedCharges,
             MaxCharges = data.MaxCharges,
         };
