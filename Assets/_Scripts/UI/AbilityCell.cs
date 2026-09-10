@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class AbilityCell : MonoBehaviour
@@ -8,18 +7,18 @@ public class AbilityCell : MonoBehaviour
     [SerializeField] private GaugeBar _rechargeGauge;
     [SerializeField] private GaugeBar _accumulationGauge;
 
-    private event Action<int, AbilitySlotData> OnAbilitySlotStateChange;
+    private IAbilityUser _abilityUser;
 
     private bool _isSet;
 
-    public void SetAbility(IAbilityPresentationData abilityData, Action<int, AbilitySlotData> onAbilitySlotStateChange)
+    public void SetAbility(IAbilityPresentationData abilityData, IAbilityUser abilityUser)
     {
+        _abilityUser = abilityUser;
+
         if (_isSet)
-            OnAbilitySlotStateChange -= HandleSlotStateChange;
+            abilityUser.OnAbilitySlotStateChange -= HandleSlotStateChange;
 
-        OnAbilitySlotStateChange = onAbilitySlotStateChange;
-
-        OnAbilitySlotStateChange += HandleSlotStateChange;
+        abilityUser.OnAbilitySlotStateChange += HandleSlotStateChange;
 
         if (abilityData.SpriteIcon != null)
             _image.sprite = abilityData.SpriteIcon;
@@ -27,7 +26,10 @@ public class AbilityCell : MonoBehaviour
         _isSet = true;
     }
 
-    private void HandleSlotStateChange(int index, AbilitySlotData data)
+    private void OnDestroy()
+        => _abilityUser.OnAbilitySlotStateChange -= HandleSlotStateChange;
+
+    private void HandleSlotStateChange(AbilitySlotData data)
     {
         _rechargeGauge.SetValue(data.RechargeProgress);
 

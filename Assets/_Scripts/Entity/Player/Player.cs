@@ -46,8 +46,6 @@ public class Player : Entity
     {
         Input.Initialize();
 
-        SetCharacterClass(_baseCharacterClass);
-
         _stateMachine = new PlayerStateMachine(this);
 
         CreateUI();
@@ -83,6 +81,8 @@ public class Player : Entity
 
     public override void OnStartLocalPlayer()
     {
+        SetCharacterClass(_baseCharacterClass);
+
         CreateUI();
 
         CmdSetSteamData(
@@ -275,20 +275,20 @@ public class Player : Entity
         dataProvider.Save(data);
     }
 
-    public void SetCharacterClass(ScriptableCharacterClass @class)
+    public void SetCharacterClass(ScriptableCharacterClass charClass)
     {
-        if (!@class)
-            throw new System.Exception("No class found!");
+        if (!charClass)
+            throw new System.Exception("No charClass found!");
 
-        CharacterClass = @class;
+        CharacterClass = charClass;
 
-        _weaponUserComponent.Initialize(@class.GetWeaponUser());
+        _weaponUserComponent.Initialize(charClass.GetWeaponUser());
 
         _abilities.Initialize(CharacterClass
             .GetNew()
             .Abilities
             .ToList(),
-            @class.AbilityExecutionMatrix);
+            charClass.AbilityExecutionMatrix);
     }
 
     private void HandleInteraction()

@@ -58,7 +58,7 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
 
         _slotsData[_slots.Count] = new();
 
-        _slots.Add(new AbilitySlot(instance,
+        _slots.Add(new AbilitySlot(instance, this,
                 (a, duration) => HandleAbilityPreparation(a, duration),
                 (a, duration) => HandleAbilityPerform(a, duration),
                 (a) => HandleAbilityFinish(a),

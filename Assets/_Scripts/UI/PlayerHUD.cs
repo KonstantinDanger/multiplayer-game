@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mirror;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -33,7 +34,9 @@ public class PlayerHUD : HUD
         _level = level;
         _wallet = wallet;
 
-        _abilitiesHUD.Initialize(abilities, owner: player);
+        if (NetworkClient.active)
+            _abilitiesHUD.Initialize(abilities, owner: player);
+
         _healthGauge.Initialize(gauge: damageable);
         _deathHUD.Initialize(respawn);
         _lobbyHUD.Initialize(wallet);
@@ -55,6 +58,9 @@ public class PlayerHUD : HUD
 
         HandleLevelChange(_level.Lvl);
     }
+
+    public void InitializeOnClientStart(Player player, IAbilityUser abilities)
+        => _abilitiesHUD.Initialize(abilities, owner: player);
 
     public T Show<T>() where T : HUD
     {
