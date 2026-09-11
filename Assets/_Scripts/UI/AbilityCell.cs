@@ -10,15 +10,17 @@ public class AbilityCell : MonoBehaviour
     private IAbilityUser _abilityUser;
 
     private bool _isSet;
+    private int _slotIndex;
 
-    public void SetAbility(IAbilityPresentationData abilityData, IAbilityUser abilityUser)
+    public void SetAbility(int slotIndex, IAbilityPresentationData abilityData, IAbilityUser abilityUser)
     {
+        _slotIndex = slotIndex;
         _abilityUser = abilityUser;
 
         if (_isSet)
-            abilityUser.OnAbilitySlotStateChange -= HandleSlotStateChange;
+            abilityUser.RpcOnAbilitySlotStateChange -= HandleSlotStateChange;
 
-        abilityUser.OnAbilitySlotStateChange += HandleSlotStateChange;
+        abilityUser.RpcOnAbilitySlotStateChange += HandleSlotStateChange;
 
         if (abilityData.SpriteIcon != null)
             _image.sprite = abilityData.SpriteIcon;
@@ -27,10 +29,13 @@ public class AbilityCell : MonoBehaviour
     }
 
     private void OnDestroy()
-        => _abilityUser.OnAbilitySlotStateChange -= HandleSlotStateChange;
+        => _abilityUser.RpcOnAbilitySlotStateChange -= HandleSlotStateChange;
 
-    private void HandleSlotStateChange(AbilitySlotData data)
+    private void HandleSlotStateChange(int slotIndex, AbilitySlotData data)
     {
+        if (_slotIndex != slotIndex)
+            return;
+
         _rechargeGauge.SetValue(data.RechargeProgress);
 
         if (data.MaxCharges == 0)

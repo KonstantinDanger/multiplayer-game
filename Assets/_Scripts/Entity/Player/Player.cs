@@ -83,7 +83,7 @@ public class Player : Entity
     {
         SetCharacterClass(_baseCharacterClass);
 
-        CreateUI();
+        _playerHUD.InitializeOnClientStart(this, _abilities);
 
         CmdSetSteamData(
             SteamUser.GetSteamID().m_SteamID,
@@ -113,13 +113,6 @@ public class Player : Entity
         else
             CmdInitWallet(data.MetaCurrency);
     }
-
-    [Command(requiresAuthority = false)]
-    private void CmdInitWallet(int metaCurrencyAmount)
-        => InitWallet(metaCurrencyAmount);
-
-    private void InitWallet(int metaCurrencyAmount)
-        => _wallet.Initialize(new() { [CurrencyType.Meta] = metaCurrencyAmount });
 
     protected override void OnEntityStartServer()
     {
@@ -201,6 +194,13 @@ public class Player : Entity
 
     private void HandleRotation(Vector3 rotation)
         => Camera.Rotate(rotation, RotationConfig.RotationSpeed);
+
+    [Command(requiresAuthority = false)]
+    private void CmdInitWallet(int metaCurrencyAmount)
+    => InitWallet(metaCurrencyAmount);
+
+    private void InitWallet(int metaCurrencyAmount)
+        => _wallet.Initialize(new() { [CurrencyType.Meta] = metaCurrencyAmount });
 
     private void HandleJump()
     {

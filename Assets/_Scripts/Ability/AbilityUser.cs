@@ -18,7 +18,7 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
     public event Action<IAbilityPresentationData, float> OnPerform;
     public event Action<IAbilityPresentationData> OnFinish;
     public event Action<IAbilityPresentationData> OnAbilitySet;
-    public event Action<AbilitySlotData> OnAbilitySlotStateChange;
+    public event Action<int, AbilitySlotData> RpcOnAbilitySlotStateChange;
 
     public override void OnStartClient()
         => _slotsData.OnChange += HandleSlotDataChange;
@@ -105,8 +105,13 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
         return selectedSlot.AbilityInstance.ability;
     }
 
+
     private void HandleSlotDataChange(SyncDictionary<int, AbilitySlotData>.Operation operation, int slotIndex, AbilitySlotData data)
-        => OnAbilitySlotStateChange?.Invoke(data);
+        => RpcHandleSlotDataChange(slotIndex, data);
+
+    [ClientRpc]
+    private void RpcHandleSlotDataChange(int slotIndex, AbilitySlotData data)
+        => RpcOnAbilitySlotStateChange?.Invoke(slotIndex, data);
 
     private void UpdateSlotData(int slotIndex, AbilitySlotData data)
     {

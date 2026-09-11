@@ -11,7 +11,8 @@ public class AbilitiesHUD : HUD
         for (int i = 0; i < _abilityCells.Count; i++)
         {
             AbilityCell abilityCell = _abilityCells[i];
-            AbilitySlot abilitySlot = abilityUser.Slots[i + 1];
+            int slotIndex = i + 1; // + 1 because primary ability occupies the first slot
+            AbilitySlot abilitySlot = abilityUser.Slots[slotIndex];
 
             AbilityInstance currentInstance = abilitySlot.AbilityInstance;
 
@@ -30,7 +31,7 @@ public class AbilitiesHUD : HUD
             //IAbilityPresentationData data = abilityUser.GetPresentationData(abilitySlot);
             //IAbilityPresentationData data = abilitySlot.AbilityInstance.presentationData;
 
-            abilityCell.SetAbility(data, abilityUser);
+            abilityCell.SetAbility(slotIndex, data, abilityUser);
         }
     }
 }

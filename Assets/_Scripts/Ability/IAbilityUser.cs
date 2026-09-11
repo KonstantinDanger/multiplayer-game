@@ -7,7 +7,7 @@ public interface IAbilityUser
     event Action<IAbilityPresentationData, float> OnPreparation;
     event Action<IAbilityPresentationData, float> OnPerform;
     event Action<IAbilityPresentationData> OnFinish;
-    event Action<AbilitySlotData> OnAbilitySlotStateChange;
+    event Action<int, AbilitySlotData> RpcOnAbilitySlotStateChange;
 
     IReadOnlyList<AbilitySlot> Slots { get; }
     IReadOnlyList<AbilityInstance> AbilityInstances { get; }
