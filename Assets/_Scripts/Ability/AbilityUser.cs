@@ -26,10 +26,12 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
     public override void OnStopClient()
         => _slotsData.OnChange -= HandleSlotDataChange;
 
+    [Server]
     public void Initialize(List<ScriptableAbility> abilities, ParallelAbilityExecutionMatrix executionMatrix)
     {
         if (_slots.Count > 0)
         {
+            _slotsData.Clear();
             _abilityInstances.Clear();
             _slots.Clear();
         }
@@ -44,25 +46,29 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
         _executionMatrix = executionMatrix;
     }
 
+    [Server]
     public void OnUpdate()
     {
         foreach (var ability in _slots)
             ability?.Update();
     }
 
+    [Server]
     public void Add(AbilityInstance instance)
     {
         Ability ability = instance.ability;
 
         _abilityInstances.Add(instance);
 
-        _slotsData[_slots.Count] = new();
+        int slotIndex = _slots.Count;
 
         _slots.Add(new AbilitySlot(instance, this,
                 (a, duration) => HandleAbilityPreparation(a, duration),
                 (a, duration) => HandleAbilityPerform(a, duration),
                 (a) => HandleAbilityFinish(a),
-                (data) => UpdateSlotData(_slotsData.Count - 1, data)));
+                (data) => UpdateSlotData(slotIndex, data)));
+
+        _slotsData.Add(slotIndex, new());
 
         if (ability is ICacheAbilities abilityCacher)
         {
@@ -99,15 +105,15 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
 
         selectedSlot.Use(this, target);
 
-        //if (selectedSlot.Use(this, target))
-        //    OnPreparation.Invoke(SetupData(selectedSlot.Ability));
-
         return selectedSlot.AbilityInstance.ability;
     }
 
-
     private void HandleSlotDataChange(SyncDictionary<int, AbilitySlotData>.Operation operation, int slotIndex, AbilitySlotData data)
-        => RpcHandleSlotDataChange(slotIndex, data);
+    {
+        RpcHandleSlotDataChange(slotIndex, data);
+
+        UnityEngine.Debug.Log($"slot {slotIndex}'s data: " + data);
+    }
 
     [ClientRpc]
     private void RpcHandleSlotDataChange(int slotIndex, AbilitySlotData data)
@@ -119,6 +125,7 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
         {
             AccumulatedCharges = data.AccumulatedCharges,
             MaxCharges = data.MaxCharges,
+            RechargeProgress = data.RechargeProgress
         };
     }
 
@@ -165,33 +172,4 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
         => _abilityInstances
         .Find(instance => instance.ability
         .Equals(ability))?.presentationData;
-
-    //private UseAbilityData SetupData(Ability ability)
-    //{
-    //    UseAbilityData data = new();
-
-    //    if (ability.PreparationAnimation == null)
-    //    {
-    //        data.UsagePreparationTime = 0f;
-    //        data.UsagePreparationAnimDuration = 0f;
-    //        data.PreparationAnimationName = string.Empty;
-    //    }
-    //    else if (ability.UsageAnimation == null)
-    //    {
-    //        data.UsageAnimationName = string.Empty;
-    //    }
-    //    else
-    //    {
-    //        data = new UseAbilityData()
-    //        {
-    //            UsagePreparationAnimDuration = ability.PreparationAnimation.averageDuration,
-    //            PreparationAnimationName = ability.PreparationAnimation.name,
-    //            UsagePreparationTime = ability.UsagePrepareTime,
-
-    //            UsageAnimationName = ability.UsageAnimation.name,
-    //        };
-    //    }
-
-    //    return data;
-    //}
 }

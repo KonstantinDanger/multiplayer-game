@@ -81,7 +81,7 @@ public class Player : Entity
 
     public override void OnStartLocalPlayer()
     {
-        SetCharacterClass(_baseCharacterClass);
+        CmdSetCharacterClass();
 
         _playerHUD.InitializeOnClientStart(this, _abilities);
 
@@ -176,10 +176,18 @@ public class Player : Entity
             CmdServerTick(Input.MovementVector, Input.Rotation, Input.IsSprinting);
         }
 
-        _abilities.OnUpdate();
+        CmdUpdateAbilities();
 
         base.Update();
     }
+
+    [Command(requiresAuthority = false)]
+    private void CmdSetCharacterClass()
+        => SetCharacterClass(_baseCharacterClass);
+
+    [Command(requiresAuthority = false)]
+    private void CmdUpdateAbilities()
+        => _abilities.OnUpdate();
 
     [Command(requiresAuthority = false)]
     private void CmdServerTick(Vector2 movementVector, Vector3 rotation, bool isSprinting)
@@ -278,7 +286,7 @@ public class Player : Entity
     public void SetCharacterClass(ScriptableCharacterClass charClass)
     {
         if (!charClass)
-            throw new System.Exception("No charClass found!");
+            throw new System.Exception("No character class found!");
 
         CharacterClass = charClass;
 

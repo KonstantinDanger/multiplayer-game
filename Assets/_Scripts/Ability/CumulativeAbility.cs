@@ -33,7 +33,7 @@ public class CumulativeAbility : Ability
 
         _accumulation--;
 
-        UnityEngine.Debug.Log("performed cumulative ability. Accumulated charges: " + AccumulatedCharges);
+        //UnityEngine.Debug.Log("performed cumulative ability. Accumulated charges: " + AccumulatedCharges);
     }
 
     protected override IEnumerator OnPerformed(NetworkBehaviour sender, NetworkBehaviour target)

@@ -6,7 +6,7 @@ public class AbilitySlot
 {
     public event Action OnUsageDeny;
 
-    private AbilitySlotData _data;
+    private AbilitySlotData _data = new();
     private readonly Action<AbilitySlotData> OnSlotStateUpdate;
 
     private CumulativeAbility _cumulativeAbility = null;
@@ -41,7 +41,9 @@ public class AbilitySlot
     public void Update()
     {
         _data.AccumulatedCharges = _cumulativeAbility == null ? -1 : _cumulativeAbility.AccumulatedCharges;
-        _data.RechargeProgress = Ability.RechargeProgress / Ability.CooldownTime;
+        _data.RechargeProgress = Ability.CooldownTime == 0f ? 0f : Ability.RechargeProgress / Ability.CooldownTime;
+
+        //UnityEngine.Debug.Log(_data);
 
         OnSlotStateUpdate?.Invoke(_data);
     }

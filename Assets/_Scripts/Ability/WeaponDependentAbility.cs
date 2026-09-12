@@ -16,6 +16,8 @@ public class WeaponDependentAbility : Ability, IPresentInnerAbility, ICacheAbili
     private Ability _selectedAbilityInstance;
     private WeaponUser _user;
 
+    public override float CooldownTime => _selectedAbilityInstance == null ? 0f : _selectedAbilityInstance.CooldownTime;
+
     public AbilityInstance GetInnerAbilityInstance(NetworkBehaviour owner)
     {
         if (_user == null)
