@@ -21,6 +21,7 @@ public class PlayerMovement : NetworkBehaviour, IMovable
 
     private Vector3 _externalForce;
     private Vector3 _movementDelta;
+    private Vector3 _slopeSlideVelocity;
 
     [SyncVar] private Vector3 _horizontalVelocity;
     [SyncVar] private float _verticalVelocity;
@@ -40,12 +41,15 @@ public class PlayerMovement : NetworkBehaviour, IMovable
 
         Vector3 verticalVelocity = new(0f, _verticalVelocity + _externalForce.y, 0f);
 
-        Vector3 slopeSlideDirection = GetSlopeSlideDirection(_surfaceChecker.GroundHitInfo.normal, out float angleToNormal);
+        Vector3 slopeSlideDirection = GetSlopeSlideDirection(_surfaceChecker.SlopeHitInfo.normal, out float angleToNormal);
 
-        //float normalAngleMultiplier = 1f + Mathf.Clamp(angleToNormal, 0f, _controller.slopeLimit) / _controller.slopeLimit;
-        Vector3 slopeSlideVelocity = gravity * Velocity.magnitude * _verticalVelocity * Time.deltaTime * slopeSlideDirection;
+        float normalAngleMultiplier = 1f + Mathf.Clamp(angleToNormal, 0f, _controller.slopeLimit) / _controller.slopeLimit;
 
-        _controller.Move((verticalVelocity + slopeSlideVelocity) * Time.deltaTime);
+        float slideSpeed = Mathf.Abs(gravity * _verticalVelocity * Velocity.magnitude * normalAngleMultiplier);
+
+        _slopeSlideVelocity = slideSpeed * Time.deltaTime * slopeSlideDirection;
+
+        _controller.Move((verticalVelocity + _slopeSlideVelocity) * Time.deltaTime);
     }
 
     private Vector3 GetSlopeSlideDirection(Vector3 surfaceNormal, out float angleToNormal)
@@ -70,6 +74,13 @@ public class PlayerMovement : NetworkBehaviour, IMovable
     {
         if (!IsGrounded)
             return;
+
+        if (_slopeSlideVelocity.magnitude > 0.01f)
+        {
+            Vector3 jumpForce = _surfaceChecker.SlopeHitInfo.normal * 0.1f;
+            jumpForce.y = 0f;
+            AddExternalForce(jumpForce);
+        }
 
         _verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
     }

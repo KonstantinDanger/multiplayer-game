@@ -26,7 +26,7 @@ public class SurfaceChecker : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool _debugEnabled = true;
 
-    public RaycastHit GroundHitInfo
+    public RaycastHit SlopeHitInfo
     {
         get
         {
@@ -34,15 +34,6 @@ public class SurfaceChecker : MonoBehaviour
             return hit;
         }
     }
-
-    //public RaycastHit GroundHitInfo
-    //{
-    //    get
-    //    {
-    //        Physics.SphereCast(_groundCheck.position, _groundCheckRadius, -transform.up, out RaycastHit hit, _groundCheckRadius);
-    //        return hit;
-    //    }
-    //}
 
     public bool IsGrounded => Physics.CheckSphere(_groundCheck.position, _groundCheckRadius, _groundLayer, QueryTriggerInteraction.Ignore);
     public bool IsUnderCeiling => Physics.CheckSphere(_ceilingCheck.position, _ceilingCheckRadius, _ceilingLayer, QueryTriggerInteraction.Ignore);
