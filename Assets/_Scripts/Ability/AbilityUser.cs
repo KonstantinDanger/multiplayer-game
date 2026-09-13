@@ -110,14 +110,10 @@ public class AbilityUser : NetworkBehaviour, IAbilityUser
 
     private void HandleSlotDataChange(SyncDictionary<int, AbilitySlotData>.Operation operation, int slotIndex, AbilitySlotData data)
     {
-        RpcHandleSlotDataChange(slotIndex, data);
-
-        UnityEngine.Debug.Log($"slot {slotIndex}'s data: " + data);
+        RpcOnAbilitySlotStateChange?.Invoke(slotIndex, data);
+        { }
+        //UnityEngine.Debug.Log($"slot {slotIndex}'s data: " + data);
     }
-
-    [ClientRpc]
-    private void RpcHandleSlotDataChange(int slotIndex, AbilitySlotData data)
-        => RpcOnAbilitySlotStateChange?.Invoke(slotIndex, data);
 
     private void UpdateSlotData(int slotIndex, AbilitySlotData data)
     {

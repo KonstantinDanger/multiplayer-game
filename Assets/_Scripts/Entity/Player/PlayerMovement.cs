@@ -40,7 +40,27 @@ public class PlayerMovement : NetworkBehaviour, IMovable
 
         Vector3 verticalVelocity = new(0f, _verticalVelocity + _externalForce.y, 0f);
 
-        _controller.Move(verticalVelocity * Time.deltaTime);
+        Vector3 slopeSlideDirection = GetSlopeSlideDirection(_surfaceChecker.GroundHitInfo.normal, out float angleToNormal);
+
+        //float normalAngleMultiplier = 1f + Mathf.Clamp(angleToNormal, 0f, _controller.slopeLimit) / _controller.slopeLimit;
+        Vector3 slopeSlideVelocity = gravity * Velocity.magnitude * _verticalVelocity * Time.deltaTime * slopeSlideDirection;
+
+        _controller.Move((verticalVelocity + slopeSlideVelocity) * Time.deltaTime);
+    }
+
+    private Vector3 GetSlopeSlideDirection(Vector3 surfaceNormal, out float angleToNormal)
+    {
+        angleToNormal = Vector3.Angle(transform.up, surfaceNormal);
+
+        if (!IsGrounded || surfaceNormal == Vector3.zero)
+            return Vector3.zero;
+
+        if (angleToNormal < _controller.slopeLimit)
+            return Vector3.zero;
+
+        Vector3 slideSurface = Vector3.ProjectOnPlane(-transform.up, surfaceNormal);
+
+        return slideSurface;
     }
 
     public void ResetVerticalVelocity()

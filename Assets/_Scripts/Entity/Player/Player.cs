@@ -176,7 +176,8 @@ public class Player : Entity
             CmdServerTick(Input.MovementVector, Input.Rotation, Input.IsSprinting);
         }
 
-        CmdUpdateAbilities();
+        if (isServer)
+            _abilities.OnUpdate();
 
         base.Update();
     }
@@ -184,10 +185,6 @@ public class Player : Entity
     [Command(requiresAuthority = false)]
     private void CmdSetCharacterClass()
         => SetCharacterClass(_baseCharacterClass);
-
-    [Command(requiresAuthority = false)]
-    private void CmdUpdateAbilities()
-        => _abilities.OnUpdate();
 
     [Command(requiresAuthority = false)]
     private void CmdServerTick(Vector2 movementVector, Vector3 rotation, bool isSprinting)
